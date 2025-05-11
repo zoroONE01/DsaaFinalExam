@@ -4,6 +4,7 @@
 #include <fstream>
 #include "libs/student/student_library.h"
 #include "libs/knights_tour/knights_tour.h"
+#include "libs/ui/ui_library.h" // Thêm include cho thư viện UI mới
 
 using namespace std;
 
@@ -79,12 +80,12 @@ Student inputStudent()
             }
             else
             {
-                cout << "Lỗi: Điểm phải nằm trong khoảng từ 0 đến 10. Vui lòng nhập lại.\n";
+                printError("Điểm phải nằm trong khoảng từ 0 đến 10. Vui lòng nhập lại.");
             }
         }
         else
         {
-            cout << "Lỗi: Điểm phải là số. Vui lòng nhập lại.\n";
+            printError("Điểm phải là số. Vui lòng nhập lại.");
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
@@ -131,7 +132,7 @@ void displayCurrentList(int dataStructureType)
         inorderTraversalBST(binarySearchTree);
         break;
     default:
-        cout << "Cấu trúc dữ liệu không hợp lệ.\n";
+        printError("Cấu trúc dữ liệu không hợp lệ.");
     }
 }
 
@@ -143,31 +144,31 @@ void addStudentToDataStructure(const Student &student, int dataStructureType)
     case ARRAY_LIST:
         if (addToArrayList(arrayList, student))
         {
-            cout << "Đã thêm sinh viên vào danh sách mảng thành công.\n";
+            printSuccess("Đã thêm sinh viên vào danh sách mảng thành công.");
         }
         else
         {
-            cout << "Lỗi: Không thể thêm sinh viên. Danh sách mảng đã đầy.\n";
+            printError("Không thể thêm sinh viên. Danh sách mảng đã đầy.");
         }
         break;
     case SINGLY_LINKED_LIST:
         addToTailSLL(singlyLinkedList, student);
-        cout << "Đã thêm sinh viên vào danh sách liên kết đơn thành công.\n";
+        printSuccess("Đã thêm sinh viên vào danh sách liên kết đơn thành công.");
         break;
     case CIRCULAR_LINKED_LIST:
         addToCLL(circularLinkedList, student);
-        cout << "Đã thêm sinh viên vào danh sách liên kết vòng thành công.\n";
+        printSuccess("Đã thêm sinh viên vào danh sách liên kết vòng thành công.");
         break;
     case DOUBLY_LINKED_LIST:
         addToTailDLL(doublyLinkedListHead, doublyLinkedListTail, student);
-        cout << "Đã thêm sinh viên vào danh sách liên kết đôi thành công.\n";
+        printSuccess("Đã thêm sinh viên vào danh sách liên kết đôi thành công.");
         break;
     case BINARY_SEARCH_TREE:
         insertToBST(binarySearchTree, student);
-        cout << "Đã thêm sinh viên vào cây BST thành công.\n";
+        printSuccess("Đã thêm sinh viên vào cây BST thành công.");
         break;
     default:
-        cout << "Cấu trúc dữ liệu không hợp lệ.\n";
+        printError("Cấu trúc dữ liệu không hợp lệ.");
     }
 }
 
@@ -192,20 +193,20 @@ void deleteStudentFromDataStructure(const char *studentID, int dataStructureType
         break;
     case BINARY_SEARCH_TREE:
         // Đối với BST, cần tìm sinh viên trước, sau đó xóa theo điểm số
-        cout << "Chức năng xóa không được hỗ trợ trực tiếp cho BST.\n";
+        printWarning("Chức năng xóa không được hỗ trợ trực tiếp cho BST.");
         return;
     default:
-        cout << "Cấu trúc dữ liệu không hợp lệ.\n";
+        printError("Cấu trúc dữ liệu không hợp lệ.");
         return;
     }
 
     if (success)
     {
-        cout << "Đã xóa sinh viên có mã " << studentID << " thành công.\n";
+        printSuccess(("Đã xóa sinh viên có mã " + string(studentID) + " thành công.").c_str());
     }
     else
     {
-        cout << "Không tìm thấy sinh viên có mã " << studentID << ".\n";
+        printError(("Không tìm thấy sinh viên có mã " + string(studentID) + ".").c_str());
     }
 }
 
@@ -229,20 +230,20 @@ void updateStudentInDataStructure(const Student &student, int dataStructureType)
         success = updateInDLL(doublyLinkedListHead, student);
         break;
     case BINARY_SEARCH_TREE:
-        cout << "Chức năng cập nhật không được hỗ trợ trực tiếp cho BST.\n";
+        printWarning("Chức năng cập nhật không được hỗ trợ trực tiếp cho BST.");
         return;
     default:
-        cout << "Cấu trúc dữ liệu không hợp lệ.\n";
+        printError("Cấu trúc dữ liệu không hợp lệ.");
         return;
     }
 
     if (success)
     {
-        cout << "Đã cập nhật thông tin sinh viên có mã " << student.studentID << " thành công.\n";
+        printSuccess(("Đã cập nhật thông tin sinh viên có mã " + string(student.studentID) + " thành công.").c_str());
     }
     else
     {
-        cout << "Không tìm thấy sinh viên có mã " << student.studentID << ".\n";
+        printError(("Không tìm thấy sinh viên có mã " + string(student.studentID) + ".").c_str());
     }
 }
 
@@ -261,7 +262,7 @@ void searchStudentInDataStructure(const char *studentID, int dataStructureType)
         }
         else
         {
-            cout << "Không tìm thấy sinh viên có mã " << studentID << ".\n";
+            printError(("Không tìm thấy sinh viên có mã " + string(studentID) + ".").c_str());
         }
         break;
     }
@@ -270,12 +271,12 @@ void searchStudentInDataStructure(const char *studentID, int dataStructureType)
         NodeSLL *result = searchInSLL(singlyLinkedList, studentID);
         if (result != NULL)
         {
-            cout << "Tìm thấy sinh viên:\n";
+            printSuccess("Tìm thấy sinh viên:");
             displayStudent(result->info);
         }
         else
         {
-            cout << "Không tìm thấy sinh viên có mã " << studentID << ".\n";
+            printError(("Không tìm thấy sinh viên có mã " + string(studentID) + ".").c_str());
         }
         break;
     }
@@ -284,12 +285,12 @@ void searchStudentInDataStructure(const char *studentID, int dataStructureType)
         NodeSLL *result = searchInCLL(circularLinkedList, studentID);
         if (result != NULL)
         {
-            cout << "Tìm thấy sinh viên:\n";
+            printSuccess("Tìm thấy sinh viên:");
             displayStudent(result->info);
         }
         else
         {
-            cout << "Không tìm thấy sinh viên có mã " << studentID << ".\n";
+            printError(("Không tìm thấy sinh viên có mã " + string(studentID) + ".").c_str());
         }
         break;
     }
@@ -298,20 +299,20 @@ void searchStudentInDataStructure(const char *studentID, int dataStructureType)
         NodeDLL *result = searchInDLL(doublyLinkedListHead, studentID);
         if (result != NULL)
         {
-            cout << "Tìm thấy sinh viên:\n";
+            printSuccess("Tìm thấy sinh viên:");
             displayStudent(result->info);
         }
         else
         {
-            cout << "Không tìm thấy sinh viên có mã " << studentID << ".\n";
+            printError(("Không tìm thấy sinh viên có mã " + string(studentID) + ".").c_str());
         }
         break;
     }
     case BINARY_SEARCH_TREE:
-        cout << "Tìm kiếm theo mã sinh viên không được hỗ trợ trực tiếp cho BST.\n";
+        printWarning("Tìm kiếm theo mã sinh viên không được hỗ trợ trực tiếp cho BST.");
         break;
     default:
-        cout << "Cấu trúc dữ liệu không hợp lệ.\n";
+        printError("Cấu trúc dữ liệu không hợp lệ.");
     }
 }
 
@@ -320,13 +321,13 @@ void performStatistics(int dataStructureType)
 {
     if (dataStructureType != ARRAY_LIST)
     {
-        cout << "Chức năng thống kê chỉ được hiện thực cho danh sách mảng.\n";
+        printWarning("Chức năng thống kê chỉ được hiện thực cho danh sách mảng.");
         return;
     }
 
     if (arrayList.count == 0)
     {
-        cout << "Danh sách sinh viên rỗng. Không có thống kê.\n";
+        printWarning("Danh sách sinh viên rỗng. Không có thống kê.");
         return;
     }
 
@@ -334,29 +335,33 @@ void performStatistics(int dataStructureType)
     float lowest = findLowestScore(arrayList);
     float average = calculateAverageScore(arrayList);
 
-    cout << "===== Thống kê điểm sinh viên =====\n";
+    printHeader("THỐNG KÊ ĐIỂM SINH VIÊN");
     cout << "Số lượng sinh viên: " << arrayList.count << "\n";
-    cout << "Điểm cao nhất: " << highest << "\n";
-    cout << "Điểm thấp nhất: " << lowest << "\n";
-    cout << "Điểm trung bình: " << average << "\n";
+    cout << GREEN << "Điểm cao nhất: " << highest << RESET << "\n";
+    cout << RED << "Điểm thấp nhất: " << lowest << RESET << "\n";
+    cout << BLUE << "Điểm trung bình: " << average << RESET << "\n";
 
-    cout << "\nSinh viên có điểm cao nhất:\n";
+    cout << CYAN << "\nSinh viên có điểm cao nhất:\n"
+         << RESET;
+    printDivider();
     for (int i = 0; i < arrayList.count; i++)
     {
         if (arrayList.students[i].score == highest)
         {
             displayStudent(arrayList.students[i]);
-            cout << "-------------------\n";
+            printDivider();
         }
     }
 
-    cout << "\nSinh viên có điểm thấp nhất:\n";
+    cout << CYAN << "\nSinh viên có điểm thấp nhất:\n"
+         << RESET;
+    printDivider();
     for (int i = 0; i < arrayList.count; i++)
     {
         if (arrayList.students[i].score == lowest)
         {
             displayStudent(arrayList.students[i]);
-            cout << "-------------------\n";
+            printDivider();
         }
     }
 }
@@ -370,32 +375,32 @@ void sortStudentList(int dataStructureType, int sortAlgorithm)
         {
         case BUBBLE_SORT:
             bubbleSortArrayList(arrayList);
-            cout << "Đã sắp xếp danh sách sử dụng thuật toán Bubble Sort.\n";
+            printSuccess("Đã sắp xếp danh sách sử dụng thuật toán Bubble Sort.");
             break;
         case INSERTION_SORT:
             insertionSortArrayList(arrayList);
-            cout << "Đã sắp xếp danh sách sử dụng thuật toán Insertion Sort.\n";
+            printSuccess("Đã sắp xếp danh sách sử dụng thuật toán Insertion Sort.");
             break;
         case SELECTION_SORT:
             selectionSortArrayList(arrayList);
-            cout << "Đã sắp xếp danh sách sử dụng thuật toán Selection Sort.\n";
+            printSuccess("Đã sắp xếp danh sách sử dụng thuật toán Selection Sort.");
             break;
         case QUICK_SORT:
             quickSortArrayList(arrayList);
-            cout << "Đã sắp xếp danh sách sử dụng thuật toán Quick Sort.\n";
+            printSuccess("Đã sắp xếp danh sách sử dụng thuật toán Quick Sort.");
             break;
         default:
-            cout << "Thuật toán sắp xếp không hợp lệ cho danh sách mảng.\n";
+            printError("Thuật toán sắp xếp không hợp lệ cho danh sách mảng.");
         }
     }
     else if (dataStructureType == DOUBLY_LINKED_LIST && sortAlgorithm == MERGE_SORT)
     {
         mergeSortDLL(&doublyLinkedListHead);
-        cout << "Đã sắp xếp danh sách liên kết đôi sử dụng thuật toán Merge Sort.\n";
+        printSuccess("Đã sắp xếp danh sách liên kết đôi sử dụng thuật toán Merge Sort.");
     }
     else
     {
-        cout << "Sắp xếp không được hỗ trợ cho cấu trúc dữ liệu này hoặc thuật toán không phù hợp.\n";
+        printWarning("Sắp xếp không được hỗ trợ cho cấu trúc dữ liệu này hoặc thuật toán không phù hợp.");
     }
 }
 
@@ -408,22 +413,59 @@ void freeAllMemory()
     freeBST(binarySearchTree);
 }
 
-// Hàm menu chính
-void displayMainMenu()
+// Hàm lấy tên cấu trúc dữ liệu theo mã
+const char *getDataStructureName(int dataStructureType)
 {
-    cout << "\n===== HỆ THỐNG QUẢN LÝ SINH VIÊN =====\n";
-    cout << "1. Chọn cấu trúc dữ liệu\n";
-    cout << "2. Nhập dữ liệu từ file CSV\n";
-    cout << "3. Thêm sinh viên mới\n";
-    cout << "4. Xóa sinh viên theo mã\n";
-    cout << "5. Cập nhật sinh viên theo mã\n";
-    cout << "6. Hiển thị danh sách sinh viên\n";
-    cout << "7. Tìm kiếm sinh viên theo mã\n";
-    cout << "8. Thống kê sinh viên (chỉ cho mảng)\n";
-    cout << "9. Sắp xếp sinh viên theo điểm số\n";
-    cout << "10. Bài toán Mã Đi Tuần\n";
-    cout << "0. Thoát\n";
-    cout << "Nhập lựa chọn: ";
+    switch (dataStructureType)
+    {
+    case ARRAY_LIST:
+        return "Danh sách mảng";
+    case SINGLY_LINKED_LIST:
+        return "Danh sách liên kết đơn";
+    case CIRCULAR_LINKED_LIST:
+        return "Danh sách liên kết vòng";
+    case DOUBLY_LINKED_LIST:
+        return "Danh sách liên kết đôi";
+    case BINARY_SEARCH_TREE:
+        return "Cây tìm kiếm nhị phân";
+    default:
+        return "Không xác định";
+    }
+}
+
+// Hàm menu chính
+void displayMainMenu(int dataStructureType)
+{
+    clearScreen();
+    printHeader("HỆ THỐNG QUẢN LÝ SINH VIÊN");
+
+    // Hiển thị thông tin cấu trúc dữ liệu đang sử dụng
+    cout << BOLD;
+    cout << "┌────────────────────────────────────────────────────────────────┐" << endl;
+    cout << "│  Cấu trúc dữ liệu hiện tại: " << setw(30) << left << getDataStructureName(dataStructureType) << "│" << endl;
+    cout << "└────────────────────────────────────────────────────────────────┘" << RESET << endl;
+
+    cout << endl;
+
+    // Hiển thị menu dưới dạng bảng
+    cout << BOLD;
+    cout << "┌────────┬───────────────────────────────────────────────────┐" << endl;
+    cout << "│  CHỌN  │                     CHỨC NĂNG                     │" << endl;
+    cout << "├────────┼───────────────────────────────────────────────────┤" << endl;
+    cout << "│   1    │  Chọn cấu trúc dữ liệu                            │" << endl;
+    cout << "│   2    │  Nhập dữ liệu từ file CSV                         │" << endl;
+    cout << "│   3    │  Thêm sinh viên mới                               │" << endl;
+    cout << "│   4    │  Xóa sinh viên theo mã                            │" << endl;
+    cout << "│   5    │  Cập nhật sinh viên theo mã                       │" << endl;
+    cout << "│   6    │  Hiển thị danh sách sinh viên                     │" << endl;
+    cout << "│   7    │  Tìm kiếm sinh viên theo mã                       │" << endl;
+    cout << "│   8    │  Thống kê sinh viên (chỉ cho mảng)                │" << endl;
+    cout << "│   9    │  Sắp xếp sinh viên theo điểm số                   │" << endl;
+    cout << "│   10   │  Bài toán Mã Đi Tuần                              │" << endl;
+    cout << "│   0    │  Thoát chương trình                               │" << endl;
+    cout << "└────────┴───────────────────────────────────────────────────┘" << RESET << endl;
+
+    cout << "\nNhập lựa chọn: ";
 }
 
 // Hàm menu chọn cấu trúc dữ liệu
@@ -431,17 +473,26 @@ int selectDataStructure()
 {
     int choice;
 
-    cout << "\n===== CHỌN CẤU TRÚC DỮ LIỆU =====\n";
-    cout << "1. Danh sách mảng\n";
-    cout << "2. Danh sách liên kết đơn\n";
-    cout << "3. Danh sách liên kết vòng\n";
-    cout << "4. Danh sách liên kết đôi\n";
-    cout << "5. Cây tìm kiếm nhị phân (BST)\n";
-    cout << "Nhập lựa chọn: ";
+    clearScreen();
+    printHeader("CHỌN CẤU TRÚC DỮ LIỆU");
+
+    // Hiển thị menu dưới dạng bảng
+    cout << BOLD;
+    cout << "┌────────┬───────────────────────────────────────────┐" << endl;
+    cout << "│  CHỌN  │             CẤU TRÚC DỮ LIỆU             │" << endl;
+    cout << "├────────┼───────────────────────────────────────────┤" << endl;
+    cout << "│   1    │  Danh sách mảng                           │" << endl;
+    cout << "│   2    │  Danh sách liên kết đơn                   │" << endl;
+    cout << "│   3    │  Danh sách liên kết vòng                  │" << endl;
+    cout << "│   4    │  Danh sách liên kết đôi                   │" << endl;
+    cout << "│   5    │  Cây tìm kiếm nhị phân (BST)              │" << endl;
+    cout << "└────────┴───────────────────────────────────────────┘" << RESET << endl;
+
+    cout << "\nNhập lựa chọn: ";
 
     while (!(cin >> choice) || choice < 1 || choice > 5)
     {
-        cout << "Lựa chọn không hợp lệ. Vui lòng nhập lại: ";
+        printError("Lựa chọn không hợp lệ. Vui lòng nhập lại.");
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
@@ -455,32 +506,44 @@ int selectSortAlgorithm(int dataStructureType)
 {
     int choice;
 
-    cout << "\n===== CHỌN THUẬT TOÁN SẮP XẾP =====\n";
+    clearScreen();
+    printHeader("CHỌN THUẬT TOÁN SẮP XẾP");
 
     if (dataStructureType == ARRAY_LIST)
     {
-        cout << "1. Bubble Sort\n";
-        cout << "2. Insertion Sort\n";
-        cout << "3. Selection Sort\n";
-        cout << "4. Quick Sort\n";
+        // Hiển thị menu dưới dạng bảng
+        cout << BOLD;
+        cout << "┌────────┬──────────────────────────────────────┐" << endl;
+        cout << "│  CHỌN  │           THUẬT TOÁN SẮP XẾP         │" << endl;
+        cout << "├────────┼──────────────────────────────────────┤" << endl;
+        cout << "│   1    │  Bubble Sort                         │" << endl;
+        cout << "│   2    │  Insertion Sort                      │" << endl;
+        cout << "│   3    │  Selection Sort                      │" << endl;
+        cout << "│   4    │  Quick Sort                          │" << endl;
+        cout << "└────────┴──────────────────────────────────────┘" << RESET << endl;
     }
     else if (dataStructureType == DOUBLY_LINKED_LIST)
     {
-        cout << "5. Merge Sort\n";
+        cout << BOLD;
+        cout << "┌────────┬──────────────────────────────────────┐" << endl;
+        cout << "│  CHỌN  │           THUẬT TOÁN SẮP XẾP         │" << endl;
+        cout << "├────────┼──────────────────────────────────────┤" << endl;
+        cout << "│   5    │  Merge Sort                          │" << endl;
+        cout << "└────────┴──────────────────────────────────────┘" << RESET << endl;
     }
     else
     {
-        cout << "Không có thuật toán sắp xếp được hỗ trợ cho cấu trúc dữ liệu này.\n";
+        printWarning("Không có thuật toán sắp xếp được hỗ trợ cho cấu trúc dữ liệu này.");
         return -1;
     }
 
-    cout << "Nhập lựa chọn: ";
+    cout << "\nNhập lựa chọn: ";
 
     while (!(cin >> choice) ||
            (dataStructureType == ARRAY_LIST && (choice < 1 || choice > 4)) ||
            (dataStructureType == DOUBLY_LINKED_LIST && choice != 5))
     {
-        cout << "Lựa chọn không hợp lệ. Vui lòng nhập lại: ";
+        printError("Lựa chọn không hợp lệ. Vui lòng nhập lại.");
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
@@ -492,21 +555,39 @@ int selectSortAlgorithm(int dataStructureType)
 // Hàm xử lý nhập dữ liệu từ file CSV
 void handleInputFromCSV(int dataStructureType)
 {
-    char filename[100];
+    // Mặc định sử dụng tên tệp "students.csv"
+    char filename[100] = "students.csv";
 
-    cout << "Nhập tên file CSV: ";
-    cin.getline(filename, sizeof(filename));
+    clearScreen();
+    printHeader("NHẬP DỮ LIỆU TỪ FILE CSV");
+
+    // Hiển thị thông tin tệp mặc định
+    cout << BOLD;
+    cout << "┌─────────────────────────────────────────────────────────────┐" << endl;
+    cout << "│  Tên tệp mặc định: students.csv                             │" << endl;
+    cout << "│  Nhấn Enter để sử dụng tệp mặc định hoặc nhập tên tệp khác  │" << endl;
+    cout << "└─────────────────────────────────────────────────────────────┘" << RESET << endl;
+
+    cout << "\nNhập tên tệp CSV [students.csv]: ";
+
+    // Nếu người dùng chỉ nhấn Enter, giữ nguyên tên tệp mặc định
+    string input;
+    getline(cin, input);
+    if (!input.empty())
+    {
+        strcpy(filename, input.c_str());
+    }
 
     if (dataStructureType == ARRAY_LIST)
     {
         if (readFromCSVFile(filename, arrayList))
         {
-            cout << "Đã đọc dữ liệu từ file " << filename << " thành công.\n";
-            cout << "Đã đọc " << arrayList.count << " sinh viên.\n";
+            printSuccess("Đã đọc dữ liệu từ file thành công.");
+            printInfo(("Đã đọc " + to_string(arrayList.count) + " sinh viên.").c_str());
         }
         else
         {
-            cout << "Lỗi: Không thể đọc file " << filename << ".\n";
+            printError(("Không thể đọc file " + string(filename) + ".").c_str());
         }
     }
     else
@@ -515,7 +596,7 @@ void handleInputFromCSV(int dataStructureType)
         ArrayStudentList tempList;
         if (readFromCSVFile(filename, tempList))
         {
-            cout << "Đã đọc dữ liệu từ file " << filename << " thành công.\n";
+            printSuccess("Đã đọc dữ liệu từ file thành công.");
 
             // Chuyển dữ liệu từ mảng tạm vào cấu trúc dữ liệu được chọn
             for (int i = 0; i < tempList.count; i++)
@@ -523,11 +604,11 @@ void handleInputFromCSV(int dataStructureType)
                 addStudentToDataStructure(tempList.students[i], dataStructureType);
             }
 
-            cout << "Đã chuyển " << tempList.count << " sinh viên vào cấu trúc dữ liệu.\n";
+            printInfo(("Đã chuyển " + to_string(tempList.count) + " sinh viên vào cấu trúc dữ liệu.").c_str());
         }
         else
         {
-            cout << "Lỗi: Không thể đọc file " << filename << ".\n";
+            printError(("Không thể đọc file " + string(filename) + ".").c_str());
         }
     }
 }
@@ -546,11 +627,11 @@ int main()
 
     do
     {
-        displayMainMenu();
+        displayMainMenu(dataStructureType);
 
         if (!(cin >> choice))
         {
-            cout << "Lựa chọn không hợp lệ. Vui lòng nhập lại.\n";
+            printError("Lựa chọn không hợp lệ. Vui lòng nhập lại.");
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             continue;
@@ -614,7 +695,7 @@ int main()
             }
             else
             {
-                cout << "Không tìm thấy sinh viên có mã " << studentID << ".\n";
+                printError(("Không tìm thấy sinh viên có mã " + string(studentID) + ".").c_str());
             }
             break;
         }
@@ -641,15 +722,23 @@ int main()
             break;
         }
         case 10:
-            cout << "\n===== BÀI TOÁN MÃ ĐI TUẦN =====\n";
+            clearScreen();
+            printHeader("BÀI TOÁN MÃ ĐI TUẦN");
             knightsTour();
             break;
         case 0:
-            cout << "Đang thoát chương trình...\n";
+            printInfo("Đang thoát chương trình...");
             freeAllMemory();
             break;
         default:
-            cout << "Lựa chọn không hợp lệ. Vui lòng nhập lại.\n";
+            printError("Lựa chọn không hợp lệ. Vui lòng nhập lại.");
+        }
+
+        // Nếu không phải menu lựa chọn hoặc trợ giúp, chờ người dùng nhấn Enter để tiếp tục
+        if (choice != 0 && choice != 1)
+        {
+            cout << "\nNhấn Enter để tiếp tục...";
+            cin.get();
         }
     } while (choice != 0);
 

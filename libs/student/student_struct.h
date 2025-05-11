@@ -64,19 +64,19 @@ void displayStudentInTable(const Student &student, int index)
     // Hiển thị điểm với màu sắc dựa trên giá trị
     if (student.score >= 8.0)
     {
-        cout << GREEN << centerAlign(scoreStr, 7) << RESET;
+        cout << GREEN << centerAlign(scoreStr, 9) << RESET;
     }
     else if (student.score >= 6.5)
     {
-        cout << BLUE << centerAlign(scoreStr, 7) << RESET;
+        cout << BLUE << centerAlign(scoreStr, 9) << RESET;
     }
     else if (student.score >= 5.0)
     {
-        cout << YELLOW << centerAlign(scoreStr, 7) << RESET;
+        cout << YELLOW << centerAlign(scoreStr, 9) << RESET;
     }
     else
     {
-        cout << RED << centerAlign(scoreStr, 7) << RESET;
+        cout << RED << centerAlign(scoreStr, 9) << RESET;
     }
     cout << " " << BOLD << "│" << RESET << endl;
 }

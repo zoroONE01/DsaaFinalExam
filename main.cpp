@@ -4,28 +4,9 @@
 #include <fstream>
 #include "libs/student/student_library.h"
 #include "libs/knights_tour/knights_tour.h"
-#include "libs/ui/ui_library.h" // Thêm include cho thư viện UI mới
+#include "libs/ui/common_ui.h" // Thư viện UI
 
 using namespace std;
-
-// Hằng số và biến toàn cục
-enum DataStructureType
-{
-    ARRAY_LIST = 1,
-    SINGLY_LINKED_LIST = 2,
-    CIRCULAR_LINKED_LIST = 3,
-    DOUBLY_LINKED_LIST = 4,
-    BINARY_SEARCH_TREE = 5
-};
-
-enum SortAlgorithm
-{
-    BUBBLE_SORT = 1,
-    INSERTION_SORT = 2,
-    SELECTION_SORT = 3,
-    QUICK_SORT = 4,
-    MERGE_SORT = 5
-};
 
 // Biến lưu trữ dữ liệu cho từng loại cấu trúc dữ liệu
 ArrayStudentList arrayList;
@@ -35,61 +16,156 @@ NodeDLL *doublyLinkedListHead = NULL;
 NodeDLL *doublyLinkedListTail = NULL;
 NodeBST *binarySearchTree = NULL;
 
-// Hàm xóa bộ nhớ đệm (buffer) sau khi nhập dữ liệu
-void clearInputBuffer()
-{
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-}
-
-// Hàm kiểm tra tính hợp lệ của điểm số
-bool isValidScore(float score)
-{
-    return score >= 0 && score <= 10;
-}
-
-// Hàm nhập thông tin sinh viên từ bàn phím với kiểm tra lỗi
+// Hàm nhập thông tin sinh viên từ bàn phím
 Student inputStudent()
 {
     Student student;
+    string tempInput;
+    bool isValid;
 
-    cout << "Nhập mã sinh viên: ";
-    cin >> student.studentID;
-    clearInputBuffer();
+    // Thông báo về cách hủy bỏ nhập liệu
+    printInfo("Lưu ý: Nhập \"0\" để hủy bỏ và trở về menu chính.");
 
-    cout << "Nhập họ: ";
-    cin.getline(student.firstName, sizeof(student.firstName));
+    // Nhập mã sinh viên
+    do
+    {
+        cout << "Nhập mã sinh viên: ";
+        cin >> tempInput;
+        clearInputBuffer();
+        tempInput = trim(tempInput); // Trim input
 
-    cout << "Nhập tên: ";
-    cin.getline(student.lastName, sizeof(student.lastName));
+        // Kiểm tra hủy bỏ
+        if (tempInput == "0")
+        {
+            student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ bằng chuỗi rỗng
+            printInfo("Đã hủy bỏ thao tác nhập liệu.");
+            return student;
+        }
 
-    cout << "Nhập lớp: ";
-    cin.getline(student.studentClass, sizeof(student.studentClass));
+        isValid = validateAndShowStudentID(tempInput);
+        if (isValid)
+        {
+            strcpy(student.studentID, tempInput.c_str());
+        }
+    } while (!isValid);
 
+    // Nhập họ
+    do
+    {
+        cout << "Nhập họ: ";
+        getline(cin, tempInput);
+        tempInput = trim(tempInput); // Trim input
+
+        // Kiểm tra hủy bỏ
+        if (tempInput == "0")
+        {
+            student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
+            printInfo("Đã hủy bỏ thao tác nhập liệu.");
+            return student;
+        }
+
+        isValid = validateAndShowName(tempInput);
+        if (isValid)
+        {
+            strcpy(student.firstName, tempInput.c_str());
+        }
+    } while (!isValid);
+
+    // Nhập tên
+    do
+    {
+        cout << "Nhập tên: ";
+        getline(cin, tempInput);
+        tempInput = trim(tempInput); // Trim input
+
+        // Kiểm tra hủy bỏ
+        if (tempInput == "0")
+        {
+            student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
+            printInfo("Đã hủy bỏ thao tác nhập liệu.");
+            return student;
+        }
+
+        isValid = validateAndShowName(tempInput);
+        if (isValid)
+        {
+            strcpy(student.lastName, tempInput.c_str());
+        }
+    } while (!isValid);
+
+    // Nhập lớp
+    do
+    {
+        cout << "Nhập lớp: ";
+        getline(cin, tempInput);
+        tempInput = trim(tempInput); // Trim input
+
+        // Kiểm tra hủy bỏ
+        if (tempInput == "0")
+        {
+            student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
+            printInfo("Đã hủy bỏ thao tác nhập liệu.");
+            return student;
+        }
+
+        isValid = validateAndShowClassName(tempInput);
+        if (isValid)
+        {
+            strcpy(student.studentClass, tempInput.c_str());
+        }
+    } while (!isValid);
+
+    // Nhập điểm số
     float score;
-    bool validScore = false;
-    while (!validScore)
+    string scoreInput;
+    do
     {
         cout << "Nhập điểm (0-10): ";
-        if (cin >> score)
+        cin >> scoreInput;
+
+        // Kiểm tra hủy bỏ (phân biệt với giá trị điểm 0)
+        if (scoreInput == "0" || scoreInput == "0.0")
         {
-            if (isValidScore(score))
+            // Kiểm tra thêm để xác nhận đây là yêu cầu hủy bỏ
+            cout << "Bạn muốn nhập điểm 0 hay hủy bỏ thao tác? (điểm/hủy): ";
+            string confirm;
+            cin >> confirm;
+            confirm = trim(confirm);
+
+            if (confirm == "hủy" || confirm == "huy")
+            {
+                student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
+                clearInputBuffer();
+                printInfo("Đã hủy bỏ thao tác nhập liệu.");
+                return student;
+            }
+        }
+
+        // Kiểm tra nếu người dùng nhập từ khóa hủy bỏ rõ ràng
+        if (scoreInput == "huy" || scoreInput == "hủy")
+        {
+            student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
+            clearInputBuffer();
+            printInfo("Đã hủy bỏ thao tác nhập liệu.");
+            return student;
+        }
+
+        // Chuyển đổi thành số
+        try
+        {
+            score = stof(scoreInput);
+            isValid = validateAndShowScore(score);
+            if (isValid)
             {
                 student.score = score;
-                validScore = true;
-            }
-            else
-            {
-                printError("Điểm phải nằm trong khoảng từ 0 đến 10. Vui lòng nhập lại.");
             }
         }
-        else
+        catch (...)
         {
-            printError("Điểm phải là số. Vui lòng nhập lại.");
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            isValid = false;
+            printError("Điểm số không hợp lệ.");
         }
-    }
+    } while (!isValid);
     clearInputBuffer();
 
     return student;
@@ -98,9 +174,33 @@ Student inputStudent()
 // Hàm nhập mã sinh viên từ bàn phím
 void inputStudentID(char *studentID)
 {
-    cout << "Nhập mã sinh viên: ";
-    cin >> studentID;
-    clearInputBuffer();
+    string tempInput;
+    bool isValid;
+
+    // Thông báo về cách hủy bỏ nhập liệu
+    printInfo("Lưu ý: Nhập \"0\" để hủy bỏ và trở về menu chính.");
+
+    do
+    {
+        cout << "Nhập mã sinh viên: ";
+        cin >> tempInput;
+        clearInputBuffer();
+        tempInput = trim(tempInput); // Trim input
+
+        // Kiểm tra hủy bỏ
+        if (tempInput == "0")
+        {
+            studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ bằng chuỗi rỗng
+            printInfo("Đã hủy bỏ thao tác nhập liệu.");
+            return;
+        }
+
+        isValid = validateAndShowStudentID(tempInput);
+        if (isValid)
+        {
+            strcpy(studentID, tempInput.c_str());
+        }
+    } while (!isValid);
 }
 
 // Hàm hiển thị kết quả tìm kiếm
@@ -413,145 +513,6 @@ void freeAllMemory()
     freeBST(binarySearchTree);
 }
 
-// Hàm lấy tên cấu trúc dữ liệu theo mã
-const char *getDataStructureName(int dataStructureType)
-{
-    switch (dataStructureType)
-    {
-    case ARRAY_LIST:
-        return "Danh sách mảng";
-    case SINGLY_LINKED_LIST:
-        return "Danh sách liên kết đơn";
-    case CIRCULAR_LINKED_LIST:
-        return "Danh sách liên kết vòng";
-    case DOUBLY_LINKED_LIST:
-        return "Danh sách liên kết đôi";
-    case BINARY_SEARCH_TREE:
-        return "Cây tìm kiếm nhị phân";
-    default:
-        return "Không xác định";
-    }
-}
-
-// Hàm menu chính
-void displayMainMenu(int dataStructureType)
-{
-    clearScreen();
-    printHeader("HỆ THỐNG QUẢN LÝ SINH VIÊN");
-
-    // Hiển thị thông tin cấu trúc dữ liệu đang sử dụng
-    cout << BOLD;
-    cout << "┌────────────────────────────────────────────────────────────────┐" << endl;
-    cout << "│  Cấu trúc dữ liệu hiện tại: " << setw(30) << left << getDataStructureName(dataStructureType) << "│" << endl;
-    cout << "└────────────────────────────────────────────────────────────────┘" << RESET << endl;
-
-    cout << endl;
-
-    // Hiển thị menu dưới dạng bảng
-    cout << BOLD;
-    cout << "┌────────┬───────────────────────────────────────────────────┐" << endl;
-    cout << "│  CHỌN  │                     CHỨC NĂNG                     │" << endl;
-    cout << "├────────┼───────────────────────────────────────────────────┤" << endl;
-    cout << "│   1    │  Chọn cấu trúc dữ liệu                            │" << endl;
-    cout << "│   2    │  Nhập dữ liệu từ file CSV                         │" << endl;
-    cout << "│   3    │  Thêm sinh viên mới                               │" << endl;
-    cout << "│   4    │  Xóa sinh viên theo mã                            │" << endl;
-    cout << "│   5    │  Cập nhật sinh viên theo mã                       │" << endl;
-    cout << "│   6    │  Hiển thị danh sách sinh viên                     │" << endl;
-    cout << "│   7    │  Tìm kiếm sinh viên theo mã                       │" << endl;
-    cout << "│   8    │  Thống kê sinh viên (chỉ cho mảng)                │" << endl;
-    cout << "│   9    │  Sắp xếp sinh viên theo điểm số                   │" << endl;
-    cout << "│   10   │  Bài toán Mã Đi Tuần                              │" << endl;
-    cout << "│   0    │  Thoát chương trình                               │" << endl;
-    cout << "└────────┴───────────────────────────────────────────────────┘" << RESET << endl;
-
-    cout << "\nNhập lựa chọn: ";
-}
-
-// Hàm menu chọn cấu trúc dữ liệu
-int selectDataStructure()
-{
-    int choice;
-
-    clearScreen();
-    printHeader("CHỌN CẤU TRÚC DỮ LIỆU");
-
-    // Hiển thị menu dưới dạng bảng
-    cout << BOLD;
-    cout << "┌────────┬───────────────────────────────────────────┐" << endl;
-    cout << "│  CHỌN  │             CẤU TRÚC DỮ LIỆU             │" << endl;
-    cout << "├────────┼───────────────────────────────────────────┤" << endl;
-    cout << "│   1    │  Danh sách mảng                           │" << endl;
-    cout << "│   2    │  Danh sách liên kết đơn                   │" << endl;
-    cout << "│   3    │  Danh sách liên kết vòng                  │" << endl;
-    cout << "│   4    │  Danh sách liên kết đôi                   │" << endl;
-    cout << "│   5    │  Cây tìm kiếm nhị phân (BST)              │" << endl;
-    cout << "└────────┴───────────────────────────────────────────┘" << RESET << endl;
-
-    cout << "\nNhập lựa chọn: ";
-
-    while (!(cin >> choice) || choice < 1 || choice > 5)
-    {
-        printError("Lựa chọn không hợp lệ. Vui lòng nhập lại.");
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-
-    clearInputBuffer();
-    return choice;
-}
-
-// Hàm menu chọn thuật toán sắp xếp
-int selectSortAlgorithm(int dataStructureType)
-{
-    int choice;
-
-    clearScreen();
-    printHeader("CHỌN THUẬT TOÁN SẮP XẾP");
-
-    if (dataStructureType == ARRAY_LIST)
-    {
-        // Hiển thị menu dưới dạng bảng
-        cout << BOLD;
-        cout << "┌────────┬──────────────────────────────────────┐" << endl;
-        cout << "│  CHỌN  │           THUẬT TOÁN SẮP XẾP         │" << endl;
-        cout << "├────────┼──────────────────────────────────────┤" << endl;
-        cout << "│   1    │  Bubble Sort                         │" << endl;
-        cout << "│   2    │  Insertion Sort                      │" << endl;
-        cout << "│   3    │  Selection Sort                      │" << endl;
-        cout << "│   4    │  Quick Sort                          │" << endl;
-        cout << "└────────┴──────────────────────────────────────┘" << RESET << endl;
-    }
-    else if (dataStructureType == DOUBLY_LINKED_LIST)
-    {
-        cout << BOLD;
-        cout << "┌────────┬──────────────────────────────────────┐" << endl;
-        cout << "│  CHỌN  │           THUẬT TOÁN SẮP XẾP         │" << endl;
-        cout << "├────────┼──────────────────────────────────────┤" << endl;
-        cout << "│   5    │  Merge Sort                          │" << endl;
-        cout << "└────────┴──────────────────────────────────────┘" << RESET << endl;
-    }
-    else
-    {
-        printWarning("Không có thuật toán sắp xếp được hỗ trợ cho cấu trúc dữ liệu này.");
-        return -1;
-    }
-
-    cout << "\nNhập lựa chọn: ";
-
-    while (!(cin >> choice) ||
-           (dataStructureType == ARRAY_LIST && (choice < 1 || choice > 4)) ||
-           (dataStructureType == DOUBLY_LINKED_LIST && choice != 5))
-    {
-        printError("Lựa chọn không hợp lệ. Vui lòng nhập lại.");
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-
-    clearInputBuffer();
-    return choice;
-}
-
 // Hàm xử lý nhập dữ liệu từ file CSV
 void handleInputFromCSV(int dataStructureType)
 {
@@ -573,6 +534,7 @@ void handleInputFromCSV(int dataStructureType)
     // Nếu người dùng chỉ nhấn Enter, giữ nguyên tên tệp mặc định
     string input;
     getline(cin, input);
+    input = trim(input); // Trim input
     if (!input.empty())
     {
         strcpy(filename, input.c_str());
@@ -649,6 +611,11 @@ int main()
         case 3:
         {
             Student student = inputStudent();
+            // Kiểm tra nếu người dùng đã hủy bỏ thao tác nhập liệu
+            if (student.studentID[0] == '\0')
+            {
+                break; // Trở về menu chính nếu đã hủy bỏ
+            }
             addStudentToDataStructure(student, dataStructureType);
             break;
         }
@@ -656,15 +623,24 @@ int main()
         {
             char studentID[20];
             inputStudentID(studentID);
+            // Kiểm tra nếu người dùng đã hủy bỏ thao tác nhập liệu
+            if (studentID[0] == '\0')
+            {
+                break; // Trở về menu chính nếu đã hủy bỏ
+            }
             deleteStudentFromDataStructure(studentID, dataStructureType);
             break;
         }
         case 5:
         {
             char studentID[20];
-            cout << "Nhập mã sinh viên cần cập nhật: ";
-            cin >> studentID;
-            clearInputBuffer();
+            inputStudentID(studentID);
+
+            // Kiểm tra nếu người dùng đã hủy bỏ thao tác nhập mã sinh viên
+            if (studentID[0] == '\0')
+            {
+                break; // Trở về menu chính nếu đã hủy bỏ
+            }
 
             // Kiểm tra xem sinh viên có tồn tại không
             bool exists = false;
@@ -690,6 +666,13 @@ int main()
             {
                 cout << "Nhập thông tin mới cho sinh viên:\n";
                 Student updateStudent = inputStudent();
+
+                // Kiểm tra nếu người dùng đã hủy bỏ thao tác nhập thông tin mới
+                if (updateStudent.studentID[0] == '\0')
+                {
+                    break; // Trở về menu chính nếu đã hủy bỏ
+                }
+
                 strcpy(updateStudent.studentID, studentID); // Giữ nguyên mã sinh viên
                 updateStudentInDataStructure(updateStudent, dataStructureType);
             }
@@ -706,6 +689,13 @@ int main()
         {
             char studentID[20];
             inputStudentID(studentID);
+
+            // Kiểm tra nếu người dùng đã hủy bỏ thao tác nhập liệu
+            if (studentID[0] == '\0')
+            {
+                break; // Trở về menu chính nếu đã hủy bỏ
+            }
+
             searchStudentInDataStructure(studentID, dataStructureType);
             break;
         }

@@ -66,4 +66,19 @@ bool readFromCSVFile(const char *filename, ArrayStudentList &list)
     return true;
 }
 
+// Hàm trim() để loại bỏ khoảng trắng ở đầu và cuối chuỗi
+string trim(string str)
+{
+    // Loại bỏ khoảng trắng ở đầu chuỗi
+    size_t start = str.find_first_not_of(" \t\n\r\f\v");
+    if (start == string::npos)
+        return "";
+
+    // Loại bỏ khoảng trắng ở cuối chuỗi
+    size_t end = str.find_last_not_of(" \t\n\r\f\v");
+
+    // Trả về chuỗi đã được trim
+    return str.substr(start, end - start + 1);
+}
+
 #endif // UTILS_H

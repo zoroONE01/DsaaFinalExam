@@ -4,7 +4,7 @@
 #include "student_struct.h"
 #include <iostream>
 #include <iomanip>
-#include "../ui/ui_library.h" // Include thư viện UI mới
+#include "../ui/common_ui.h" // Include thư viện UI mới
 
 using namespace std;
 

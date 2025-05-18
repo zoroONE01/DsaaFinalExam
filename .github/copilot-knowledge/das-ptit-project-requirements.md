@@ -22,7 +22,7 @@ Xây dựng chương trình bằng C++ với các chức năng sau. *Lưu ý: c�
     * *Ví dụ thông tin sinh viên:*
         * Mã sinh viên: N20DCPT110
         * Họ: Nguyễn Ngọc
-        * Tên sinh viên: Mai
+        * Tên sinh viên: MaiE
         * Lớp: D23CQPT01
         * Điểm: 7.5
 

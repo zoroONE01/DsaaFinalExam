@@ -16,6 +16,23 @@ NodeDLL *doublyLinkedListHead = NULL;
 NodeDLL *doublyLinkedListTail = NULL;
 NodeBST *binarySearchTree = NULL;
 
+// Hàm xác nhận hủy bỏ thao tác nhập liệu
+bool confirmCancel()
+{
+    cout << "Bạn có chắc muốn hủy thao tác? (Nhập 0 để hủy, nhập khác để tiếp tục): ";
+    string confirm;
+    cin >> confirm;
+    clearInputBuffer();
+
+    if (confirm == "0")
+    {
+        printInfo("Đã hủy bỏ thao tác nhập liệu.");
+        return true; // Xác nhận hủy
+    }
+    printInfo("Tiếp tục nhập liệu.");
+    return false; // Tiếp tục nhập liệu
+}
+
 // Hàm nhập thông tin sinh viên từ bàn phím
 Student inputStudent()
 {
@@ -24,7 +41,7 @@ Student inputStudent()
     bool isValid;
 
     // Thông báo về cách hủy bỏ nhập liệu
-    printInfo("Lưu ý: Nhập \"0\" để hủy bỏ và trở về menu chính.");
+    printInfo("Lưu ý: Nhập \"00\" để hủy bỏ và trở về menu chính.");
 
     // Nhập mã sinh viên
     do
@@ -35,11 +52,14 @@ Student inputStudent()
         tempInput = trim(tempInput); // Trim input
 
         // Kiểm tra hủy bỏ
-        if (tempInput == "0")
+        if (tempInput == "00")
         {
-            student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ bằng chuỗi rỗng
-            printInfo("Đã hủy bỏ thao tác nhập liệu.");
-            return student;
+            if (confirmCancel())
+            {
+                student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ bằng chuỗi rỗng
+                return student;
+            }
+            continue;
         }
 
         isValid = validateAndShowStudentID(tempInput);
@@ -57,11 +77,14 @@ Student inputStudent()
         tempInput = trim(tempInput); // Trim input
 
         // Kiểm tra hủy bỏ
-        if (tempInput == "0")
+        if (tempInput == "00")
         {
-            student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
-            printInfo("Đã hủy bỏ thao tác nhập liệu.");
-            return student;
+            if (confirmCancel())
+            {
+                student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
+                return student;
+            }
+            continue;
         }
 
         isValid = validateAndShowName(tempInput);
@@ -79,11 +102,14 @@ Student inputStudent()
         tempInput = trim(tempInput); // Trim input
 
         // Kiểm tra hủy bỏ
-        if (tempInput == "0")
+        if (tempInput == "00")
         {
-            student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
-            printInfo("Đã hủy bỏ thao tác nhập liệu.");
-            return student;
+            if (confirmCancel())
+            {
+                student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
+                return student;
+            }
+            continue;
         }
 
         isValid = validateAndShowName(tempInput);
@@ -101,11 +127,14 @@ Student inputStudent()
         tempInput = trim(tempInput); // Trim input
 
         // Kiểm tra hủy bỏ
-        if (tempInput == "0")
+        if (tempInput == "00")
         {
-            student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
-            printInfo("Đã hủy bỏ thao tác nhập liệu.");
-            return student;
+            if (confirmCancel())
+            {
+                student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
+                return student;
+            }
+            continue;
         }
 
         isValid = validateAndShowClassName(tempInput);
@@ -124,30 +153,15 @@ Student inputStudent()
         cin >> scoreInput;
 
         // Kiểm tra hủy bỏ (phân biệt với giá trị điểm 0)
-        if (scoreInput == "0" || scoreInput == "0.0")
+        if (scoreInput == "00")
         {
-            // Kiểm tra thêm để xác nhận đây là yêu cầu hủy bỏ
-            cout << "Bạn muốn nhập điểm 0 hay hủy bỏ thao tác? (điểm/hủy): ";
-            string confirm;
-            cin >> confirm;
-            confirm = trim(confirm);
-
-            if (confirm == "hủy" || confirm == "huy")
+            if (confirmCancel())
             {
                 student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
                 clearInputBuffer();
-                printInfo("Đã hủy bỏ thao tác nhập liệu.");
                 return student;
             }
-        }
-
-        // Kiểm tra nếu người dùng nhập từ khóa hủy bỏ rõ ràng
-        if (scoreInput == "huy" || scoreInput == "hủy")
-        {
-            student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
-            clearInputBuffer();
-            printInfo("Đã hủy bỏ thao tác nhập liệu.");
-            return student;
+            continue;
         }
 
         // Chuyển đổi thành số
@@ -178,7 +192,7 @@ void inputStudentID(char *studentID)
     bool isValid;
 
     // Thông báo về cách hủy bỏ nhập liệu
-    printInfo("Lưu ý: Nhập \"0\" để hủy bỏ và trở về menu chính.");
+    printInfo("Lưu ý: Nhập \"00\" để hủy bỏ và trở về menu chính.");
 
     do
     {
@@ -188,11 +202,14 @@ void inputStudentID(char *studentID)
         tempInput = trim(tempInput); // Trim input
 
         // Kiểm tra hủy bỏ
-        if (tempInput == "0")
+        if (tempInput == "00")
         {
-            studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ bằng chuỗi rỗng
-            printInfo("Đã hủy bỏ thao tác nhập liệu.");
-            return;
+            if (confirmCancel())
+            {
+                studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ bằng chuỗi rỗng
+                return;
+            }
+            continue;
         }
 
         isValid = validateAndShowStudentID(tempInput);

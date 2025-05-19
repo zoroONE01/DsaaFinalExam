@@ -12,5 +12,6 @@
 #include "sorting_algorithms.h"   // Các thuật toán sắp xếp
 #include "utils.h"                // Các hàm tiện ích
 #include "validation.h"           // Thư viện kiểm tra đầu vào
+#include "common_operations.h"    // Các hàm xử lý chung cho các cấu trúc dữ liệu
 
 #endif // STUDENT_LIBRARY_H

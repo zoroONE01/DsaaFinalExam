@@ -19,10 +19,50 @@ struct Student
     float score;
 };
 
-// Hàm hỗ trợ căn giữa
+// Hàm tính độ rộng hiển thị thực tế của chuỗi UTF-8
+int visualWidth(const string &str)
+{
+    int width = 0;
+
+    // Duyệt qua từng byte trong chuỗi
+    for (size_t i = 0; i < str.length(); i++)
+    {
+        unsigned char c = str[i];
+
+        // Kiểm tra byte đầu tiên của mã UTF-8
+        if ((c & 0x80) == 0)
+        {
+            // Ký tự ASCII (0xxxxxxx) - độ rộng 1
+            width++;
+        }
+        else if ((c & 0xE0) == 0xC0)
+        {
+            // Chuỗi 2 byte (110xxxxx 10xxxxxx) - độ rộng 1
+            i++; // Bỏ qua byte tiếp theo
+            width++;
+        }
+        else if ((c & 0xF0) == 0xE0)
+        {
+            // Chuỗi 3 byte (1110xxxx 10xxxxxx 10xxxxxx) - độ rộng 1
+            i += 2; // Bỏ qua 2 byte tiếp theo
+            width++;
+        }
+        else if ((c & 0xF8) == 0xF0)
+        {
+            // Chuỗi 4 byte (11110xxx 10xxxxxx 10xxxxxx 10xxxxxx) - độ rộng 2
+            i += 3;     // Bỏ qua 3 byte tiếp theo
+            width += 2; // Các ký tự emoji/biểu tượng thường có độ rộng 2
+        }
+    }
+
+    return width;
+}
+
+// Hàm hỗ trợ căn giữa có hỗ trợ tiếng Việt
 string centerAlign(const string &text, int width)
 {
-    int padding = width - text.length();
+    int actualWidth = visualWidth(text);
+    int padding = width - actualWidth;
     int padLeft = padding / 2;
     int padRight = padding - padLeft;
     return string(padLeft, ' ') + text + string(padRight, ' ');

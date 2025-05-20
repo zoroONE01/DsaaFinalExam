@@ -50,7 +50,7 @@ bool validateName(const string &name)
     {
         return false;
     }
-    regex pattern("^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ\\s-]+$");
+    regex pattern("^[a-zA-ZàáảạãâầấẩậẫăằắẳặẵđèéẻẹẽêềếểệễìíỉịĩòóỏọõôồốổộỗơờớởợỡùúủụũưừứửựữýỳỷỵỹÀÁẢẠÃÂẦẤẨẬẪĂẰẮẲẶẴĐÈÉẺẸẼÊỀẾỂỆỄÌÍỈỊĨÒÓỎỌÕÔỒỐỔỘỖƠỜỚỞỢỠÙÚỦỤŨƯỪỨỬỰỮÝỲỶỴỸ -]+$");
     return regex_match(name, pattern);
 }
 
@@ -69,7 +69,7 @@ bool validateAndShowStudentID(const string &studentID)
     if (!isValid)
     {
         printError(getInvalidFieldMessage("Mã sinh viên").c_str());
-        printWarning("Mã sinh viên phải có từ 3-19 ký tự và chỉ bao gồm chữ cái và số.");
+        printWarning("Mã sinh viên phải có từ 3-19 ký tự, chỉ bao gồm chữ cái và số, không chứa khoảng trắng.");
     }
     return isValid;
 }
@@ -93,7 +93,7 @@ bool validateAndShowClassName(const string &className)
     if (!isValid)
     {
         printError(getInvalidFieldMessage("Tên lớp").c_str());
-        printWarning("Tên lớp phải có từ 2-19 ký tự và chỉ chứa chữ cái, số, dấu gạch ngang, dấu chấm và gạch dưới.");
+        printWarning("Tên lớp phải có từ 2-19 ký tự và chỉ chứa chữ cái, số, dấu gạch ngang, dấu chấm và gạch dưới, không chứa khoảng trắng.");
     }
     return isValid;
 }

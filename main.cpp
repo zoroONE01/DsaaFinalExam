@@ -48,7 +48,56 @@ int main()
             break;
         case 3:
         {
+            char studentID[20];
+            // Bước 1: Nhập và kiểm tra mã sinh viên
+            string tempID;
+            bool isValid;
+
+            // Thông báo về cách hủy bỏ nhập liệu
+            printInfo("Lưu ý: Nhập \"00\" để hủy bỏ và trở về menu chính.");
+
+            // Nhập và kiểm tra mã sinh viên
+            do
+            {
+                cout << "Nhập mã sinh viên: ";
+                cin >> tempID;
+                clearInputBuffer();
+                tempID = trim(tempID);
+
+                // Kiểm tra hủy bỏ
+                if (tempID == "00")
+                {
+                    if (confirmCancel())
+                    {
+                        break;
+                    }
+                    continue;
+                }
+
+                // Kiểm tra định dạng mã sinh viên
+                isValid = validateAndShowStudentID(tempID);
+
+                // Nếu định dạng hợp lệ, kiểm tra trùng lặp
+                if (isValid)
+                {
+                    isValid = validateAndShowDuplicateStudentID(tempID, dataStructureType, arrayList, singlyLinkedList,
+                                                                circularLinkedList, doublyLinkedListHead);
+                }
+            } while (!isValid);
+
+            // Nếu người dùng chọn hủy bỏ
+            if (tempID == "00")
+            {
+                break;
+            }
+
+            // Lưu mã sinh viên hợp lệ
+            strcpy(studentID, tempID.c_str());
+
+            // Bước 2: Tiếp tục nhập thông tin chi tiết
             Student student;
+            strcpy(student.studentID, studentID); // Đặt mã sinh viên đã nhập
+
             if (inputStudent(student))
             {
                 addStudentToDataStructure(student, dataStructureType, arrayList, singlyLinkedList,
@@ -80,9 +129,9 @@ int main()
                 {
                     cout << "Nhập thông tin mới cho sinh viên:\n";
                     Student updateStudent;
+                    strcpy(updateStudent.studentID, studentID); // Đặt mã sinh viên trước khi gọi inputStudent
                     if (inputStudent(updateStudent))
                     {
-                        strcpy(updateStudent.studentID, studentID); // Giữ nguyên mã sinh viên
                         updateStudentInDataStructure(updateStudent, dataStructureType, arrayList, singlyLinkedList,
                                                      circularLinkedList, doublyLinkedListHead);
                     }

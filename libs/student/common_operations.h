@@ -69,6 +69,24 @@ bool isStudentExists(const char *studentID, int dataStructureType,
     return false; // Không hỗ trợ cho BST
 }
 
+// Hàm kiểm tra trùng mã sinh viên và hiển thị thông báo lỗi
+bool validateAndShowDuplicateStudentID(const string &studentID, int dataStructureType,
+                                       const ArrayStudentList &arrayList,
+                                       NodeSLL *singlyLinkedList,
+                                       NodeSLL *circularLinkedList,
+                                       NodeDLL *doublyLinkedListHead)
+{
+    bool isDuplicate = isStudentExists(studentID.c_str(), dataStructureType, arrayList,
+                                       singlyLinkedList, circularLinkedList, doublyLinkedListHead);
+    if (isDuplicate)
+    {
+        printError("Lỗi: Mã sinh viên đã tồn tại.");
+        printWarning("Không thể thêm sinh viên với mã trùng lặp.");
+        return false; // Trả về false nếu trùng lặp
+    }
+    return true; // Trả về true nếu không trùng lặp
+}
+
 // Hàm thoát chương trình, giải phóng bộ nhớ
 void exitProgram(NodeSLL *&singlyLinkedList,
                  NodeSLL *&circularLinkedList,
@@ -560,31 +578,35 @@ bool inputStudent(Student &student)
     // Thông báo về cách hủy bỏ nhập liệu
     printInfo("Lưu ý: Nhập \"00\" để hủy bỏ và trở về menu chính.");
 
-    // Nhập mã sinh viên
-    do
+    // Kiểm tra nếu mã sinh viên đã được nhập trước đó (studentID[0] != '\0')
+    if (student.studentID[0] == '\0')
     {
-        cout << "Nhập mã sinh viên: ";
-        cin >> tempInput;
-        clearInputBuffer();
-        tempInput = trim(tempInput); // Trim input
-
-        // Kiểm tra hủy bỏ
-        if (tempInput == "00")
+        // Nhập mã sinh viên nếu chưa có (trường hợp khi không gọi từ main.cpp)
+        do
         {
-            if (confirmCancel())
+            cout << "Nhập mã sinh viên: ";
+            cin >> tempInput;
+            clearInputBuffer();
+            tempInput = trim(tempInput); // Trim input
+
+            // Kiểm tra hủy bỏ
+            if (tempInput == "00")
             {
-                student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ bằng chuỗi rỗng
-                return false;
+                if (confirmCancel())
+                {
+                    student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ bằng chuỗi rỗng
+                    return false;
+                }
+                continue;
             }
-            continue;
-        }
 
-        isValid = validateAndShowStudentID(tempInput);
-        if (isValid)
-        {
-            strcpy(student.studentID, tempInput.c_str());
-        }
-    } while (!isValid);
+            isValid = validateAndShowStudentID(tempInput);
+            if (isValid)
+            {
+                strcpy(student.studentID, tempInput.c_str());
+            }
+        } while (!isValid);
+    }
 
     // Nhập họ
     do

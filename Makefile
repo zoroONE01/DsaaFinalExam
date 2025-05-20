@@ -32,5 +32,8 @@ run: $(TARGET)
 # Rule tổng hợp (giống run_student_management.sh)
 console: $(TARGET) run
 
+# Rule để rebuild và chạy chương trình
+rerun: rebuild run
+
 # Đảm bảo các rule này không bị nhầm với tên file
-.PHONY: all clean rebuild run console
+.PHONY: all clean rebuild run console rerun

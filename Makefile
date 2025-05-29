@@ -1,39 +1,53 @@
-# Makefile cho Hệ thống Quản lý Sinh viên PTIT
-# Biến compiler và flags
-CC = g++
-CFLAGS = -Wall -g
+# Makefile cho Hệ Thống Quản Lý Sinh Viên
+# Được tạo cho môn học Cấu Trúc Dữ Liệu và Giải Thuật
 
 # Tên chương trình
 TARGET = student_management
 
-# Rule mặc định
-all: $(TARGET)
+# Trình biên dịch
+CC = g++
 
-# Rule để build chương trình
-$(TARGET): main.cpp
-	@echo "===== HỆ THỐNG QUẢN LÝ SINH VIÊN ====="
-	@echo "Đang biên dịch chương trình..."
-	$(CC) $(CFLAGS) main.cpp -o $(TARGET)
-	@echo "Biên dịch thành công!"
+# Các thư mục
+SRC_DIR = src
+INCLUDE_DIR = include
+OBJ_DIR = obj
 
-# Rule để dọn dẹp các file object và executable
+# Cờ biên dịch
+CFLAGS = -Wall -std=c++11 -I$(INCLUDE_DIR)
+
+# Tìm tất cả các tệp nguồn .cpp
+SRC_FILES = $(wildcard $(SRC_DIR)/*/*.cpp)
+# Thêm tệp main.cpp
+SRC_FILES += main.cpp
+# Tạo danh sách các tệp đối tượng .o
+OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(filter-out main.cpp,$(SRC_FILES)))
+OBJ_FILES += $(OBJ_DIR)/main.o
+
+# Đích mặc định
+all: directories $(TARGET)
+
+# Tạo các thư mục cần thiết
+directories:
+	@mkdir -p $(OBJ_DIR)/algorithms
+	@mkdir -p $(OBJ_DIR)/data_structures
+	@mkdir -p $(OBJ_DIR)/ui
+	@mkdir -p $(OBJ_DIR)/utils
+
+# Quy tắc liên kết
+$(TARGET): $(OBJ_FILES)
+	$(CC) -o $@ $^
+
+# Biên dịch main.cpp
+$(OBJ_DIR)/main.o: main.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Quy tắc biên dịch các tệp nguồn trong thư mục con
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Dọn dẹp
 clean:
-	rm -f $(TARGET) *.o
+	rm -rf $(OBJ_DIR)/* $(TARGET)
 
-# Rule để build lại hoàn toàn
-rebuild: clean all
-
-# Rule để chạy chương trình
-run: $(TARGET)
-	@echo "Đang chạy chương trình..."
-	@echo "------------------------------"
-	./$(TARGET)
-
-# Rule tổng hợp (giống run_student_management.sh)
-console: $(TARGET) run
-
-# Rule để rebuild và chạy chương trình
-rerun: rebuild run
-
-# Đảm bảo các rule này không bị nhầm với tên file
-.PHONY: all clean rebuild run console rerun
+# Đảm bảo không có lỗi nếu tệp tin trùng tên với các đích
+.PHONY: all clean directories

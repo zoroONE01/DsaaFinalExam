@@ -2,9 +2,8 @@
 #include <cstring>
 #include <limits>
 #include <fstream>
-#include "libs/student/student_library.h"
-#include "libs/knights_tour/knights_tour.h"
-#include "libs/ui/common_ui.h" // Thư viện UI
+#include "include/student_management.h" // Header chính của hệ thống
+#include "include/utils/student_input.h" // Include for input functions
 
 using namespace std;
 

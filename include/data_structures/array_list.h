@@ -1,7 +1,8 @@
 #ifndef ARRAY_LIST_H
 #define ARRAY_LIST_H
 
-#include "student_struct.h"
+#include "../core/student.h"
+#include "../utils/constants.h"
 #include <iostream>
 #include <iomanip>
 #include "../ui/common_ui.h" // Include thư viện UI mới
@@ -9,7 +10,6 @@
 using namespace std;
 
 // ========== Cài đặt danh sách mảng ==========
-const int MAX_STUDENTS = 100; // Kích thước tối đa của mảng
 
 struct ArrayStudentList
 {
@@ -38,19 +38,25 @@ bool addToArrayList(ArrayStudentList &list, const Student &student)
     return true;
 }
 
-// Xóa sinh viên theo mã sinh viên trong danh sách mảng
-bool deleteFromArrayList(ArrayStudentList &list, const char *studentID)
+// Tìm kiếm sinh viên theo mã sinh viên trong danh sách mảng (tuần tự)
+int searchInArrayList(const ArrayStudentList &list, const char *studentID)
 {
-    // Tìm vị trí của sinh viên cần xóa
-    int position = -1;
     for (int i = 0; i < list.count; i++)
     {
         if (strcmp(list.students[i].studentID, studentID) == 0)
         {
-            position = i;
-            break;
+            return i; // Trả về vị trí tìm thấy
         }
     }
+
+    return -1; // Không tìm thấy sinh viên
+}
+
+// Xóa sinh viên theo mã sinh viên trong danh sách mảng
+bool deleteFromArrayList(ArrayStudentList &list, const char *studentID)
+{
+    // Tìm vị trí của sinh viên cần xóa
+    int position = searchInArrayList(list, studentID);
 
     if (position == -1)
     {
@@ -71,31 +77,16 @@ bool deleteFromArrayList(ArrayStudentList &list, const char *studentID)
 bool updateInArrayList(ArrayStudentList &list, const Student &student)
 {
     // Tìm sinh viên cần cập nhật
-    for (int i = 0; i < list.count; i++)
+    int position = searchInArrayList(list, student.studentID);
+
+    if (position != -1)
     {
-        if (strcmp(list.students[i].studentID, student.studentID) == 0)
-        {
-            // Cập nhật thông tin sinh viên
-            list.students[i] = student;
-            return true;
-        }
+        // Cập nhật thông tin sinh viên
+        list.students[position] = student;
+        return true;
     }
 
     return false; // Không tìm thấy sinh viên
-}
-
-// Tìm kiếm sinh viên theo mã sinh viên trong danh sách mảng (tuần tự)
-int searchInArrayList(const ArrayStudentList &list, const char *studentID)
-{
-    for (int i = 0; i < list.count; i++)
-    {
-        if (strcmp(list.students[i].studentID, studentID) == 0)
-        {
-            return i; // Trả về vị trí tìm thấy
-        }
-    }
-
-    return -1; // Không tìm thấy sinh viên
 }
 
 // Hiển thị danh sách sinh viên từ mảng (sử dụng thư viện UI)
@@ -125,7 +116,7 @@ void displayArrayList(const ArrayStudentList &list)
     displayStudentTableFooter();
 }
 
-// Tìm sinh viên có điểm cao nhất trong danh sách mảng
+// Tìm điểm cao nhất trong danh sách mảng
 float findHighestScore(const ArrayStudentList &list)
 {
     if (list.count == 0)
@@ -145,7 +136,7 @@ float findHighestScore(const ArrayStudentList &list)
     return highest;
 }
 
-// Tìm sinh viên có điểm thấp nhất trong danh sách mảng
+// Tìm điểm thấp nhất trong danh sách mảng
 float findLowestScore(const ArrayStudentList &list)
 {
     if (list.count == 0)

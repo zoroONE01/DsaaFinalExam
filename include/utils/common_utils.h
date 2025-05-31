@@ -1,8 +1,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "student_struct.h"
-#include "array_list.h"
+#include "../core/student.h"
+#include "../data_structures/array_list.h"
 #include <iostream>
 #include <fstream>
 #include <cstring>

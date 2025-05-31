@@ -2,31 +2,30 @@
 #define KNIGHTS_TOUR_H
 
 #include <iostream>
+#include "../utils/constants.h"
 
 using namespace std;
 
 // ========== Cài đặt thuật toán Mã Đi Tuần (Knight's Tour) ==========
 
-const int N = 8; // Kích thước bàn cờ 8x8
-
 // Bàn cờ và các bước di chuyển
-int knightsTourBoard[N][N];
+int knightsTourBoard[CHESS_BOARD_SIZE][CHESS_BOARD_SIZE];
 int xMove[8] = {2, 1, -1, -2, -2, -1, 1, 2};
 int yMove[8] = {1, 2, 2, 1, -1, -2, -2, -1};
 
 // Hàm kiểm tra nước đi có hợp lệ hay không
 bool isSafe(int x, int y)
 {
-    return (x >= 0 && x < N && y >= 0 && y < N && knightsTourBoard[x][y] == -1);
+    return (x >= 0 && x < CHESS_BOARD_SIZE && y >= 0 && y < CHESS_BOARD_SIZE && knightsTourBoard[x][y] == -1);
 }
 
 // Hàm hiển thị bàn cờ với đường đi của quân mã
 void printKnightsTour()
 {
     cout << "Đường đi của quân mã:\n";
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < CHESS_BOARD_SIZE; i++)
     {
-        for (int j = 0; j < N; j++)
+        for (int j = 0; j < CHESS_BOARD_SIZE; j++)
         {
             cout << knightsTourBoard[i][j] << "\t";
         }
@@ -38,7 +37,7 @@ void printKnightsTour()
 bool solveKnightsTour(int x, int y, int moveCount)
 {
     // Nếu tất cả các ô đã được đi qua
-    if (moveCount == N * N)
+    if (moveCount == CHESS_BOARD_SIZE * CHESS_BOARD_SIZE)
     {
         return true;
     }
@@ -72,9 +71,9 @@ bool solveKnightsTour(int x, int y, int moveCount)
 bool knightsTour()
 {
     // Khởi tạo bàn cờ với tất cả các ô chưa được đi qua
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < CHESS_BOARD_SIZE; i++)
     {
-        for (int j = 0; j < N; j++)
+        for (int j = 0; j < CHESS_BOARD_SIZE; j++)
         {
             knightsTourBoard[i][j] = -1;
         }

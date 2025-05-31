@@ -14,6 +14,13 @@
                 "@modelcontextprotocol/server-filesystem",
                 "/Users/tuthanhnguyen/Workspace/CPP/DsaaFinalExam"
             ]
+        },
+        "memory": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-memory"
+            ]
         }
     }
 }

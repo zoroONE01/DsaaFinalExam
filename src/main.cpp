@@ -2,9 +2,7 @@
 #include <cstring>
 #include <limits>
 #include <fstream>
-#include "libs/student/student_library.h"
-#include "libs/knights_tour/knights_tour.h"
-#include "libs/ui/common_ui.h" // Thư viện UI
+#include "../include/student_library.h"
 
 using namespace std;
 

@@ -1,7 +1,7 @@
 #ifndef SORTING_ALGORITHMS_H
 #define SORTING_ALGORITHMS_H
 
-#include "array_list.h"
+#include "../data_structures/array_list.h"
 
 using namespace std;
 

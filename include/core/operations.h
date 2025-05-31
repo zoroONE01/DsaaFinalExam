@@ -1,12 +1,13 @@
 #ifndef COMMON_OPERATIONS_H
 #define COMMON_OPERATIONS_H
 
-#include "student_struct.h"
-#include "array_list.h"
-#include "singly_linked_list.h"
-#include "circular_linked_list.h"
-#include "doubly_linked_list.h"
-#include "binary_search_tree.h"
+#include "student.h"
+#include "../data_structures/array_list.h"
+#include "../data_structures/singly_linked_list.h"
+#include "../data_structures/circular_linked_list.h"
+#include "../data_structures/doubly_linked_list.h"
+#include "../data_structures/binary_search_tree.h"
+#include "../algorithms/sorting.h"
 #include "../ui/common_ui.h"
 #include <iostream>
 

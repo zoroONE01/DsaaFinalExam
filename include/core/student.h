@@ -5,6 +5,12 @@
 #include <cstring>
 #include <iomanip>
 #include <sstream>
+#include "../utils/constants.h"
+#include "../ui/common_ui.h"
+
+using namespace std;
+#include <sstream>
+#include "../utils/constants.h"
 #include "../ui/common_ui.h"
 
 using namespace std;
@@ -12,10 +18,10 @@ using namespace std;
 // Định nghĩa cấu trúc Student (Sinh viên)
 struct Student
 {
-    char studentID[20];
-    char firstName[50];
-    char lastName[50];
-    char studentClass[20];
+    char studentID[MAX_STUDENT_ID_LENGTH];
+    char firstName[MAX_NAME_LENGTH];
+    char lastName[MAX_NAME_LENGTH];
+    char studentClass[MAX_CLASS_LENGTH];
     float score;
 };
 
@@ -102,21 +108,21 @@ void displayStudentInTable(const Student &student, int index)
     cout << BOLD << "│" << RESET << " ";
 
     // Hiển thị điểm với màu sắc dựa trên giá trị
-    if (student.score >= 8.0)
+    if (student.score >= EXCELLENT_THRESHOLD)
     {
-        cout << GREEN << centerAlign(scoreStr, 9) << RESET;
+        cout << GREEN << centerAlign(scoreStr, DISPLAY_WIDTH_SCORE) << RESET;
     }
-    else if (student.score >= 6.5)
+    else if (student.score >= GOOD_THRESHOLD)
     {
-        cout << BLUE << centerAlign(scoreStr, 9) << RESET;
+        cout << BLUE << centerAlign(scoreStr, DISPLAY_WIDTH_SCORE) << RESET;
     }
-    else if (student.score >= 5.0)
+    else if (student.score >= AVERAGE_THRESHOLD)
     {
-        cout << YELLOW << centerAlign(scoreStr, 9) << RESET;
+        cout << YELLOW << centerAlign(scoreStr, DISPLAY_WIDTH_SCORE) << RESET;
     }
     else
     {
-        cout << RED << centerAlign(scoreStr, 9) << RESET;
+        cout << RED << centerAlign(scoreStr, DISPLAY_WIDTH_SCORE) << RESET;
     }
     cout << " " << BOLD << "│" << RESET << endl;
 }
@@ -135,15 +141,15 @@ void displayStudentDetailed(const Student &student)
 
     // Màu sắc khác nhau dựa trên điểm số
     cout << BOLD << "│ " << YELLOW << "Điểm:   " << RESET;
-    if (student.score >= 8.0)
+    if (student.score >= EXCELLENT_THRESHOLD)
     {
         cout << GREEN << setw(26) << left << student.score << RESET;
     }
-    else if (student.score >= 6.5)
+    else if (student.score >= GOOD_THRESHOLD)
     {
         cout << BLUE << setw(26) << left << student.score << RESET;
     }
-    else if (student.score >= 5.0)
+    else if (student.score >= AVERAGE_THRESHOLD)
     {
         cout << YELLOW << setw(26) << left << student.score << RESET;
     }

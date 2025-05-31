@@ -1,19 +1,28 @@
 # Makefile cho Hệ thống Quản lý Sinh viên PTIT
 # Biến compiler và flags
 CC = g++
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -Iinclude
+
+# Thư mục
+SRC_DIR = src
+INCLUDE_DIR = include
+BUILD_DIR = build
 
 # Tên chương trình
 TARGET = student_management
 
+# Tạo thư mục build nếu chưa có
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
 # Rule mặc định
-all: $(TARGET)
+all: $(BUILD_DIR) $(TARGET)
 
 # Rule để build chương trình
-$(TARGET): main.cpp
+$(TARGET): $(SRC_DIR)/main.cpp
 	@echo "===== HỆ THỐNG QUẢN LÝ SINH VIÊN ====="
 	@echo "Đang biên dịch chương trình..."
-	$(CC) $(CFLAGS) main.cpp -o $(TARGET)
+	$(CC) $(CFLAGS) $(SRC_DIR)/main.cpp -o $(TARGET)
 	@echo "Biên dịch thành công!"
 
 # Rule để dọn dẹp các file object và executable

@@ -1,7 +1,7 @@
 #ifndef CIRCULAR_LINKED_LIST_H
 #define CIRCULAR_LINKED_LIST_H
 
-#include "student_struct.h"
+#include "../core/student.h"
 #include <iostream>
 
 using namespace std;

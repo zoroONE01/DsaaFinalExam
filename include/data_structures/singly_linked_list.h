@@ -1,7 +1,7 @@
 #ifndef SINGLY_LINKED_LIST_H
 #define SINGLY_LINKED_LIST_H
 
-#include "student_struct.h"
+#include "../core/student.h"
 #include <iostream>
 
 using namespace std;

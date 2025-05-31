@@ -1,7 +1,9 @@
 #ifndef VALIDATION_H
 #define VALIDATION_H
 
-#include "student_struct.h"
+#include "../core/student.h"
+#include "constants.h"
+#include "error_handling.h"
 #include "../ui/common_ui.h"
 #include <iostream>
 #include <regex>
@@ -31,22 +33,25 @@ string getStringLengthValidationMessage(const char *fieldName, size_t maxLength)
 // Hàm kiểm tra tính hợp lệ của điểm số
 bool validateScore(float score)
 {
-    return score >= 0 && score <= 10;
+    return score >= MIN_SCORE && score <= MAX_SCORE;
 }
 
 // Các hàm validate bằng regex
 bool validateStudentID(const string &studentID)
 {
-    // Mã sinh viên gồm chữ và số, từ 3 đến 19 ký tự (vì mảng 20 ký tự cần 1 byte cho null terminator)
-    regex pattern("^[a-zA-Z0-9]{3,19}$");
-    return regex_match(studentID, pattern);
+    // Mã sinh viên gồm chữ và số, từ 3 đến (MAX_STUDENT_ID_LENGTH - 1) ký tự
+    // (vì mảng cần 1 byte cho null terminator)
+    string pattern = "^[a-zA-Z0-9]{3," + to_string(MAX_STUDENT_ID_LENGTH - 1) + "}$";
+    regex regexPattern(pattern);
+    return regex_match(studentID, regexPattern);
 }
 
 bool validateName(const string &name)
 {
     // Tên họ chỉ được chứa chữ cái, khoảng trắng và dấu gạch ngang
-    // Giới hạn độ dài tối đa 49 ký tự (vì mảng 50 ký tự cần 1 byte cho null terminator)
-    if (name.length() > 49)
+    // Giới hạn độ dài tối đa (MAX_NAME_LENGTH - 1) ký tự
+    // (vì mảng cần 1 byte cho null terminator)
+    if (name.length() > MAX_NAME_LENGTH - 1)
     {
         return false;
     }

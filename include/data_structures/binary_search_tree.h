@@ -1,7 +1,7 @@
 #ifndef BINARY_SEARCH_TREE_H
 #define BINARY_SEARCH_TREE_H
 
-#include "student_struct.h"
+#include "../core/student.h"
 #include "array_list.h" // Để sử dụng các hàm hiển thị bảng
 #include <iostream>
 

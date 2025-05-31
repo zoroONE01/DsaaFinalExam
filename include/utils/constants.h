@@ -28,6 +28,6 @@ const int DISPLAY_WIDTH_CLASS = 18;     // Độ rộng hiển thị lớp
 const int DISPLAY_WIDTH_SCORE = 9;      // Độ rộng hiển thị điểm
 
 // Mã hủy bỏ nhập liệu
-const char* CANCEL_INPUT_CODE = "00";
+extern const char* CANCEL_INPUT_CODE;
 
 #endif // CONSTANTS_H

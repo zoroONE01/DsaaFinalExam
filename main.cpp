@@ -17,6 +17,10 @@ NodeBST *binarySearchTree = NULL;
 
 int main()
 {
+    // Hiển thị welcome banner
+    showWelcomeBanner();
+    pauseScreen();
+
     // Khởi tạo các cấu trúc dữ liệu
     initAllDataStructures(arrayList, singlyLinkedList, circularLinkedList, doublyLinkedListHead, doublyLinkedListTail, binarySearchTree);
 
@@ -29,6 +33,15 @@ int main()
 
         if (!(cin >> choice))
         {
+            // Kiểm tra EOF condition (khi dùng pipe input)
+            if (cin.eof())
+            {
+                cout << "\nDa ket thuc input. Thoat chuong trinh..." << endl;
+                choice = 0; // Thoát chương trình
+                break;
+            }
+            
+            // Chỉ hiển thị lỗi khi không phải EOF
             printError("Lựa chọn không hợp lệ. Vui lòng nhập lại.");
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');

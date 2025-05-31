@@ -270,47 +270,46 @@ void performStatistics(int dataStructureType, const ArrayStudentList &arrayList)
             totalScore += score;
         }
 
-        // Hiển thị thông tin thống kê
-        cout << "Thống kê điểm số:" << endl;
-        cout << "- Điểm thấp nhất: " << minScore << endl;
-        cout << "- Điểm cao nhất: " << maxScore << endl;
-        cout << "- Điểm trung bình: " << (totalScore / arrayList.count) << endl;
+        float avgScore = totalScore / arrayList.count;
+
+        // Hiển thị dashboard thống kê
+        clearScreen();
+        printHeader("THỐNG KÊ ĐIỂM SỐ SINH VIÊN");
+        displayStatsDashboard(minScore, maxScore, avgScore, arrayList.count);
 
         // Hiển thị sinh viên có điểm thấp nhất
-        cout << "\nSinh viên có điểm thấp nhất:" << endl;
-        cout << left << setw(10) << "Mã SV"
-             << setw(20) << "Họ"
-             << setw(20) << "Tên"
-             << setw(15) << "Lớp"
-             << setw(5) << "Điểm" << endl;
-        cout << string(70, '-') << endl;
+        cout << endl;
+        printSubHeader("SINH VIÊN CÓ ĐIỂM THẤP NHẤT");
+        displayStudentTableHeader();
+        int minCount = 0;
         for (int i = 0; i < arrayList.count; i++)
         {
             if (arrayList.students[i].score == minScore)
             {
-                displayStudent(arrayList.students[i]);
+                displayStudentRow(arrayList.students[i], minCount++);
             }
         }
+        displayStudentTableFooter();
 
         // Hiển thị sinh viên có điểm cao nhất
-        cout << "\nSinh viên có điểm cao nhất:" << endl;
-        cout << left << setw(10) << "Mã SV"
-             << setw(20) << "Họ"
-             << setw(20) << "Tên"
-             << setw(15) << "Lớp"
-             << setw(5) << "Điểm" << endl;
-        cout << string(70, '-') << endl;
+        cout << endl;
+        printSubHeader("SINH VIÊN CÓ ĐIỂM CAO NHẤT");
+        displayStudentTableHeader();
+        int maxCount = 0;
         for (int i = 0; i < arrayList.count; i++)
         {
             if (arrayList.students[i].score == maxScore)
             {
-                displayStudent(arrayList.students[i]);
+                displayStudentRow(arrayList.students[i], maxCount++);
             }
         }
+        displayStudentTableFooter();
     }
     else
     {
-        cout << "Không có sinh viên để thống kê hoặc cấu trúc dữ liệu không hỗ trợ chức năng này!" << endl;
+        clearScreen();
+        printHeader("THỐNG KÊ ĐIỂM SỐ SINH VIÊN");
+        displayEmptyMessage("Không có sinh viên để thống kê hoặc cấu trúc dữ liệu không hỗ trợ chức năng này!");
     }
 }
 

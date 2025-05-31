@@ -127,7 +127,7 @@ void displayArrayList(const ArrayStudentList &list)
         return;
     }
 
-    cout << BOLD << CYAN << "\n=== DANH SÁCH SINH VIÊN MẢNG (" << list.count << " sinh viên) ===" << RESET << endl;
+    cout << BOLD << CYAN << "\n=== DANH SÁCH SINH VIÊN MẢNG (" << list.count << " sinh viên) ===" << COLOR_RESET << endl;
 
     displayStudentTableHeader();
 

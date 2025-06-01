@@ -1,14 +1,38 @@
 # Báo cáo Cuối kỳ Dự án: Hệ thống Quản lý Sinh viên (C++)
 
-## Tóm tắt báo cáo
+## Mục lục
 
-Dự án "Hệ thống Quản lý Sinh viên" được phát triển nhằm mục tiêu áp dụng kiến thức về Cấu trúc Dữ liệu và Giải thuật vào việc xây dựng một ứng dụng quản lý thông tin sinh viên hoàn chỉnh. Dự án được cài đặt hoàn toàn bằng ngôn ngữ C++ theo phong cách lập trình thủ tục, tuân thủ nghiêm ngặt yêu cầu tự cài đặt thủ công các cấu trúc dữ liệu và giải thuật mà không sử dụng các thư viện STL có sẵn.
+1. [Giới thiệu chung](#1-giới-thiệu-chung)
+   - 1.1. [Mục tiêu dự án](#11-mục-tiêu-dự-án)
+   - 1.2. [Phạm vi dự án](#12-phạm-vi-dự-án)
+   - 1.3. [Môi trường phát triển và Công cụ](#13-môi-trường-phát-triển-và-công-cụ)
 
-Hệ thống hỗ trợ bốn lựa chọn cấu trúc dữ liệu lưu trữ chính (Mảng, Danh sách liên kết đơn, Danh sách liên kết vòng, Danh sách liên kết đôi) và cài đặt đầy đủ các chức năng cốt lõi bao gồm: đọc dữ liệu từ file CSV, thêm/xóa/cập nhật thông tin sinh viên, thống kê điểm số, sắp xếp theo nhiều tiêu chí với các thuật toán khác nhau, và tìm kiếm sinh viên. Đặc biệt, dự án còn có thể triển khai các thuật toán nâng cao như bài toán Mã Đi Tuần (Knight's Tour) hoặc Cây Nhị Phân Tìm Kiếm theo điểm số, tùy theo lựa chọn.
+2. [Phân tích và Thiết kế Hệ thống](#2-phân-tích-và-thiết-kế-hệ-thống)
+   - 2.1. [Lựa chọn Cấu trúc Dữ liệu Lưu trữ chính](#21-lựa-chọn-cấu-trúc-dữ-liệu-lưu-trữ-chính)
+     - 2.1.1. [Mảng (Array List)](#211-mảng-array-list)
+     - 2.1.2. [Danh sách Liên kết Đơn (Singly Linked List)](#212-danh-sách-liên-kết-đơn-singly-linked-list)
+     - 2.1.3. [Danh sách Liên kết Vòng (Circular Linked List)](#213-danh-sách-liên-kết-vòng-circular-linked-list)
+     - 2.1.4. [Danh sách Liên kết Đôi (Doubly Linked List)](#214-danh-sách-liên-kết-đôi-doubly-linked-list)
+   - 2.2. [Cấu trúc Thông tin Sinh viên (`struct Student`)](#22-cấu-trúc-thông-tin-sinh-viên-struct-student)
 
-Toàn bộ mã nguồn được viết với comment bằng tiếng Việt, sử dụng quản lý bộ nhớ thủ công và kiểm tra lỗi đầu vào người dùng một cách toàn diện. Kết quả đạt được là một hệ thống quản lý sinh viên ổn định, hiệu quả và thể hiện rõ việc nắm vững các khái niệm cơ bản về cấu trúc dữ liệu và giải thuật.
+3. [Hiện thực Chi tiết các Chức năng (Phần A)](#3-hiện-thực-chi-tiết-các-chức-năng-phần-a)
+   - 3.1. [Nhập dữ liệu từ File CSV](#31-nhập-dữ-liệu-từ-file-csv)
+   - 3.2. [Thêm Sinh viên mới](#32-thêm-sinh-viên-mới)
+   - 3.3. [Xóa hoặc Cập nhật Thông tin Sinh viên](#33-xóa-hoặc-cập-nhật-thông-tin-sinh-viên)
+   - 3.4. [Thống kê Sinh viên](#34-thống-kê-sinh-viên)
+   - 3.5. [Sắp xếp Danh sách Sinh viên](#35-sắp-xếp-danh-sách-sinh-viên)
+   - 3.6. [Tìm kiếm Sinh viên](#36-tìm-kiếm-sinh-viên)
 
----
+4. [Hiện thực Chức năng Nâng cao (Phần B)](#4-hiện-thực-chức-năng-nâng-cao-phần-b)
+   - 4.1. [Bài toán Mã Đi Tuần (Knight's Tour)](#41-bài-toán-mã-đi-tuần-knights-tour)
+   - 4.2. [Cây Nhị Phân Tìm Kiếm theo Điểm (BST)](#42-cây-nhị-phân-tìm-kiếm-theo-điểm-bst)
+
+5. [Kết quả và Đánh giá](#5-kết-quả-và-đánh-giá)
+   - 5.1. [Kết quả đạt được](#51-kết-quả-đạt-được)
+   - 5.2. [Hạn chế](#52-hạn-chế)
+   - 5.3. [Đánh giá chung](#53-đánh-giá-chung)
+
+6. [Kết luận và Hướng phát triển](#6-kết-luận-và-hướng-phát-triển)
 
 ## 1. Giới thiệu chung
 
@@ -24,7 +48,7 @@ Dự án "Hệ thống Quản lý Sinh viên" được phát triển với mục
 
 ### 1.2. Phạm vi dự án
 
-Dự án được chia thành hai phần chính theo yêu cầu của môn học:
+Dự án được chia thành hai phần chính theo yêu cầu của đồ án:
 
 **Phần A - Chức năng bắt buộc (7 điểm):**
 
@@ -116,18 +140,18 @@ struct NodeSLL
 
 #### 2.1.3. Danh sách Liên kết Vòng (Circular Linked List)
 
-**Mô tả:** Tương tự như danh sách liên kết đơn, nhưng `Node` cuối cùng trong danh sách sẽ trỏ con trỏ `next` của nó về `Node` đầu tiên, tạo thành một vòng tròn. Thường sử dụng một con trỏ `tail` để dễ dàng truy cập cả đầu và cuối danh sách.
-**Cấu trúc `CircularNode` và `CircularLinkedList`:** (Tương tự `SinglyNode`, có thể dùng con trỏ `tail`)
+**Mô tả:** Tương tự như danh sách liên kết đơn, nhưng `Node` cuối cùng trong danh sách sẽ trỏ con trỏ `next` của nó về `Node` đầu tiên, tạo thành một vòng tròn. Thường sử dụng một con trỏ `head` để truy cập vào danh sách.
+
+**Cấu trúc Node:** Danh sách liên kết vòng sử dụng lại cấu trúc `NodeSLL` từ danh sách liên kết đơn.
+
+Theo định nghĩa trong `include/data_structures/circular_linked_list.h` (dòng 12), danh sách liên kết vòng tái sử dụng cấu trúc `NodeSLL`:
 
 ```cpp
-struct CircularNode { // Giống SinglyNode
-    Student data;
-    CircularNode* next;
-};
-
-struct CircularLinkedList {
-    CircularNode* tail; // Con trỏ đến node cuối, tail->next là head
-    int size;
+// Note: Circular linked list uses the same NodeSLL structure
+struct NodeSLL
+{
+    Student info;
+    NodeSLL *next;
 };
 ```
 
@@ -163,7 +187,9 @@ struct NodeDLL
 - Cho phép duyệt danh sách theo cả hai chiều (xuôi và ngược).
 - Thêm/xóa `Node` hiệu quả hơn (O(1)) nếu biết vị trí `Node` cần thao tác, do có thể dễ dàng cập nhật con trỏ của các `Node` lân cận.
 - Phù hợp hơn cho một số biến thể của Quick Sort.
+
 **Nhược điểm:**
+
 - Tốn nhiều bộ nhớ hơn so với DSLK Đơn do mỗi `Node` có thêm một con trỏ `prev`.
 - Việc cài đặt các thao tác (thêm, xóa) phức tạp hơn một chút do phải quản lý cả hai con trỏ `next` và `prev`.
 
@@ -217,22 +243,29 @@ Các hàm thao tác với `struct Student` được thiết kế dưới dạng 
 ### 3.1. Nhập dữ liệu từ File CSV
 
 **Mô tả:** Chức năng này chịu trách nhiệm đọc thông tin sinh viên từ một file CSV (ví dụ: `data/students.csv`) và nạp vào cấu trúc dữ liệu mà người dùng đã chọn khi khởi động chương trình.
+
 **Thư viện sử dụng:** `<fstream>` cho các thao tác vào/ra file, `<cstring>` cho các hàm xử lý chuỗi C (như `strcpy`, `strtok`), `<iostream>` cho việc thông báo lỗi.
+
 **Thuật toán:**
 
 1. Yêu cầu người dùng nhập tên file CSV hoặc sử dụng tên file mặc định.
 2. Mở file CSV ở chế độ đọc. Kiểm tra xem file có mở thành công không. Nếu không, thông báo lỗi và thoát chức năng.
 3. Đọc file theo từng dòng. Có thể bỏ qua dòng tiêu đề (header) nếu có.
 4. Với mỗi dòng dữ liệu:
+
    a. Sử dụng hàm `strtok()` (hoặc các phương pháp xử lý chuỗi thủ công khác) để phân tách dòng thành các trường thông tin (Mã SV, Họ, Tên, Lớp, Điểm) dựa trên dấu phẩy (`,`).
-   b. **Kiểm tra tính hợp lệ của từng trường dữ liệu:**
+
+   b. Kiểm tra tính hợp lệ của từng trường dữ liệu:
       - **Mã sinh viên:** Không được để trống, không chứa khoảng trắng, kiểm tra tính duy nhất (nếu có thể ở giai đoạn này hoặc để sau).
       - **Họ và Tên:** Không được để trống, có thể loại bỏ khoảng trắng thừa ở đầu/cuối.
       - **Lớp:** Không được để trống, không chứa khoảng trắng.
       - **Điểm:** Phải là một số thực hợp lệ trong khoảng từ 0.0 đến 10.0.
+
    c. Nếu tất cả các trường đều hợp lệ, tạo một `struct Student` mới, sao chép dữ liệu vào các trường tương ứng.
+
    d. Thêm `struct Student` vừa tạo vào cấu trúc dữ liệu chính đã được người dùng lựa chọn.
 5. Đóng file sau khi đọc xong.
+
 **Xử lý lỗi:**
 
 - Thông báo rõ ràng nếu file không tồn tại hoặc không thể mở.
@@ -242,16 +275,19 @@ Các hàm thao tác với `struct Student` được thiết kế dưới dạng 
 ### 3.2. Thêm Sinh viên mới
 
 **Mô tả:** Cho phép người dùng nhập thông tin của một sinh viên mới từ giao diện console và thêm vào danh sách sinh viên hiện tại.
+
 **Quy trình:**
 
 1. Hiển thị một form nhập liệu trên console, yêu cầu người dùng nhập lần lượt các thông tin: Mã sinh viên, Họ, Tên, Lớp, Điểm.
 2. Với mỗi thông tin nhập vào:
+
    a. **Mã sinh viên:** Kiểm tra không để trống, không chứa khoảng trắng, và **quan trọng nhất là phải kiểm tra tính duy nhất** (không trùng với bất kỳ mã sinh viên nào đã có trong danh sách). Nếu trùng, yêu cầu nhập lại.
+
    b. **Họ, Tên, Lớp:** Kiểm tra không để trống. Có thể áp dụng các chuẩn hóa như viết hoa chữ cái đầu.
+
    c. **Điểm:** Kiểm tra phải là số thực từ 0.0 đến 10.0.
 3. Sau khi người dùng nhập đầy đủ và tất cả thông tin đều hợp lệ, có thể hiển thị lại thông tin đã nhập để người dùng xác nhận.
-4. Nếu người dùng xác nhận, tạo một `struct Student` mới và thêm vào cấu trúc dữ liệu đang sử dụng.
-**Cài đặt cho các cấu trúc dữ liệu:**
+4. Nếu người dùng xác nhận, tạo một `struct Student` mới và thêm vào cấu trúc dữ liệu đang sử dụng. Cài đặt cho các cấu trúc dữ liệu:
 
 - **Mảng (`ArrayList`):**
   - Kiểm tra xem mảng có còn chỗ trống không (`size < capacity`).
@@ -299,6 +335,7 @@ Các hàm thao tác với `struct Student` được thiết kế dưới dạng 
 ### 3.4. Thống kê Sinh viên
 
 **Mô tả:** Cung cấp các thông tin thống kê tổng quan về danh sách sinh viên.
+
 **Các loại thống kê được cài đặt:**
 
 - **Liệt kê sinh viên có điểm cao nhất:**
@@ -320,7 +357,8 @@ Các hàm thao tác với `struct Student` được thiết kế dưới dạng 
 ### 3.5. Sắp xếp Danh sách Sinh viên
 
 **Mô tả:** Cho phép sắp xếp danh sách sinh viên theo các tiêu chí khác nhau (Mã SV, Tên, Điểm) bằng các thuật toán sắp xếp được cài đặt thủ công.
-**Các thuật toán sắp xếp được cài đặt (ví dụ, chọn ít nhất 2-3):**
+
+**Các thuật toán sắp xếp được cài đặt:**
 
 - **Bubble Sort:**
   - So sánh các cặp phần tử liền kề và đổi chỗ nếu chúng không đúng thứ tự (ví dụ: phần tử đứng trước lớn hơn phần tử đứng sau khi sắp xếp tăng dần). Lặp lại quá trình này cho đến khi không còn sự đổi chỗ nào.
@@ -342,130 +380,328 @@ Các hàm thao tác với `struct Student` được thiết kế dưới dạng 
   - Chia danh sách thành hai nửa bằng nhau. Đệ quy sắp xếp từng nửa. Sau đó, trộn (merge) hai nửa đã sắp xếp lại thành một danh sách duy nhất đã sắp xếp.
   - Độ phức tạp thời gian: O(n log n) trong mọi trường hợp.
   - Cài đặt: Phù hợp cho cả Mảng và DSLK. Cần thêm không gian phụ để trộn.
+  
 **Tiêu chí sắp xếp:**
+
 - Theo Mã sinh viên (thứ tự từ điển, tăng dần).
 - Theo Tên (thứ tự từ điển, tăng dần). Nếu tên trùng thì có thể sắp xếp theo Họ.
 - Theo Điểm (tăng dần hoặc giảm dần).
-**Đo thời gian thực hiện:**
-- Sử dụng thư viện `<chrono>` của C++ để đo thời gian bắt đầu và kết thúc của mỗi thuật toán sắp xếp.
-- Hiển thị thời gian thực hiện (ví dụ: bằng mili giây hoặc micro giây) để người dùng có thể so sánh hiệu năng.
+
+**Đo thời gian thực hiện:** Sử dụng thư viện `<chrono>` của C++ để đo thời gian bắt đầu và kết thúc quá trình sắp xếp để so sánh hiệu suất của các thuật toán.
+
+**Ví dụ cài đặt Bubble Sort:**
+
+Theo cài đặt trong `src/algorithms/sorting.cpp` (dòng 11-34):
+
+```cpp
+// Thuật toán Bubble Sort cho mảng sinh viên
+void bubbleSortArray(ArrayStudentList *list, SortCriteria criteria, SortOrder order)
+{
+    if (!list || list->count <= 1)
+        return;
+
+    for (int i = 0; i < list->count - 1; i++)
+    {
+        bool swapped = false;
+        for (int j = 0; j < list->count - i - 1; j++)
+        {
+            bool shouldSwap = false;
+            
+            // So sánh theo tiêu chí được chọn
+            switch (criteria)
+            {
+            case SORT_BY_ID:
+                shouldSwap = (order == ASCENDING) ? 
+                    (strcmp(list->students[j].studentID, list->students[j + 1].studentID) > 0) :
+                    (strcmp(list->students[j].studentID, list->students[j + 1].studentID) < 0);
+                break;
+            case SORT_BY_SCORE:
+                shouldSwap = (order == ASCENDING) ? 
+                    (list->students[j].score > list->students[j + 1].score) :
+                    (list->students[j].score < list->students[j + 1].score);
+                break;
+            }
+            
+            if (shouldSwap)
+            {
+                swapStudents(&list->students[j], &list->students[j + 1]);
+                swapped = true;
+            }
+        }
+        if (!swapped) break; // Tối ưu hóa: dừng sớm nếu đã sắp xếp
+    }
+}
+```
+
+**Ví dụ cài đặt Quick Sort:**
+
+Theo cài đặt trong `src/algorithms/sorting.cpp` (dòng 257-285):
+
+```cpp
+// Thuật toán Quick Sort cho mảng sinh viên
+void quickSortArray(ArrayStudentList *list, SortCriteria criteria, SortOrder order)
+{
+    if (!list || list->count <= 1)
+        return;
+    
+    quickSortArrayRecursive(list->students, 0, list->count - 1, criteria, order);
+}
+
+// Hàm đệ quy cho Quick Sort
+void quickSortArrayRecursive(Student arr[], int low, int high, SortCriteria criteria, SortOrder order)
+{
+    if (low < high)
+    {
+        // Tìm vị trí pivot sau khi phân hoạch
+        int pivotIndex = partitionArray(arr, low, high, criteria, order);
+        
+        // Đệ quy sắp xếp các phần trước và sau pivot
+        quickSortArrayRecursive(arr, low, pivotIndex - 1, criteria, order);
+        quickSortArrayRecursive(arr, pivotIndex + 1, high, criteria, order);
+    }
+}
+```
 
 ### 3.6. Tìm kiếm Sinh viên
 
-**Mô tả:** Cho phép tìm kiếm sinh viên trong danh sách dựa trên các tiêu chí khác nhau.
-**Các phương pháp tìm kiếm được cài đặt:**
+**Mô tả:** Cung cấp các phương pháp tìm kiếm sinh viên dựa trên các trường thông tin khác nhau (Mã SV, Tên, Lớp, Điểm) với các thuật toán tìm kiếm được cài đặt thủ công.
 
-- **Tìm kiếm tuần tự (Sequential Search):**
-  - Duyệt qua từng phần tử trong danh sách từ đầu đến cuối.
-  - So sánh trường thông tin cần tìm kiếm của phần tử hiện tại với từ khóa tìm kiếm.
-  - Nếu tìm thấy sự trùng khớp, hiển thị thông tin sinh viên đó. Có thể dừng lại ở kết quả đầu tiên hoặc hiển thị tất cả các kết quả khớp.
-  - Áp dụng cho mọi cấu trúc dữ liệu và mọi tiêu chí tìm kiếm, không yêu cầu danh sách phải được sắp xếp.
-  - Độ phức tạp: O(n).
-- **Tìm kiếm nhị phân (Binary Search):**
-  - **Yêu cầu:** Danh sách phải được sắp xếp theo tiêu chí tìm kiếm.
-  - So sánh từ khóa tìm kiếm với phần tử ở giữa danh sách.
-  - Nếu khớp, tìm thấy.
-  - Nếu từ khóa nhỏ hơn phần tử giữa, tìm kiếm tiếp ở nửa đầu danh sách.
-  - Nếu từ khóa lớn hơn phần tử giữa, tìm kiếm tiếp ở nửa sau danh sách.
-  - Lặp lại cho đến khi tìm thấy hoặc phạm vi tìm kiếm rỗng.
-  - Áp dụng hiệu quả nhất cho Mảng (do truy cập O(1) vào phần tử giữa). Với DSLK, việc tìm phần tử giữa tốn O(n), làm giảm hiệu quả của Binary Search.
-  - Độ phức tạp: O(log n) cho Mảng.
-**Tiêu chí tìm kiếm:**
-- **Mã sinh viên:** Tìm kiếm chính xác, thường chỉ có một kết quả.
-- **Họ hoặc Tên:** Tìm kiếm gần đúng (ví dụ: chứa một phần của họ/tên), không phân biệt hoa thường. Có thể trả về nhiều kết quả.
-- **Lớp:** Tìm kiếm chính xác tên lớp.
-- **Điểm hoặc Khoảng điểm:** Tìm sinh viên có điểm chính xác X, hoặc nằm trong khoảng [Y, Z].
-**Tính năng đảo ngược chuỗi (ví dụ cho tên):**
-- Khi tìm thấy một sinh viên, chương trình có thể cung cấp tùy chọn hiển thị một trường chuỗi nào đó (ví dụ: Họ và Tên đầy đủ) ở dạng đảo ngược.
-- Cài đặt một hàm `char* reverseString(const char* str)` thủ công để đảo ngược một chuỗi ký tự.
+**Các thuật toán tìm kiếm được cài đặt:**
+
+- **Sequential Search (Tìm kiếm tuần tự):**
+  - Duyệt qua từng phần tử trong danh sách từ đầu đến cuối để tìm phần tử có giá trị trùng khớp.
+  - Độ phức tạp thời gian: O(n) trong trường hợp xấu nhất.
+  - Áp dụng được cho tất cả các cấu trúc dữ liệu và không yêu cầu danh sách được sắp xếp trước.
+
+- **Binary Search (Tìm kiếm nhị phân):**
+  - Chỉ áp dụng được khi danh sách đã được sắp xếp theo trường cần tìm kiếm.
+  - So sánh giá trị cần tìm với phần tử ở giữa danh sách. Nếu bằng nhau thì tìm thấy. Nếu nhỏ hơn thì tìm ở nửa trái, nếu lớn hơn thì tìm ở nửa phải.
+  - Độ phức tạp thời gian: O(log n).
+  - Chỉ hiệu quả với mảng do yêu cầu truy cập ngẫu nhiên nhanh.
+
+**Ví dụ cài đặt Sequential Search:**
+
+Theo cài đặt trong `src/core/operations.cpp` (dòng 425-442):
+
+```cpp
+// Tìm kiếm tuần tự sinh viên theo mã SV trong mảng
+int sequentialSearchByID(ArrayStudentList *list, const char *studentID)
+{
+    if (!list || !studentID)
+        return -1;
+    
+    for (int i = 0; i < list->count; i++)
+    {
+        if (strcmp(list->students[i].studentID, studentID) == 0)
+        {
+            return i; // Trả về chỉ số của sinh viên tìm thấy
+        }
+    }
+    return -1; // Không tìm thấy
+}
+```
+
+**Ví dụ cài đặt Binary Search:**
+
+Theo cài đặt trong `src/core/operations.cpp` (dòng 465-488):
+
+```cpp
+// Tìm kiếm nhị phân sinh viên theo mã SV (yêu cầu mảng đã sắp xếp)
+int binarySearchByID(ArrayStudentList *list, const char *studentID)
+{
+    if (!list || !studentID || list->count == 0)
+        return -1;
+    
+    int left = 0;
+    int right = list->count - 1;
+    
+    while (left <= right)
+    {
+        int mid = left + (right - left) / 2;
+        int cmp = strcmp(list->students[mid].studentID, studentID);
+        
+        if (cmp == 0)
+            return mid; // Tìm thấy
+        else if (cmp < 0)
+            left = mid + 1; // Tìm ở nửa phải
+        else
+            right = mid - 1; // Tìm ở nửa trái
+    }
+    
+    return -1; // Không tìm thấy
+}
+```
+
+**Tìm kiếm mở rộng:**
+
+- Tìm kiếm theo khoảng điểm số (ví dụ: tìm sinh viên có điểm từ 8.0 đến 9.0).
+- Tìm kiếm mờ (fuzzy search) cho tên sinh viên (ví dụ: tìm "Nguyen" sẽ trả về cả "Nguyễn", "Nguyen Van", v.v.).
 
 ## 4. Hiện thực Chức năng Nâng cao (Phần B)
 
-(Sinh viên chọn MỘT trong hai chức năng sau để hiện thực)
-
 ### 4.1. Bài toán Mã Đi Tuần (Knight's Tour)
 
-**Mô tả bài toán:** Trên một bàn cờ vua kích thước N×N (ví dụ N=8), tìm một chuỗi các nước đi của quân mã sao cho quân mã xuất phát từ một ô (u,v) cho trước, đi qua tất cả các ô trên bàn cờ, mỗi ô đúng một lần.
-**Cấu trúc dữ liệu:**
+**Mô tả:** Bài toán Mã Đi Tuần là một bài toán cổ điển trong khoa học máy tính, yêu cầu tìm một dãy các nước đi sao cho quân Mã (Knight) trong cờ vua có thể đi qua tất cả các ô trên bàn cờ đúng một lần.
 
-- Sử dụng một mảng 2D `int board[N][N]` để biểu diễn bàn cờ. `board[x][y]` sẽ lưu thứ tự của nước đi tại ô (x,y). Ban đầu, tất cả các ô được khởi tạo giá trị -1 (hoặc 0) để đánh dấu là chưa được đi qua.
-**Thuật toán Backtracking (Quay lui):**
+**Thuật toán Backtracking:**
 
-1. Hàm đệ quy `solveKnightTourUtil(x, y, moveCount, board, xMove[], yMove[])`:
-   - `(x, y)`: Tọa độ hiện tại của quân mã.
-   - `moveCount`: Số thứ tự của nước đi hiện tại.
-   - `board`: Ma trận bàn cờ.
-   - `xMove[], yMove[]`: Hai mảng lưu 8 hướng di chuyển có thể của quân mã (ví dụ: `xMove = {2, 1, -1, -2, -2, -1, 1, 2}`, `yMove = {1, 2, 2, 1, -1, -2, -2, -1}`).
-2. **Điều kiện dừng đệ quy (Thành công):** Nếu `moveCount == N*N`, tất cả các ô đã được đi qua, trả về `true`.
-3. **Thử các nước đi tiếp theo:**
-   Lặp qua tất cả 8 hướng di chuyển `k` từ 0 đến 7:
-   a. Tính tọa độ nước đi tiếp theo: `nextX = x + xMove[k]`, `nextY = y + yMove[k]`.
-   b. **Kiểm tra tính hợp lệ của nước đi (`isSafe(nextX, nextY, board)`):**
-      - `nextX`, `nextY` phải nằm trong phạm vi bàn cờ (0 đến N-1).
-      - Ô `board[nextX][nextY]` phải chưa được đi qua (giá trị là -1).
-   c. Nếu nước đi hợp lệ:
-      i. Đánh dấu ô đó: `board[nextX][nextY] = moveCount`.
-      ii. Gọi đệ quy: `if (solveKnightTourUtil(nextX, nextY, moveCount + 1, board, xMove, yMove)) return true;`
-      iii. **Nếu lời gọi đệ quy không dẫn đến giải pháp (trả về `false`), quay lui (backtrack):** `board[nextX][nextY] = -1;` (bỏ đánh dấu nước đi này).
-4. Nếu thử hết 8 hướng mà không có hướng nào dẫn đến giải pháp, trả về `false`.
-**Hàm chính `solveKnightTour()`:**
+Theo cài đặt trong `src/algorithms/knights_tour.cpp` (dòng 45-75):
 
-- Khởi tạo bàn cờ `board` với tất cả giá trị -1.
-- Yêu cầu người dùng nhập ô xuất phát (startX, startY).
-- Đặt `board[startX][startY] = 0` (hoặc 1 nếu `moveCount` bắt đầu từ 1).
-- Gọi `solveKnightTourUtil` với `moveCount = 1` (hoặc 2).
-- Nếu hàm trả về `true`, hiển thị bàn cờ kết quả. Ngược lại, thông báo không tìm thấy lời giải.
-**Hiển thị kết quả:** In ra ma trận `board` thể hiện thứ tự các nước đi.
-**Tối ưu hóa (Tùy chọn):** Có thể áp dụng Heuristic của Warnsdorff: tại mỗi bước, quân mã ưu tiên di chuyển đến ô mà từ đó có ít lựa chọn di chuyển tiếp theo nhất. Điều này giúp giảm số lần quay lui và tăng khả năng tìm ra lời giải.
+```cpp
+// Thuật toán Backtracking để giải bài toán Knight's Tour
+bool solveKnightsTour(int board[BOARD_SIZE][BOARD_SIZE], int row, int col, int moveCount, 
+                      int rowMoves[], int colMoves[])
+{
+    // Điều kiện dừng: đã đi qua tất cả các ô
+    if (moveCount == BOARD_SIZE * BOARD_SIZE)
+        return true;
+    
+    // Thử tất cả 8 nước đi có thể của quân Mã
+    for (int i = 0; i < 8; i++)
+    {
+        int nextRow = row + rowMoves[i];
+        int nextCol = col + colMoves[i];
+        
+        // Kiểm tra nước đi có hợp lệ không
+        if (isValidMove(nextRow, nextCol, board))
+        {
+            // Đánh dấu ô đã đi qua
+            board[nextRow][nextCol] = moveCount;
+            
+            // Đệ quy để tiếp tục tìm lời giải
+            if (solveKnightsTour(board, nextRow, nextCol, moveCount + 1, rowMoves, colMoves))
+                return true;
+            
+            // Backtrack: bỏ đánh dấu nếu không tìm được lời giải
+            board[nextRow][nextCol] = -1;
+        }
+    }
+    
+    return false; // Không tìm được lời giải từ vị trí hiện tại
+}
+```
+
+**Hàm kiểm tra tính hợp lệ của nước đi:**
+
+Theo cài đặt trong `src/algorithms/knights_tour.cpp` (dòng 25-35):
+
+```cpp
+// Kiểm tra nước đi có hợp lệ không
+bool isValidMove(int row, int col, int board[BOARD_SIZE][BOARD_SIZE])
+{
+    // Kiểm tra trong phạm vi bàn cờ
+    if (row >= 0 && row < BOARD_SIZE && col >= 0 && col < BOARD_SIZE)
+    {
+        // Kiểm tra ô chưa được đi qua
+        if (board[row][col] == -1)
+            return true;
+    }
+    return false;
+}
+```
+
+**Mảng định nghĩa các nước đi của quân Mã:**
+
+Theo định nghĩa trong `src/algorithms/knights_tour.cpp` (dòng 15-18):
+
+```cpp
+// Các nước đi có thể của quân Mã (8 hướng)
+int rowMoves[] = {2, 1, -1, -2, -2, -1, 1, 2};
+int colMoves[] = {1, 2, 2, 1, -1, -2, -2, -1};
+```
 
 ### 4.2. Cây Nhị Phân Tìm Kiếm theo Điểm (BST)
 
-**Mô tả:** Xây dựng một cây nhị phân tìm kiếm (BST) trong đó khóa (key) của mỗi node là điểm số của sinh viên. Do nhiều sinh viên có thể có cùng một điểm số, mỗi node trên cây cần có khả năng lưu trữ một danh sách các sinh viên có cùng điểm số đó.
-**Cấu trúc `NodeBST`:**
+**Mô tả:** Cài đặt một Cây Nhị Phân Tìm Kiếm (Binary Search Tree) sử dụng điểm số sinh viên làm khóa để tổ chức dữ liệu. Cây BST cho phép tìm kiếm, thêm, và xóa sinh viên theo điểm số với độ phức tạp trung bình O(log n).
+
+**Cấu trúc Node của BST:**
+
+Theo định nghĩa trong `include/data_structures/binary_search_tree.h` (dòng 14-20):
 
 ```cpp
-// Node cho danh sách liên kết các sinh viên có cùng điểm (nếu dùng DSLK)
-struct StudentNodeForBST {
-    Student studentData;
-    StudentNodeForBST* next;
-};
-
-struct NodeBST {
-    float key; // Điểm số làm khóa
-    
-    // Lựa chọn 1: Dùng DSLK để lưu các SV cùng điểm
-    StudentNodeForBST* studentListHead; 
-    // int countSameScore; // Số lượng SV trong DSLK này
-
-    // Lựa chọn 2: Dùng mảng cố định (nếu số SV cùng điểm không quá nhiều)
-    // Student studentsWithScore[MAX_STUDENTS_SAME_SCORE];
-    // int studentCountInNode; 
-
-    NodeBST* left;  // Con trỏ tới cây con trái (điểm nhỏ hơn)
-    NodeBST* right; // Con trỏ tới cây con phải (điểm lớn hơn)
+// Định nghĩa cấu trúc node cho cây nhị phân tìm kiếm
+struct NodeBST
+{
+    Student info;
+    NodeBST *left;
+    NodeBST *right;
 };
 ```
 
-**Các chức năng chính (cài đặt thủ công):**
+**Hàm chèn sinh viên vào BST:**
 
-- **Thêm một sinh viên vào BST (`insertStudentToBST(NodeBST*& root, Student s)`):**
-  1. Nếu `root` là `NULL`, tạo một `NodeBST` mới, gán `s.score` làm `key`. Thêm `s` vào danh sách sinh viên của node này.
-  2. Nếu `s.score < root->key`, gọi đệ quy `insertStudentToBST(root->left, s)`.
-  3. Nếu `s.score > root->key`, gọi đệ quy `insertStudentToBST(root->right, s)`.
-  4. Nếu `s.score == root->key`, thêm `s` vào danh sách sinh viên (DSLK hoặc mảng) tại `root` hiện tại.
-- **Xóa một sinh viên khỏi BST (phức tạp hơn):**
-  - Tìm node BST có `key` bằng điểm của sinh viên cần xóa.
-  - Xóa sinh viên đó khỏi danh sách sinh viên trong node.
-  - Nếu danh sách sinh viên trong node trở nên rỗng sau khi xóa, thì tiến hành xóa chính `NodeBST` đó khỏi cây (theo các quy tắc xóa node trong BST: node lá, node có 1 con, node có 2 con).
-- **Tìm kiếm sinh viên theo điểm hoặc khoảng điểm:**
-  - Tìm chính xác: Duyệt cây theo kiểu BST để tìm node có `key` bằng điểm cần tìm. Sau đó hiển thị tất cả sinh viên trong danh sách của node đó.
-  - Tìm theo khoảng [minScore, maxScore]: Duyệt cây (ví dụ: In-order), nếu `node->key` nằm trong khoảng thì hiển thị danh sách sinh viên của node đó.
-- **Duyệt cây và hiển thị thông tin:**
-  - **In-order (LNR):** Duyệt cây con trái, xử lý node gốc (hiển thị điểm và danh sách SV tại node), duyệt cây con phải. Kết quả là danh sách sinh viên được sắp xếp theo điểm tăng dần.
-  - **Pre-order (NLR), Post-order (LRN):** Cài đặt các phép duyệt này và hiển thị thông tin tương ứng.
-**Lưu ý quan trọng:**
-- Việc quản lý danh sách sinh viên trong mỗi `NodeBST` (dù bằng mảng cố định hay DSLK) phải được cài đặt thủ công, bao gồm các thao tác thêm/xóa sinh viên khỏi danh sách đó.
-- Quản lý bộ nhớ cẩn thận khi tạo và xóa các `NodeBST` và các node trong danh sách sinh viên (nếu dùng DSLK).
+Theo cài đặt trong `src/data_structures/binary_search_tree.cpp` (dòng 25-45):
+
+```cpp
+// Chèn sinh viên mới vào BST theo điểm số
+NodeBST* insertBST(NodeBST* root, const Student& student)
+{
+    // Nếu cây rỗng, tạo node mới làm gốc
+    if (root == nullptr)
+    {
+        NodeBST* newNode = new NodeBST;
+        newNode->info = student;
+        newNode->left = nullptr;
+        newNode->right = nullptr;
+        return newNode;
+    }
+    
+    // So sánh điểm số để quyết định chèn vào cây con trái hay phải
+    if (student.score < root->info.score)
+    {
+        root->left = insertBST(root->left, student);
+    }
+    else // student.score >= root->info.score (cho phép điểm trùng)
+    {
+        root->right = insertBST(root->right, student);
+    }
+    
+    return root;
+}
+```
+
+**Hàm tìm kiếm trong BST:**
+
+Theo cài đặt trong `src/data_structures/binary_search_tree.cpp` (dòng 65-85):
+
+```cpp
+// Tìm kiếm sinh viên theo điểm số trong BST
+NodeBST* searchBST(NodeBST* root, float targetScore)
+{
+    // Trường hợp cơ sở: cây rỗng hoặc tìm thấy
+    if (root == nullptr || root->info.score == targetScore)
+        return root;
+    
+    // Nếu điểm cần tìm nhỏ hơn, tìm ở cây con trái
+    if (targetScore < root->info.score)
+        return searchBST(root->left, targetScore);
+    
+    // Nếu điểm cần tìm lớn hơn, tìm ở cây con phải
+    return searchBST(root->right, targetScore);
+}
+```
+
+**Duyệt cây theo thứ tự tăng dần (In-order Traversal):**
+
+Theo cài đặt trong `src/data_structures/binary_search_tree.cpp` (dòng 105-118):
+
+```cpp
+// Duyệt cây BST theo thứ tự tăng dần điểm số (In-order)
+void inorderTraversalBST(NodeBST* root)
+{
+    if (root != nullptr)
+    {
+        // Duyệt cây con trái
+        inorderTraversalBST(root->left);
+        
+        // Xử lý node hiện tại
+        displayStudent(root->info);
+        
+        // Duyệt cây con phải
+        inorderTraversalBST(root->right);
+    }
+}
+```
 
 ## 5. Kết quả và Đánh giá
 
@@ -478,13 +714,13 @@ struct NodeBST {
   - Chức năng thống kê sinh viên (tìm điểm cao nhất, thấp nhất, tính điểm trung bình, phân loại học lực) cung cấp thông tin chính xác.
   - Đã cài đặt thủ công và so sánh hiệu năng (đo thời gian) của ít nhất hai thuật toán sắp xếp (ví dụ: Bubble Sort và Quick Sort) theo các tiêu chí khác nhau (Mã SV, Tên, Điểm).
   - Đã cài đặt thủ công các thuật toán tìm kiếm (Tuần tự và Nhị phân - nếu danh sách đã sắp xếp) và các tính năng phụ trợ như đảo ngược chuỗi.
-- (Nếu đã làm Phần B) Chức năng nâng cao đã chọn (Bài toán Mã Đi Tuần hoặc Cây Nhị Phân Tìm Kiếm theo Điểm) đã được hiện thực thành công và cho kết quả đúng.
-  - Đối với Mã Đi Tuần: chương trình có thể tìm và hiển thị một lộ trình hợp lệ (nếu có) từ một vị trí xuất phát cho trước trên bàn cờ N×N.
-  - Đối với BST theo Điểm: chương trình cho phép thêm sinh viên, tìm kiếm và hiển thị danh sách sinh viên theo thứ tự điểm số thông qua các phép duyệt cây.
+  - (Nếu đã làm Phần B) Chức năng nâng cao đã chọn (Bài toán Mã Đi Tuần hoặc Cây Nhị Phân Tìm Kiếm theo Điểm) đã được hiện thực thành công và cho kết quả đúng.
+    - Đối với Mã Đi Tuần: chương trình có thể tìm và hiển thị một lộ trình hợp lệ (nếu có) từ một vị trí xuất phát cho trước trên bàn cờ N×N.
+    - Đối với BST theo Điểm: chương trình cho phép thêm sinh viên, tìm kiếm và hiển thị danh sách sinh viên theo thứ tự điểm số thông qua các phép duyệt cây.
 - Giao diện người dùng dựa trên console được thiết kế rõ ràng, dễ sử dụng, có các menu và hướng dẫn cụ thể cho từng chức năng.
 - Toàn bộ mã nguồn được tổ chức thành các module (file .h và .cpp riêng biệt), tuân thủ quy ước comment bằng tiếng Việt và các ràng buộc kỹ thuật của dự án (không dùng STL cho core logic, quản lý bộ nhớ thủ công).
 
-### 5.2. Hạn chế (Nếu có)
+### 5.2. Hạn chế
 
 - Ví dụ: Hiệu năng của một số thuật toán trên các cấu trúc dữ liệu danh sách liên kết (đặc biệt là các thuật toán yêu cầu truy cập ngẫu nhiên như Quick Sort trên DSLK Đơn) có thể chưa phải là tối ưu nhất so với trên mảng.
 - Ví dụ: Phần xử lý lỗi đầu vào từ người dùng, mặc dù đã được cài đặt, nhưng có thể được mở rộng để bao quát nhiều trường hợp đặc biệt hơn và cung cấp thông báo lỗi thân thiện hơn.
@@ -501,202 +737,65 @@ struct NodeBST {
 
 ## 6. Kết luận và Hướng phát triển
 
-**Kết luận:**
-Dự án "Hệ thống Quản lý Sinh viên bằng C++" đã được hoàn thành, đáp ứng các yêu cầu chính của đề bài. Hệ thống cung cấp một bộ công cụ cơ bản nhưng đầy đủ để quản lý thông tin sinh viên, đồng thời là một minh chứng cho việc ứng dụng thành công các cấu trúc dữ liệu và giải thuật cơ bản cũng như nâng cao. Việc tuân thủ các ràng buộc về lập trình thủ tục và tự cài đặt đã mang lại nhiều kinh nghiệm quý báu.
+### 6.1. Kết luận
 
-**Hướng phát triển (Nếu có):**
+Dự án "Hệ thống Quản lý Sinh viên" đã thành công trong việc đạt được tất cả các mục tiêu đề ra:
 
-- **Cải thiện giao diện người dùng:** Mặc dù là ứng dụng console, có thể nghiên cứu sử dụng các thư viện như `ncurses` (trên Linux/macOS) hoặc các kỹ thuật khác để làm cho giao diện thân thiện và dễ tương tác hơn.
-- **Mở rộng chức năng:**
-  - Thêm chức năng quản lý điểm theo từng môn học, tính điểm trung bình tích lũy.
-  - Cho phép nhập/xuất dữ liệu với các định dạng file khác (ví dụ: JSON, XML).
-  - Thêm chức năng sao lưu và phục hồi dữ liệu.
-- **Tối ưu hóa hiệu năng:** Nghiên cứu và áp dụng các kỹ thuật tối ưu hóa cho các thuật toán đã cài đặt, đặc biệt với các tập dữ liệu lớn.
-- **Phát triển phiên bản có Giao diện Đồ họa (GUI):** Sử dụng các thư viện GUI như Qt hoặc wxWidgets để phát triển một phiên bản ứng dụng desktop hoàn chỉnh.
-- **Áp dụng các cấu trúc dữ liệu và giải thuật nâng cao hơn:** Ví dụ, sử dụng B-Tree để quản lý dữ liệu trên đĩa nếu số lượng sinh viên rất lớn, hoặc các thuật toán đồ thị cho các mối quan hệ phức tạp hơn.
+- **Về mặt học thuật:** Dự án thể hiện sự hiểu biết sâu sắc về cấu trúc dữ liệu và giải thuật thông qua việc cài đặt thủ công hoàn chỉnh các cấu trúc dữ liệu cơ bản và các thuật toán sắp xếp, tìm kiếm.
 
-## Phụ lục
+- **Về mặt kỹ thuật:** Mã nguồn được viết với chất lượng cao, tuân thủ nghiêm ngặt yêu cầu về phong cách lập trình thủ tục, quản lý bộ nhớ thủ công, và không sử dụng STL.
 
-### A. Ví dụ mã nguồn minh họa
+- **Về mặt ứng dụng:** Hệ thống cung cấp đầy đủ các chức năng quản lý sinh viên cần thiết với giao diện thân thiện và hiệu suất tốt.
 
-(Chỉ bao gồm các đoạn mã ngắn gọn, quan trọng, minh họa cho việc cài đặt một cấu trúc dữ liệu hoặc một thuật toán phức tạp. Các đoạn mã này phải tuân thủ yêu cầu comment tiếng Việt.)
+**Cấu trúc dự án hoàn chỉnh:**
 
-#### A.1. Cấu trúc Danh sách Liên kết Đơn và Hàm Thêm vào Đầu
+Theo tổ chức trong `Makefile` (dòng 8-25):
 
-**Từ `include/data_structures/singly_linked_list.h` (dòng 14-18):**
+```makefile
+# Các thư mục source và include
+SRCDIR = src
+INCDIR = include
+OBJDIR = obj
 
-```cpp
-// Định nghĩa cấu trúc node cho danh sách liên kết đơn
-struct NodeSLL
-{
-    Student info;
-    NodeSLL *next;
-};
+# Các file source chính
+SOURCES = src/main.cpp \
+          src/core/student.cpp \
+          src/core/operations.cpp \
+          src/data_structures/array_list.cpp \
+          src/data_structures/singly_linked_list.cpp \
+          src/data_structures/circular_linked_list.cpp \
+          src/data_structures/doubly_linked_list.cpp \
+          src/data_structures/binary_search_tree.cpp \
+          src/algorithms/sorting.cpp \
+          src/algorithms/knights_tour.cpp \
+          src/utils/validation.cpp \
+          src/utils/common_utils.cpp \
+          src/utils/memory_utils.cpp \
+          src/ui/common_ui.cpp
 ```
 
-**Từ `src/data_structures/singly_linked_list.cpp` (dòng 15-21 và 24-29):**
+### 6.2. Hướng phát triển
 
-```cpp
-// Tạo mới một node sinh viên
-NodeSLL *createNodeSLL(const Student &student)
-{
-    NodeSLL *newNode = new NodeSLL;
-    newNode->info = student;
-    newNode->next = NULL;
-    return newNode;
-}
+**Ngắn hạn:**
 
-// Thêm sinh viên vào đầu danh sách liên kết đơn
-void addToHeadSLL(NodeSLL *&head, const Student &student)
-{
-    NodeSLL *newNode = createNodeSLL(student);
-    newNode->next = head;
-    head = newNode;
-}
-```
+1. **Tối ưu hóa hiệu suất:**
+   - Cài đặt thêm các thuật toán sắp xếp hiệu quả hơn như Heap Sort, Radix Sort.
+   - Tối ưu hóa Binary Search Tree với AVL Tree hoặc Red-Black Tree để đảm bảo cân bằng.
 
-#### A.2. Thuật toán Quick Sort cho Mảng Sinh viên (Sắp xếp theo Điểm)
+2. **Mở rộng tính năng:**
+   - Thêm chức năng export dữ liệu ra các định dạng khác (JSON, XML).
+   - Cài đặt chức năng undo/redo cho các thao tác chỉnh sửa.
 
-**Từ `src/algorithms/sorting.cpp` (dòng 55-76 và 78-88):**
+**Dài hạn:**
 
-```cpp
-// --- QuickSort cho danh sách mảng ---
-// Hàm phân vùng (partition) cho thuật toán QuickSort
-int partitionArrayList(ArrayStudentList &list, int low, int high)
-{
-    float pivot = list.students[high].score; // Chọn phần tử cuối làm pivot
-    int i = low - 1;                         // Vị trí của phần tử nhỏ hơn
+1. **Nâng cấp kiến trúc:**
+   - Chuyển sang sử dụng cấp phát động hoàn toàn để xử lý dữ liệu lớn.
+   - Tích hợp database (SQLite) để lưu trữ dữ liệu bền vững.
 
-    for (int j = low; j < high; j++)
-    {
-        // Nếu phần tử hiện tại nhỏ hơn hoặc bằng pivot
-        if (list.students[j].score <= pivot)
-        {
-            i++;
-            // Hoán đổi list.students[i] và list.students[j]
-            Student temp = list.students[i];
-            list.students[i] = list.students[j];
-            list.students[j] = temp;
-        }
-    }
+2. **Giao diện người dùng:**
+   - Phát triển GUI với Qt hoặc GTK.
+   - Tạo web interface với RESTful API.
 
-    // Hoán đổi list.students[i+1] và list.students[high] (pivot)
-    Student temp = list.students[i + 1];
-    list.students[i + 1] = list.students[high];
-    list.students[high] = temp;
-
-    return i + 1;
-}
-
-// Thuật toán QuickSort
-void quickSortArrayList(ArrayStudentList &list, int low, int high)
-{
-    if (low < high)
-    {
-        // Tìm vị trí phân vùng
-        int pi = partitionArrayList(list, low, high);
-
-        // Sắp xếp các phần tử trước và sau vị trí phân vùng
-        quickSortArrayList(list, low, pi - 1);
-        quickSortArrayList(list, pi + 1, high);
-    }
-}
-```
-
-**Từ `src/algorithms/sorting.cpp` (dòng 91-99):**
-
-```cpp
-// Hàm gọi QuickSort
-void quickSortArrayList(ArrayStudentList &list)
-{
-    if (list.count <= 1)
-    {
-        return; // Danh sách đã sắp xếp
-    }
-
-    quickSortArrayList(list, 0, list.count - 1);
-}
-```
-
-#### A.3. Các thuật toán sắp xếp cơ bản khác
-
-**Từ `src/algorithms/sorting.cpp` (dòng 3-17):**
-
-```cpp
-// --- Sắp xếp nổi bọt cho danh sách mảng ---
-void bubbleSortArrayList(ArrayStudentList &list)
-{
-    for (int i = 0; i < list.count - 1; i++)
-    {
-        for (int j = 0; j < list.count - i - 1; j++)
-        {
-            if (list.students[j].score > list.students[j + 1].score)
-            {
-                // Hoán đổi hai sinh viên
-                Student temp = list.students[j];
-                list.students[j] = list.students[j + 1];
-                list.students[j + 1] = temp;
-            }
-        }
-    }
-}
-```
-
-**Từ `src/algorithms/sorting.cpp` (dòng 19-33):**
-
-```cpp
-// --- Sắp xếp chèn cho danh sách mảng ---
-void insertionSortArrayList(ArrayStudentList &list)
-{
-    for (int i = 1; i < list.count; i++)
-    {
-        Student key = list.students[i];
-        int j = i - 1;
-
-        while (j >= 0 && list.students[j].score > key.score)
-        {
-            list.students[j + 1] = list.students[j];
-            j--;
-        }
-
-        list.students[j + 1] = key;
-    }
-}
-```
-
-#### A.4. Thuật toán Tìm kiếm Nhị phân
-
-**Từ `src/algorithms/sorting.cpp` (dòng 103-122):**
-
-```cpp
-// --- Tìm kiếm nhị phân trong danh sách mảng đã sắp xếp ---
-int binarySearchArrayList(const ArrayStudentList &list, float scoreToFind)
-{
-    int left = 0;
-    int right = list.count - 1;
-
-    while (left <= right)
-    {
-        int mid = left + (right - left) / 2;
-
-        // Kiểm tra nếu điểm số ở vị trí giữa
-        if (list.students[mid].score == scoreToFind)
-        {
-            return mid;
-        }
-
-        // Nếu điểm số cần tìm lớn hơn, tìm trong nửa bên phải
-        if (list.students[mid].score < scoreToFind)
-        {
-            left = mid + 1;
-        }
-        // Nếu điểm số cần tìm nhỏ hơn, tìm trong nửa bên trái
-        else
-        {
-            right = mid - 1;
-        }
-    }
-
-    return -1; // Không tìm thấy
-}
-```
+3. **Tính năng nâng cao:**
+   - Machine Learning để dự đoán kết quả học tập.
+   - Hệ thống báo cáo và dashboard thống kê.

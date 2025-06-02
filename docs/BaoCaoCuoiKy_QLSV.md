@@ -83,6 +83,7 @@ Hệ thống được thiết kế linh hoạt cho phép người dùng lựa ch
 #### 2.1.1. Mảng (Array List)
 
 **Mô tả:** Mảng là một cấu trúc dữ liệu tuyến tính, lưu trữ các phần tử liên tiếp trong bộ nhớ. Trong dự án này, mảng động được sử dụng để có thể thay đổi kích thước khi cần.
+
 **Cấu trúc `ArrayStudentList`:**
 
 Theo định nghĩa trong `include/data_structures/array_list.h` (dòng 13-17):
@@ -168,6 +169,7 @@ struct NodeSLL
 #### 2.1.4. Danh sách Liên kết Đôi (Doubly Linked List)
 
 **Mô tả:** Mỗi `Node` trong danh sách liên kết đôi không chỉ có con trỏ `next` tới `Node` sau mà còn có con trỏ `prev` tới `Node` trước đó.
+
 **Cấu trúc `NodeDLL`:**
 
 Theo định nghĩa trong `include/data_structures/doubly_linked_list.h` (dòng 14-19):
@@ -1159,69 +1161,63 @@ case 7:
 
 **Thuật toán Backtracking:**
 
-Theo cài đặt trong `src/algorithms/knights_tour.cpp` (dòng 45-75):
+Theo cài đặt trong `src/algorithms/knights_tour.cpp` (dòng 28-57):
 
 ```cpp
-// Thuật toán Backtracking để giải bài toán Knight's Tour
-bool solveKnightsTour(int board[BOARD_SIZE][BOARD_SIZE], int row, int col, int moveCount, 
-                      int rowMoves[], int colMoves[])
+// Hàm đệ quy giải bài toán Mã Đi Tuần sử dụng kỹ thuật quay lui (backtracking)
+bool solveKnightsTour(int x, int y, int moveCount)
 {
-    // Điều kiện dừng: đã đi qua tất cả các ô
-    if (moveCount == BOARD_SIZE * BOARD_SIZE)
-        return true;
-    
-    // Thử tất cả 8 nước đi có thể của quân Mã
-    for (int i = 0; i < 8; i++)
+    // Nếu tất cả các ô đã được đi qua
+    if (moveCount == CHESS_BOARD_SIZE * CHESS_BOARD_SIZE)
     {
-        int nextRow = row + rowMoves[i];
-        int nextCol = col + colMoves[i];
-        
-        // Kiểm tra nước đi có hợp lệ không
-        if (isValidMove(nextRow, nextCol, board))
+        return true;
+    }
+
+    // Thử tất cả các nước đi tiếp theo từ vị trí hiện tại
+    for (int k = 0; k < 8; k++)
+    {
+        int nextX = x + xMove[k];
+        int nextY = y + yMove[k];
+
+        if (isSafe(nextX, nextY))
         {
-            // Đánh dấu ô đã đi qua
-            board[nextRow][nextCol] = moveCount;
-            
-            // Đệ quy để tiếp tục tìm lời giải
-            if (solveKnightsTour(board, nextRow, nextCol, moveCount + 1, rowMoves, colMoves))
+            knightsTourBoard[nextX][nextY] = moveCount;
+
+            if (solveKnightsTour(nextX, nextY, moveCount + 1))
+            {
                 return true;
-            
-            // Backtrack: bỏ đánh dấu nếu không tìm được lời giải
-            board[nextRow][nextCol] = -1;
+            }
+            else
+            {
+                // Quay lui (backtrack)
+                knightsTourBoard[nextX][nextY] = -1;
+            }
         }
     }
-    
-    return false; // Không tìm được lời giải từ vị trí hiện tại
+
+    return false;
 }
 ```
 
 **Hàm kiểm tra tính hợp lệ của nước đi:**
 
-Theo cài đặt trong `src/algorithms/knights_tour.cpp` (dòng 25-35):
+Theo cài đặt trong `src/algorithms/knights_tour.cpp` (dòng 10-13):
 
 ```cpp
-// Kiểm tra nước đi có hợp lệ không
-bool isValidMove(int row, int col, int board[BOARD_SIZE][BOARD_SIZE])
+// Hàm kiểm tra nước đi có hợp lệ hay không
+bool isSafe(int x, int y)
 {
-    // Kiểm tra trong phạm vi bàn cờ
-    if (row >= 0 && row < BOARD_SIZE && col >= 0 && col < BOARD_SIZE)
-    {
-        // Kiểm tra ô chưa được đi qua
-        if (board[row][col] == -1)
-            return true;
-    }
-    return false;
+    return (x >= 0 && x < CHESS_BOARD_SIZE && y >= 0 && y < CHESS_BOARD_SIZE && knightsTourBoard[x][y] == -1);
 }
 ```
 
 **Mảng định nghĩa các nước đi của quân Mã:**
 
-Theo định nghĩa trong `src/algorithms/knights_tour.cpp` (dòng 15-18):
+Theo định nghĩa trong `src/algorithms/knights_tour.cpp` (dòng 6-7):
 
 ```cpp
-// Các nước đi có thể của quân Mã (8 hướng)
-int rowMoves[] = {2, 1, -1, -2, -2, -1, 1, 2};
-int colMoves[] = {1, 2, 2, 1, -1, -2, -2, -1};
+int xMove[8] = {2, 1, -1, -2, -2, -1, 1, 2};
+int yMove[8] = {1, 2, 2, 1, -1, -2, -2, -1};
 ```
 
 ### 4.2. Cây Nhị Phân Tìm Kiếm theo Điểm (BST)
@@ -1230,90 +1226,106 @@ int colMoves[] = {1, 2, 2, 1, -1, -2, -2, -1};
 
 **Cấu trúc Node của BST:**
 
-Theo định nghĩa trong `include/data_structures/binary_search_tree.h` (dòng 14-20):
+Theo định nghĩa trong `include/data_structures/binary_search_tree.h` (dòng 14-22):
 
 ```cpp
-// Định nghĩa cấu trúc node cho cây nhị phân tìm kiếm
+// Định nghĩa cấu trúc node cho cây BST
+#ifndef NODE_BST_DEFINED
+#define NODE_BST_DEFINED
 struct NodeBST
 {
-    Student info;
-    NodeBST *left;
-    NodeBST *right;
+    float key;                                // Điểm số làm khóa
+    Student students[MAX_STUDENTS_PER_SCORE]; // Danh sách sinh viên có điểm số này
+    int count;                                // Số lượng sinh viên trong node này
+    NodeBST *left;                            // Con trỏ tới node con bên trái
+    NodeBST *right;                           // Con trỏ tới node con bên phải
 };
+#endif
 ```
 
 **Hàm chèn sinh viên vào BST:**
 
-Theo cài đặt trong `src/data_structures/binary_search_tree.cpp` (dòng 25-45):
+Theo cài đặt trong `src/data_structures/binary_search_tree.cpp` (dòng 19-49):
 
 ```cpp
-// Chèn sinh viên mới vào BST theo điểm số
-NodeBST* insertBST(NodeBST* root, const Student& student)
+// Thêm sinh viên vào cây BST
+void insertToBST(NodeBST *&root, const Student &student)
 {
-    // Nếu cây rỗng, tạo node mới làm gốc
-    if (root == nullptr)
+    // Nếu cây rỗng, tạo node mới
+    if (root == NULL)
     {
-        NodeBST* newNode = new NodeBST;
-        newNode->info = student;
-        newNode->left = nullptr;
-        newNode->right = nullptr;
-        return newNode;
+        root = createNodeBST(student.score, student);
+        return;
     }
-    
-    // So sánh điểm số để quyết định chèn vào cây con trái hay phải
-    if (student.score < root->info.score)
+
+    // Nếu điểm số bằng nhau
+    if (student.score == root->key)
     {
-        root->left = insertBST(root->left, student);
+        // Kiểm tra nếu danh sách đã đầy
+        if (root->count >= MAX_STUDENTS_PER_SCORE)
+        {
+            printWarning("Cây BST đã đạt giới hạn sinh viên cho điểm số này!");
+            return;
+        }
+
+        // Thêm sinh viên vào node hiện tại
+        root->students[root->count] = student;
+        root->count++;
     }
-    else // student.score >= root->info.score (cho phép điểm trùng)
+    // Nếu điểm số nhỏ hơn, đi sang trái
+    else if (student.score < root->key)
     {
-        root->right = insertBST(root->right, student);
+        insertToBST(root->left, student);
     }
-    
-    return root;
+    // Nếu điểm số lớn hơn, đi sang phải
+    else
+    {
+        insertToBST(root->right, student);
+    }
 }
 ```
 
 **Hàm tìm kiếm trong BST:**
 
-Theo cài đặt trong `src/data_structures/binary_search_tree.cpp` (dòng 65-85):
+Theo cài đặt trong `src/data_structures/binary_search_tree.cpp` (dòng 90-107):
 
 ```cpp
-// Tìm kiếm sinh viên theo điểm số trong BST
-NodeBST* searchBST(NodeBST* root, float targetScore)
+// Tìm kiếm sinh viên trong cây BST theo điểm số
+NodeBST *searchInBST(NodeBST *root, float score)
 {
-    // Trường hợp cơ sở: cây rỗng hoặc tìm thấy
-    if (root == nullptr || root->info.score == targetScore)
+    // Nếu cây rỗng hoặc tìm thấy điểm số
+    if (root == NULL || root->key == score)
+    {
         return root;
-    
-    // Nếu điểm cần tìm nhỏ hơn, tìm ở cây con trái
-    if (targetScore < root->info.score)
-        return searchBST(root->left, targetScore);
-    
-    // Nếu điểm cần tìm lớn hơn, tìm ở cây con phải
-    return searchBST(root->right, targetScore);
+    }
+
+    // Nếu điểm số nhỏ hơn node hiện tại, đi sang trái
+    if (score < root->key)
+    {
+        return searchInBST(root->left, score);
+    }
+
+    // Nếu điểm số lớn hơn node hiện tại, đi sang phải
+    return searchInBST(root->right, score);
 }
 ```
 
 **Duyệt cây theo thứ tự tăng dần (In-order Traversal):**
 
-Theo cài đặt trong `src/data_structures/binary_search_tree.cpp` (dòng 105-118):
+Theo cài đặt trong `src/data_structures/binary_search_tree.cpp` (dòng 74-85):
 
 ```cpp
-// Duyệt cây BST theo thứ tự tăng dần điểm số (In-order)
-void inorderTraversalBST(NodeBST* root)
+// Duyệt cây BST theo thứ tự giữa (In-order)
+void inorderTraversalBST(NodeBST *root)
 {
-    if (root != nullptr)
+    if (root == NULL)
     {
-        // Duyệt cây con trái
-        inorderTraversalBST(root->left);
-        
-        // Xử lý node hiện tại
-        displayStudent(root->info);
-        
-        // Duyệt cây con phải
-        inorderTraversalBST(root->right);
+        return;
     }
+
+    inorderTraversalBST(root->left);
+    displayBSTNode(root);
+    inorderTraversalBST(root->right);
 }
 ```
 
@@ -1328,7 +1340,7 @@ void inorderTraversalBST(NodeBST* root)
   - Chức năng thống kê sinh viên (tìm điểm cao nhất, thấp nhất, tính điểm trung bình, phân loại học lực) cung cấp thông tin chính xác.
   - Đã cài đặt thủ công và so sánh hiệu năng (đo thời gian) của ít nhất hai thuật toán sắp xếp (ví dụ: Bubble Sort và Quick Sort) theo các tiêu chí khác nhau (Mã SV, Tên, Điểm).
   - Đã cài đặt thủ công các thuật toán tìm kiếm (Tuần tự và Nhị phân - nếu danh sách đã sắp xếp) và các tính năng phụ trợ như đảo ngược chuỗi.
-  - (Nếu đã làm Phần B) Chức năng nâng cao đã chọn (Bài toán Mã Đi Tuần hoặc Cây Nhị Phân Tìm Kiếm theo Điểm) đã được hiện thực thành công và cho kết quả đúng.
+  - Chức năng nâng cao đã chọn (Bài toán Mã Đi Tuần hoặc Cây Nhị Phân Tìm Kiếm theo Điểm) đã được hiện thực thành công và cho kết quả đúng.
     - Đối với Mã Đi Tuần: chương trình có thể tìm và hiển thị một lộ trình hợp lệ (nếu có) từ một vị trí xuất phát cho trước trên bàn cờ N×N.
     - Đối với BST theo Điểm: chương trình cho phép thêm sinh viên, tìm kiếm và hiển thị danh sách sinh viên theo thứ tự điểm số thông qua các phép duyệt cây.
 - Giao diện người dùng dựa trên console được thiết kế rõ ràng, dễ sử dụng, có các menu và hướng dẫn cụ thể cho từng chức năng.

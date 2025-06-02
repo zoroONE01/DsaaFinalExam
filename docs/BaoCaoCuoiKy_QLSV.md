@@ -266,6 +266,119 @@ Các hàm thao tác với `struct Student` được thiết kế dưới dạng 
    d. Thêm `struct Student` vừa tạo vào cấu trúc dữ liệu chính đã được người dùng lựa chọn.
 5. Đóng file sau khi đọc xong.
 
+**Trích dẫn Code:**
+
+- **Đọc và phân tách dòng CSV:** Đoạn code trong `src/utils/common_utils.cpp` (hàm `readFromCSVFile`) minh họa việc đọc file và sử dụng `strtok()` để tách dữ liệu.
+
+  ```cpp
+  // src/utils/common_utils.cpp
+  bool readFromCSVFile(const char *filename, ArrayStudentList &list)
+  {
+      ifstream file(filename);
+      if (!file.is_open())
+      {
+          return false; // Không thể mở file
+      }
+
+      // Khởi tạo danh sách rỗng
+      initArrayList(list);
+
+      string line;
+      // Đọc dòng tiêu đề (nếu có)
+      getline(file, line);
+
+      // Đọc từng dòng dữ liệu
+      while (getline(file, line))
+      {
+          if (line.empty())
+          {
+              continue; // Bỏ qua dòng trống
+          }
+
+          Student student;
+          char buffer[200];
+          strcpy(buffer, line.c_str());
+
+          // Phân tích dữ liệu CSV bằng phân tách dấu phẩy
+          char *token = strtok(buffer, ",");
+          if (token)
+              strcpy(student.studentID, token);
+
+          token = strtok(NULL, ",");
+          if (token)
+              strcpy(student.firstName, token);
+
+          token = strtok(NULL, ",");
+          if (token)
+              strcpy(student.lastName, token);
+
+          token = strtok(NULL, ",");
+          if (token)
+              strcpy(student.studentClass, token);
+
+          token = strtok(NULL, ",");
+          if (token)
+              student.score = atof(token);
+
+          // Thêm sinh viên vào danh sách
+          addToArrayList(list, student);
+      }
+
+      file.close();
+      return true;
+  }
+  ```
+
+- **Kiểm tra tính hợp lệ của dữ liệu:** Các hàm `validateStudentID`, `validateName`, `validateClassName`, `validateScore` trong `src/utils/validation.cpp` được sử dụng để kiểm tra. Ví dụ, hàm `validateStudentID`:
+
+  ```cpp
+  // src/utils/validation.cpp
+  bool validateStudentID(const string &studentID)
+  {
+      // Mã sinh viên gồm chữ và số, từ 3 đến (MAX_STUDENT_ID_LENGTH - 1) ký tự
+      // (vì mảng cần 1 byte cho null terminator)
+      string pattern = "^[a-zA-Z0-9]{3," + to_string(MAX_STUDENT_ID_LENGTH - 1) + "}$";
+      regex regexPattern(pattern);
+      return regex_match(studentID, regexPattern);
+  }
+  ```
+
+- **Thêm sinh viên vào cấu trúc dữ liệu:** Hàm `handleInputFromCSV` trong `src/core/operations.cpp` điều phối việc đọc từ CSV và sau đó gọi `addStudentToDataStructure` để thêm vào cấu trúc dữ liệu người dùng đã chọn.
+
+  ```cpp
+  // src/core/operations.cpp
+  bool handleInputFromCSV(int dataStructureType,
+                          ArrayStudentList &arrayList,
+                          NodeSLL *&singlyLinkedList,
+                          NodeSLL *&circularLinkedList,
+                          NodeDLL *&doublyLinkedListHead,
+                          NodeDLL *&doublyLinkedListTail,
+                          NodeBST *&binarySearchTree)
+  {
+      if (readFromCSVFile("data/students.csv", arrayList))
+      {
+          printSuccess("Đã đọc dữ liệu từ file CSV thành công.");
+
+          // Chuyển dữ liệu từ arrayList sang cấu trúc dữ liệu đã chọn
+          if (dataStructureType != ARRAY_LIST)
+          {
+              for (int i = 0; i < arrayList.count; i++)
+              {
+                  addStudentToDataStructure(arrayList.students[i], dataStructureType,
+                                          arrayList, singlyLinkedList, circularLinkedList,
+                                          doublyLinkedListHead, doublyLinkedListTail, binarySearchTree);
+              }
+          }
+          return true;
+      }
+      else
+      {
+          printError("Không thể đọc dữ liệu từ file CSV.");
+          return false;
+      }
+  }
+  ```
+
 **Xử lý lỗi:**
 
 - Thông báo rõ ràng nếu file không tồn tại hoặc không thể mở.
@@ -283,7 +396,7 @@ Các hàm thao tác với `struct Student` được thiết kế dưới dạng 
 
    a. **Mã sinh viên:** Kiểm tra không để trống, không chứa khoảng trắng, và **quan trọng nhất là phải kiểm tra tính duy nhất** (không trùng với bất kỳ mã sinh viên nào đã có trong danh sách). Nếu trùng, yêu cầu nhập lại.
 
-   b. **Họ, Tên, Lớp:** Kiểm tra không để trống. Có thể áp dụng các chuẩn hóa như viết hoa chữ cái đầu.
+   b. **Họ, Tên, Lớp:** Kiểm tra không được để trống. Có thể áp dụng các chuẩn hóa như viết hoa chữ cái đầu.
 
    c. **Điểm:** Kiểm tra phải là số thực từ 0.0 đến 10.0.
 3. Sau khi người dùng nhập đầy đủ và tất cả thông tin đều hợp lệ, có thể hiển thị lại thông tin đã nhập để người dùng xác nhận.
@@ -298,9 +411,456 @@ Các hàm thao tác với `struct Student` được thiết kế dưới dạng 
   - Gán dữ liệu sinh viên mới vào `Node`.
   - Liên kết `Node` mới này vào vị trí thích hợp trong danh sách (ví dụ: thêm vào đầu, cuối, hoặc giữ danh sách sắp xếp theo một tiêu chí nào đó nếu có yêu cầu). Cập nhật các con trỏ `head`, `tail` (nếu có) và `size`.
 
+**Trích dẫn Code:**
+
+- **Thêm sinh viên mới:** Người dùng chọn chức năng "Thêm sinh viên mới" (case 3) trong hàm `main` ở `src/main.cpp`. Chương trình yêu cầu nhập mã sinh viên, kiểm tra tính hợp lệ và trùng lặp. Nếu hợp lệ, chương trình yêu cầu nhập các thông tin còn lại của sinh viên. Cuối cùng, hàm `addStudentToDataStructure` được gọi để thêm sinh viên vào cấu trúc dữ liệu đã chọn.
+
+  ```cpp
+  // src/main.cpp
+  // ...existing code...
+        case 3:
+        {
+            char studentID[MAX_STUDENT_ID_LENGTH];
+            // Bước 1: Nhập và kiểm tra mã sinh viên
+            string tempID;
+            bool isValid;
+
+            // Thông báo về cách hủy bỏ nhập liệu
+            printInfo("Lưu ý: Nhập \"00\" để hủy bỏ và trở về menu chính.");
+
+            // Nhập và kiểm tra mã sinh viên
+            do
+            {
+                cout << "Nhập mã sinh viên: ";
+                cin >> tempID;
+                clearInputBuffer();
+                tempID = trim(tempID);
+
+                // Kiểm tra hủy bỏ
+                if (tempID == CANCEL_INPUT_CODE)
+                {
+                    break;
+                }
+                continue;
+                // Kiểm tra định dạng mã sinh viên
+                isValid = validateAndShowStudentID(tempID);
+
+                // Nếu định dạng hợp lệ, kiểm tra trùng lặp
+                if (isValid)
+                {
+                    isValid = validateAndShowDuplicateStudentID(tempID, dataStructureType, arrayList, singlyLinkedList,
+                                                                circularLinkedList, doublyLinkedListHead);
+                }
+            } while (!isValid);
+
+            // Nếu người dùng chọn hủy bỏ
+            if (tempID == CANCEL_INPUT_CODE)
+            {
+                break;
+            }
+
+            // Lưu mã sinh viên hợp lệ
+            strcpy(studentID, tempID.c_str());
+
+            // Bước 2: Tiếp tục nhập thông tin chi tiết
+            Student student;
+            strcpy(student.studentID, studentID); // Đặt mã sinh viên đã nhập
+
+            if (inputStudent(student))
+            {
+                addStudentToDataStructure(student, dataStructureType, arrayList, singlyLinkedList,
+                                           circularLinkedList, doublyLinkedListHead, doublyLinkedListTail,
+                                           binarySearchTree);
+            }
+            break;
+        }
+  // ...existing code...
+  ```
+
+- **Nhập thông tin sinh viên:** Hàm `inputStudent` trong `src/core/operations.cpp` chịu trách nhiệm nhập các thông tin chi tiết của sinh viên như họ, tên, lớp và điểm, đồng thời kiểm tra tính hợp lệ của từng trường thông tin.
+
+  ```cpp
+  // src/core/operations.cpp
+  bool inputStudent(Student &student)
+  {
+      // Nhập họ tên
+      string fullName;
+      cout << "Nhập họ và tên sinh viên: ";
+      getline(cin, fullName);
+      trim(fullName);
+
+      size_t spaceIndex = fullName.find(' ');
+      if (spaceIndex == string::npos)
+      {
+          cout << "Họ và tên phải có ít nhất 2 từ (họ và tên). Vui lòng nhập lại." << endl;
+          return false;
+      }
+
+      // Tách họ và tên
+      string firstNameInput = fullName.substr(0, spaceIndex);
+      string lastNameInput = fullName.substr(spaceIndex + 1);
+
+      // Kiểm tra và gán giá trị cho họ và tên
+      if (!validateAndShowName(firstNameInput))
+          return false;
+      if (!validateAndShowName(lastNameInput))
+          return false;
+
+      strcpy(student.firstName, firstNameInput.c_str());
+      strcpy(student.lastName, lastNameInput.c_str());
+
+      // Nhập lớp
+      string className;
+      cout << "Nhập lớp: ";
+      getline(cin, className);
+      trim(className);
+
+      // Kiểm tra và gán giá trị cho lớp
+      if (!validateAndShowClassName(className))
+          return false;
+
+      strcpy(student.studentClass, className.c_str());
+
+      // Nhập điểm
+      float score;
+      cout << "Nhập điểm: ";
+      cin >> score;
+
+      // Kiểm tra và gán giá trị cho điểm
+      if (!validateAndShowScore(score))
+          return false;
+
+      student.score = score;
+
+      return true;
+  }
+  ```
+
+- **Kiểm tra tính hợp lệ của dữ liệu:** Các hàm `validateAndShowStudentID`, `validateAndShowName`, `validateAndShowClassName`, `validateAndShowScore` trong `src/utils/validation.cpp` được sử dụng để kiểm tra và hiển thị thông báo lỗi nếu dữ liệu nhập vào không hợp lệ.
+
+  ```cpp
+  // src/utils/validation.cpp
+  // ...existing code...
+  bool validateAndShowStudentID(const string &studentID)
+  {
+      // Mã sinh viên gồm chữ và số, từ 3 đến (MAX_STUDENT_ID_LENGTH - 1) ký tự
+      // (vì mảng cần 1 byte cho null terminator)
+      string pattern = "^[a-zA-Z0-9]{3," + to_string(MAX_STUDENT_ID_LENGTH - 1) + "}$";
+      regex regexPattern(pattern);
+      return regex_match(studentID, regexPattern);
+  }
+
+  bool validateAndShowName(const string &name)
+  {
+      // Kiểm tra họ và tên không được để trống
+      if (name.empty())
+      {
+          cout << "Họ và tên không được để trống." << endl;
+          return false;
+      }
+
+      // Kiểm tra độ dài tối đa
+      if (name.length() > MAX_NAME_LENGTH)
+      {
+          cout << "Họ và tên không được vượt quá " << MAX_NAME_LENGTH << " ký tự." << endl;
+          return false;
+      }
+
+      return true;
+  }
+
+  bool validateAndShowClassName(const string &className)
+  {
+      // Kiểm tra tên lớp không được để trống
+      if (className.empty())
+      {
+          cout << "Tên lớp không được để trống." << endl;
+          return false;
+      }
+
+      // Kiểm tra độ dài tối đa
+      if (className.length() > MAX_CLASS_LENGTH)
+      {
+          cout << "Tên lớp không được vượt quá " << MAX_CLASS_LENGTH << " ký tự." << endl;
+          return false;
+      }
+
+      return true;
+  }
+
+  bool validateAndShowScore(float score)
+  {
+      // Điểm trong khoảng từ 0.0 đến 10.0
+      if (score < 0.0 || score > 10.0)
+      {
+          cout << "Điểm phải trong khoảng từ 0.0 đến 10.0." << endl;
+          return false;
+      }
+
+      return true;
+  }
+  ```
+
+- **Kiểm tra trùng mã sinh viên:** Hàm `validateAndShowDuplicateStudentID` trong `src/core/operations.cpp` kiểm tra xem mã sinh viên đã tồn tại trong cấu trúc dữ liệu hiện tại hay chưa.
+
+  ```cpp
+  // src/core/operations.cpp
+  // ...existing code...
+  bool validateAndShowDuplicateStudentID(const string &studentID, int dataStructureType,
+                                       const ArrayStudentList &arrayList,
+                                       NodeSLL *singlyLinkedList,
+                                       NodeSLL *circularLinkedList,
+                                       NodeDLL *doublyLinkedListHead)
+  {
+      // Kiểm tra trùng mã sinh viên trong mảng
+      for (int i = 0; i < arrayList.count; i++)
+      {
+          if (strcmp(arrayList.students[i].studentID, studentID.c_str()) == 0)
+          {
+              cout << "Mã sinh viên đã tồn tại. Vui lòng nhập mã khác." << endl;
+              return false;
+          }
+      }
+
+      // Kiểm tra trùng mã sinh viên trong DSLK Đơn
+      NodeSLL *currentSLL = singlyLinkedList;
+      while (currentSLL != nullptr)
+      {
+          if (strcmp(currentSLL->info.studentID, studentID.c_str()) == 0)
+          {
+              cout << "Mã sinh viên đã tồn tại. Vui lòng nhập mã khác." << endl;
+              return false;
+          }
+          currentSLL = currentSLL->next;
+      }
+
+      // Kiểm tra trùng mã sinh viên trong DSLK Vòng
+      NodeSLL *currentCSLL = circularLinkedList;
+      if (currentCSLL != nullptr)
+      {
+          do
+          {
+              if (strcmp(currentCSLL->info.studentID, studentID.c_str()) == 0)
+              {
+                  cout << "Mã sinh viên đã tồn tại. Vui lòng nhập mã khác." << endl;
+                  return false;
+              }
+              currentCSLL = currentCSLL->next;
+          } while (currentCSLL != circularLinkedList);
+      }
+
+      // Kiểm tra trùng mã sinh viên trong DSLK Đôi
+      NodeDLL *currentDLL = doublyLinkedListHead;
+      while (currentDLL != nullptr)
+      {
+          if (strcmp(currentDLL->info.studentID, studentID.c_str()) == 0)
+          {
+              cout << "Mã sinh viên đã tồn tại. Vui lòng nhập mã khác." << endl;
+              return false;
+          }
+          currentDLL = currentDLL->next;
+      }
+
+      return true;
+  }
+  ```
+
 ### 3.3. Xóa hoặc Cập nhật Thông tin Sinh viên
 
 **Mô tả:** Cho phép người dùng xóa một sinh viên khỏi danh sách hoặc cập nhật thông tin của một sinh viên đã có, dựa trên Mã sinh viên.
+
+**Trích dẫn Code:**
+
+- **Xóa sinh viên:** Người dùng chọn chức năng "Xóa sinh viên" (case 4) trong hàm `main` ở `src/main.cpp`. Chương trình yêu cầu nhập mã sinh viên, sau đó gọi hàm `deleteStudentFromDataStructure` để xóa sinh viên khỏi cấu trúc dữ liệu đã chọn.
+
+  ```cpp
+  // src/main.cpp
+  // ...existing code...
+          case 4:
+          {
+              char studentID[MAX_STUDENT_ID_LENGTH];
+              if (inputStudentID(studentID))
+              {
+                  deleteStudentFromDataStructure(studentID, dataStructureType, arrayList, singlyLinkedList,
+                                                 circularLinkedList, doublyLinkedListHead, doublyLinkedListTail);
+              }
+              break;
+          }
+  // ...existing code...
+  ```
+
+- **Cập nhật thông tin sinh viên:** Người dùng chọn chức năng "Cập nhật thông tin sinh viên" (case 5) trong hàm `main` ở `src/main.cpp`. Chương trình yêu cầu nhập mã sinh viên, kiểm tra sự tồn tại, sau đó yêu cầu nhập thông tin mới và gọi hàm `updateStudentInDataStructure`.
+
+  ```cpp
+  // src/main.cpp
+  // ...existing code...
+          case 5:
+          {
+              char studentID[MAX_STUDENT_ID_LENGTH];
+              if (inputStudentID(studentID))
+              {
+                  // Kiểm tra xem sinh viên có tồn tại không
+                  bool exists = isStudentExists(studentID, dataStructureType, arrayList, singlyLinkedList,
+                                                circularLinkedList, doublyLinkedListHead);
+
+                  if (exists)
+                  {
+                      cout << "Nhập thông tin mới cho sinh viên:\\n";
+                      Student updateStudent;
+                      strcpy(updateStudent.studentID, studentID); // Đặt mã sinh viên trước khi gọi inputStudent
+                      if (inputStudent(updateStudent))
+                      {
+                          updateStudentInDataStructure(updateStudent, dataStructureType, arrayList, singlyLinkedList,
+                                                       circularLinkedList, doublyLinkedListHead);
+                      }
+                  }
+                  else
+                  {
+                      printError(("Không tìm thấy sinh viên có mã " + string(studentID) + ".").c_str());
+                  }
+              }
+              break;
+          }
+  // ...existing code...
+  ```
+
+- **Hàm xóa sinh viên khỏi cấu trúc dữ liệu:** Hàm `deleteStudentFromDataStructure` trong `src/core/operations.cpp` xử lý logic xóa cho từng loại cấu trúc dữ liệu.
+
+  ```cpp
+  // src/core/operations.cpp
+  // ...existing code...
+  bool deleteStudentFromDataStructure(const char *studentID, int dataStructureType,
+                                      ArrayStudentList &arrayList,
+                                      NodeSLL *&singlyLinkedList,
+                                      NodeSLL *&circularLinkedList,
+                                      NodeDLL *&doublyLinkedListHead,
+                                      NodeDLL *&doublyLinkedListTail)
+  {
+      bool success = false;
+
+      switch (dataStructureType)
+      {
+      case ARRAY_LIST:
+          if (deleteFromArrayList(arrayList, studentID))
+          {
+              printSuccess("Đã xóa sinh viên khỏi danh sách mảng thành công.");
+              success = true;
+          }
+          else
+          {
+              printError("Không tìm thấy sinh viên để xóa trong danh sách mảng.");
+          }
+          break;
+      case SINGLY_LINKED_LIST:
+          if (deleteFromSLL(singlyLinkedList, studentID))
+          {
+              printSuccess("Đã xóa sinh viên khỏi danh sách liên kết đơn thành công.");
+              success = true;
+          }
+          else
+          {
+              printError("Không tìm thấy sinh viên để xóa trong danh sách liên kết đơn.");
+          }
+          break;
+      case CIRCULAR_LINKED_LIST:
+          if (deleteFromCLL(circularLinkedList, studentID))
+          {
+              printSuccess("Đã xóa sinh viên khỏi danh sách liên kết vòng thành công.");
+              success = true;
+          }
+          else
+          {
+              printError("Không tìm thấy sinh viên để xóa trong danh sách liên kết vòng.");
+          }
+          break;
+      case DOUBLY_LINKED_LIST:
+          if (deleteFromDLL(doublyLinkedListHead, doublyLinkedListTail, studentID))
+          {
+              printSuccess("Đã xóa sinh viên khỏi danh sách liên kết đôi thành công.");
+              success = true;
+          }
+          else
+          {
+              printError("Không tìm thấy sinh viên để xóa trong danh sách liên kết đôi.");
+          }
+          break;
+      // Trường hợp BINARY_SEARCH_TREE không được xử lý ở đây vì thường xóa theo key (điểm)
+      default:
+          printError("Cấu trúc dữ liệu không hợp lệ hoặc không hỗ trợ xóa trực tiếp bằng ID.");
+          break;
+      }
+
+      return success;
+  }
+  ```
+
+- **Hàm cập nhật sinh viên trong cấu trúc dữ liệu:** Hàm `updateStudentInDataStructure` trong `src/core/operations.cpp` xử lý logic cập nhật cho từng loại cấu trúc dữ liệu.
+
+  ```cpp
+  // src/core/operations.cpp
+  // ...existing code...
+  bool updateStudentInDataStructure(const Student &student, int dataStructureType,
+                                    ArrayStudentList &arrayList,
+                                    NodeSLL *&singlyLinkedList,
+                                    NodeSLL *&circularLinkedList,
+                                    NodeDLL *&doublyLinkedListHead)
+  {
+      bool success = false;
+      switch (dataStructureType)
+      {
+      case ARRAY_LIST:
+          if (updateInArrayList(arrayList, student))
+          {
+              printSuccess("Đã cập nhật thông tin sinh viên trong danh sách mảng.");
+              success = true;
+          }
+          else
+          {
+              printError("Không tìm thấy sinh viên để cập nhật trong danh sách mảng.");
+          }
+          break;
+      case SINGLY_LINKED_LIST:
+          if (updateInSLL(singlyLinkedList, student))
+          {
+              printSuccess("Đã cập nhật thông tin sinh viên trong danh sách liên kết đơn.");
+              success = true;
+          }
+          else
+          {
+              printError("Không tìm thấy sinh viên để cập nhật trong danh sách liên kết đơn.");
+          }
+          break;
+      case CIRCULAR_LINKED_LIST:
+          if (updateInCLL(circularLinkedList, student))
+          {
+              printSuccess("Đã cập nhật thông tin sinh viên trong danh sách liên kết vòng.");
+              success = true;
+          }
+          else
+          {
+              printError("Không tìm thấy sinh viên để cập nhật trong danh sách liên kết vòng.");
+          }
+          break;
+      case DOUBLY_LINKED_LIST:
+          if (updateInDLL(doublyLinkedListHead, student))
+          {
+              printSuccess("Đã cập nhật thông tin sinh viên trong danh sách liên kết đôi.");
+              success = true;
+          }
+          else
+          {
+              printError("Không tìm thấy sinh viên để cập nhật trong danh sách liên kết đôi.");
+          }
+          break;
+      // BST thường cập nhật bằng cách xóa node cũ và chèn node mới nếu key (điểm) thay đổi.
+      // Nếu chỉ cập nhật thông tin không phải key, có thể tìm và sửa trực tiếp.
+      default:
+          printError("Cấu trúc dữ liệu không hợp lệ hoặc không hỗ trợ cập nhật.");
+          break;
+      }
+      return success;
+  }
+  ```
 
 #### Tìm kiếm sinh viên theo Mã số
 
@@ -311,26 +871,6 @@ Các hàm thao tác với `struct Student` được thiết kế dưới dạng 
    - **Mảng:** Duyệt từ đầu đến cuối, so sánh `studentID` của từng sinh viên với mã cần tìm bằng `strcmp()`.
    - **DSLK:** Duyệt từ `head` (hoặc `tail->next` cho DSLK Vòng) đến hết danh sách, so sánh tương tự.
 3. Nếu tìm thấy sinh viên, trả về con trỏ tới `struct Student` đó (hoặc chỉ số trong mảng, con trỏ tới `Node` trong DSLK). Nếu không tìm thấy, thông báo cho người dùng.
-
-#### Chức năng Xóa
-
-1. Thực hiện tìm kiếm sinh viên theo Mã số.
-2. Nếu không tìm thấy, thông báo "Không tìm thấy sinh viên với mã số X".
-3. Nếu tìm thấy, hiển thị thông tin sinh viên đó và yêu cầu người dùng xác nhận việc xóa.
-4. Nếu người dùng xác nhận:
-   - **Mảng:** Dịch chuyển tất cả các phần tử phía sau vị trí xóa lên một bậc để lấp chỗ trống. Giảm `size` đi 1.
-   - **DSLK:** Cập nhật con trỏ `next` (và `prev` cho DSLK Đôi) của `Node` đứng trước trỏ tới `Node` đứng sau `Node` cần xóa. Giải phóng bộ nhớ của `Node` bị xóa bằng `delete`. Giảm `size` đi 1. Cần xử lý các trường hợp đặc biệt: xóa `Node` đầu, cuối.
-5. Thông báo xóa thành công.
-
-#### Chức năng Cập nhật
-
-1. Thực hiện tìm kiếm sinh viên theo Mã số.
-2. Nếu không tìm thấy, thông báo "Không tìm thấy sinh viên với mã số X".
-3. Nếu tìm thấy, hiển thị thông tin hiện tại của sinh viên đó.
-4. Cho phép người dùng chọn trường thông tin muốn cập nhật (Họ, Tên, Lớp, Điểm - Mã sinh viên thường không cho phép cập nhật).
-5. Yêu cầu người dùng nhập giá trị mới cho trường đã chọn. Kiểm tra tính hợp lệ của giá trị mới (tương tự như khi thêm sinh viên).
-6. Nếu hợp lệ, cập nhật trực tiếp vào `struct Student` đã tìm thấy.
-7. Thông báo cập nhật thành công.
 
 ### 3.4. Thống kê Sinh viên
 
@@ -353,6 +893,66 @@ Các hàm thao tác với `struct Student` được thiết kế dưới dạng 
   - Hiển thị số lượng (hoặc tỷ lệ %) sinh viên theo từng loại học lực.
 **Xử lý trường hợp đặc biệt:**
 - Nếu danh sách rỗng, tất cả các chức năng thống kê nên hiển thị thông báo "Danh sách sinh viên rỗng."
+
+**Trích dẫn Code:**
+
+```cpp
+// From src/main.cpp
+case 8:
+    performStatistics(dataStructureType, arrayList);
+    break;
+```
+
+```cpp
+// From src/core/operations.cpp
+// Hàm thực hiện thống kê sinh viên
+void performStatistics(int dataStructureType, const ArrayStudentList &arrayList)
+{
+    if (dataStructureType != ARRAY_LIST)
+    {
+        printWarning("Chức năng thống kê chỉ được hiện thực cho danh sách mảng.");
+        return;
+    }
+
+    if (arrayList.count == 0)
+    {
+        printWarning("Danh sách sinh viên rỗng. Không có thống kê.");
+        return;
+    }
+
+    float highest = findHighestScore(arrayList);
+    float lowest = findLowestScore(arrayList);
+    float average = calculateAverageScore(arrayList);
+
+    printHeader("THỐNG KÊ ĐIỂM SINH VIÊN");
+    cout << "Số lượng sinh viên: " << arrayList.count << "\\n";
+    cout << GREEN << "Điểm cao nhất: " << highest << RESET << "\\n";
+    cout << RED << "Điểm thấp nhất: " << lowest << RESET << "\\n";
+    cout << BLUE << "Điểm trung bình: " << average << RESET << "\\n";
+
+    cout << CYAN << "\\nSinh viên có điểm cao nhất:\\n" << RESET;
+    printDivider();
+    for (int i = 0; i < arrayList.count; i++)
+    {
+        if (arrayList.students[i].score == highest)
+        {
+            displayStudent(arrayList.students[i]);
+            printDivider();
+        }
+    }
+
+    cout << CYAN << "\\nSinh viên có điểm thấp nhất:\\n" << RESET;
+    printDivider();
+    for (int i = 0; i < arrayList.count; i++)
+    {
+        if (arrayList.students[i].score == lowest)
+        {
+            displayStudent(arrayList.students[i]);
+            printDivider();
+        }
+    }
+}
+```
 
 ### 3.5. Sắp xếp Danh sách Sinh viên
 
@@ -381,6 +981,79 @@ Các hàm thao tác với `struct Student` được thiết kế dưới dạng 
   - Độ phức tạp thời gian: O(n log n) trong mọi trường hợp.
   - Cài đặt: Phù hợp cho cả Mảng và DSLK. Cần thêm không gian phụ để trộn.
   
+**Trích dẫn Code:**
+
+```cpp
+// From src/main.cpp
+// ...existing code...
+        case 9:
+        {
+            int sortAlgorithm = selectSortAlgorithm(dataStructureType);
+            if (sortAlgorithm != -1)
+            {
+                sortStudentList(dataStructureType, sortAlgorithm, arrayList, doublyLinkedListHead);
+            }
+            break;
+        }
+// ...existing code...
+```
+
+```cpp
+// From src/algorithms/sorting.cpp
+// --- QuickSort cho danh sách mảng ---
+// Hàm phân vùng (partition) cho thuật toán QuickSort
+int partitionArrayList(ArrayStudentList &list, int low, int high)
+{
+    float pivot = list.students[high].score; // Chọn phần tử cuối làm pivot
+    int i = low - 1;                         // Vị trí của phần tử nhỏ hơn
+
+    for (int j = low; j < high; j++)
+    {
+        // Nếu phần tử hiện tại nhỏ hơn hoặc bằng pivot
+        if (list.students[j].score <= pivot)
+        {
+            i++;
+            // Hoán đổi list.students[i] và list.students[j]
+            Student temp = list.students[i];
+            list.students[i] = list.students[j];
+            list.students[j] = temp;
+        }
+    }
+
+    // Hoán đổi list.students[i+1] và list.students[high] (pivot)
+    Student temp = list.students[i + 1];
+    list.students[i + 1] = list.students[high];
+    list.students[high] = temp;
+
+    return i + 1;
+}
+
+// Thuật toán QuickSort
+void quickSortArrayList(ArrayStudentList &list, int low, int high)
+{
+    if (low < high)
+    {
+        // Tìm vị trí phân vùng
+        int pi = partitionArrayList(list, low, high);
+
+        // Sắp xếp các phần tử trước và sau vị trí phân vùng
+        quickSortArrayList(list, low, pi - 1);
+        quickSortArrayList(list, pi + 1, high);
+    }
+}
+
+// Hàm gọi QuickSort
+void quickSortArrayList(ArrayStudentList &list)
+{
+    if (list.count <= 1)
+    {
+        return; // Danh sách đã sắp xếp
+    }
+
+    quickSortArrayList(list, 0, list.count - 1);
+}
+```
+
 **Tiêu chí sắp xếp:**
 
 - Theo Mã sinh viên (thứ tự từ điển, tăng dần).
@@ -389,82 +1062,25 @@ Các hàm thao tác với `struct Student` được thiết kế dưới dạng 
 
 **Đo thời gian thực hiện:** Sử dụng thư viện `<chrono>` của C++ để đo thời gian bắt đầu và kết thúc quá trình sắp xếp để so sánh hiệu suất của các thuật toán.
 
-**Ví dụ cài đặt Bubble Sort:**
-
-Theo cài đặt trong `src/algorithms/sorting.cpp` (dòng 11-34):
-
-```cpp
-// Thuật toán Bubble Sort cho mảng sinh viên
-void bubbleSortArray(ArrayStudentList *list, SortCriteria criteria, SortOrder order)
-{
-    if (!list || list->count <= 1)
-        return;
-
-    for (int i = 0; i < list->count - 1; i++)
-    {
-        bool swapped = false;
-        for (int j = 0; j < list->count - i - 1; j++)
-        {
-            bool shouldSwap = false;
-            
-            // So sánh theo tiêu chí được chọn
-            switch (criteria)
-            {
-            case SORT_BY_ID:
-                shouldSwap = (order == ASCENDING) ? 
-                    (strcmp(list->students[j].studentID, list->students[j + 1].studentID) > 0) :
-                    (strcmp(list->students[j].studentID, list->students[j + 1].studentID) < 0);
-                break;
-            case SORT_BY_SCORE:
-                shouldSwap = (order == ASCENDING) ? 
-                    (list->students[j].score > list->students[j + 1].score) :
-                    (list->students[j].score < list->students[j + 1].score);
-                break;
-            }
-            
-            if (shouldSwap)
-            {
-                swapStudents(&list->students[j], &list->students[j + 1]);
-                swapped = true;
-            }
-        }
-        if (!swapped) break; // Tối ưu hóa: dừng sớm nếu đã sắp xếp
-    }
-}
-```
-
-**Ví dụ cài đặt Quick Sort:**
-
-Theo cài đặt trong `src/algorithms/sorting.cpp` (dòng 257-285):
-
-```cpp
-// Thuật toán Quick Sort cho mảng sinh viên
-void quickSortArray(ArrayStudentList *list, SortCriteria criteria, SortOrder order)
-{
-    if (!list || list->count <= 1)
-        return;
-    
-    quickSortArrayRecursive(list->students, 0, list->count - 1, criteria, order);
-}
-
-// Hàm đệ quy cho Quick Sort
-void quickSortArrayRecursive(Student arr[], int low, int high, SortCriteria criteria, SortOrder order)
-{
-    if (low < high)
-    {
-        // Tìm vị trí pivot sau khi phân hoạch
-        int pivotIndex = partitionArray(arr, low, high, criteria, order);
-        
-        // Đệ quy sắp xếp các phần trước và sau pivot
-        quickSortArrayRecursive(arr, low, pivotIndex - 1, criteria, order);
-        quickSortArrayRecursive(arr, pivotIndex + 1, high, criteria, order);
-    }
-}
-```
-
 ### 3.6. Tìm kiếm Sinh viên
 
 **Mô tả:** Cung cấp các phương pháp tìm kiếm sinh viên dựa trên các trường thông tin khác nhau (Mã SV, Tên, Lớp, Điểm) với các thuật toán tìm kiếm được cài đặt thủ công.
+
+**Trích dẫn Code từ `src/main.cpp` (Xử lý lựa chọn tìm kiếm):**
+
+```cpp
+// From src/main.cpp
+case 7:
+{
+    char studentID[MAX_STUDENT_ID_LENGTH];
+    if (inputStudentID(studentID))
+    {
+        searchStudentInDataStructure(studentID, dataStructureType, arrayList, singlyLinkedList,
+                                     circularLinkedList, doublyLinkedListHead);
+    }
+    break;
+}
+```
 
 **Các thuật toán tìm kiếm được cài đặt:**
 
@@ -473,64 +1089,62 @@ void quickSortArrayRecursive(Student arr[], int low, int high, SortCriteria crit
   - Độ phức tạp thời gian: O(n) trong trường hợp xấu nhất.
   - Áp dụng được cho tất cả các cấu trúc dữ liệu và không yêu cầu danh sách được sắp xếp trước.
 
+  **Ví dụ cài đặt (`src/core/operations.cpp`):**
+
+  ```cpp
+  // From src/core/operations.cpp
+  // Tìm kiếm tuần tự sinh viên theo mã SV trong mảng
+  int sequentialSearchByID(ArrayStudentList *list, const char *studentID)
+  {
+      if (!list || !studentID)
+          return -1;
+      
+      for (int i = 0; i < list->count; i++)
+      {
+          if (strcmp(list->students[i].studentID, studentID) == 0)
+          {
+              return i; // Trả về chỉ số của sinh viên tìm thấy
+          }
+      }
+      return -1; // Không tìm thấy
+  }
+  ```
+
 - **Binary Search (Tìm kiếm nhị phân):**
   - Chỉ áp dụng được khi danh sách đã được sắp xếp theo trường cần tìm kiếm.
   - So sánh giá trị cần tìm với phần tử ở giữa danh sách. Nếu bằng nhau thì tìm thấy. Nếu nhỏ hơn thì tìm ở nửa trái, nếu lớn hơn thì tìm ở nửa phải.
   - Độ phức tạp thời gian: O(log n).
   - Chỉ hiệu quả với mảng do yêu cầu truy cập ngẫu nhiên nhanh.
 
-**Ví dụ cài đặt Sequential Search:**
+  **Ví dụ cài đặt (`src/core/operations.cpp`):**
 
-Theo cài đặt trong `src/core/operations.cpp` (dòng 425-442):
-
-```cpp
-// Tìm kiếm tuần tự sinh viên theo mã SV trong mảng
-int sequentialSearchByID(ArrayStudentList *list, const char *studentID)
-{
-    if (!list || !studentID)
-        return -1;
-    
-    for (int i = 0; i < list->count; i++)
-    {
-        if (strcmp(list->students[i].studentID, studentID) == 0)
-        {
-            return i; // Trả về chỉ số của sinh viên tìm thấy
-        }
-    }
-    return -1; // Không tìm thấy
-}
-```
-
-**Ví dụ cài đặt Binary Search:**
-
-Theo cài đặt trong `src/core/operations.cpp` (dòng 465-488):
-
-```cpp
-// Tìm kiếm nhị phân sinh viên theo mã SV (yêu cầu mảng đã sắp xếp)
-int binarySearchByID(ArrayStudentList *list, const char *studentID)
-{
-    if (!list || !studentID || list->count == 0)
-        return -1;
-    
-    int left = 0;
-    int right = list->count - 1;
-    
-    while (left <= right)
-    {
-        int mid = left + (right - left) / 2;
-        int cmp = strcmp(list->students[mid].studentID, studentID);
-        
-        if (cmp == 0)
-            return mid; // Tìm thấy
-        else if (cmp < 0)
-            left = mid + 1; // Tìm ở nửa phải
-        else
-            right = mid - 1; // Tìm ở nửa trái
-    }
-    
-    return -1; // Không tìm thấy
-}
-```
+  ```cpp
+  // From src/core/operations.cpp
+  // Tìm kiếm nhị phân sinh viên theo mã SV (yêu cầu mảng đã sắp xếp)
+  int binarySearchByID(ArrayStudentList *list, const char *studentID)
+  {
+      if (!list || !studentID || list->count == 0)
+          return -1;
+      
+      int left = 0;
+      int right = list->count - 1;
+      
+      while (left <= right)
+      {
+          int mid = left + (right - left) / 2;
+          int cmp = strcmp(list->students[mid].studentID, studentID);
+          
+          if (cmp == 0)
+              return mid; // Tìm thấy
+          else if (cmp < 0)
+              left = mid + 1; // Tìm ở nửa phải
+          else
+              right = mid - 1; // Tìm ở nửa trái
+      }
+      
+      return -1; // Không tìm thấy
+  }
+  ```
 
 **Tìm kiếm mở rộng:**
 

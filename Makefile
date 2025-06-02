@@ -21,6 +21,7 @@ SOURCES = $(SRC_DIR)/main.cpp \
           $(SRC_DIR)/data_structures/doubly_linked_list.cpp \
           $(SRC_DIR)/data_structures/binary_search_tree.cpp \
           $(SRC_DIR)/algorithms/sorting.cpp \
+          $(SRC_DIR)/algorithms/knights_tour.cpp \
           $(SRC_DIR)/ui/common_ui.cpp \
           $(SRC_DIR)/utils/common_utils.cpp \
           $(SRC_DIR)/utils/validation.cpp \
@@ -36,6 +37,7 @@ OBJECTS = $(BUILD_DIR)/main.o \
           $(BUILD_DIR)/doubly_linked_list.o \
           $(BUILD_DIR)/binary_search_tree.o \
           $(BUILD_DIR)/sorting.o \
+          $(BUILD_DIR)/knights_tour.o \
           $(BUILD_DIR)/common_ui.o \
           $(BUILD_DIR)/common_utils.o \
           $(BUILD_DIR)/validation.o \
@@ -99,6 +101,11 @@ $(BUILD_DIR)/student.o: $(SRC_DIR)/core/student.cpp
 $(BUILD_DIR)/sorting.o: $(SRC_DIR)/algorithms/sorting.cpp
 	@echo "Đang biên dịch sorting.cpp..."
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/algorithms/sorting.cpp -o $(BUILD_DIR)/sorting.o
+
+# Rule để compile knights_tour.cpp
+$(BUILD_DIR)/knights_tour.o: $(SRC_DIR)/algorithms/knights_tour.cpp
+	@echo "Đang biên dịch knights_tour.cpp..."
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/algorithms/knights_tour.cpp -o $(BUILD_DIR)/knights_tour.o
 
 # Rule để compile common_ui.cpp
 $(BUILD_DIR)/common_ui.o: $(SRC_DIR)/ui/common_ui.cpp

@@ -172,7 +172,7 @@ int selectDataStructure()
     // Hiển thị menu dưới dạng bảng
     cout << BOLD;
     cout << "┌────────┬───────────────────────────────────────────┐" << endl;
-    cout << "│  CHỌN  │             CẤU TRÚC DỮ LIỆU             │" << endl;
+    cout << "│  CHỌN  │             CẤU TRÚC DỮ LIỆU              │" << endl;
     cout << "├────────┼───────────────────────────────────────────┤" << endl;
     cout << "│   1    │  Danh sách mảng                           │" << endl;
     cout << "│   2    │  Danh sách liên kết đơn                   │" << endl;
@@ -186,7 +186,9 @@ int selectDataStructure()
     while (!(cin >> choice) || choice < 1 || choice > 5)
     {
         printError("Lựa chọn không hợp lệ. Vui lòng nhập lại.");
+        // Đặt lại trạng thái của cin để tránh lỗi khi nhập không phải số
         cin.clear();
+        // Xóa bộ đệm nhập để tránh lỗi khi nhập không phải số
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 

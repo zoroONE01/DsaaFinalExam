@@ -61,13 +61,13 @@ bool validateAndShowDuplicateStudentID(const string &studentID, int dataStructur
                                        NodeSLL *circularLinkedList,
                                        NodeDLL *doublyLinkedListHead)
 {
-    if (isStudentExists(studentID.c_str(), dataStructureType, arrayList,
-                        singlyLinkedList, circularLinkedList, doublyLinkedListHead))
+    bool isExist = isStudentExists(studentID.c_str(), dataStructureType, arrayList,
+                                   singlyLinkedList, circularLinkedList, doublyLinkedListHead);
+    if (isExist)
     {
         printError(("Mã sinh viên " + studentID + " đã tồn tại!").c_str());
-        return false;
     }
-    return true;
+    return !isExist;
 }
 
 // Hàm thoát chương trình, giải phóng bộ nhớ
@@ -312,8 +312,9 @@ void displayCurrentList(int dataStructureType,
         {
             cout << BOLD << CYAN << "\n=== CÂY TÌM KIẾM NHỊ PHÂN ===" << RESET << endl;
             displayBSTTree(binarySearchTree);
-            
-            cout << "\n" << BOLD << YELLOW << "Duyệt cây theo thứ tự giữa (In-order):" << RESET;
+
+            cout << "\n"
+                 << BOLD << YELLOW << "Duyệt cây theo thứ tự giữa (In-order):" << RESET;
             inorderTraversalBST(binarySearchTree);
         }
         else
@@ -334,63 +335,40 @@ void searchStudentInDataStructure(const char *studentID, int dataStructureType,
                                   NodeSLL *circularLinkedList,
                                   NodeDLL *doublyLinkedListHead)
 {
-    bool found = false;
-
-    switch (dataStructureType)
+    // Kiểm tra trường hợp đặc biệt cho BST
+    if (dataStructureType == BINARY_SEARCH_TREE)
     {
-    case ARRAY_LIST:
-        {
-            int index = searchInArrayList(arrayList, studentID);
-            if (index != -1)
-            {
-                printSuccess("Tìm thấy sinh viên trong danh sách mảng:");
-                displayStudentDetailed(arrayList.students[index]);
-                found = true;
-            }
-        }
-        break;
-    case SINGLY_LINKED_LIST:
-        {
-            NodeSLL *node = searchInSLL(singlyLinkedList, studentID);
-            if (node != NULL)
-            {
-                printSuccess("Tìm thấy sinh viên trong danh sách liên kết đơn:");
-                displayStudentDetailed(node->info);
-                found = true;
-            }
-        }
-        break;
-    case CIRCULAR_LINKED_LIST:
-        {
-            NodeSLL *node = searchInCLL(circularLinkedList, studentID);
-            if (node != NULL)
-            {
-                printSuccess("Tìm thấy sinh viên trong danh sách liên kết vòng:");
-                displayStudentDetailed(node->info);
-                found = true;
-            }
-        }
-        break;
-    case DOUBLY_LINKED_LIST:
-        {
-            NodeDLL *node = searchInDLL(doublyLinkedListHead, studentID);
-            if (node != NULL)
-            {
-                printSuccess("Tìm thấy sinh viên trong danh sách liên kết đôi:");
-                displayStudentDetailed(node->info);
-                found = true;
-            }
-        }
-        break;
-    case BINARY_SEARCH_TREE:
         printWarning("Chức năng tìm kiếm theo mã sinh viên chưa được hiện thực cho cây tìm kiếm nhị phân.");
-        return;
-    default:
-        printError("Cấu trúc dữ liệu không hợp lệ.");
         return;
     }
 
-    if (!found)
+    // Sử dụng getStudentFromDataStructure để tìm kiếm
+    Student foundStudent;
+    bool found = getStudentFromDataStructure(studentID, dataStructureType, arrayList,
+                                           singlyLinkedList, circularLinkedList,
+                                           doublyLinkedListHead, foundStudent);
+
+    if (found)
+    {
+        // Hiển thị thông báo thành công tùy theo cấu trúc dữ liệu
+        switch (dataStructureType)
+        {
+        case ARRAY_LIST:
+            printSuccess("Tìm thấy sinh viên trong danh sách mảng:");
+            break;
+        case SINGLY_LINKED_LIST:
+            printSuccess("Tìm thấy sinh viên trong danh sách liên kết đơn:");
+            break;
+        case CIRCULAR_LINKED_LIST:
+            printSuccess("Tìm thấy sinh viên trong danh sách liên kết vòng:");
+            break;
+        case DOUBLY_LINKED_LIST:
+            printSuccess("Tìm thấy sinh viên trong danh sách liên kết đôi:");
+            break;
+        }
+        displayStudentDetailed(foundStudent);
+    }
+    else
     {
         printError(("Không tìm thấy sinh viên có mã: " + string(studentID)).c_str());
     }
@@ -421,7 +399,8 @@ void performStatistics(int dataStructureType, const ArrayStudentList &arrayList)
     cout << RED << "Điểm thấp nhất: " << lowest << RESET << "\n";
     cout << BLUE << "Điểm trung bình: " << average << RESET << "\n";
 
-    cout << CYAN << "\nSinh viên có điểm cao nhất:\n" << RESET;
+    cout << CYAN << "\nSinh viên có điểm cao nhất:\n"
+         << RESET;
     printDivider();
     for (int i = 0; i < arrayList.count; i++)
     {
@@ -432,7 +411,8 @@ void performStatistics(int dataStructureType, const ArrayStudentList &arrayList)
         }
     }
 
-    cout << CYAN << "\nSinh viên có điểm thấp nhất:\n" << RESET;
+    cout << CYAN << "\nSinh viên có điểm thấp nhất:\n"
+         << RESET;
     printDivider();
     for (int i = 0; i < arrayList.count; i++)
     {
@@ -520,8 +500,8 @@ bool handleInputFromCSV(int dataStructureType,
             for (int i = 0; i < arrayList.count; i++)
             {
                 addStudentToDataStructure(arrayList.students[i], dataStructureType,
-                                        arrayList, singlyLinkedList, circularLinkedList,
-                                        doublyLinkedListHead, doublyLinkedListTail, binarySearchTree);
+                                          arrayList, singlyLinkedList, circularLinkedList,
+                                          doublyLinkedListHead, doublyLinkedListTail, binarySearchTree);
             }
         }
         return true;
@@ -569,37 +549,37 @@ bool inputStudentID(char *studentID)
 // Hàm nhập thông tin sinh viên từ bàn phím
 bool inputStudent(Student &student)
 {
-    clearScreen();
-    printHeader("NHẬP THÔNG TIN SINH VIÊN");
-    cout << "Lưu ý: Nhập '00' để hủy bỏ nhập liệu\n" << endl;
 
     string tempInput;
     bool isValid;
 
-    // Nhập mã sinh viên
-    do
+    // Nhập mã sinh viên (chỉ nhập nếu chưa có)
+    if (student.studentID[0] == '\0' || strlen(student.studentID) == 0)
     {
-        cout << "Nhập mã sinh viên: ";
-        getline(cin, tempInput);
-        tempInput = trim(tempInput); // Trim input
-
-        // Kiểm tra hủy bỏ
-        if (tempInput == "00")
+        do
         {
-            if (confirmCancel())
+            cout << "Nhập mã sinh viên: ";
+            getline(cin, tempInput);
+            tempInput = trim(tempInput); // Trim input
+
+            // Kiểm tra hủy bỏ
+            if (tempInput == "00")
             {
-                student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
-                return false;
+                if (confirmCancel())
+                {
+                    student.studentID[0] = '\0'; // Đánh dấu là đã hủy bỏ
+                    return false;
+                }
+                continue;
             }
-            continue;
-        }
 
-        isValid = validateAndShowStudentID(tempInput);
-        if (isValid)
-        {
-            strcpy(student.studentID, tempInput.c_str());
-        }
-    } while (!isValid);
+            isValid = validateAndShowStudentID(tempInput);
+            if (isValid)
+            {
+                strcpy(student.studentID, tempInput.c_str());
+            }
+        } while (!isValid);
+    }
 
     // Nhập họ và tên đệm
     do
@@ -715,7 +695,8 @@ bool inputStudent(Student &student)
     // Clear input buffer for next input
     clearInputBuffer();
 
-    cout << "\n" << GREEN << "✓ Đã nhập thông tin sinh viên thành công!" << RESET << endl;
+    cout << "\n"
+         << GREEN << "✓ Đã nhập thông tin sinh viên thành công!" << RESET << endl;
     displayStudentDetailed(student);
 
     return true;
@@ -734,4 +715,199 @@ void initAllDataStructures(ArrayStudentList &arrayList,
     initCLL(circularLinkedList);
     initDLL(doublyLinkedListHead, doublyLinkedListTail);
     initBST(binarySearchTree);
+}
+
+// Hàm lấy thông tin sinh viên từ cấu trúc dữ liệu
+bool getStudentFromDataStructure(const char *studentID, int dataStructureType,
+                                 const ArrayStudentList &arrayList,
+                                 NodeSLL *singlyLinkedList,
+                                 NodeSLL *circularLinkedList,
+                                 NodeDLL *doublyLinkedListHead,
+                                 Student &outStudent)
+{
+    switch (dataStructureType)
+    {
+    case ARRAY_LIST:
+    {
+        int index = searchInArrayList(arrayList, studentID);
+        if (index != -1)
+        {
+            outStudent = arrayList.students[index];
+            return true;
+        }
+    }
+    break;
+    case SINGLY_LINKED_LIST:
+    {
+        NodeSLL *node = searchInSLL(singlyLinkedList, studentID);
+        if (node != NULL)
+        {
+            outStudent = node->info;
+            return true;
+        }
+    }
+    break;
+    case CIRCULAR_LINKED_LIST:
+    {
+        NodeSLL *node = searchInCLL(circularLinkedList, studentID);
+        if (node != NULL)
+        {
+            outStudent = node->info;
+            return true;
+        }
+    }
+    break;
+    case DOUBLY_LINKED_LIST:
+    {
+        NodeDLL *node = searchInDLL(doublyLinkedListHead, studentID);
+        if (node != NULL)
+        {
+            outStudent = node->info;
+            return true;
+        }
+    }
+    break;
+    default:
+        return false;
+    }
+    return false;
+}
+
+// Hàm nhập thông tin sinh viên từ bàn phím cho việc cập nhật
+bool inputStudentForUpdate(Student &student)
+{
+    string tempInput;
+    bool isValid;
+
+    clearScreen();
+    printHeader("CẬP NHẬT THÔNG TIN SINH VIÊN");
+    printInfo("Thông tin hiện tại của sinh viên:");
+    displayStudentDetailed(student);
+    
+    cout << "\n" << YELLOW << "Hướng dẫn:" << RESET << endl;
+    cout << "- Nhập thông tin mới để thay đổi" << endl;
+    cout << "- Nhấn Enter để giữ nguyên thông tin cũ" << endl;
+    cout << "- Nhập \"00\" để hủy bỏ" << endl;
+    cout << "----------------------------------------" << endl;
+
+    // Nhập họ và tên đệm
+    cout << "Họ và tên đệm hiện tại: " << CYAN << student.firstName << RESET << endl;
+    cout << "Nhập họ và tên đệm mới (Enter để giữ nguyên): ";
+    getline(cin, tempInput);
+    tempInput = trim(tempInput);
+
+    // Kiểm tra hủy bỏ
+    if (tempInput == "00")
+    {
+        if (confirmCancel())
+        {
+            return false;
+        }
+    }
+    else if (!tempInput.empty())
+    {
+        isValid = validateAndShowName(tempInput);
+        if (isValid)
+        {
+            strcpy(student.firstName, tempInput.c_str());
+        }
+        else
+        {
+            printError("Họ và tên đệm không hợp lệ. Giữ nguyên giá trị cũ.");
+        }
+    }
+
+    // Nhập tên
+    cout << "\nTên hiện tại: " << CYAN << student.lastName << RESET << endl;
+    cout << "Nhập tên mới (Enter để giữ nguyên): ";
+    getline(cin, tempInput);
+    tempInput = trim(tempInput);
+
+    // Kiểm tra hủy bỏ
+    if (tempInput == "00")
+    {
+        if (confirmCancel())
+        {
+            return false;
+        }
+    }
+    else if (!tempInput.empty())
+    {
+        isValid = validateAndShowName(tempInput);
+        if (isValid)
+        {
+            strcpy(student.lastName, tempInput.c_str());
+        }
+        else
+        {
+            printError("Tên không hợp lệ. Giữ nguyên giá trị cũ.");
+        }
+    }
+
+    // Nhập lớp
+    cout << "\nLớp hiện tại: " << CYAN << student.studentClass << RESET << endl;
+    cout << "Nhập lớp mới (Enter để giữ nguyên): ";
+    getline(cin, tempInput);
+    tempInput = trim(tempInput);
+
+    // Kiểm tra hủy bỏ
+    if (tempInput == "00")
+    {
+        if (confirmCancel())
+        {
+            return false;
+        }
+    }
+    else if (!tempInput.empty())
+    {
+        isValid = validateAndShowClassName(tempInput);
+        if (isValid)
+        {
+            strcpy(student.studentClass, tempInput.c_str());
+        }
+        else
+        {
+            printError("Tên lớp không hợp lệ. Giữ nguyên giá trị cũ.");
+        }
+    }
+
+    // Nhập điểm số
+    cout << "\nĐiểm hiện tại: " << CYAN << student.score << RESET << endl;
+    cout << "Nhập điểm mới (0-10, Enter để giữ nguyên): ";
+    getline(cin, tempInput);
+    tempInput = trim(tempInput);
+
+    // Kiểm tra hủy bỏ
+    if (tempInput == "00")
+    {
+        if (confirmCancel())
+        {
+            return false;
+        }
+    }
+    else if (!tempInput.empty())
+    {
+        try
+        {
+            float score = stof(tempInput);
+            isValid = validateAndShowScore(score);
+            if (isValid)
+            {
+                student.score = score;
+            }
+            else
+            {
+                printError("Điểm không hợp lệ. Giữ nguyên giá trị cũ.");
+            }
+        }
+        catch (const exception &e)
+        {
+            printError("Điểm phải là một số thực. Giữ nguyên giá trị cũ.");
+        }
+    }
+
+    cout << "\n" << GREEN << "✓ Thông tin sinh viên sau khi cập nhật:" << RESET << endl;
+    displayStudentDetailed(student);
+
+    return true;
 }

@@ -99,6 +99,15 @@ bool inputStudentID(char *studentID);
 
 bool inputStudent(Student &student);
 
+bool getStudentFromDataStructure(const char *studentID, int dataStructureType,
+                                const ArrayStudentList &arrayList,
+                                NodeSLL *singlyLinkedList,
+                                NodeSLL *circularLinkedList,
+                                NodeDLL *doublyLinkedListHead,
+                                Student &foundStudent);
+
+bool inputStudentForUpdate(Student &student);
+
 void initAllDataStructures(ArrayStudentList &arrayList,
                            NodeSLL *&singlyLinkedList,
                            NodeSLL *&circularLinkedList,

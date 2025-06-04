@@ -41,9 +41,52 @@ int main()
             dataStructureType = selectDataStructure();
             break;
         case 2:
-            handleInputFromCSV(dataStructureType, arrayList, singlyLinkedList, circularLinkedList,
+        {
+            string filePathStr;
+            // Thông báo về cách hủy bỏ nhập liệu
+            printInfo("Lưu ý: Nhập \"00\" để hủy bỏ và trở về menu chính.");
+
+            cout << "\nNhập đường dẫn đến file CSV (nhấn Enter để dùng mặc định 'data/students.csv'): ";
+
+            // Handle potential leftover newline from previous cin >> operations
+            if (cin.peek() == '\n')
+            {
+                cin.ignore();
+            }
+            getline(cin, filePathStr);
+            filePathStr = trim(filePathStr); // Trim input
+
+            if (filePathStr == "00")
+            {
+                if (confirmCancel())
+                {
+                    printInfo("Đã hủy thao tác nhập từ file CSV.");
+                    break;
+                }
+                // If not confirmed, re-prompt
+                cout << "\nNhập lại đường dẫn đến file CSV (nhấn Enter để dùng mặc định 'data/students.csv'): ";
+                if (cin.peek() == '\n')
+                {
+                    cin.ignore();
+                }
+                getline(cin, filePathStr);
+                filePathStr = trim(filePathStr);
+                if (filePathStr == "00")
+                {
+                    printInfo("Đã hủy thao tác nhập từ file CSV.");
+                    break;
+                }
+            }
+
+            if (filePathStr.empty())
+            {
+                filePathStr = "data/students.csv"; // Default path
+            }
+
+            handleInputFromCSV(filePathStr.c_str(), dataStructureType, arrayList, singlyLinkedList, circularLinkedList,
                                doublyLinkedListHead, doublyLinkedListTail, binarySearchTree);
             break;
+        }
         case 3:
         {
             char studentID[MAX_STUDENT_ID_LENGTH];

@@ -87,7 +87,8 @@ bool sortStudentList(int dataStructureType, int sortAlgorithm,
                      ArrayStudentList &arrayList,
                      NodeDLL *&doublyLinkedListHead);
 
-bool handleInputFromCSV(int dataStructureType,
+bool handleInputFromCSV(const char* filePath,
+                        int dataStructureType,
                         ArrayStudentList &arrayList,
                         NodeSLL *&singlyLinkedList,
                         NodeSLL *&circularLinkedList,

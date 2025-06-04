@@ -312,8 +312,9 @@ void displayCurrentList(int dataStructureType,
         {
             cout << BOLD << CYAN << "\n=== CÂY TÌM KIẾM NHỊ PHÂN ===" << RESET << endl;
             displayBSTTree(binarySearchTree);
-            
-            cout << "\n" << BOLD << YELLOW << "Duyệt cây theo thứ tự giữa (In-order):" << RESET;
+
+            cout << "\n"
+                 << BOLD << YELLOW << "Duyệt cây theo thứ tự giữa (In-order):" << RESET;
             inorderTraversalBST(binarySearchTree);
         }
         else
@@ -339,49 +340,49 @@ void searchStudentInDataStructure(const char *studentID, int dataStructureType,
     switch (dataStructureType)
     {
     case ARRAY_LIST:
+    {
+        int index = searchInArrayList(arrayList, studentID);
+        if (index != -1)
         {
-            int index = searchInArrayList(arrayList, studentID);
-            if (index != -1)
-            {
-                printSuccess("Tìm thấy sinh viên trong danh sách mảng:");
-                displayStudentDetailed(arrayList.students[index]);
-                found = true;
-            }
+            printSuccess("Tìm thấy sinh viên trong danh sách mảng:");
+            displayStudentDetailed(arrayList.students[index]);
+            found = true;
         }
-        break;
+    }
+    break;
     case SINGLY_LINKED_LIST:
+    {
+        NodeSLL *node = searchInSLL(singlyLinkedList, studentID);
+        if (node != NULL)
         {
-            NodeSLL *node = searchInSLL(singlyLinkedList, studentID);
-            if (node != NULL)
-            {
-                printSuccess("Tìm thấy sinh viên trong danh sách liên kết đơn:");
-                displayStudentDetailed(node->info);
-                found = true;
-            }
+            printSuccess("Tìm thấy sinh viên trong danh sách liên kết đơn:");
+            displayStudentDetailed(node->info);
+            found = true;
         }
-        break;
+    }
+    break;
     case CIRCULAR_LINKED_LIST:
+    {
+        NodeSLL *node = searchInCLL(circularLinkedList, studentID);
+        if (node != NULL)
         {
-            NodeSLL *node = searchInCLL(circularLinkedList, studentID);
-            if (node != NULL)
-            {
-                printSuccess("Tìm thấy sinh viên trong danh sách liên kết vòng:");
-                displayStudentDetailed(node->info);
-                found = true;
-            }
+            printSuccess("Tìm thấy sinh viên trong danh sách liên kết vòng:");
+            displayStudentDetailed(node->info);
+            found = true;
         }
-        break;
+    }
+    break;
     case DOUBLY_LINKED_LIST:
+    {
+        NodeDLL *node = searchInDLL(doublyLinkedListHead, studentID);
+        if (node != NULL)
         {
-            NodeDLL *node = searchInDLL(doublyLinkedListHead, studentID);
-            if (node != NULL)
-            {
-                printSuccess("Tìm thấy sinh viên trong danh sách liên kết đôi:");
-                displayStudentDetailed(node->info);
-                found = true;
-            }
+            printSuccess("Tìm thấy sinh viên trong danh sách liên kết đôi:");
+            displayStudentDetailed(node->info);
+            found = true;
         }
-        break;
+    }
+    break;
     case BINARY_SEARCH_TREE:
         printWarning("Chức năng tìm kiếm theo mã sinh viên chưa được hiện thực cho cây tìm kiếm nhị phân.");
         return;
@@ -421,7 +422,8 @@ void performStatistics(int dataStructureType, const ArrayStudentList &arrayList)
     cout << RED << "Điểm thấp nhất: " << lowest << RESET << "\n";
     cout << BLUE << "Điểm trung bình: " << average << RESET << "\n";
 
-    cout << CYAN << "\nSinh viên có điểm cao nhất:\n" << RESET;
+    cout << CYAN << "\nSinh viên có điểm cao nhất:\n"
+         << RESET;
     printDivider();
     for (int i = 0; i < arrayList.count; i++)
     {
@@ -432,7 +434,8 @@ void performStatistics(int dataStructureType, const ArrayStudentList &arrayList)
         }
     }
 
-    cout << CYAN << "\nSinh viên có điểm thấp nhất:\n" << RESET;
+    cout << CYAN << "\nSinh viên có điểm thấp nhất:\n"
+         << RESET;
     printDivider();
     for (int i = 0; i < arrayList.count; i++)
     {
@@ -502,7 +505,8 @@ bool sortStudentList(int dataStructureType, int sortAlgorithm,
 }
 
 // Hàm xử lý nhập dữ liệu từ file CSV
-bool handleInputFromCSV(int dataStructureType,
+bool handleInputFromCSV(const char* filePath,
+                        int dataStructureType,
                         ArrayStudentList &arrayList,
                         NodeSLL *&singlyLinkedList,
                         NodeSLL *&circularLinkedList,
@@ -510,7 +514,7 @@ bool handleInputFromCSV(int dataStructureType,
                         NodeDLL *&doublyLinkedListTail,
                         NodeBST *&binarySearchTree)
 {
-    if (readFromCSVFile("data/students.csv", arrayList))
+    cout << "Đang thử đọc từ file: " << filePath << endl;    if (readFromCSVFile(filePath, arrayList))
     {
         printSuccess("Đã đọc dữ liệu từ file CSV thành công.");
 
@@ -528,7 +532,8 @@ bool handleInputFromCSV(int dataStructureType,
     }
     else
     {
-        printError("Không thể đọc dữ liệu từ file CSV.");
+        string errorMsg = "Không thể đọc dữ liệu từ file CSV: " + string(filePath);
+        printError(errorMsg.c_str());
         return false;
     }
 }
@@ -571,7 +576,8 @@ bool inputStudent(Student &student)
 {
     clearScreen();
     printHeader("NHẬP THÔNG TIN SINH VIÊN");
-    cout << "Lưu ý: Nhập '00' để hủy bỏ nhập liệu\n" << endl;
+    cout << "Lưu ý: Nhập '00' để hủy bỏ nhập liệu\n"
+         << endl;
 
     string tempInput;
     bool isValid;
@@ -715,7 +721,8 @@ bool inputStudent(Student &student)
     // Clear input buffer for next input
     clearInputBuffer();
 
-    cout << "\n" << GREEN << "✓ Đã nhập thông tin sinh viên thành công!" << RESET << endl;
+    cout << "\n"
+         << GREEN << "✓ Đã nhập thông tin sinh viên thành công!" << RESET << endl;
     displayStudentDetailed(student);
 
     return true;

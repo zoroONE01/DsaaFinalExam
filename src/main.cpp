@@ -7,11 +7,21 @@
 using namespace std;
 
 // Biến lưu trữ dữ liệu cho từng loại cấu trúc dữ liệu
+
+// Biến lưu trữ danh sách mảng
 ArrayStudentList arrayList;
+
+// Biến lưu trữ đầu và đuôi của danh sách liên kết đơn
 NodeSLL *singlyLinkedList = NULL;
+
+// Biến lưu trữ đầu của danh sách liên kết vòng
 NodeSLL *circularLinkedList = NULL;
+
+// Biến lưu trữ đầu và đuôi của danh sách liên kết đôi
 NodeDLL *doublyLinkedListHead = NULL;
 NodeDLL *doublyLinkedListTail = NULL;
+
+// Biến lưu trữ cây tìm kiếm nhị phân
 NodeBST *binarySearchTree = NULL;
 
 int main()
@@ -37,7 +47,7 @@ int main()
 
         switch (choice)
         {
-        case 1:
+        case 1: // Chọn cấu trúc dữ liệu
             dataStructureType = selectDataStructure();
             break;
         case 2:
@@ -89,13 +99,15 @@ int main()
         }
         case 3:
         {
+
+            clearScreen();
+            printHeader("THÊM SINH VIÊN MỚI");
+            printInfo("Lưu ý: Nhập \"00\" để hủy bỏ và trở về menu chính.");
+
             char studentID[MAX_STUDENT_ID_LENGTH];
             // Bước 1: Nhập và kiểm tra mã sinh viên
             string tempID;
             bool isValid;
-
-            // Thông báo về cách hủy bỏ nhập liệu
-            printInfo("Lưu ý: Nhập \"00\" để hủy bỏ và trở về menu chính.");
 
             // Nhập và kiểm tra mã sinh viên
             do
@@ -139,7 +151,9 @@ int main()
             Student student;
             strcpy(student.studentID, studentID); // Đặt mã sinh viên đã nhập
 
-            if (inputStudent(student))
+            isValid = inputStudent(student);
+
+            if (isValid)
             {
                 addStudentToDataStructure(student, dataStructureType, arrayList, singlyLinkedList,
                                           circularLinkedList, doublyLinkedListHead, doublyLinkedListTail,
@@ -147,7 +161,7 @@ int main()
             }
             break;
         }
-        case 4:
+        case 4: // Xóa sinh viên theo mã
         {
             char studentID[MAX_STUDENT_ID_LENGTH];
             if (inputStudentID(studentID))
@@ -157,21 +171,23 @@ int main()
             }
             break;
         }
-        case 5:
+        case 5: // Cập nhật sinh viên theo mã
         {
+            clearScreen();
+            printHeader("CẬP NHẬT SINH VIÊN");
+            printInfo("Lưu ý: Nhập \"00\" để hủy bỏ và trở về menu chính.");
+
             char studentID[MAX_STUDENT_ID_LENGTH];
             if (inputStudentID(studentID))
             {
-                // Kiểm tra xem sinh viên có tồn tại không
-                bool exists = isStudentExists(studentID, dataStructureType, arrayList, singlyLinkedList,
-                                              circularLinkedList, doublyLinkedListHead);
-
-                if (exists)
+                Student currentStudent;
+                // Lấy thông tin sinh viên hiện tại từ cấu trúc dữ liệu
+                if (getStudentFromDataStructure(studentID, dataStructureType, arrayList, singlyLinkedList,
+                                               circularLinkedList, doublyLinkedListHead, currentStudent))
                 {
-                    cout << "Nhập thông tin mới cho sinh viên:\n";
-                    Student updateStudent;
-                    strcpy(updateStudent.studentID, studentID); // Đặt mã sinh viên trước khi gọi inputStudent
-                    if (inputStudent(updateStudent))
+                    Student updateStudent = currentStudent; // Bắt đầu với thông tin hiện tại
+
+                    if (inputStudentForUpdate(updateStudent))
                     {
                         updateStudentInDataStructure(updateStudent, dataStructureType, arrayList, singlyLinkedList,
                                                      circularLinkedList, doublyLinkedListHead);
@@ -184,11 +200,11 @@ int main()
             }
             break;
         }
-        case 6:
+        case 6: // Hiển thị danh sách sinh viên
             displayCurrentList(dataStructureType, arrayList, singlyLinkedList, circularLinkedList,
                                doublyLinkedListHead, binarySearchTree);
             break;
-        case 7:
+        case 7: // Tìm kiếm sinh viên theo mã
         {
             char studentID[MAX_STUDENT_ID_LENGTH];
             if (inputStudentID(studentID))
@@ -198,10 +214,10 @@ int main()
             }
             break;
         }
-        case 8:
+        case 8: // Thống kê sinh viên (chỉ cho mảng)
             performStatistics(dataStructureType, arrayList);
             break;
-        case 9:
+        case 9: // Sắp xếp sinh viên theo điểm số
         {
             int sortAlgorithm = selectSortAlgorithm(dataStructureType);
             if (sortAlgorithm != -1)
@@ -210,7 +226,7 @@ int main()
             }
             break;
         }
-        case 10:
+        case 10: // Bài toán Mã Đi Tuần
             clearScreen();
             printHeader("BÀI TOÁN MÃ ĐI TUẦN");
             knightsTour();

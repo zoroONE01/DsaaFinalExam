@@ -12,7 +12,6 @@ student_management
 *.dSYM/
 
 # IDE files
-.vscode/
 .idea/
 
 # OS generated files

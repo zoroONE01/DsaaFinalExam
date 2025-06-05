@@ -13,12 +13,6 @@
 
 using namespace std;
 
-// Các hằng số cho thuật toán HEAP_SORT (không có trong common_ui.h)
-enum AdditionalSortAlgorithms
-{
-    HEAP_SORT = 6
-};
-
 // Function declarations
 bool isDataStructureEmpty(int dataStructureType,
                           const ArrayStudentList &arrayList,
@@ -83,9 +77,12 @@ void displayCurrentList(int dataStructureType,
 
 void performStatistics(int dataStructureType, const ArrayStudentList &arrayList);
 
-bool sortStudentList(int dataStructureType, int sortAlgorithm,
+bool sortStudentList(int dataStructureType, int sortAlgorithm, int sortCriteria,
                      ArrayStudentList &arrayList,
-                     NodeDLL *&doublyLinkedListHead);
+                     NodeSLL *&singlyLinkedList,
+                     NodeSLL *&circularLinkedList,
+                     NodeDLL *&doublyLinkedListHead,
+                     NodeDLL *&doublyLinkedListTail);
 
 bool handleInputFromCSV(const char* filePath,
                         int dataStructureType,

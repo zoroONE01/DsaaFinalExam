@@ -27,7 +27,15 @@ enum SortAlgorithm
     INSERTION_SORT = 2,
     SELECTION_SORT = 3,
     QUICK_SORT = 4,
-    MERGE_SORT = 5
+    MERGE_SORT = 5,
+    HEAP_SORT = 6
+};
+
+enum SortCriteria
+{
+    SORT_BY_STUDENT_ID = 1,
+    SORT_BY_NAME = 2,
+    SORT_BY_SCORE = 3
 };
 
 using namespace std;
@@ -101,6 +109,9 @@ int selectDataStructure();
 
 // Hàm menu chọn thuật toán sắp xếp
 int selectSortAlgorithm(int dataStructureType);
+
+// Hàm menu chọn tiêu chí sắp xếp
+int selectSortCriteria();
 
 // Hàm xóa bộ nhớ đệm (buffer) sau khi nhập dữ liệu
 void clearInputBuffer();

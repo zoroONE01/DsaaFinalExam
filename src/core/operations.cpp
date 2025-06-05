@@ -7,6 +7,22 @@
 
 using namespace std;
 
+// Helper function to get criteria name
+const char* getCriteriaName(int sortCriteria)
+{
+    switch (sortCriteria)
+    {
+    case SORT_BY_STUDENT_ID:
+        return "mã sinh viên";
+    case SORT_BY_NAME:
+        return "tên sinh viên";
+    case SORT_BY_SCORE:
+        return "điểm số";
+    default:
+        return "không xác định";
+    }
+}
+
 // Hàm kiểm tra xem một cấu trúc dữ liệu có rỗng hay không
 bool isDataStructureEmpty(int dataStructureType,
                           const ArrayStudentList &arrayList,
@@ -424,12 +440,23 @@ void performStatistics(int dataStructureType, const ArrayStudentList &arrayList)
     }
 }
 
-// Hàm sắp xếp danh sách sinh viên theo điểm số sử dụng thuật toán được chọn
-bool sortStudentList(int dataStructureType, int sortAlgorithm,
+// Hàm sắp xếp danh sách sinh viên theo tiêu chí được chọn sử dụng thuật toán được chọn
+bool sortStudentList(int dataStructureType, int sortAlgorithm, int sortCriteria,
                      ArrayStudentList &arrayList,
-                     NodeDLL *&doublyLinkedListHead)
+                     NodeSLL *&singlyLinkedList,
+                     NodeSLL *&circularLinkedList,
+                     NodeDLL *&doublyLinkedListHead,
+                     NodeDLL *&doublyLinkedListTail)
 {
     bool success = false;
+    
+    // Display warning for non-score sorting since current algorithms only support score sorting
+    if (sortCriteria != SORT_BY_SCORE)
+    {
+        printWarning(("Lưu ý: Thuật toán sắp xếp hiện tại chỉ hỗ trợ sắp xếp theo điểm số. "
+                     "Tiêu chí '" + string(getCriteriaName(sortCriteria)) + "' sẽ được hiện thực trong phiên bản sau.").c_str());
+        printInfo("Thực hiện sắp xếp theo điểm số...");
+    }
 
     switch (dataStructureType)
     {
@@ -438,12 +465,12 @@ bool sortStudentList(int dataStructureType, int sortAlgorithm,
         {
         case BUBBLE_SORT:
             bubbleSortArrayList(arrayList);
-            printSuccess("Đã sắp xếp danh sách mảng bằng thuật toán Bubble Sort.");
+            printSuccess(("Đã sắp xếp danh sách mảng theo " + string(getCriteriaName(sortCriteria)) + " bằng thuật toán Bubble Sort.").c_str());
             success = true;
             break;
         case INSERTION_SORT:
             insertionSortArrayList(arrayList);
-            printSuccess("Đã sắp xếp danh sách mảng bằng thuật toán Insertion Sort.");
+            printSuccess(("Đã sắp xếp danh sách mảng theo " + string(getCriteriaName(sortCriteria)) + " bằng thuật toán Insertion Sort.").c_str());
             success = true;
             break;
         case SELECTION_SORT:
@@ -456,23 +483,119 @@ bool sortStudentList(int dataStructureType, int sortAlgorithm,
             printSuccess("Đã sắp xếp danh sách mảng bằng thuật toán Quick Sort.");
             success = true;
             break;
+        case HEAP_SORT:
+            heapSortArrayList(arrayList);
+            printSuccess("Đã sắp xếp danh sách mảng bằng thuật toán Heap Sort.");
+            success = true;
+            break;
+        case MERGE_SORT:
+            mergeSortArrayList(arrayList);
+            printSuccess("Đã sắp xếp danh sách mảng bằng thuật toán Merge Sort.");
+            success = true;
+            break;
         default:
             printError("Thuật toán sắp xếp không hợp lệ cho danh sách mảng.");
             break;
         }
         break;
-    case DOUBLY_LINKED_LIST:
-        if (sortAlgorithm == MERGE_SORT)
+    
+    case SINGLY_LINKED_LIST:
+        switch (sortAlgorithm)
         {
+        case BUBBLE_SORT:
+            bubbleSortSLL(singlyLinkedList);
+            printSuccess("Đã sắp xếp danh sách liên kết đơn bằng thuật toán Bubble Sort.");
+            success = true;
+            break;
+        case INSERTION_SORT:
+            insertionSortSLL(singlyLinkedList);
+            printSuccess("Đã sắp xếp danh sách liên kết đơn bằng thuật toán Insertion Sort.");
+            success = true;
+            break;
+        case SELECTION_SORT:
+            selectionSortSLL(singlyLinkedList);
+            printSuccess("Đã sắp xếp danh sách liên kết đơn bằng thuật toán Selection Sort.");
+            success = true;
+            break;
+        case MERGE_SORT:
+            mergeSortSLL(singlyLinkedList);
+            printSuccess("Đã sắp xếp danh sách liên kết đơn bằng thuật toán Merge Sort.");
+            success = true;
+            break;
+        default:
+            printError("Thuật toán sắp xếp không hợp lệ cho danh sách liên kết đơn. Chỉ hỗ trợ: Bubble, Insertion, Selection, Merge Sort.");
+            break;
+        }
+        break;
+    
+    case CIRCULAR_LINKED_LIST:
+        switch (sortAlgorithm)
+        {
+        case BUBBLE_SORT:
+            bubbleSortCLL(circularLinkedList);
+            printSuccess("Đã sắp xếp danh sách liên kết tròn bằng thuật toán Bubble Sort.");
+            success = true;
+            break;
+        case INSERTION_SORT:
+            insertionSortCLL(circularLinkedList);
+            printSuccess("Đã sắp xếp danh sách liên kết tròn bằng thuật toán Insertion Sort.");
+            success = true;
+            break;
+        case SELECTION_SORT:
+            selectionSortCLL(circularLinkedList);
+            printSuccess("Đã sắp xếp danh sách liên kết tròn bằng thuật toán Selection Sort.");
+            success = true;
+            break;
+        case MERGE_SORT:
+            mergeSortCLL(circularLinkedList);
+            printSuccess("Đã sắp xếp danh sách liên kết tròn bằng thuật toán Merge Sort.");
+            success = true;
+            break;
+        default:
+            printError("Thuật toán sắp xếp không hợp lệ cho danh sách liên kết tròn. Chỉ hỗ trợ: Bubble, Insertion, Selection, Merge Sort.");
+            break;
+        }
+        break;
+    
+    case DOUBLY_LINKED_LIST:
+        switch (sortAlgorithm)
+        {
+        case BUBBLE_SORT:
+            bubbleSortDLL(doublyLinkedListHead, doublyLinkedListTail);
+            printSuccess("Đã sắp xếp danh sách liên kết đôi bằng thuật toán Bubble Sort.");
+            success = true;
+            break;
+        case INSERTION_SORT:
+            insertionSortDLL(doublyLinkedListHead, doublyLinkedListTail);
+            printSuccess("Đã sắp xếp danh sách liên kết đôi bằng thuật toán Insertion Sort.");
+            success = true;
+            break;
+        case SELECTION_SORT:
+            selectionSortDLL(doublyLinkedListHead, doublyLinkedListTail);
+            printSuccess("Đã sắp xếp danh sách liên kết đôi bằng thuật toán Selection Sort.");
+            success = true;
+            break;
+        case QUICK_SORT:
+            quickSortDLL(doublyLinkedListHead, doublyLinkedListTail);
+            printSuccess("Đã sắp xếp danh sách liên kết đôi bằng thuật toán Quick Sort.");
+            success = true;
+            break;
+        case HEAP_SORT:
+            heapSortDLL(doublyLinkedListHead, doublyLinkedListTail);
+            printSuccess("Đã sắp xếp danh sách liên kết đôi bằng thuật toán Heap Sort.");
+            success = true;
+            break;
+        case MERGE_SORT:
             mergeSortDLL(&doublyLinkedListHead);
             printSuccess("Đã sắp xếp danh sách liên kết đôi bằng thuật toán Merge Sort.");
             success = true;
-        }
-        else
-        {
-            printWarning("Chỉ hỗ trợ thuật toán Merge Sort cho danh sách liên kết đôi.");
+            break;
+        default:
+            printError("Thuật toán sắp xếp không hợp lệ cho danh sách liên kết đôi.");
+            break;
         }
         break;
+    
     default:
         printWarning("Chức năng sắp xếp chưa được hiện thực cho cấu trúc dữ liệu này.");
         break;

@@ -153,7 +153,7 @@ void displayMainMenu(int dataStructureType)
     cout << "│   6    │  Hiển thị danh sách sinh viên                     │" << endl;
     cout << "│   7    │  Tìm kiếm sinh viên theo mã                       │" << endl;
     cout << "│   8    │  Thống kê sinh viên (chỉ cho mảng)                │" << endl;
-    cout << "│   9    │  Sắp xếp sinh viên theo điểm số                   │" << endl;
+    cout << "│   9    │  Sắp xếp sinh viên (theo mã/tên/điểm)             │" << endl;
     cout << "│   10   │  Bài toán Mã Đi Tuần                              │" << endl;
     cout << "│   0    │  Thoát chương trình                               │" << endl;
     cout << "└────────┴───────────────────────────────────────────────────┘" << RESET << endl;
@@ -196,6 +196,37 @@ int selectDataStructure()
     return choice;
 }
 
+// Hàm menu chọn tiêu chí sắp xếp
+int selectSortCriteria()
+{
+    int choice;
+
+    clearScreen();
+    printHeader("CHỌN TIÊU CHÍ SẮP XẾP");
+
+    // Hiển thị menu dưới dạng bảng
+    cout << BOLD;
+    cout << "┌────────┬──────────────────────────────────────┐" << endl;
+    cout << "│  CHỌN  │              TIÊU CHÍ SẮP XẾP       │" << endl;
+    cout << "├────────┼──────────────────────────────────────┤" << endl;
+    cout << "│   1    │  Mã sinh viên                        │" << endl;
+    cout << "│   2    │  Tên sinh viên                       │" << endl;
+    cout << "│   3    │  Điểm số                             │" << endl;
+    cout << "└────────┴──────────────────────────────────────┘" << RESET << endl;
+
+    cout << "\nNhập lựa chọn: ";
+
+    while (!(cin >> choice) || choice < 1 || choice > 3)
+    {
+        printError("Lựa chọn không hợp lệ. Vui lòng nhập lại (1-3).");
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+
+    clearInputBuffer();
+    return choice;
+}
+
 // Hàm menu chọn thuật toán sắp xếp
 int selectSortAlgorithm(int dataStructureType)
 {
@@ -206,7 +237,7 @@ int selectSortAlgorithm(int dataStructureType)
 
     if (dataStructureType == ARRAY_LIST)
     {
-        // Hiển thị menu dưới dạng bảng
+        // Hiển thị menu dưới dạng bảng cho Array List
         cout << BOLD;
         cout << "┌────────┬──────────────────────────────────────┐" << endl;
         cout << "│  CHỌN  │           THUẬT TOÁN SẮP XẾP         │" << endl;
@@ -215,32 +246,87 @@ int selectSortAlgorithm(int dataStructureType)
         cout << "│   2    │  Insertion Sort                      │" << endl;
         cout << "│   3    │  Selection Sort                      │" << endl;
         cout << "│   4    │  Quick Sort                          │" << endl;
+        cout << "│   5    │  Merge Sort                          │" << endl;
+        cout << "│   6    │  Heap Sort                           │" << endl;
         cout << "└────────┴──────────────────────────────────────┘" << RESET << endl;
+        
+        cout << "\nNhập lựa chọn: ";
+        while (!(cin >> choice) || choice < 1 || choice > 6)
+        {
+            printError("Lựa chọn không hợp lệ. Vui lòng nhập lại (1-6).");
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
     }
-    else if (dataStructureType == DOUBLY_LINKED_LIST)
+    else if (dataStructureType == SINGLY_LINKED_LIST)
     {
+        // Hiển thị menu cho Singly Linked List
         cout << BOLD;
         cout << "┌────────┬──────────────────────────────────────┐" << endl;
         cout << "│  CHỌN  │           THUẬT TOÁN SẮP XẾP         │" << endl;
         cout << "├────────┼──────────────────────────────────────┤" << endl;
+        cout << "│   1    │  Bubble Sort                         │" << endl;
+        cout << "│   2    │  Insertion Sort                      │" << endl;
+        cout << "│   3    │  Selection Sort                      │" << endl;
         cout << "│   5    │  Merge Sort                          │" << endl;
         cout << "└────────┴──────────────────────────────────────┘" << RESET << endl;
+        
+        cout << "\nNhập lựa chọn: ";
+        while (!(cin >> choice) || (choice != 1 && choice != 2 && choice != 3 && choice != 5))
+        {
+            printError("Lựa chọn không hợp lệ. Chỉ hỗ trợ: 1(Bubble), 2(Insertion), 3(Selection), 5(Merge).");
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+    else if (dataStructureType == CIRCULAR_LINKED_LIST)
+    {
+        // Hiển thị menu cho Circular Linked List  
+        cout << BOLD;
+        cout << "┌────────┬──────────────────────────────────────┐" << endl;
+        cout << "│  CHỌN  │           THUẬT TOÁN SẮP XẾP         │" << endl;
+        cout << "├────────┼──────────────────────────────────────┤" << endl;
+        cout << "│   1    │  Bubble Sort                         │" << endl;
+        cout << "│   2    │  Insertion Sort                      │" << endl;
+        cout << "│   3    │  Selection Sort                      │" << endl;
+        cout << "│   5    │  Merge Sort                          │" << endl;
+        cout << "└────────┴──────────────────────────────────────┘" << RESET << endl;
+        
+        cout << "\nNhập lựa chọn: ";
+        while (!(cin >> choice) || (choice != 1 && choice != 2 && choice != 3 && choice != 5))
+        {
+            printError("Lựa chọn không hợp lệ. Chỉ hỗ trợ: 1(Bubble), 2(Insertion), 3(Selection), 5(Merge).");
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+    else if (dataStructureType == DOUBLY_LINKED_LIST)
+    {
+        // Hiển thị menu cho Doubly Linked List
+        cout << BOLD;
+        cout << "┌────────┬──────────────────────────────────────┐" << endl;
+        cout << "│  CHỌN  │           THUẬT TOÁN SẮP XẾP         │" << endl;
+        cout << "├────────┼──────────────────────────────────────┤" << endl;
+        cout << "│   1    │  Bubble Sort                         │" << endl;
+        cout << "│   2    │  Insertion Sort                      │" << endl;
+        cout << "│   3    │  Selection Sort                      │" << endl;
+        cout << "│   4    │  Quick Sort                          │" << endl;
+        cout << "│   5    │  Merge Sort                          │" << endl;
+        cout << "│   6    │  Heap Sort                           │" << endl;
+        cout << "└────────┴──────────────────────────────────────┘" << RESET << endl;
+        
+        cout << "\nNhập lựa chọn: ";
+        while (!(cin >> choice) || choice < 1 || choice > 6)
+        {
+            printError("Lựa chọn không hợp lệ. Vui lòng nhập lại (1-6).");
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
     }
     else
     {
         printWarning("Không có thuật toán sắp xếp được hỗ trợ cho cấu trúc dữ liệu này.");
         return -1;
-    }
-
-    cout << "\nNhập lựa chọn: ";
-
-    while (!(cin >> choice) ||
-           (dataStructureType == ARRAY_LIST && (choice < 1 || choice > 4)) ||
-           (dataStructureType == DOUBLY_LINKED_LIST && choice != 5))
-    {
-        printError("Lựa chọn không hợp lệ. Vui lòng nhập lại.");
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
     clearInputBuffer();

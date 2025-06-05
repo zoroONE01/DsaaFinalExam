@@ -2,6 +2,7 @@
 #include <cstring>
 #include <limits>
 #include <fstream>
+#include <chrono>
 #include "../include/student_library.h"
 
 using namespace std;
@@ -217,12 +218,30 @@ int main()
         case 8: // Thống kê sinh viên (chỉ cho mảng)
             performStatistics(dataStructureType, arrayList);
             break;
-        case 9: // Sắp xếp sinh viên theo điểm số
+        case 9: // Sắp xếp sinh viên theo tiêu chí
         {
             int sortAlgorithm = selectSortAlgorithm(dataStructureType);
             if (sortAlgorithm != -1)
             {
-                sortStudentList(dataStructureType, sortAlgorithm, arrayList, doublyLinkedListHead);
+                int sortCriteria = selectSortCriteria();
+                if (sortCriteria != -1)
+                {
+                    // Đo thời gian thực thi
+                    auto start = chrono::high_resolution_clock::now();
+                    
+                    bool success = sortStudentList(dataStructureType, sortAlgorithm, sortCriteria, arrayList, 
+                                                   singlyLinkedList, circularLinkedList, doublyLinkedListHead, 
+                                                   doublyLinkedListTail);
+                    
+                    auto end = chrono::high_resolution_clock::now();
+                    auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+                    
+                    if (success)
+                    {
+                        cout << BOLD << GREEN << "\n✓ Thời gian thực thi: " << duration.count() << " microseconds (" 
+                             << (double)duration.count() / 1000.0 << " ms)" << RESET << endl;
+                    }
+                }
             }
             break;
         }

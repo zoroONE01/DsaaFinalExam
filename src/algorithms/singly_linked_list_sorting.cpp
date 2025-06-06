@@ -8,7 +8,7 @@
  * Ý tưởng: So sánh các cặp node liền kề và hoán đổi dữ liệu nếu không đúng thứ tự
  * Sau mỗi lần duyệt, node có giá trị lớn nhất sẽ "nổi" về cuối danh sách
  * Độ phức tạp: O(n²) trong tất cả trường hợp
- * 
+ *
  * @param head: Tham chiếu đến con trỏ đầu danh sách liên kết đơn
  */
 void bubbleSortSLL(NodeSLL *&head)
@@ -50,7 +50,7 @@ void bubbleSortSLL(NodeSLL *&head)
  * Ý tưởng: Xây dựng danh sách đã sắp xếp từng node một bằng cách
  * lấy từng node từ danh sách gốc và chèn vào vị trí đúng trong danh sách mới
  * Độ phức tạp: O(n) tốt nhất, O(n²) xấu nhất
- * 
+ *
  * @param head: Tham chiếu đến con trỏ đầu danh sách liên kết đơn
  */
 void insertionSortSLL(NodeSLL *&head)
@@ -78,21 +78,21 @@ void insertionSortSLL(NodeSLL *&head)
         {
             // TH2: Tìm vị trí thích hợp trong danh sách sorted để chèn current
             NodeSLL *temp = sorted;
-            
+
             // Duyệt đến vị trí node có giá trị >= current (hoặc cuối danh sách)
             while (temp->next != NULL && temp->next->info.score < current->info.score)
             {
                 temp = temp->next;
             }
-            
+
             // Chèn current vào sau node temp
             current->next = temp->next;
             temp->next = current;
         }
-        
+
         current = next; // Chuyển sang node tiếp theo trong danh sách gốc
     }
-    
+
     head = sorted; // Cập nhật đầu danh sách thành danh sách đã sắp xếp
 }
 
@@ -102,7 +102,7 @@ void insertionSortSLL(NodeSLL *&head)
  * Ý tưởng: Với mỗi vị trí trong danh sách, tìm phần tử nhỏ nhất trong phần còn lại
  * và hoán đổi với phần tử tại vị trí hiện tại
  * Độ phức tạp: O(n²) trong tất cả trường hợp
- * 
+ *
  * @param head: Tham chiếu đến con trỏ đầu danh sách liên kết đơn
  */
 void selectionSortSLL(NodeSLL *&head)
@@ -116,8 +116,8 @@ void selectionSortSLL(NodeSLL *&head)
     // Duyệt qua từng vị trí trong danh sách
     while (temp)
     {
-        NodeSLL *min = temp;      // Giả sử node hiện tại là nhỏ nhất
-        NodeSLL *r = temp->next;  // Bắt đầu tìm từ node tiếp theo
+        NodeSLL *min = temp;     // Giả sử node hiện tại là nhỏ nhất
+        NodeSLL *r = temp->next; // Bắt đầu tìm từ node tiếp theo
 
         // Tìm node có giá trị nhỏ nhất trong phần còn lại của danh sách
         while (r)
@@ -135,7 +135,7 @@ void selectionSortSLL(NodeSLL *&head)
             temp->info = min->info;
             min->info = tempData;
         }
-        
+
         temp = temp->next; // Chuyển sang vị trí tiếp theo
     }
 }
@@ -145,18 +145,20 @@ void selectionSortSLL(NodeSLL *&head)
 
 /**
  * Hàm hợp nhất hai danh sách liên kết đơn đã được sắp xếp thành một danh sách sắp xếp
- * 
+ *
  * @param a: Con trỏ đến đầu danh sách thứ nhất (đã sắp xếp)
  * @param b: Con trỏ đến đầu danh sách thứ hai (đã sắp xếp)
  * @return: Con trỏ đến đầu danh sách sau khi hợp nhất
  */
-NodeSLL* mergeSortedSLL(NodeSLL* a, NodeSLL* b)
+NodeSLL *mergeSortedSLL(NodeSLL *a, NodeSLL *b)
 {
     // Trường hợp cơ sở: một trong hai danh sách rỗng
-    if (a == NULL) return b;
-    if (b == NULL) return a;
+    if (a == NULL)
+        return b;
+    if (b == NULL)
+        return a;
 
-    NodeSLL* result = NULL; // Đầu danh sách kết quả
+    NodeSLL *result = NULL; // Đầu danh sách kết quả
 
     // So sánh phần tử đầu của hai danh sách và chọn phần tử nhỏ hơn
     if (a->info.score <= b->info.score)
@@ -177,18 +179,18 @@ NodeSLL* mergeSortedSLL(NodeSLL* a, NodeSLL* b)
 /**
  * Hàm tách danh sách liên kết đơn thành hai nửa bằng nhau (hoặc gần bằng nhau)
  * Sử dụng kỹ thuật "rùa và thỏ": con trỏ chậm di chuyển 1 bước, con trỏ nhanh di chuyển 2 bước
- * 
+ *
  * @param source: Danh sách gốc cần tách
  * @param frontRef: Con trỏ tới con trỏ đầu của nửa đầu
  * @param backRef: Con trỏ tới con trỏ đầu của nửa sau
  */
-void splitSLL(NodeSLL* source, NodeSLL** frontRef, NodeSLL** backRef)
+void splitSLL(NodeSLL *source, NodeSLL **frontRef, NodeSLL **backRef)
 {
-    NodeSLL* fast; // Con trỏ di chuyển nhanh (2 bước/lần)
-    NodeSLL* slow; // Con trỏ di chuyển chậm (1 bước/lần)
-    
-    slow = source;        // Bắt đầu từ đầu danh sách
-    fast = source->next;  // Con trỏ nhanh bắt đầu từ node thứ 2
+    NodeSLL *fast; // Con trỏ di chuyển nhanh (2 bước/lần)
+    NodeSLL *slow; // Con trỏ di chuyển chậm (1 bước/lần)
+
+    slow = source;       // Bắt đầu từ đầu danh sách
+    fast = source->next; // Con trỏ nhanh bắt đầu từ node thứ 2
 
     // Di chuyển fast 2 bước và slow 1 bước cho đến khi fast đến cuối
     while (fast != NULL)
@@ -202,9 +204,9 @@ void splitSLL(NodeSLL* source, NodeSLL** frontRef, NodeSLL** backRef)
     }
 
     // Khi fast đến cuối, slow ở giữa danh sách
-    *frontRef = source;      // Nửa đầu từ đầu đến slow
-    *backRef = slow->next;   // Nửa sau từ slow->next đến cuối
-    slow->next = NULL;       // Cắt đứt liên kết giữa hai nửa
+    *frontRef = source;    // Nửa đầu từ đầu đến slow
+    *backRef = slow->next; // Nửa sau từ slow->next đến cuối
+    slow->next = NULL;     // Cắt đứt liên kết giữa hai nửa
 }
 
 /**
@@ -214,7 +216,7 @@ void splitSLL(NodeSLL* source, NodeSLL** frontRef, NodeSLL** backRef)
  * - Đệ quy sắp xếp từng nửa
  * - Hợp nhất hai nửa đã sắp xếp
  * Độ phức tạp: O(n log n) trong tất cả trường hợp
- * 
+ *
  * @param head: Tham chiếu đến con trỏ đầu danh sách liên kết đơn
  */
 void mergeSortSLL(NodeSLL *&head)
@@ -223,8 +225,8 @@ void mergeSortSLL(NodeSLL *&head)
     if (head == NULL || head->next == NULL)
         return;
 
-    NodeSLL* a; // Nửa đầu của danh sách
-    NodeSLL* b; // Nửa sau của danh sách
+    NodeSLL *a; // Nửa đầu của danh sách
+    NodeSLL *b; // Nửa sau của danh sách
 
     // Tách danh sách thành hai nửa
     splitSLL(head, &a, &b);

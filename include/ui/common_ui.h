@@ -38,6 +38,15 @@ enum SortCriteria
     SORT_BY_SCORE = 3
 };
 
+enum SearchCriteria
+{
+    SEARCH_BY_STUDENT_ID = 1,
+    SEARCH_BY_FIRST_NAME = 2,
+    SEARCH_BY_LAST_NAME = 3,
+    SEARCH_BY_CLASS = 4,
+    SEARCH_BY_SCORE = 5
+};
+
 using namespace std;
 
 // ========== Định nghĩa các mã ANSI escape cho màu sắc ==========
@@ -112,6 +121,12 @@ int selectSortAlgorithm(int dataStructureType);
 
 // Hàm menu chọn tiêu chí sắp xếp
 int selectSortCriteria();
+
+// Hàm menu chọn tiêu chí tìm kiếm
+int selectSearchCriteria();
+
+// Hàm nhập từ khóa tìm kiếm
+bool inputSearchKeyword(char* keyword, int searchCriteria);
 
 // Hàm xóa bộ nhớ đệm (buffer) sau khi nhập dữ liệu
 void clearInputBuffer();

@@ -56,6 +56,7 @@
         "vector": "cpp",
         "algorithm": "cpp",
         "regex": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "chrono": "cpp"
     }
 }

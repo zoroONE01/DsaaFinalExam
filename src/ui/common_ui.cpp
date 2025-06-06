@@ -151,9 +151,9 @@ void displayMainMenu(int dataStructureType)
     cout << "│   4    │  Xóa sinh viên theo mã                            │" << endl;
     cout << "│   5    │  Cập nhật sinh viên theo mã                       │" << endl;
     cout << "│   6    │  Hiển thị danh sách sinh viên                     │" << endl;
-    cout << "│   7    │  Tìm kiếm sinh viên theo mã                       │" << endl;
-    cout << "│   8    │  Thống kê sinh viên (chỉ cho mảng)                │" << endl;
-    cout << "│   9    │  Sắp xếp sinh viên (theo mã/tên/điểm)             │" << endl;
+    cout << "│   7    │  Thống kê sinh viên (chỉ cho mảng)                │" << endl;
+    cout << "│   8    │  Sắp xếp sinh viên (theo mã/tên/điểm)             │" << endl;
+    cout << "│   9    │  Tìm kiếm nâng cao (nhiều tiêu chí)               │" << endl;
     cout << "│   0    │  Thoát chương trình                               │" << endl;
     cout << "└────────┴───────────────────────────────────────────────────┘" << RESET << endl;
 
@@ -330,4 +330,85 @@ int selectSortAlgorithm(int dataStructureType)
 
     clearInputBuffer();
     return choice;
+}
+
+// Hàm menu chọn tiêu chí tìm kiếm
+int selectSearchCriteria()
+{
+    printHeader("CHỌN TIÊU CHÍ TÌM KIẾM");
+
+    cout << BOLD;
+    cout << "┌────────┬──────────────────────────────────────┐" << endl;
+    cout << "│  CHỌN  │           TIÊU CHÍ TÌM KIẾM          │" << endl;
+    cout << "├────────┼──────────────────────────────────────┤" << endl;
+    cout << "│   1    │ Tìm theo Mã sinh viên                │" << endl;
+    cout << "│   2    │ Tìm theo Tên                         │" << endl;
+    cout << "│   3    │ Tìm theo Họ                          │" << endl;
+    cout << "│   4    │ Tìm theo Lớp                         │" << endl;
+    cout << "│   5    │ Tìm theo Điểm số                     │" << endl;
+    cout << "└────────┴──────────────────────────────────────┘" << endl;
+    cout << RESET;
+
+    cout << CYAN << "Lựa chọn của bạn (1-5): " << RESET;
+
+    int choice;
+    while (!(cin >> choice) || choice < 1 || choice > 5)
+    {
+        printError("Lựa chọn không hợp lệ. Vui lòng chọn từ 1-5.");
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << CYAN << "Lựa chọn của bạn (1-5): " << RESET;
+    }
+
+    clearInputBuffer();
+    return choice;
+}
+
+// Hàm nhập từ khóa tìm kiếm
+bool inputSearchKeyword(char* keyword, int searchCriteria)
+{
+    cout << "\n";
+    printInfo("Nhập từ khóa tìm kiếm:");
+    
+    string prompt;
+    switch (searchCriteria) {
+        case SEARCH_BY_STUDENT_ID:
+            prompt = "Mã sinh viên (ví dụ: SV001): ";
+            break;
+        case SEARCH_BY_FIRST_NAME:
+            prompt = "Tên (ví dụ: Nguyen): ";
+            break;
+        case SEARCH_BY_LAST_NAME:
+            prompt = "Họ (ví dụ: Van): ";
+            break;
+        case SEARCH_BY_CLASS:
+            prompt = "Lớp (ví dụ: CNTT1): ";
+            break;
+        case SEARCH_BY_SCORE:
+            prompt = "Điểm số (ví dụ: 8.5): ";
+            break;
+        default:
+            prompt = "Từ khóa: ";
+    }
+    
+    cout << CYAN << prompt << RESET;
+    cin.getline(keyword, 100);
+    
+    // Kiểm tra từ khóa không rỗng
+    if (strlen(keyword) == 0) {
+        printError("Từ khóa không được để trống!");
+        return false;
+    }
+    
+    // Validate score input if searching by score
+    if (searchCriteria == SEARCH_BY_SCORE) {
+        char* endptr;
+        float score = strtof(keyword, &endptr);
+        if (*endptr != '\0' || score < 0 || score > 10) {
+            printError("Điểm số không hợp lệ! Vui lòng nhập điểm từ 0 đến 10.");
+            return false;
+        }
+    }
+    
+    return true;
 }

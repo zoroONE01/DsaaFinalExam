@@ -1,10 +1,12 @@
 #include "../../include/core/operations.h"
 #include "../../include/utils/validation.h"
 #include "../../include/utils/common_utils.h"
+#include "../../include/algorithms/search.h"
 #include <iostream>
 #include <string>
 #include <limits>
 #include <iomanip>
+#include <chrono>
 
 using namespace std;
 
@@ -345,49 +347,153 @@ void displayCurrentList(int dataStructureType,
     }
 }
 
-// Hàm tìm kiếm sinh viên trong cấu trúc dữ liệu đã chọn
-void searchStudentInDataStructure(const char *studentID, int dataStructureType,
-                                  const ArrayStudentList &arrayList,
-                                  NodeSLL *singlyLinkedList,
-                                  NodeSLL *circularLinkedList,
-                                  NodeDLL *doublyLinkedListHead)
+// Hàm tìm kiếm sinh viên nâng cao với nhiều tiêu chí
+void enhancedSearchStudentInDataStructure(int dataStructureType,
+                                        const ArrayStudentList &arrayList,
+                                        NodeSLL *singlyLinkedList,
+                                        NodeSLL *circularLinkedList,
+                                        NodeDLL *doublyLinkedListHead,
+                                        int currentSortCriteria)
 {
     // Kiểm tra trường hợp đặc biệt cho BST
     if (dataStructureType == BINARY_SEARCH_TREE)
     {
-        printWarning("Chức năng tìm kiếm theo mã sinh viên chưa được hiện thực cho cây tìm kiếm nhị phân.");
+        printWarning("Chức năng tìm kiếm nâng cao chưa được hiện thực cho cây tìm kiếm nhị phân.");
         return;
     }
 
-    // Sử dụng getStudentFromDataStructure để tìm kiếm
-    Student foundStudent;
-    bool found = getStudentFromDataStructure(studentID, dataStructureType, arrayList,
-                                           singlyLinkedList, circularLinkedList,
-                                           doublyLinkedListHead, foundStudent);
-
-    if (found)
+    // Kiểm tra cấu trúc dữ liệu có rỗng không
+    if (isDataStructureEmpty(dataStructureType, arrayList, singlyLinkedList, circularLinkedList, doublyLinkedListHead, nullptr))
     {
-        // Hiển thị thông báo thành công tùy theo cấu trúc dữ liệu
-        switch (dataStructureType)
-        {
-        case ARRAY_LIST:
-            printSuccess("Tìm thấy sinh viên trong danh sách mảng:");
-            break;
-        case SINGLY_LINKED_LIST:
-            printSuccess("Tìm thấy sinh viên trong danh sách liên kết đơn:");
-            break;
-        case CIRCULAR_LINKED_LIST:
-            printSuccess("Tìm thấy sinh viên trong danh sách liên kết vòng:");
-            break;
-        case DOUBLY_LINKED_LIST:
-            printSuccess("Tìm thấy sinh viên trong danh sách liên kết đôi:");
+        printWarning("Cấu trúc dữ liệu hiện tại đang rỗng. Vui lòng thêm dữ liệu trước khi tìm kiếm.");
+        return;
+    }
+
+    // Chọn tiêu chí tìm kiếm
+    int searchCriteria = selectSearchCriteria();
+    if (searchCriteria == -1) {
+        printError("Tiêu chí tìm kiếm không hợp lệ!");
+        return;
+    }
+
+    // Nhập từ khóa tìm kiếm
+    char keyword[100];
+    if (!inputSearchKeyword(keyword, searchCriteria)) {
+        printError("Từ khóa tìm kiếm không hợp lệ!");
+        return;
+    }
+
+    // Thực hiện tìm kiếm theo từng cấu trúc dữ liệu với đo thời gian
+    int count = 0;
+    chrono::microseconds duration;
+    
+    // Đo thời gian thực thi
+    chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
+    
+    switch (dataStructureType) {
+        case ARRAY_LIST: {
+            int* results = searchArrayList(arrayList, keyword, searchCriteria, count);
+            
+            chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
+            duration = chrono::duration_cast<chrono::microseconds>(end - start);
+            
+            displaySearchResultsArray(arrayList, results, count, keyword);
+            
+            // Hiển thị thông tin thuật toán
+            cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Sequential Search (Array)" << RESET << endl;
+            cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(n)" << RESET << endl;
+            cout << BOLD << GREEN << "• Thời gian thực thi: " << duration.count() << " microseconds (" 
+                 << (double)duration.count() / 1000.0 << " ms)" << RESET << endl;
+            
+            // Giải phóng bộ nhớ
+            if (results) {
+                delete[] results;
+            }
             break;
         }
-        displayStudentDetailed(foundStudent);
+        
+        case SINGLY_LINKED_LIST: {
+            NodeSLL* results = searchSLL(singlyLinkedList, keyword, searchCriteria, count);
+            
+            chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
+            duration = chrono::duration_cast<chrono::microseconds>(end - start);
+            
+            displaySearchResultsSLL(results, count, keyword);
+            
+            // Hiển thị thông tin thuật toán
+            cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Sequential Search (Singly Linked List)" << RESET << endl;
+            cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(n)" << RESET << endl;
+            cout << BOLD << GREEN << "• Thời gian thực thi: " << duration.count() << " microseconds (" 
+                 << (double)duration.count() / 1000.0 << " ms)" << RESET << endl;
+            
+            // Giải phóng bộ nhớ kết quả
+            while (results) {
+                NodeSLL* temp = results;
+                results = results->next;
+                delete temp;
+            }
+            break;
+        }
+        
+        case CIRCULAR_LINKED_LIST: {
+            NodeSLL* results = searchCLL(circularLinkedList, keyword, searchCriteria, count);
+            
+            chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
+            duration = chrono::duration_cast<chrono::microseconds>(end - start);
+            
+            displaySearchResultsSLL(results, count, keyword);
+            
+            // Hiển thị thông tin thuật toán
+            cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Sequential Search (Circular Linked List)" << RESET << endl;
+            cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(n)" << RESET << endl;
+            cout << BOLD << GREEN << "• Thời gian thực thi: " << duration.count() << " microseconds (" 
+                 << (double)duration.count() / 1000.0 << " ms)" << RESET << endl;
+            
+            // Giải phóng bộ nhớ kết quả
+            while (results) {
+                NodeSLL* temp = results;
+                results = results->next;
+                delete temp;
+            }
+            break;
+        }
+        
+        case DOUBLY_LINKED_LIST: {
+            NodeDLL* results = searchDLL(doublyLinkedListHead, keyword, searchCriteria, count);
+            
+            chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
+            duration = chrono::duration_cast<chrono::microseconds>(end - start);
+            
+            displaySearchResultsDLL(results, count, keyword);
+            
+            // Hiển thị thông tin thuật toán
+            cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Sequential Search (Doubly Linked List)" << RESET << endl;
+            cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(n)" << RESET << endl;
+            cout << BOLD << GREEN << "• Thời gian thực thi: " << duration.count() << " microseconds (" 
+                 << (double)duration.count() / 1000.0 << " ms)" << RESET << endl;
+            
+            // Giải phóng bộ nhớ kết quả
+            while (results) {
+                NodeDLL* temp = results;
+                results = results->next;
+                delete temp;
+            }
+            break;
+        }
+        
+        default:
+            printError("Cấu trúc dữ liệu không được hỗ trợ!");
+            return;
     }
-    else
-    {
-        printError(("Không tìm thấy sinh viên có mã: " + string(studentID)).c_str());
+    
+    // Hiển thị thông tin hiệu suất dựa trên thời gian microseconds
+    double timeMs = (double)duration.count() / 1000.0;
+    if (timeMs < 1) {
+        cout << YELLOW << "• " << RESET << "Hiệu suất: " << GREEN << BOLD << "Rất nhanh (< 1ms)" << RESET << endl;
+    } else if (timeMs < 10) {
+        cout << YELLOW << "• " << RESET << "Hiệu suất: " << GREEN << BOLD << "Nhanh" << RESET << endl;
+    } else {
+        cout << YELLOW << "• " << RESET << "Hiệu suất: " << YELLOW << BOLD << "Bình thường" << RESET << endl;
     }
 }
 

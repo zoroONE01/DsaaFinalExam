@@ -25,6 +25,10 @@ NodeDLL *doublyLinkedListTail = NULL;
 // Biến lưu trữ cây tìm kiếm nhị phân
 NodeBST *binarySearchTree = NULL;
 
+// Biến lưu trữ trạng thái sắp xếp hiện tại
+int currentSortCriteria = -1; // -1 means not sorted
+bool isSorted = false;
+
 int main()
 {
     // Khởi tạo các cấu trúc dữ liệu
@@ -96,6 +100,10 @@ int main()
 
             handleInputFromCSV(filePathStr.c_str(), dataStructureType, arrayList, singlyLinkedList, circularLinkedList,
                                doublyLinkedListHead, doublyLinkedListTail, binarySearchTree);
+            
+            // Reset sort state after loading new data
+            currentSortCriteria = -1;
+            isSorted = false;
             break;
         }
         case 3:
@@ -159,6 +167,10 @@ int main()
                 addStudentToDataStructure(student, dataStructureType, arrayList, singlyLinkedList,
                                           circularLinkedList, doublyLinkedListHead, doublyLinkedListTail,
                                           binarySearchTree);
+                
+                // Reset sort state after adding new student
+                currentSortCriteria = -1;
+                isSorted = false;
             }
             break;
         }
@@ -169,6 +181,10 @@ int main()
             {
                 deleteStudentFromDataStructure(studentID, dataStructureType, arrayList, singlyLinkedList,
                                                circularLinkedList, doublyLinkedListHead, doublyLinkedListTail);
+                
+                // Reset sort state after deleting student
+                currentSortCriteria = -1;
+                isSorted = false;
             }
             break;
         }
@@ -192,6 +208,10 @@ int main()
                     {
                         updateStudentInDataStructure(updateStudent, dataStructureType, arrayList, singlyLinkedList,
                                                      circularLinkedList, doublyLinkedListHead);
+                        
+                        // Reset sort state after updating student
+                        currentSortCriteria = -1;
+                        isSorted = false;
                     }
                 }
                 else
@@ -205,20 +225,10 @@ int main()
             displayCurrentList(dataStructureType, arrayList, singlyLinkedList, circularLinkedList,
                                doublyLinkedListHead, binarySearchTree);
             break;
-        case 7: // Tìm kiếm sinh viên theo mã
-        {
-            char studentID[MAX_STUDENT_ID_LENGTH];
-            if (inputStudentID(studentID))
-            {
-                searchStudentInDataStructure(studentID, dataStructureType, arrayList, singlyLinkedList,
-                                             circularLinkedList, doublyLinkedListHead);
-            }
-            break;
-        }
-        case 8: // Thống kê sinh viên
+        case 7: // Thống kê sinh viên
             performStatistics(dataStructureType, arrayList, singlyLinkedList, circularLinkedList, doublyLinkedListHead);
             break;
-        case 9: // Sắp xếp sinh viên theo tiêu chí
+        case 8: // Sắp xếp sinh viên theo tiêu chí
         {
             int sortAlgorithm = selectSortAlgorithm(dataStructureType);
             if (sortAlgorithm != -1)
@@ -227,22 +237,33 @@ int main()
                 if (sortCriteria != -1)
                 {
                     // Đo thời gian thực thi
-                    auto start = chrono::high_resolution_clock::now();
+                    chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
                     
                     bool success = sortStudentList(dataStructureType, sortAlgorithm, sortCriteria, arrayList, 
                                                    singlyLinkedList, circularLinkedList, doublyLinkedListHead, 
                                                    doublyLinkedListTail);
                     
-                    auto end = chrono::high_resolution_clock::now();
-                    auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+                    chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
+                    chrono::microseconds duration = chrono::duration_cast<chrono::microseconds>(end - start);
                     
                     if (success)
                     {
+                        // Update sort state for enhanced search optimization
+                        currentSortCriteria = sortCriteria;
+                        isSorted = true;
+                        
                         cout << BOLD << GREEN << "\n✓ Thời gian thực thi: " << duration.count() << " microseconds (" 
                              << (double)duration.count() / 1000.0 << " ms)" << RESET << endl;
                     }
                 }
             }
+            break;
+        }
+        case 9: // Tìm kiếm nâng cao với nhiều tiêu chí
+        {
+            enhancedSearchStudentInDataStructure(dataStructureType, arrayList, singlyLinkedList,
+                                               circularLinkedList, doublyLinkedListHead, 
+                                               isSorted ? currentSortCriteria : -1);
             break;
         }
         case 0:

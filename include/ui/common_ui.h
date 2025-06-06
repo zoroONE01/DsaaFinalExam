@@ -52,6 +52,7 @@ extern const char *CYAN;
 extern const char *WHITE;
 extern const char *BOLD;
 extern const char *UNDERLINE;
+extern const char *ITALIC;
 
 // ========== Các hàm hiển thị cơ bản ==========
 

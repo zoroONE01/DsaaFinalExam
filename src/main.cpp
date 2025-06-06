@@ -261,9 +261,9 @@ int main()
         }
         case 9: // Tìm kiếm nâng cao với nhiều tiêu chí
         {
-            enhancedSearchStudentInDataStructure(dataStructureType, arrayList, singlyLinkedList,
-                                               circularLinkedList, doublyLinkedListHead, 
-                                               isSorted ? currentSortCriteria : -1);
+            searchStudentInDataStructure(dataStructureType, arrayList, singlyLinkedList,
+                                        circularLinkedList, doublyLinkedListHead, 
+                                        isSorted ? currentSortCriteria : -1);
             break;
         }
         case 0:

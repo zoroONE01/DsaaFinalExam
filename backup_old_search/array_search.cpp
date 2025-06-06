@@ -28,7 +28,7 @@ int *searchArrayList(const ArrayStudentList &list, const char *keyword, int sear
     // Lần duyệt đầu: đếm số lượng kết quả phù hợp
     for (int i = 0; i < list.count; i++)
     {
-        if (matchesSearchCriteria(list.students[i], keyword, searchCriteria))
+        if (studentMatchesCriteria(list.students[i], keyword, searchCriteria))
         {
             count++;
         }
@@ -46,7 +46,7 @@ int *searchArrayList(const ArrayStudentList &list, const char *keyword, int sear
     // Lần duyệt thứ hai: thu thập các chỉ số phù hợp
     for (int i = 0; i < list.count; i++)
     {
-        if (matchesSearchCriteria(list.students[i], keyword, searchCriteria))
+        if (studentMatchesCriteria(list.students[i], keyword, searchCriteria))
         {
             results[resultIndex++] = i;
         }

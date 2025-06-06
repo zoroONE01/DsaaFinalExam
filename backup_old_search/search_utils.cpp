@@ -16,7 +16,7 @@ using namespace std;
  * @param str2 Chuỗi thứ hai
  * @return true nếu hai chuỗi giống nhau (không phân biệt hoa thường)
  */
-bool caseInsensitiveMatch(const char *str1, const char *str2)
+bool compareStringsIgnoreCase(const char *str1, const char *str2)
 {
     if (!str1 || !str2)
         return false;
@@ -40,7 +40,7 @@ bool caseInsensitiveMatch(const char *str1, const char *str2)
  * @param substring Chuỗi con cần tìm
  * @return true nếu tìm thấy chuỗi con
  */
-bool caseInsensitiveContains(const char *str, const char *substring)
+bool containsSubstring(const char *str, const char *substring)
 {
     if (!str || !substring)
         return false;
@@ -75,7 +75,7 @@ bool caseInsensitiveContains(const char *str, const char *substring)
  * @param searchCriteria Tiêu chí tìm kiếm (1: ID, 2: Tên, 3: Họ, 4: Lớp, 5: Điểm)
  * @return true nếu sinh viên khớp với tiêu chí
  */
-bool matchesSearchCriteria(const Student &student, const char *keyword, int searchCriteria)
+bool studentMatchesCriteria(const Student &student, const char *keyword, int searchCriteria)
 {
     if (!keyword || strlen(keyword) == 0)
         return true;
@@ -83,13 +83,13 @@ bool matchesSearchCriteria(const Student &student, const char *keyword, int sear
     switch (searchCriteria)
     {
     case 1: // Student ID
-        return caseInsensitiveContains(student.studentID, keyword);
+        return containsSubstring(student.studentID, keyword);
     case 2: // First Name
-        return caseInsensitiveContains(student.firstName, keyword);
+        return containsSubstring(student.firstName, keyword);
     case 3: // Last Name
-        return caseInsensitiveContains(student.lastName, keyword);
+        return containsSubstring(student.lastName, keyword);
     case 4: // Class
-        return caseInsensitiveContains(student.studentClass, keyword);
+        return containsSubstring(student.studentClass, keyword);
     case 5: // Score (convert keyword to float and check)
     {
         float searchScore = atof(keyword);

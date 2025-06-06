@@ -13,6 +13,7 @@ const char *CYAN = "\033[36m";
 const char *WHITE = "\033[37m";
 const char *BOLD = "\033[1m";
 const char *UNDERLINE = "\033[4m";
+const char *ITALIC = "\033[3m";
 
 // ========== Cài đặt các hàm hiển thị cơ bản ==========
 

@@ -35,7 +35,7 @@ NodeSLL *searchCLL(NodeSLL *head, const char *keyword, int searchCriteria, int &
 
     do
     {
-        if (matchesSearchCriteria(current->info, keyword, searchCriteria))
+        if (studentMatchesCriteria(current->info, keyword, searchCriteria))
         {
             // Tạo node mới cho kết quả
             NodeSLL *newNode = new NodeSLL;

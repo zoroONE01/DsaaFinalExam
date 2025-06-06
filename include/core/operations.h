@@ -62,12 +62,12 @@ bool updateStudentInDataStructure(const Student &student, int dataStructureType,
                                   NodeSLL *&circularLinkedList,
                                   NodeDLL *&doublyLinkedListHead);
 
-void enhancedSearchStudentInDataStructure(int dataStructureType,
-                                        const ArrayStudentList &arrayList,
-                                        NodeSLL *singlyLinkedList,
-                                        NodeSLL *circularLinkedList,
-                                        NodeDLL *doublyLinkedListHead,
-                                        int currentSortCriteria);
+void searchStudentInDataStructure(int dataStructureType,
+                                 const ArrayStudentList &arrayList,
+                                 NodeSLL *singlyLinkedList,
+                                 NodeSLL *circularLinkedList,
+                                 NodeDLL *doublyLinkedListHead,
+                                 int currentSortCriteria);
 
 void displayCurrentList(int dataStructureType,
                         const ArrayStudentList &arrayList,

@@ -8,11 +8,11 @@ using namespace std;
 // ========== Utility Functions cho tìm kiếm ==========
 
 // --- Hàm tiện ích so sánh chuỗi ---
-bool caseInsensitiveMatch(const char* str1, const char* str2);
-bool caseInsensitiveContains(const char* str, const char* substring);
+bool compareStringsIgnoreCase(const char* str1, const char* str2);
+bool containsSubstring(const char* str, const char* substring);
 
 // --- Hàm kiểm tra tiêu chí tìm kiếm ---
-bool matchesSearchCriteria(const Student& student, const char* keyword, int searchCriteria);
+bool studentMatchesCriteria(const Student& student, const char* keyword, int searchCriteria);
 
 // --- Hàm đảo ngược chuỗi ---
 char* reverseString(const char* str);

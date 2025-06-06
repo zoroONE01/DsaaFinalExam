@@ -1,7 +1,7 @@
 #include "../../include/core/operations.h"
 #include "../../include/utils/validation.h"
 #include "../../include/utils/common_utils.h"
-#include "../../include/algorithms/search.h"
+#include "../../include/ui/search_menu.h"
 #include <iostream>
 #include <string>
 #include <limits>
@@ -347,18 +347,18 @@ void displayCurrentList(int dataStructureType,
     }
 }
 
-// Hàm tìm kiếm sinh viên nâng cao với nhiều tiêu chí
-void enhancedSearchStudentInDataStructure(int dataStructureType,
-                                        const ArrayStudentList &arrayList,
-                                        NodeSLL *singlyLinkedList,
-                                        NodeSLL *circularLinkedList,
-                                        NodeDLL *doublyLinkedListHead,
-                                        int currentSortCriteria)
+// Hàm tìm kiếm sinh viên đơn giản với nhiều tiêu chí
+void searchStudentInDataStructure(int dataStructureType,
+                                 const ArrayStudentList &arrayList,
+                                 NodeSLL *singlyLinkedList,
+                                 NodeSLL *circularLinkedList,
+                                 NodeDLL *doublyLinkedListHead,
+                                 int currentSortCriteria)
 {
     // Kiểm tra trường hợp đặc biệt cho BST
     if (dataStructureType == BINARY_SEARCH_TREE)
     {
-        printWarning("Chức năng tìm kiếm nâng cao chưa được hiện thực cho cây tìm kiếm nhị phân.");
+        printWarning("Chức năng tìm kiếm chưa được hiện thực cho cây tìm kiếm nhị phân.");
         return;
     }
 
@@ -369,132 +369,24 @@ void enhancedSearchStudentInDataStructure(int dataStructureType,
         return;
     }
 
-    // Chọn tiêu chí tìm kiếm
-    int searchCriteria = selectSearchCriteria();
-    if (searchCriteria == -1) {
-        printError("Tiêu chí tìm kiếm không hợp lệ!");
+    // Sử dụng giao diện tìm kiếm với lựa chọn thuật toán
+    switch (dataStructureType) 
+    {
+    case ARRAY_LIST:
+        performSearchArray(arrayList, (currentSortCriteria != -1), currentSortCriteria);
+        break;
+    case SINGLY_LINKED_LIST:
+        performSearchSLL(singlyLinkedList);
+        break;
+    case CIRCULAR_LINKED_LIST:
+        performSearchCLL(circularLinkedList);
+        break;
+    case DOUBLY_LINKED_LIST:
+        performSearchDLL(doublyLinkedListHead, (currentSortCriteria != -1), currentSortCriteria);
+        break;
+    default:
+        printError("Cấu trúc dữ liệu không được hỗ trợ!");
         return;
-    }
-
-    // Nhập từ khóa tìm kiếm
-    char keyword[100];
-    if (!inputSearchKeyword(keyword, searchCriteria)) {
-        printError("Từ khóa tìm kiếm không hợp lệ!");
-        return;
-    }
-
-    // Hỏi người dùng có muốn hiển thị họ tên đảo ngược không
-    bool showReversed = false;
-    cout << "\n";
-    printInfo("Tùy chọn hiển thị:");
-    cout << CYAN << "Bạn có muốn hiển thị họ tên đảo ngược không? (y/n): " << RESET;
-    char choice;
-    cin >> choice;
-    clearInputBuffer();
-    showReversed = (choice == 'y' || choice == 'Y');
-
-    // Thực hiện tìm kiếm theo từng cấu trúc dữ liệu với đo thời gian
-    int count = 0;
-    double searchTimeMs = 0.0;
-    
-    switch (dataStructureType) {
-        case ARRAY_LIST: {
-            // Kiểm tra xem có thể dùng binary search không (nếu dữ liệu đã sắp xếp)
-            bool isSorted = (currentSortCriteria != -1);
-            int* results = searchArrayListWithOptions(arrayList, keyword, searchCriteria, 
-                                                    count, searchTimeMs, isSorted, currentSortCriteria);
-            
-            displaySearchResultsArrayWithOptions(arrayList, results, count, keyword, 
-                                                searchCriteria, showReversed, searchTimeMs);
-            
-            // Hiển thị thông tin thuật toán
-            if (isSorted && searchCriteria == currentSortCriteria) {
-                cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Binary Search (Array)" << RESET << endl;
-                cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(log n)" << RESET << endl;
-            } else {
-                cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Sequential Search (Array)" << RESET << endl;
-                cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(n)" << RESET << endl;
-            }
-            
-            // Giải phóng bộ nhớ
-            if (results) {
-                delete[] results;
-            }
-            break;
-        }
-        
-        case SINGLY_LINKED_LIST: {
-            NodeSLL* results = searchSLLWithOptions(singlyLinkedList, keyword, searchCriteria, 
-                                                   count, searchTimeMs);
-            
-            displaySearchResultsSLLWithOptions(results, count, keyword, searchCriteria, 
-                                              showReversed, searchTimeMs);
-            
-            // Hiển thị thông tin thuật toán
-            cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Sequential Search (Singly Linked List)" << RESET << endl;
-            cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(n)" << RESET << endl;
-            
-            // Giải phóng bộ nhớ kết quả
-            while (results) {
-                NodeSLL* temp = results;
-                results = results->next;
-                delete temp;
-            }
-            break;
-        }
-        
-        case CIRCULAR_LINKED_LIST: {
-            NodeSLL* results = searchCLLWithOptions(circularLinkedList, keyword, searchCriteria, 
-                                                   count, searchTimeMs);
-            
-            displaySearchResultsCLLWithOptions(results, count, keyword, searchCriteria, 
-                                              showReversed, searchTimeMs);
-            
-            // Hiển thị thông tin thuật toán
-            cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Sequential Search (Circular Linked List)" << RESET << endl;
-            cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(n)" << RESET << endl;
-            
-            // Giải phóng bộ nhớ kết quả
-            while (results) {
-                NodeSLL* temp = results;
-                results = results->next;
-                delete temp;
-            }
-            break;
-        }
-        
-        case DOUBLY_LINKED_LIST: {
-            NodeDLL* results = searchDLLWithOptions(doublyLinkedListHead, keyword, searchCriteria, 
-                                                   count, searchTimeMs);
-            
-            displaySearchResultsDLLWithOptions(results, count, keyword, searchCriteria, 
-                                              showReversed, searchTimeMs);
-            
-            // Hiển thị thông tin thuật toán
-            cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Sequential Search (Doubly Linked List)" << RESET << endl;
-            cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(n)" << RESET << endl;
-            
-            // Giải phóng bộ nhớ kết quả
-            while (results) {
-                NodeDLL* temp = results;
-                results = results->next;
-                delete temp;
-            }
-            break;
-        }
-        
-        default:
-            printError("Cấu trúc dữ liệu không được hỗ trợ!");
-            return;
-    }
-    
-    // Hiển thị thông tin hiệu suất dựa trên thời gian milliseconds
-    if (searchTimeMs < 1) {
-        cout << YELLOW << "• " << RESET << "Hiệu suất: " << GREEN << BOLD << "Rất nhanh (< 1ms)" << RESET << endl;
-    } else if (searchTimeMs < 10) {
-        cout << YELLOW << "• " << RESET << "Hiệu suất: " << GREEN << BOLD << "Nhanh" << RESET << endl;
-    } else {
-        cout << YELLOW << "• " << RESET << "Hiệu suất: " << YELLOW << BOLD << "Bình thường" << RESET << endl;
     }
 }
 

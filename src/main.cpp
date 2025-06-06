@@ -245,11 +245,6 @@ int main()
             }
             break;
         }
-        case 10: // Bài toán Mã Đi Tuần
-            clearScreen();
-            printHeader("BÀI TOÁN MÃ ĐI TUẦN");
-            knightsTour();
-            break;
         case 0:
             exitProgram(singlyLinkedList, circularLinkedList, doublyLinkedListHead,
                         doublyLinkedListTail, binarySearchTree);

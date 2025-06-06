@@ -9,7 +9,6 @@
 #include "singly_linked_list_sorting.h"
 #include "circular_linked_list_sorting.h"
 #include "doubly_linked_list_sorting.h"
-#include "search_algorithms.h"
 
 // ========== Tất cả các hàm sắp xếp đã được định nghĩa trong các thư viện con ==========
 
@@ -19,7 +18,6 @@
  * - singly_linked_list_sorting.h: Thuật toán sắp xếp cho Singly Linked List
  * - circular_linked_list_sorting.h: Thuật toán sắp xếp cho Circular Linked List
  * - doubly_linked_list_sorting.h: Thuật toán sắp xếp cho Doubly Linked List
- * - search_algorithms.h: Thuật toán tìm kiếm
  */
 
 #endif // SORTING_ALGORITHMS_H

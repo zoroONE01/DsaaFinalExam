@@ -18,9 +18,6 @@ const float EXCELLENT_THRESHOLD = 8.0f; // Ngưỡng điểm xuất sắc
 const float GOOD_THRESHOLD = 6.5f;      // Ngưỡng điểm khá
 const float AVERAGE_THRESHOLD = 5.0f;   // Ngưỡng điểm trung bình
 
-// Hằng số cho Knight's Tour
-const int CHESS_BOARD_SIZE = 8;         // Kích thước bàn cờ
-
 // Hằng số cho display
 const int DISPLAY_WIDTH_ID = 12;        // Độ rộng hiển thị mã SV
 const int DISPLAY_WIDTH_NAME = 15;      // Độ rộng hiển thị họ/tên

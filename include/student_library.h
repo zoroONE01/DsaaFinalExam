@@ -27,6 +27,5 @@
 
 // Algorithms
 #include "algorithms/sorting.h"         // Các thuật toán sắp xếp
-#include "algorithms/knights_tour.h"    // Bài toán Mã Đi Tuần
 
 #endif // STUDENT_LIBRARY_H

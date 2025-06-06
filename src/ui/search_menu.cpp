@@ -1,6 +1,5 @@
 #include "../../include/ui/search_menu.h"
-#include "../../include/algorithms/search.h"
-#include "../../include/algorithms/student_search.h"
+#include "../../include/algorithms/searching.h"
 #include "../../include/ui/common_ui.h"
 #include "../../include/utils/constants.h"
 #include "../../include/utils/validation.h"
@@ -155,7 +154,7 @@ void performSearchArray(const ArrayStudentList &list, bool isSorted, int sortCri
     }
 
     // Hiển thị kết quả
-    displaySearchResults(result, keyword, searchCriteria, showReversedName, getDataStructureName(ARRAY_LIST));
+    displaySearchResultsWithDataStructure(result, keyword, searchCriteria, showReversedName, getDataStructureName(ARRAY_LIST));
 
     // Giải phóng bộ nhớ
     freeSearchResult(result);
@@ -187,7 +186,7 @@ void performSearchSLL(NodeSLL *head)
     SearchResult result = sequentialSearchSLL(head, keyword, searchCriteria);
 
     // Hiển thị kết quả
-    displaySearchResults(result, keyword, searchCriteria, showReversedName, getDataStructureName(SINGLY_LINKED_LIST));
+    displaySearchResultsWithDataStructure(result, keyword, searchCriteria, showReversedName, getDataStructureName(SINGLY_LINKED_LIST));
 
     // Giải phóng bộ nhớ
     freeSearchResult(result);
@@ -219,7 +218,7 @@ void performSearchCLL(NodeSLL *head)
     SearchResult result = sequentialSearchCLL(head, keyword, searchCriteria);
 
     // Hiển thị kết quả
-    displaySearchResults(result, keyword, searchCriteria, showReversedName, getDataStructureName(CIRCULAR_LINKED_LIST));
+    displaySearchResultsWithDataStructure(result, keyword, searchCriteria, showReversedName, getDataStructureName(CIRCULAR_LINKED_LIST));
 
     // Giải phóng bộ nhớ
     freeSearchResult(result);
@@ -278,7 +277,7 @@ void performSearchDLL(NodeDLL *head, bool isSorted, int sortCriteria)
                                                  sortCriteria);
 
     // Hiển thị kết quả
-    displaySearchResults(result, keyword, searchCriteria, showReversedName, getDataStructureName(DOUBLY_LINKED_LIST));
+    displaySearchResultsWithDataStructure(result, keyword, searchCriteria, showReversedName, getDataStructureName(DOUBLY_LINKED_LIST));
 
     // Hiển thị thông tin thuật toán
     cout << "\n";
@@ -318,4 +317,3 @@ void performSearchDLL(NodeDLL *head, bool isSorted, int sortCriteria)
 /**
  * @brief Giao diện tìm kiếm sinh viên chính
  */
-

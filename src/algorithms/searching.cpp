@@ -1,4 +1,4 @@
-#include "../../include/algorithms/student_search.h"
+#include "../../include/algorithms/searching.h"
 #include "../../include/utils/constants.h"
 #include "../../include/ui/common_ui.h"
 #include <iostream>
@@ -15,7 +15,7 @@ using namespace std;
 /**
  * @brief So sánh chuỗi không phân biệt hoa thường
  */
-bool compareStringsIgnoreCase(const char* str1, const char* str2) {
+bool compareIgnoreCase(const char* str1, const char* str2) {
     if (!str1 || !str2) return false;
     
     while (*str1 && *str2) {
@@ -31,7 +31,7 @@ bool compareStringsIgnoreCase(const char* str1, const char* str2) {
 /**
  * @brief Kiểm tra chuỗi con (không phân biệt hoa thường)
  */
-bool containsSubstring(const char* str, const char* substring) {
+bool containsIgnoreCase(const char* str, const char* substring) {
     if (!str || !substring) return false;
     if (strlen(substring) == 0) return true;
     
@@ -54,18 +54,18 @@ bool containsSubstring(const char* str, const char* substring) {
 /**
  * @brief Kiểm tra sinh viên có khớp với tiêu chí tìm kiếm không
  */
-bool studentMatchesCriteria(const Student& student, const char* keyword, int searchCriteria) {
+bool checkStudentMatch(const Student& student, const char* keyword, int searchCriteria) {
     if (!keyword || strlen(keyword) == 0) return true;
     
     switch (searchCriteria) {
         case SEARCH_BY_STUDENT_ID:
-            return containsSubstring(student.studentID, keyword);
+            return containsIgnoreCase(student.studentID, keyword);
         case SEARCH_BY_FIRST_NAME:
-            return containsSubstring(student.firstName, keyword);
+            return containsIgnoreCase(student.firstName, keyword);
         case SEARCH_BY_LAST_NAME:
-            return containsSubstring(student.lastName, keyword);
+            return containsIgnoreCase(student.lastName, keyword);
         case SEARCH_BY_CLASS:
-            return containsSubstring(student.studentClass, keyword);
+            return containsIgnoreCase(student.studentClass, keyword);
         case SEARCH_BY_SCORE: {
             float searchScore = atof(keyword);
             return (student.score >= searchScore - 0.01 && student.score <= searchScore + 0.01);
@@ -136,7 +136,7 @@ SearchResult sequentialSearch(Student* students, int totalCount, const char* key
     // Đếm số lượng kết quả trước
     int matchCount = 0;
     for (int i = 0; i < totalCount; i++) {
-        if (studentMatchesCriteria(students[i], keyword, searchCriteria)) {
+        if (checkStudentMatch(students[i], keyword, searchCriteria)) {
             matchCount++;
         }
     }
@@ -147,7 +147,7 @@ SearchResult sequentialSearch(Student* students, int totalCount, const char* key
         
         int resultIndex = 0;
         for (int i = 0; i < totalCount; i++) {
-            if (studentMatchesCriteria(students[i], keyword, searchCriteria)) {
+            if (checkStudentMatch(students[i], keyword, searchCriteria)) {
                 result.students[resultIndex] = students[i];
                 resultIndex++;
             }
@@ -229,20 +229,25 @@ SearchResult binarySearchArray(const ArrayStudentList& list, const char* keyword
 }
 
 /**
- * @brief Tìm kiếm trong Array List
+ * @brief Tìm kiếm tuần tự trong Array List
  */
-SearchResult searchInArrayList(const ArrayStudentList& list, const char* keyword, int searchCriteria, bool isSorted, int sortCriteria) {
-    if (isSorted && searchCriteria == sortCriteria) {
-        return binarySearchArray(list, keyword, searchCriteria, sortCriteria);
-    } else {
-        return sequentialSearch(const_cast<Student*>(list.students), list.count, keyword, searchCriteria);
-    }
+SearchResult sequentialSearchArray(const ArrayStudentList& list, const char* keyword, int searchCriteria) {
+    return sequentialSearch(const_cast<Student*>(list.students), list.count, keyword, searchCriteria);
+}
+
+/**
+ * @brief Tìm kiếm nhị phân trong Array List theo điểm
+ */
+SearchResult binarySearchArrayByScore(const ArrayStudentList& list, float targetScore) {
+    char scoreStr[20];
+    snprintf(scoreStr, sizeof(scoreStr), "%.2f", targetScore);
+    return binarySearchArray(list, scoreStr, SEARCH_BY_SCORE, SORT_BY_SCORE);
 }
 
 /**
  * @brief Tìm kiếm trong Singly Linked List (luôn dùng tìm kiếm tuần tự)
  */
-SearchResult searchInSinglyLinkedList(NodeSLL* head, const char* keyword, int searchCriteria) {
+SearchResult sequentialSearchSLL(NodeSLL* head, const char* keyword, int searchCriteria) {
     SearchResult result;
     result.students = nullptr;
     result.count = 0;
@@ -254,7 +259,7 @@ SearchResult searchInSinglyLinkedList(NodeSLL* head, const char* keyword, int se
     int matchCount = 0;
     NodeSLL* current = head;
     while (current != nullptr) {
-        if (studentMatchesCriteria(current->info, keyword, searchCriteria)) {
+        if (checkStudentMatch(current->info, keyword, searchCriteria)) {
             matchCount++;
         }
         current = current->next;
@@ -267,7 +272,7 @@ SearchResult searchInSinglyLinkedList(NodeSLL* head, const char* keyword, int se
         int resultIndex = 0;
         current = head;
         while (current != nullptr) {
-            if (studentMatchesCriteria(current->info, keyword, searchCriteria)) {
+            if (checkStudentMatch(current->info, keyword, searchCriteria)) {
                 result.students[resultIndex] = current->info;
                 resultIndex++;
             }
@@ -284,7 +289,7 @@ SearchResult searchInSinglyLinkedList(NodeSLL* head, const char* keyword, int se
 /**
  * @brief Tìm kiếm trong Circular Linked List (luôn dùng tìm kiếm tuần tự)
  */
-SearchResult searchInCircularLinkedList(NodeSLL* head, const char* keyword, int searchCriteria) {
+SearchResult sequentialSearchCLL(NodeSLL* head, const char* keyword, int searchCriteria) {
     SearchResult result;
     result.students = nullptr;
     result.count = 0;
@@ -301,7 +306,7 @@ SearchResult searchInCircularLinkedList(NodeSLL* head, const char* keyword, int 
     int matchCount = 0;
     NodeSLL* current = head;
     do {
-        if (studentMatchesCriteria(current->info, keyword, searchCriteria)) {
+        if (checkStudentMatch(current->info, keyword, searchCriteria)) {
             matchCount++;
         }
         current = current->next;
@@ -314,7 +319,7 @@ SearchResult searchInCircularLinkedList(NodeSLL* head, const char* keyword, int 
         int resultIndex = 0;
         current = head;
         do {
-            if (studentMatchesCriteria(current->info, keyword, searchCriteria)) {
+            if (checkStudentMatch(current->info, keyword, searchCriteria)) {
                 result.students[resultIndex] = current->info;
                 resultIndex++;
             }
@@ -331,7 +336,7 @@ SearchResult searchInCircularLinkedList(NodeSLL* head, const char* keyword, int 
 /**
  * @brief Tìm kiếm trong Doubly Linked List
  */
-SearchResult searchInDoublyLinkedList(NodeDLL* head, const char* keyword, int searchCriteria, bool isSorted, int sortCriteria) {
+SearchResult searchDoublyLinkedList(NodeDLL* head, const char* keyword, int searchCriteria, bool isSorted, int sortCriteria) {
     SearchResult result;
     result.students = nullptr;
     result.count = 0;
@@ -402,7 +407,7 @@ SearchResult searchInDoublyLinkedList(NodeDLL* head, const char* keyword, int se
         int matchCount = 0;
         NodeDLL* current = head;
         while (current != nullptr) {
-            if (studentMatchesCriteria(current->info, keyword, searchCriteria)) {
+            if (checkStudentMatch(current->info, keyword, searchCriteria)) {
                 matchCount++;
             }
             current = current->next;
@@ -415,7 +420,7 @@ SearchResult searchInDoublyLinkedList(NodeDLL* head, const char* keyword, int se
             int resultIndex = 0;
             current = head;
             while (current != nullptr) {
-                if (studentMatchesCriteria(current->info, keyword, searchCriteria)) {
+                if (checkStudentMatch(current->info, keyword, searchCriteria)) {
                     result.students[resultIndex] = current->info;
                     resultIndex++;
                 }
@@ -570,4 +575,16 @@ void freeSearchResult(SearchResult& result) {
         result.students = nullptr;
     }
     result.count = 0;
+}
+
+/**
+ * @brief Hiển thị kết quả tìm kiếm với tên cấu trúc dữ liệu
+ * @note Wrapper function để thêm tên cấu trúc dữ liệu vào output
+ */
+void displaySearchResultsWithDataStructure(const SearchResult& result, const char* keyword, int searchCriteria, bool showReversedName, const char* dataStructureName) {
+    // Hiển thị tiêu đề với tên cấu trúc dữ liệu
+    cout << CYAN << "\n========== KẾT QUẢ TÌM KIẾM TRÊN " << dataStructureName << " ==========" << RESET << endl;
+    
+    // Gọi hàm hiển thị chính
+    displaySearchResults(result, keyword, searchCriteria, showReversedName);
 }

@@ -5,6 +5,7 @@
 #include "../data_structures/array_list.h"
 #include "../data_structures/singly_linked_list.h"
 #include "../data_structures/doubly_linked_list.h"
+#include "../algorithms/searching.h"
 #include "common_ui.h"
 
 using namespace std;

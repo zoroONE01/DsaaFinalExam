@@ -383,27 +383,38 @@ void enhancedSearchStudentInDataStructure(int dataStructureType,
         return;
     }
 
+    // Hỏi người dùng có muốn hiển thị họ tên đảo ngược không
+    bool showReversed = false;
+    cout << "\n";
+    printInfo("Tùy chọn hiển thị:");
+    cout << CYAN << "Bạn có muốn hiển thị họ tên đảo ngược không? (y/n): " << RESET;
+    char choice;
+    cin >> choice;
+    clearInputBuffer();
+    showReversed = (choice == 'y' || choice == 'Y');
+
     // Thực hiện tìm kiếm theo từng cấu trúc dữ liệu với đo thời gian
     int count = 0;
-    chrono::microseconds duration;
-    
-    // Đo thời gian thực thi
-    chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
+    double searchTimeMs = 0.0;
     
     switch (dataStructureType) {
         case ARRAY_LIST: {
-            int* results = searchArrayList(arrayList, keyword, searchCriteria, count);
+            // Kiểm tra xem có thể dùng binary search không (nếu dữ liệu đã sắp xếp)
+            bool isSorted = (currentSortCriteria != -1);
+            int* results = searchArrayListWithOptions(arrayList, keyword, searchCriteria, 
+                                                    count, searchTimeMs, isSorted, currentSortCriteria);
             
-            chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-            duration = chrono::duration_cast<chrono::microseconds>(end - start);
-            
-            displaySearchResultsArray(arrayList, results, count, keyword);
+            displaySearchResultsArrayWithOptions(arrayList, results, count, keyword, 
+                                                searchCriteria, showReversed, searchTimeMs);
             
             // Hiển thị thông tin thuật toán
-            cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Sequential Search (Array)" << RESET << endl;
-            cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(n)" << RESET << endl;
-            cout << BOLD << GREEN << "• Thời gian thực thi: " << duration.count() << " microseconds (" 
-                 << (double)duration.count() / 1000.0 << " ms)" << RESET << endl;
+            if (isSorted && searchCriteria == currentSortCriteria) {
+                cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Binary Search (Array)" << RESET << endl;
+                cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(log n)" << RESET << endl;
+            } else {
+                cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Sequential Search (Array)" << RESET << endl;
+                cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(n)" << RESET << endl;
+            }
             
             // Giải phóng bộ nhớ
             if (results) {
@@ -413,18 +424,15 @@ void enhancedSearchStudentInDataStructure(int dataStructureType,
         }
         
         case SINGLY_LINKED_LIST: {
-            NodeSLL* results = searchSLL(singlyLinkedList, keyword, searchCriteria, count);
+            NodeSLL* results = searchSLLWithOptions(singlyLinkedList, keyword, searchCriteria, 
+                                                   count, searchTimeMs);
             
-            chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-            duration = chrono::duration_cast<chrono::microseconds>(end - start);
-            
-            displaySearchResultsSLL(results, count, keyword);
+            displaySearchResultsSLLWithOptions(results, count, keyword, searchCriteria, 
+                                              showReversed, searchTimeMs);
             
             // Hiển thị thông tin thuật toán
             cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Sequential Search (Singly Linked List)" << RESET << endl;
             cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(n)" << RESET << endl;
-            cout << BOLD << GREEN << "• Thời gian thực thi: " << duration.count() << " microseconds (" 
-                 << (double)duration.count() / 1000.0 << " ms)" << RESET << endl;
             
             // Giải phóng bộ nhớ kết quả
             while (results) {
@@ -436,18 +444,15 @@ void enhancedSearchStudentInDataStructure(int dataStructureType,
         }
         
         case CIRCULAR_LINKED_LIST: {
-            NodeSLL* results = searchCLL(circularLinkedList, keyword, searchCriteria, count);
+            NodeSLL* results = searchCLLWithOptions(circularLinkedList, keyword, searchCriteria, 
+                                                   count, searchTimeMs);
             
-            chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-            duration = chrono::duration_cast<chrono::microseconds>(end - start);
-            
-            displaySearchResultsSLL(results, count, keyword);
+            displaySearchResultsCLLWithOptions(results, count, keyword, searchCriteria, 
+                                              showReversed, searchTimeMs);
             
             // Hiển thị thông tin thuật toán
             cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Sequential Search (Circular Linked List)" << RESET << endl;
             cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(n)" << RESET << endl;
-            cout << BOLD << GREEN << "• Thời gian thực thi: " << duration.count() << " microseconds (" 
-                 << (double)duration.count() / 1000.0 << " ms)" << RESET << endl;
             
             // Giải phóng bộ nhớ kết quả
             while (results) {
@@ -459,18 +464,15 @@ void enhancedSearchStudentInDataStructure(int dataStructureType,
         }
         
         case DOUBLY_LINKED_LIST: {
-            NodeDLL* results = searchDLL(doublyLinkedListHead, keyword, searchCriteria, count);
+            NodeDLL* results = searchDLLWithOptions(doublyLinkedListHead, keyword, searchCriteria, 
+                                                   count, searchTimeMs);
             
-            chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-            duration = chrono::duration_cast<chrono::microseconds>(end - start);
-            
-            displaySearchResultsDLL(results, count, keyword);
+            displaySearchResultsDLLWithOptions(results, count, keyword, searchCriteria, 
+                                              showReversed, searchTimeMs);
             
             // Hiển thị thông tin thuật toán
             cout << YELLOW << "• " << RESET << "Thuật toán: " << BOLD << "Sequential Search (Doubly Linked List)" << RESET << endl;
             cout << YELLOW << "• " << RESET << "Độ phức tạp: " << BOLD << "O(n)" << RESET << endl;
-            cout << BOLD << GREEN << "• Thời gian thực thi: " << duration.count() << " microseconds (" 
-                 << (double)duration.count() / 1000.0 << " ms)" << RESET << endl;
             
             // Giải phóng bộ nhớ kết quả
             while (results) {
@@ -486,11 +488,10 @@ void enhancedSearchStudentInDataStructure(int dataStructureType,
             return;
     }
     
-    // Hiển thị thông tin hiệu suất dựa trên thời gian microseconds
-    double timeMs = (double)duration.count() / 1000.0;
-    if (timeMs < 1) {
+    // Hiển thị thông tin hiệu suất dựa trên thời gian milliseconds
+    if (searchTimeMs < 1) {
         cout << YELLOW << "• " << RESET << "Hiệu suất: " << GREEN << BOLD << "Rất nhanh (< 1ms)" << RESET << endl;
-    } else if (timeMs < 10) {
+    } else if (searchTimeMs < 10) {
         cout << YELLOW << "• " << RESET << "Hiệu suất: " << GREEN << BOLD << "Nhanh" << RESET << endl;
     } else {
         cout << YELLOW << "• " << RESET << "Hiệu suất: " << YELLOW << BOLD << "Bình thường" << RESET << endl;

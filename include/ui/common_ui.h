@@ -6,6 +6,7 @@
 #include <cstring>
 #include <limits>
 #include <string>
+#include "../utils/constants.h"
 
 // Sử dụng tiền khai báo thay vì include trực tiếp để tránh include cycle
 struct Student;
@@ -36,15 +37,6 @@ enum SortCriteria
     SORT_BY_STUDENT_ID = 1,
     SORT_BY_NAME = 2,
     SORT_BY_SCORE = 3
-};
-
-enum SearchCriteria
-{
-    SEARCH_BY_STUDENT_ID = 1,
-    SEARCH_BY_FIRST_NAME = 2,
-    SEARCH_BY_LAST_NAME = 3,
-    SEARCH_BY_CLASS = 4,
-    SEARCH_BY_SCORE = 5
 };
 
 using namespace std;

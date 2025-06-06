@@ -27,4 +27,22 @@ const int DISPLAY_WIDTH_SCORE = 9;      // Độ rộng hiển thị điểm
 // Mã hủy bỏ nhập liệu
 extern const char* CANCEL_INPUT_CODE;
 
+// ========== Hằng số cho tìm kiếm sinh viên ==========
+
+// Các tiêu chí tìm kiếm
+const int SEARCH_BY_STUDENT_ID = 1;     // Tìm kiếm theo mã sinh viên
+const int SEARCH_BY_FIRST_NAME = 2;     // Tìm kiếm theo tên
+const int SEARCH_BY_LAST_NAME = 3;      // Tìm kiếm theo họ
+const int SEARCH_BY_CLASS = 4;          // Tìm kiếm theo lớp
+const int SEARCH_BY_SCORE = 5;          // Tìm kiếm theo điểm
+
+// Tùy chọn hiển thị kết quả tìm kiếm
+const int DISPLAY_NORMAL_NAME = 0;      // Hiển thị tên bình thường
+const int DISPLAY_REVERSED_NAME = 1;    // Hiển thị tên đảo ngược
+
+// Màu sắc cho hiển thị kết quả
+const char* const RED_COLOR = "\033[31m";      // Màu đỏ
+const char* const BOLD_TEXT = "\033[1m";       // In đậm
+const char* const RESET_COLOR = "\033[0m";     // Reset màu
+
 #endif // CONSTANTS_H

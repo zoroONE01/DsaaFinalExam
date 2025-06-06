@@ -13,5 +13,11 @@ NodeSLL* searchSLL(NodeSLL* head, const char* keyword, int searchCriteria, int &
 
 // --- Hiển thị kết quả tìm kiếm ---
 void displaySearchResultsSLL(NodeSLL* results, int count, const char* keyword);
+void displaySearchResultsSLLWithOptions(NodeSLL* results, int count, const char* keyword, 
+                                       int searchCriteria, bool showReversed, double searchTimeMs);
+
+// --- Tìm kiếm với tùy chọn ---
+NodeSLL* searchSLLWithOptions(NodeSLL* head, const char* keyword, int searchCriteria, 
+                             int &count, double &searchTimeMs);
 
 #endif // SINGLY_LINKED_LIST_SEARCH_H

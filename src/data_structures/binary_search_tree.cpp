@@ -1,6 +1,7 @@
 #include "../../include/data_structures/binary_search_tree.h"
 #include "../../include/ui/common_ui.h"
 #include <iostream>
+#include <chrono>
 
 using namespace std;
 
@@ -207,4 +208,152 @@ void freeBST(NodeBST *&root)
     // Giải phóng node hiện tại
     delete root;
     root = NULL;
+}
+
+// Xóa node trong cây BST theo key (điểm số)
+NodeBST *deleteFromBST(NodeBST *&root, float key)
+{
+    // Nếu cây rỗng
+    if (root == NULL)
+    {
+        printWarning("Không tìm thấy node có điểm số cần xóa!");
+        return root;
+    }
+
+    // Nếu key nhỏ hơn key của node hiện tại, đi sang trái
+    if (key < root->key)
+    {
+        root->left = deleteFromBST(root->left, key);
+    }
+    // Nếu key lớn hơn key của node hiện tại, đi sang phải
+    else if (key > root->key)
+    {
+        root->right = deleteFromBST(root->right, key);
+    }
+    // Nếu tìm thấy node cần xóa
+    else
+    {
+        cout << GREEN << "✅ Đã tìm thấy và xóa node có điểm số " << key << " khỏi cây BST!" << RESET << endl;
+
+        // Trường hợp 1: Node là lá (không có con)
+        if (root->left == NULL && root->right == NULL)
+        {
+            delete root;
+            return NULL;
+        }
+        // Trường hợp 2: Node có một con
+        else if (root->left == NULL)
+        {
+            NodeBST *temp = root;
+            root = root->right;
+            delete temp;
+            return root;
+        }
+        else if (root->right == NULL)
+        {
+            NodeBST *temp = root;
+            root = root->left;
+            delete temp;
+            return root;
+        }
+        // Trường hợp 3: Node có hai con
+        else
+        {
+            // Tìm node nhỏ nhất trong cây con phải (successor)
+            NodeBST *minNode = findMinNode(root->right);
+
+            // Sao chép dữ liệu từ successor vào node hiện tại
+            root->key = minNode->key;
+            for (int i = 0; i < minNode->count; i++)
+            {
+                root->students[i] = minNode->students[i];
+            }
+            root->count = minNode->count;
+
+            // Xóa successor
+            root->right = deleteFromBST(root->right, minNode->key);
+        }
+    }
+    return root;
+}
+
+// Duyệt cây BST theo thứ tự giữa (In-order) với đo thời gian
+void inorderTraversalBSTWithTimer(NodeBST *root)
+{
+    cout << BOLD << BLUE << "\n=== DUYỆT CÂY BST THEO THỨ TỰ GIỮA (IN-ORDER) - CÓ ĐO THỜI GIAN ===" << RESET << endl;
+
+    // Bắt đầu đo thời gian
+    chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
+
+    if (root == NULL)
+    {
+        printWarning("Cây BST rỗng!");
+    }
+    else
+    {
+        cout << CYAN << "Kết quả duyệt cây theo thứ tự tăng dần (điểm số):" << RESET << endl;
+        inorderTraversalBST(root);
+    }
+
+    // Kết thúc đo thời gian
+    chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
+    chrono::microseconds duration = chrono::duration_cast<chrono::microseconds>(end - start);
+
+    cout << BOLD << GREEN << "\n⏱️  Thời gian thực hiện: "
+         << duration.count() << " microseconds ("
+         << duration.count() / 1000.0 << " ms)" << RESET << endl;
+}
+
+// Duyệt cây BST theo thứ tự trước (Pre-order) với đo thời gian
+void preorderTraversalBSTWithTimer(NodeBST *root)
+{
+    cout << BOLD << BLUE << "\n=== DUYỆT CÂY BST THEO THỨ TỰ TRƯỚC (PRE-ORDER) - CÓ ĐO THỜI GIAN ===" << RESET << endl;
+
+    // Bắt đầu đo thời gian
+    chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
+
+    if (root == NULL)
+    {
+        printWarning("Cây BST rỗng!");
+    }
+    else
+    {
+        cout << CYAN << "Kết quả duyệt cây theo thứ tự trước:" << RESET << endl;
+        preorderTraversalBST(root);
+    }
+
+    // Kết thúc đo thời gian
+    chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
+    chrono::microseconds duration = chrono::duration_cast<chrono::microseconds>(end - start);
+
+    cout << BOLD << GREEN << "\n⏱️  Thời gian thực hiện: "
+         << duration.count() << " microseconds ("
+         << duration.count() / 1000.0 << " ms)" << RESET << endl;
+}
+
+// Duyệt cây BST theo thứ tự sau (Post-order) với đo thời gian
+void postorderTraversalBSTWithTimer(NodeBST *root)
+{
+    cout << BOLD << BLUE << "\n=== DUYỆT CÂY BST THEO THỨ TỰ SAU (POST-ORDER) - CÓ ĐO THỜI GIAN ===" << RESET << endl;
+
+    // Bắt đầu đo thời gian
+    chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
+
+    if (root == NULL)
+    {
+        printWarning("Cây BST rỗng!");
+    }
+    else
+    {
+        cout << CYAN << "Kết quả duyệt cây theo thứ tự sau:" << RESET << endl;
+        postorderTraversalBST(root);
+    }
+
+    // Kết thúc đo thời gian
+    chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
+    chrono::microseconds duration = chrono::duration_cast<chrono::microseconds>(end - start);
+
+    cout << BOLD << GREEN << "\n⏱️  Thời gian thực hiện: "
+         << duration.count() << " microseconds ("
+         << duration.count() / 1000.0 << " ms)" << RESET << endl;
 }

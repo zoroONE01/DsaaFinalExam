@@ -28,11 +28,17 @@ struct NodeBST
 void initBST(NodeBST *&root);
 NodeBST *createNodeBST(float score, const Student &student);
 void insertToBST(NodeBST *&root, const Student &student);
+NodeBST *deleteFromBST(NodeBST *&root, float key);
 NodeBST *searchInBST(NodeBST *root, float score);
+NodeBST *findMinNode(NodeBST *root);
 void inorderTraversalBST(NodeBST *root);
 void preorderTraversalBST(NodeBST *root);
 void postorderTraversalBST(NodeBST *root);
+void inorderTraversalBSTWithTimer(NodeBST *root);
+void preorderTraversalBSTWithTimer(NodeBST *root);
+void postorderTraversalBSTWithTimer(NodeBST *root);
 void displayBSTTree(NodeBST *root, int level = 0, char branch = ' ');
+void displayBSTNode(NodeBST *node);
 void freeBST(NodeBST *&root);
 
 #endif // BINARY_SEARCH_TREE_H

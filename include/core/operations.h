@@ -56,6 +56,8 @@ bool deleteStudentFromDataStructure(const char *studentID, int dataStructureType
                                     NodeDLL *&doublyLinkedListHead,
                                     NodeDLL *&doublyLinkedListTail);
 
+bool deleteNodeFromBSTByKey(NodeBST *&binarySearchTree);
+
 bool updateStudentInDataStructure(const Student &student, int dataStructureType,
                                   ArrayStudentList &arrayList,
                                   NodeSLL *&singlyLinkedList,
@@ -117,5 +119,40 @@ void initAllDataStructures(ArrayStudentList &arrayList,
                            NodeDLL *&doublyLinkedListHead,
                            NodeDLL *&doublyLinkedListTail,
                            NodeBST *&binarySearchTree);
+
+// ========== Các hàm helper cho BST ==========
+void addStudentToBST(const Student &student, NodeBST *&binarySearchTree);
+void deleteStudentFromBST(const char *studentID, NodeBST *&binarySearchTree);
+bool getStudentFromBST(const char *studentID, NodeBST *binarySearchTree, Student &foundStudent);
+void updateStudentInBST(const Student &student, NodeBST *&binarySearchTree);
+bool searchStudentInBST(const char *studentID, NodeBST *binarySearchTree, Student &foundStudent);
+void displayBST(NodeBST *binarySearchTree);
+void performStatisticsOnBST(NodeBST *binarySearchTree);
+
+// ========== Các hàm helper riêng cho thống kê BST ==========
+void calculateBSTStats(NodeBST* node, int& totalStudents, float& totalScore, float& highestScore, float& lowestScore);
+void showHighestScoreStudents(NodeBST* node, float highestScore);
+void showLowestScoreStudents(NodeBST* node, float lowestScore);
+
+// ========== Các hàm chuyển đổi dữ liệu giữa các cấu trúc ==========
+void convertDataStructureToBST(int sourceDataStructureType,
+                               const ArrayStudentList &arrayList,
+                               NodeSLL *singlyLinkedList,
+                               NodeSLL *circularLinkedList,
+                               NodeDLL *doublyLinkedListHead,
+                               NodeBST *&binarySearchTree);
+
+void convertBSTToArrayList(NodeBST *binarySearchTree, ArrayStudentList &arrayList);
+
+// Hàm helper cho chuyển đổi BST sang Array List
+void traverseBSTAndAddToArray(NodeBST* node, ArrayStudentList &arrayList);
+
+// Hàm chọn cấu trúc dữ liệu với xử lý chuyển đổi BST
+int selectDataStructureWithBSTHandling(int currentDataStructureType,
+                                       ArrayStudentList &arrayList,
+                                       NodeSLL *singlyLinkedList,
+                                       NodeSLL *circularLinkedList,
+                                       NodeDLL *doublyLinkedListHead,
+                                       NodeBST *&binarySearchTree);
 
 #endif // COMMON_OPERATIONS_H

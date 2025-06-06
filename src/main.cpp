@@ -29,6 +29,197 @@ NodeBST *binarySearchTree = NULL;
 int currentSortCriteria = -1; // -1 means not sorted
 bool isSorted = false;
 
+void displayBSTMenu()
+{
+    clearScreen();
+    printHeader("MENU CÂY TÌM KIẾM NHỊ PHÂN");
+    cout << "1. Thêm nút vào cây" << endl;
+    cout << "2. Xóa nút khỏi cây" << endl;
+    cout << "3. Cập nhật nút trong cây" << endl;
+    cout << "4. Hiển thị cây (dạng danh sách liên kết)" << endl;
+    cout << "5. Tìm kiếm nút trong cây" << endl;
+    cout << "6. Thống kê cây" << endl;
+    cout << "7. Quay lại menu chính" << endl;
+    cout << "0. Thoát" << endl;
+}
+
+int performBSTOperations(NodeBST *&binarySearchTree, ArrayStudentList &arrayList)
+{
+    int choice;
+    do
+    {
+        displayBSTMenu();
+
+        if (!(cin >> choice))
+        {
+            printError("Lựa chọn không hợp lệ. Vui lòng nhập lại.");
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+        clearInputBuffer();
+
+        switch (choice)
+        {
+        case 1: // Thêm nút vào cây
+        {
+            clearScreen();
+            printHeader("THÊM NÚT VÀO CÂY");
+            printInfo("Lưu ý: Nhập \"00\" để hủy bỏ và trở về menu trước.");
+
+            char studentID[MAX_STUDENT_ID_LENGTH];
+            // Bước 1: Nhập và kiểm tra mã sinh viên
+            string tempID;
+            bool isValid;
+
+            // Nhập và kiểm tra mã sinh viên
+            do
+            {
+                cout << "Nhập mã sinh viên: ";
+                cin >> tempID;
+                clearInputBuffer();
+                tempID = trim(tempID);
+
+                // Kiểm tra hủy bỏ
+                if (tempID == CANCEL_INPUT_CODE)
+                {
+                    if (confirmCancel())
+                    {
+                        break;
+                    }
+                    continue;
+                }
+
+                // Kiểm tra định dạng mã sinh viên
+                isValid = validateAndShowStudentID(tempID);
+
+                // Nếu định dạng hợp lệ, kiểm tra trùng lặp
+                if (isValid)
+                {
+                    isValid = validateAndShowDuplicateStudentID(tempID, BINARY_SEARCH_TREE, arrayList, singlyLinkedList,
+                                                                circularLinkedList, doublyLinkedListHead);
+                }
+            } while (!isValid);
+
+            // Nếu người dùng chọn hủy bỏ
+            if (tempID == CANCEL_INPUT_CODE)
+            {
+                break;
+            }
+
+            // Lưu mã sinh viên hợp lệ
+            strcpy(studentID, tempID.c_str());
+
+            // Bước 2: Tiếp tục nhập thông tin chi tiết
+            Student student;
+            strcpy(student.studentID, studentID); // Đặt mã sinh viên đã nhập
+
+            isValid = inputStudent(student);
+
+            if (isValid)
+            {
+                // Thêm sinh viên vào cây tìm kiếm nhị phân
+                addStudentToBST(student, binarySearchTree);
+
+                printSuccess("Thêm sinh viên thành công vào cây.");
+            }
+            break;
+        }
+        case 2: // Xóa nút khỏi cây
+        {
+            char studentID[MAX_STUDENT_ID_LENGTH];
+            if (inputStudentID(studentID))
+            {
+                deleteStudentFromBST(studentID, binarySearchTree);
+            }
+            break;
+        }
+        case 3: // Cập nhật nút trong cây
+        {
+            clearScreen();
+            printHeader("CẬP NHẬT NÚT TRONG CÂY");
+            printInfo("Lưu ý: Nhập \"00\" để hủy bỏ và trở về menu trước.");
+
+            char studentID[MAX_STUDENT_ID_LENGTH];
+            if (inputStudentID(studentID))
+            {
+                Student currentStudent;
+                // Lấy thông tin sinh viên hiện tại từ cây
+                if (getStudentFromBST(studentID, binarySearchTree, currentStudent))
+                {
+                    Student updateStudent = currentStudent; // Bắt đầu với thông tin hiện tại
+
+                    if (inputStudentForUpdate(updateStudent))
+                    {
+                        updateStudentInBST(updateStudent, binarySearchTree);
+                    }
+                }
+                else
+                {
+                    printError(("Không tìm thấy sinh viên có mã " + string(studentID) + " trong cây.").c_str());
+                }
+            }
+            break;
+        }
+        case 4: // Hiển thị cây (dạng danh sách liên kết)
+            displayBST(binarySearchTree);
+            break;
+        case 5: // Tìm kiếm nút trong cây
+        {
+            char studentID[MAX_STUDENT_ID_LENGTH];
+            if (inputStudentID(studentID))
+            {
+                Student foundStudent;
+                if (searchStudentInBST(studentID, binarySearchTree, foundStudent))
+                {
+                    displayStudent(foundStudent);
+                }
+                else
+                {
+                    printError(("Không tìm thấy sinh viên có mã " + string(studentID) + " trong cây.").c_str());
+                }
+            }
+            break;
+        }
+        case 6: // Thống kê cây
+            performStatisticsOnBST(binarySearchTree);
+            break;
+        case 7: // Quay lại menu chính
+        {
+            // Chuyển đổi dữ liệu từ BST về Array List
+            clearScreen();
+            printHeader("CHUYỂN ĐỔI DỮ LIỆU");
+            printInfo("Đang chuyển đổi dữ liệu từ cây tìm kiếm nhị phân về danh sách mảng...");
+            
+            convertBSTToArrayList(binarySearchTree, arrayList);
+            
+            printSuccess("Đã chuyển đổi dữ liệu thành công về danh sách mảng.");
+            printInfo("Bạn sẽ được chuyển về menu chính với cấu trúc dữ liệu: Danh sách mảng");
+            
+            cout << "\nNhấn Enter để tiếp tục...";
+            cin.get();
+            return ARRAY_LIST; // Trả về mã của Array List
+        }
+        case 0:
+            exitProgram(singlyLinkedList, circularLinkedList, doublyLinkedListHead,
+                        doublyLinkedListTail, binarySearchTree);
+            return BINARY_SEARCH_TREE; // Vẫn ở BST khi thoát chương trình
+            break;
+        default:
+            printError("Lựa chọn không hợp lệ. Vui lòng nhập lại.");
+        }
+
+        // Nếu không phải menu lựa chọn hoặc trợ giúp, chờ người dùng nhấn Enter để tiếp tục
+        if (choice != 0 && choice != 7)
+        {
+            cout << "\nNhấn Enter để tiếp tục...";
+            cin.get();
+        }
+    } while (choice != 0 && choice != 7);
+    
+    return BINARY_SEARCH_TREE; // Mặc định trả về BST nếu không có trường hợp đặc biệt
+}
+
 int main()
 {
     // Khởi tạo các cấu trúc dữ liệu
@@ -53,7 +244,7 @@ int main()
         switch (choice)
         {
         case 1: // Chọn cấu trúc dữ liệu
-            dataStructureType = selectDataStructure();
+            dataStructureType = selectDataStructureWithBSTHandling(dataStructureType, arrayList, singlyLinkedList, circularLinkedList, doublyLinkedListHead, binarySearchTree);
             break;
         case 2:
         {

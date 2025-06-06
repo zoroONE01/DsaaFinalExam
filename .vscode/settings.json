@@ -58,6 +58,7 @@
         "regex": "cpp",
         "deque": "cpp",
         "chrono": "cpp",
-        "execution": "cpp"
+        "execution": "cpp",
+        "stack": "cpp"
     }
 }

@@ -29,6 +29,5 @@ NodeDLL *searchInDLL(NodeDLL *head, const char *studentID);
 bool updateInDLL(NodeDLL *head, const Student &newInfo);
 void displayDLL(NodeDLL *head);
 void freeDLL(NodeDLL *&head, NodeDLL *&tail);
-void mergeSortDLL(NodeDLL **headRef);
 
 #endif // DOUBLY_LINKED_LIST_H

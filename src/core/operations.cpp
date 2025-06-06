@@ -479,7 +479,7 @@ bool sortStudentList(int dataStructureType, int sortAlgorithm, int sortCriteria,
             success = true;
             break;
         case QUICK_SORT:
-            quickSortArrayList(arrayList, 0, arrayList.count - 1);
+            quickSortArrayList(arrayList);
             printSuccess("Đã sắp xếp danh sách mảng bằng thuật toán Quick Sort.");
             success = true;
             break;

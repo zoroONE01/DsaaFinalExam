@@ -28,5 +28,8 @@ NodeSLL *searchInSLL(NodeSLL *head, const char *studentID);
 bool updateInSLL(NodeSLL *head, const Student &newInfo);
 void displaySLL(NodeSLL *head);
 void freeSLL(NodeSLL *&head);
+float findHighestScoreSLL(NodeSLL *head);
+float findLowestScoreSLL(NodeSLL *head);
+float calculateAverageScoreSLL(NodeSLL *head);
 
 #endif // SINGLY_LINKED_LIST_H

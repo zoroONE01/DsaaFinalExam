@@ -29,5 +29,8 @@ NodeDLL *searchInDLL(NodeDLL *head, const char *studentID);
 bool updateInDLL(NodeDLL *head, const Student &newInfo);
 void displayDLL(NodeDLL *head);
 void freeDLL(NodeDLL *&head, NodeDLL *&tail);
+float findHighestScoreDLL(NodeDLL *head);
+float findLowestScoreDLL(NodeDLL *head);
+float calculateAverageScoreDLL(NodeDLL *head);
 
 #endif // DOUBLY_LINKED_LIST_H

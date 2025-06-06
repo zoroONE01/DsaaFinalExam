@@ -178,3 +178,65 @@ void freeSLL(NodeSLL *&head)
         delete temp;
     }
 }
+
+// Tìm điểm cao nhất trong danh sách liên kết đơn
+float findHighestScoreSLL(NodeSLL *head)
+{
+    if (head == NULL)
+    {
+        return 0.0f; // Trường hợp danh sách rỗng
+    }
+
+    float highest = head->info.score;
+    NodeSLL *current = head->next;
+    while (current != NULL)
+    {
+        if (current->info.score > highest)
+        {
+            highest = current->info.score;
+        }
+        current = current->next;
+    }
+    return highest;
+}
+
+// Tìm điểm thấp nhất trong danh sách liên kết đơn
+float findLowestScoreSLL(NodeSLL *head)
+{
+    if (head == NULL)
+    {
+        return 0.0f; // Trường hợp danh sách rỗng
+    }
+
+    float lowest = head->info.score;
+    NodeSLL *current = head->next;
+    while (current != NULL)
+    {
+        if (current->info.score < lowest)
+        {
+            lowest = current->info.score;
+        }
+        current = current->next;
+    }
+    return lowest;
+}
+
+// Tính điểm trung bình của danh sách liên kết đơn
+float calculateAverageScoreSLL(NodeSLL *head)
+{
+    if (head == NULL)
+    {
+        return 0.0f; // Trường hợp danh sách rỗng
+    }
+
+    float sum = 0.0f;
+    int count = 0;
+    NodeSLL *current = head;
+    while (current != NULL)
+    {
+        sum += current->info.score;
+        count++;
+        current = current->next;
+    }
+    return sum / count;
+}

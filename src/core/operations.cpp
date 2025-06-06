@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include <iomanip>
 
 using namespace std;
 
@@ -391,52 +392,269 @@ void searchStudentInDataStructure(const char *studentID, int dataStructureType,
 }
 
 // Hàm thực hiện thống kê sinh viên
-void performStatistics(int dataStructureType, const ArrayStudentList &arrayList)
+void performStatistics(int dataStructureType, 
+                      const ArrayStudentList &arrayList,
+                      NodeSLL *singlyLinkedList,
+                      NodeSLL *circularLinkedList,
+                      NodeDLL *doublyLinkedListHead)
 {
-    if (dataStructureType != ARRAY_LIST)
+    float highest = 0.0f, lowest = 0.0f, average = 0.0f;
+    bool isEmpty = false;
+    
+    // Kiểm tra cấu trúc dữ liệu có rỗng không và tính toán thống kê
+    switch (dataStructureType)
     {
-        printWarning("Chức năng thống kê chỉ được hiện thực cho danh sách mảng.");
+    case ARRAY_LIST:
+        if (arrayList.count == 0)
+        {
+            isEmpty = true;
+        }
+        else
+        {
+            highest = findHighestScore(arrayList);
+            lowest = findLowestScore(arrayList);
+            average = calculateAverageScore(arrayList);
+        }
+        break;
+        
+    case SINGLY_LINKED_LIST:
+        if (singlyLinkedList == NULL)
+        {
+            isEmpty = true;
+        }
+        else
+        {
+            highest = findHighestScoreSLL(singlyLinkedList);
+            lowest = findLowestScoreSLL(singlyLinkedList);
+            average = calculateAverageScoreSLL(singlyLinkedList);
+        }
+        break;
+        
+    case CIRCULAR_LINKED_LIST:
+        if (circularLinkedList == NULL)
+        {
+            isEmpty = true;
+        }
+        else
+        {
+            highest = findHighestScoreCLL(circularLinkedList);
+            lowest = findLowestScoreCLL(circularLinkedList);
+            average = calculateAverageScoreCLL(circularLinkedList);
+        }
+        break;
+        
+    case DOUBLY_LINKED_LIST:
+        if (doublyLinkedListHead == NULL)
+        {
+            isEmpty = true;
+        }
+        else
+        {
+            highest = findHighestScoreDLL(doublyLinkedListHead);
+            lowest = findLowestScoreDLL(doublyLinkedListHead);
+            average = calculateAverageScoreDLL(doublyLinkedListHead);
+        }
+        break;
+        
+    default:
+        printWarning("Chức năng thống kê chưa được hiện thực cho cấu trúc dữ liệu này.");
         return;
     }
 
-    if (arrayList.count == 0)
+    if (isEmpty)
     {
         printWarning("Danh sách sinh viên rỗng. Không có thống kê.");
         return;
     }
 
-    float highest = findHighestScore(arrayList);
-    float lowest = findLowestScore(arrayList);
-    float average = calculateAverageScore(arrayList);
-
+    // Hiển thị thống kê cơ bản
     printHeader("THỐNG KÊ ĐIỂM SINH VIÊN");
-    cout << "Số lượng sinh viên: " << arrayList.count << "\n";
+    
+    // Đếm số lượng sinh viên theo từng cấu trúc dữ liệu
+    int studentCount = 0;
+    switch (dataStructureType)
+    {
+    case ARRAY_LIST:
+        studentCount = arrayList.count;
+        break;
+    case SINGLY_LINKED_LIST:
+    case CIRCULAR_LINKED_LIST:
+    case DOUBLY_LINKED_LIST:
+        // Đếm node trong linked list
+        switch (dataStructureType)
+        {
+        case SINGLY_LINKED_LIST:
+            {
+                NodeSLL *current = singlyLinkedList;
+                while (current != NULL)
+                {
+                    studentCount++;
+                    current = current->next;
+                }
+            }
+            break;
+        case CIRCULAR_LINKED_LIST:
+            {
+                NodeSLL *current = circularLinkedList;
+                if (current != NULL)
+                {
+                    do
+                    {
+                        studentCount++;
+                        current = current->next;
+                    } while (current != circularLinkedList);
+                }
+            }
+            break;
+        case DOUBLY_LINKED_LIST:
+            {
+                NodeDLL *current = doublyLinkedListHead;
+                while (current != NULL)
+                {
+                    studentCount++;
+                    current = current->next;
+                }
+            }
+            break;
+        }
+        break;
+    }
+    
+    cout << "Số lượng sinh viên: " << studentCount << "\n";
     cout << GREEN << "Điểm cao nhất: " << highest << RESET << "\n";
     cout << RED << "Điểm thấp nhất: " << lowest << RESET << "\n";
-    cout << BLUE << "Điểm trung bình: " << average << RESET << "\n";
+    cout << BLUE << "Điểm trung bình: " << fixed << setprecision(2) << average << RESET << "\n";
 
-    cout << CYAN << "\nSinh viên có điểm cao nhất:\n"
-         << RESET;
+    // Hiển thị sinh viên có điểm cao nhất
+    cout << CYAN << "\nSinh viên có điểm cao nhất:\n" << RESET;
     printDivider();
-    for (int i = 0; i < arrayList.count; i++)
+    
+    switch (dataStructureType)
     {
-        if (arrayList.students[i].score == highest)
+    case ARRAY_LIST:
+        for (int i = 0; i < arrayList.count; i++)
         {
-            displayStudent(arrayList.students[i]);
-            printDivider();
+            if (arrayList.students[i].score == highest)
+            {
+                displayStudent(arrayList.students[i]);
+                printDivider();
+            }
         }
+        break;
+        
+    case SINGLY_LINKED_LIST:
+        {
+            NodeSLL *current = singlyLinkedList;
+            while (current != NULL)
+            {
+                if (current->info.score == highest)
+                {
+                    displayStudent(current->info);
+                    printDivider();
+                }
+                current = current->next;
+            }
+        }
+        break;
+        
+    case CIRCULAR_LINKED_LIST:
+        {
+            NodeSLL *current = circularLinkedList;
+            if (current != NULL)
+            {
+                do
+                {
+                    if (current->info.score == highest)
+                    {
+                        displayStudent(current->info);
+                        printDivider();
+                    }
+                    current = current->next;
+                } while (current != circularLinkedList);
+            }
+        }
+        break;
+        
+    case DOUBLY_LINKED_LIST:
+        {
+            NodeDLL *current = doublyLinkedListHead;
+            while (current != NULL)
+            {
+                if (current->info.score == highest)
+                {
+                    displayStudent(current->info);
+                    printDivider();
+                }
+                current = current->next;
+            }
+        }
+        break;
     }
 
-    cout << CYAN << "\nSinh viên có điểm thấp nhất:\n"
-         << RESET;
+    // Hiển thị sinh viên có điểm thấp nhất
+    cout << CYAN << "\nSinh viên có điểm thấp nhất:\n" << RESET;
     printDivider();
-    for (int i = 0; i < arrayList.count; i++)
+    
+    switch (dataStructureType)
     {
-        if (arrayList.students[i].score == lowest)
+    case ARRAY_LIST:
+        for (int i = 0; i < arrayList.count; i++)
         {
-            displayStudent(arrayList.students[i]);
-            printDivider();
+            if (arrayList.students[i].score == lowest)
+            {
+                displayStudent(arrayList.students[i]);
+                printDivider();
+            }
         }
+        break;
+        
+    case SINGLY_LINKED_LIST:
+        {
+            NodeSLL *current = singlyLinkedList;
+            while (current != NULL)
+            {
+                if (current->info.score == lowest)
+                {
+                    displayStudent(current->info);
+                    printDivider();
+                }
+                current = current->next;
+            }
+        }
+        break;
+        
+    case CIRCULAR_LINKED_LIST:
+        {
+            NodeSLL *current = circularLinkedList;
+            if (current != NULL)
+            {
+                do
+                {
+                    if (current->info.score == lowest)
+                    {
+                        displayStudent(current->info);
+                        printDivider();
+                    }
+                    current = current->next;
+                } while (current != circularLinkedList);
+            }
+        }
+        break;
+        
+    case DOUBLY_LINKED_LIST:
+        {
+            NodeDLL *current = doublyLinkedListHead;
+            while (current != NULL)
+            {
+                if (current->info.score == lowest)
+                {
+                    displayStudent(current->info);
+                    printDivider();
+                }
+                current = current->next;
+            }
+        }
+        break;
     }
 }
 

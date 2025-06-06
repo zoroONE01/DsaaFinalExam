@@ -75,7 +75,11 @@ void displayCurrentList(int dataStructureType,
                         NodeDLL *doublyLinkedListHead,
                         NodeBST *binarySearchTree);
 
-void performStatistics(int dataStructureType, const ArrayStudentList &arrayList);
+void performStatistics(int dataStructureType, 
+                      const ArrayStudentList &arrayList,
+                      NodeSLL *singlyLinkedList,
+                      NodeSLL *circularLinkedList,
+                      NodeDLL *doublyLinkedListHead);
 
 bool sortStudentList(int dataStructureType, int sortAlgorithm, int sortCriteria,
                      ArrayStudentList &arrayList,

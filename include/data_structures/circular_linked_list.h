@@ -18,5 +18,8 @@ NodeSLL *searchInCLL(NodeSLL *head, const char *studentID);
 bool updateInCLL(NodeSLL *head, const Student &newInfo);
 void displayCLL(NodeSLL *head);
 void freeCLL(NodeSLL *&head);
+float findHighestScoreCLL(NodeSLL *head);
+float findLowestScoreCLL(NodeSLL *head);
+float calculateAverageScoreCLL(NodeSLL *head);
 
 #endif // CIRCULAR_LINKED_LIST_H

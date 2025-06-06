@@ -216,3 +216,65 @@ void freeDLL(NodeDLL *&head, NodeDLL *&tail)
     }
     tail = NULL;
 }
+
+// Tìm điểm cao nhất trong danh sách liên kết đôi
+float findHighestScoreDLL(NodeDLL *head)
+{
+    if (head == NULL)
+    {
+        return 0.0f; // Trường hợp danh sách rỗng
+    }
+
+    float highest = head->info.score;
+    NodeDLL *current = head->next;
+    while (current != NULL)
+    {
+        if (current->info.score > highest)
+        {
+            highest = current->info.score;
+        }
+        current = current->next;
+    }
+    return highest;
+}
+
+// Tìm điểm thấp nhất trong danh sách liên kết đôi
+float findLowestScoreDLL(NodeDLL *head)
+{
+    if (head == NULL)
+    {
+        return 0.0f; // Trường hợp danh sách rỗng
+    }
+
+    float lowest = head->info.score;
+    NodeDLL *current = head->next;
+    while (current != NULL)
+    {
+        if (current->info.score < lowest)
+        {
+            lowest = current->info.score;
+        }
+        current = current->next;
+    }
+    return lowest;
+}
+
+// Tính điểm trung bình của danh sách liên kết đôi
+float calculateAverageScoreDLL(NodeDLL *head)
+{
+    if (head == NULL)
+    {
+        return 0.0f; // Trường hợp danh sách rỗng
+    }
+
+    float sum = 0.0f;
+    int count = 0;
+    NodeDLL *current = head;
+    while (current != NULL)
+    {
+        sum += current->info.score;
+        count++;
+        current = current->next;
+    }
+    return sum / count;
+}

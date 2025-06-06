@@ -215,8 +215,8 @@ int main()
             }
             break;
         }
-        case 8: // Thống kê sinh viên (chỉ cho mảng)
-            performStatistics(dataStructureType, arrayList);
+        case 8: // Thống kê sinh viên
+            performStatistics(dataStructureType, arrayList, singlyLinkedList, circularLinkedList, doublyLinkedListHead);
             break;
         case 9: // Sắp xếp sinh viên theo tiêu chí
         {

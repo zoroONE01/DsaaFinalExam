@@ -216,3 +216,72 @@ void freeCLL(NodeSLL *&head)
 
     head = NULL;
 }
+
+// Tìm điểm cao nhất trong danh sách liên kết vòng
+float findHighestScoreCLL(NodeSLL *head)
+{
+    if (head == NULL)
+    {
+        return 0.0f; // Trường hợp danh sách rỗng
+    }
+
+    float highest = head->info.score;
+    NodeSLL *current = head->next;
+
+    // Duyệt qua danh sách vòng cho đến khi quay lại node đầu
+    while (current != head)
+    {
+        if (current->info.score > highest)
+        {
+            highest = current->info.score;
+        }
+        current = current->next;
+    }
+    return highest;
+}
+
+// Tìm điểm thấp nhất trong danh sách liên kết vòng
+float findLowestScoreCLL(NodeSLL *head)
+{
+    if (head == NULL)
+    {
+        return 0.0f; // Trường hợp danh sách rỗng
+    }
+
+    float lowest = head->info.score;
+    NodeSLL *current = head->next;
+
+    // Duyệt qua danh sách vòng cho đến khi quay lại node đầu
+    while (current != head)
+    {
+        if (current->info.score < lowest)
+        {
+            lowest = current->info.score;
+        }
+        current = current->next;
+    }
+    return lowest;
+}
+
+// Tính điểm trung bình của danh sách liên kết vòng
+float calculateAverageScoreCLL(NodeSLL *head)
+{
+    if (head == NULL)
+    {
+        return 0.0f; // Trường hợp danh sách rỗng
+    }
+
+    float sum = 0.0f;
+    int count = 0;
+    NodeSLL *current = head;
+
+    // Duyệt qua danh sách vòng cho đến khi quay lại node đầu
+    do
+    {
+        sum += current->info.score;
+        count++;
+        current = current->next;
+    } while (current != head);
+
+    return sum / count;
+}

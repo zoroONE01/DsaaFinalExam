@@ -97,7 +97,7 @@ int performBSTOperations(NodeBST *&binarySearchTree, ArrayStudentList &arrayList
                 if (isValid)
                 {
                     isValid = validateAndShowDuplicateStudentID(tempID, BINARY_SEARCH_TREE, arrayList, singlyLinkedList,
-                                                                circularLinkedList, doublyLinkedListHead);
+                                                                circularLinkedList, doublyLinkedListHead, binarySearchTree);
                 }
             } while (!isValid);
 
@@ -330,7 +330,7 @@ int main()
                 if (isValid)
                 {
                     isValid = validateAndShowDuplicateStudentID(tempID, dataStructureType, arrayList, singlyLinkedList,
-                                                                circularLinkedList, doublyLinkedListHead);
+                                                                circularLinkedList, doublyLinkedListHead, binarySearchTree);
                 }
             } while (!isValid);
 

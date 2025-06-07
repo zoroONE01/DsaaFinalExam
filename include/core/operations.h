@@ -25,13 +25,15 @@ bool isStudentExists(const char *studentID, int dataStructureType,
                      const ArrayStudentList &arrayList,
                      NodeSLL *singlyLinkedList,
                      NodeSLL *circularLinkedList,
-                     NodeDLL *doublyLinkedListHead);
+                     NodeDLL *doublyLinkedListHead,
+                     NodeBST *binarySearchTree);
 
 bool validateAndShowDuplicateStudentID(const string &studentID, int dataStructureType,
                                        const ArrayStudentList &arrayList,
                                        NodeSLL *singlyLinkedList,
                                        NodeSLL *circularLinkedList,
-                                       NodeDLL *doublyLinkedListHead);
+                                       NodeDLL *doublyLinkedListHead,
+                                       NodeBST *binarySearchTree);
 
 void exitProgram(NodeSLL *&singlyLinkedList,
                  NodeSLL *&circularLinkedList,

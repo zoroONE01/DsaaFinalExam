@@ -27,6 +27,7 @@ struct NodeBST
 // Function declarations
 void initBST(NodeBST *&root);
 NodeBST *createNodeBST(float score, const Student &student);
+bool isStudentExistsInBST(NodeBST *root, const char *studentID);
 void insertToBST(NodeBST *&root, const Student &student);
 NodeBST *deleteFromBST(NodeBST *&root, float key);
 NodeBST *searchInBST(NodeBST *root, float score);

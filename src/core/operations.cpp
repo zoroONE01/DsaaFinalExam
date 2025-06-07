@@ -57,7 +57,8 @@ bool isStudentExists(const char *studentID, int dataStructureType,
                      const ArrayStudentList &arrayList,
                      NodeSLL *singlyLinkedList,
                      NodeSLL *circularLinkedList,
-                     NodeDLL *doublyLinkedListHead)
+                     NodeDLL *doublyLinkedListHead,
+                     NodeBST *binarySearchTree)
 {
     switch (dataStructureType)
     {
@@ -69,6 +70,8 @@ bool isStudentExists(const char *studentID, int dataStructureType,
         return searchInCLL(circularLinkedList, studentID) != NULL;
     case DOUBLY_LINKED_LIST:
         return searchInDLL(doublyLinkedListHead, studentID) != NULL;
+    case BINARY_SEARCH_TREE:
+        return isStudentExistsInBST(binarySearchTree, studentID);
     default:
         return false; // Mặc định là không tồn tại
     }
@@ -79,10 +82,11 @@ bool validateAndShowDuplicateStudentID(const string &studentID, int dataStructur
                                        const ArrayStudentList &arrayList,
                                        NodeSLL *singlyLinkedList,
                                        NodeSLL *circularLinkedList,
-                                       NodeDLL *doublyLinkedListHead)
+                                       NodeDLL *doublyLinkedListHead,
+                                       NodeBST *binarySearchTree)
 {
     bool isExist = isStudentExists(studentID.c_str(), dataStructureType, arrayList,
-                                   singlyLinkedList, circularLinkedList, doublyLinkedListHead);
+                                   singlyLinkedList, circularLinkedList, doublyLinkedListHead, binarySearchTree);
     if (isExist)
     {
         printError(("Mã sinh viên " + studentID + " đã tồn tại!").c_str());

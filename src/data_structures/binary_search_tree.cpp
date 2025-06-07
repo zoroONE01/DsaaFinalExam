@@ -2,6 +2,7 @@
 #include "../../include/ui/common_ui.h"
 #include <iostream>
 #include <chrono>
+#include <cstring>
 
 using namespace std;
 
@@ -23,13 +24,55 @@ NodeBST *createNodeBST(float score, const Student &student)
     return newNode;
 }
 
+// Kiểm tra sinh viên tồn tại trong cây BST theo mã sinh viên
+bool isStudentExistsInBST(NodeBST *root, const char *studentID)
+{
+    if (root == NULL)
+    {
+        return false;
+    }
+
+    // Kiểm tra trong node hiện tại
+    for (int i = 0; i < root->count; i++)
+    {
+        if (strcmp(root->students[i].studentID, studentID) == 0)
+        {
+            return true; // Tìm thấy mã sinh viên trùng lặp
+        }
+    }
+
+    // Tìm kiếm đệ quy trong cây con trái và phải
+    return isStudentExistsInBST(root->left, studentID) || isStudentExistsInBST(root->right, studentID);
+}
+
 // Thêm sinh viên vào cây BST
 void insertToBST(NodeBST *&root, const Student &student)
 {
+    // Kiểm tra tính hợp lệ của dữ liệu sinh viên trước khi thêm
+    if (strlen(student.studentID) == 0)
+    {
+        printError("Mã sinh viên không được để trống!");
+        return;
+    }
+
+    if (student.score < MIN_SCORE || student.score > MAX_SCORE)
+    {
+        printError("Điểm số không hợp lệ! Điểm phải trong khoảng 0-10.");
+        return;
+    }
+
+    // Kiểm tra mã sinh viên trùng lặp trước khi thêm
+    if (isStudentExistsInBST(root, student.studentID))
+    {
+        printError("Mã sinh viên đã tồn tại trong cây BST!");
+        return;
+    }
+
     // Nếu cây rỗng, tạo node mới
     if (root == NULL)
     {
         root = createNodeBST(student.score, student);
+        printSuccess("Đã thêm sinh viên thành công vào cây BST!");
         return;
     }
 
@@ -46,6 +89,7 @@ void insertToBST(NodeBST *&root, const Student &student)
         // Thêm sinh viên vào node hiện tại
         root->students[root->count] = student;
         root->count++;
+        printSuccess("Đã thêm sinh viên thành công vào cây BST!");
     }
     // Nếu điểm số nhỏ hơn, đi sang trái
     else if (student.score < root->key)

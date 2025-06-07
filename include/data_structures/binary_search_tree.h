@@ -38,7 +38,6 @@ void postorderTraversalBST(NodeBST *root);
 void inorderTraversalBSTWithTimer(NodeBST *root);
 void preorderTraversalBSTWithTimer(NodeBST *root);
 void postorderTraversalBSTWithTimer(NodeBST *root);
-void displayBSTTree(NodeBST *root, int level = 0, char branch = ' ');
 void displayBSTNode(NodeBST *node);
 void freeBST(NodeBST *&root);
 

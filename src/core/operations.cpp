@@ -337,7 +337,6 @@ void displayCurrentList(int dataStructureType,
         if (binarySearchTree != NULL)
         {
             cout << BOLD << CYAN << "\n=== CÂY TÌM KIẾM NHỊ PHÂN ===" << RESET << endl;
-            displayBSTTree(binarySearchTree);
 
             cout << "\n"
                  << BOLD << YELLOW << "Duyệt cây theo thứ tự giữa (In-order):" << RESET;
@@ -1572,7 +1571,6 @@ void displayBST(NodeBST *binarySearchTree)
     }
 
     cout << BOLD << CYAN << "\n=== CÂY TÌM KIẾM NHỊ PHÂN ===" << RESET << endl;
-    displayBSTTree(binarySearchTree);
 
     // Sử dụng các hàm duyệt có đo thời gian
     inorderTraversalBSTWithTimer(binarySearchTree);

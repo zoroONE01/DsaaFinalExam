@@ -196,46 +196,7 @@ NodeBST *findMinNode(NodeBST *root)
     return current;
 }
 
-// Hiển thị cây BST theo cách trực quan
-void displayBSTTree(NodeBST *root, int level, char branch)
-{
-    if (root == NULL)
-    {
-        return;
-    }
 
-    displayBSTTree(root->right, level + 1, '/');
-
-    for (int i = 0; i < level; i++)
-    {
-        cout << "   ";
-    }
-
-    if (level > 0)
-    {
-        cout << YELLOW << " " << branch << "──" << RESET;
-    }
-
-    // Màu sắc cho điểm số dựa trên giá trị
-    if (root->key >= 8.0)
-    {
-        cout << GREEN << root->key << " (" << root->count << ")" << RESET << endl;
-    }
-    else if (root->key >= 6.5)
-    {
-        cout << BLUE << root->key << " (" << root->count << ")" << RESET << endl;
-    }
-    else if (root->key >= 5.0)
-    {
-        cout << YELLOW << root->key << " (" << root->count << ")" << RESET << endl;
-    }
-    else
-    {
-        cout << RED << root->key << " (" << root->count << ")" << RESET << endl;
-    }
-
-    displayBSTTree(root->left, level + 1, '\\');
-}
 
 // Giải phóng bộ nhớ cây BST
 void freeBST(NodeBST *&root)

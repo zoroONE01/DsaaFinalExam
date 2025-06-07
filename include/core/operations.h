@@ -13,6 +13,15 @@
 
 using namespace std;
 
+// ========== Struct cho thống kê theo lớp ==========
+struct ClassStatistics {
+    char className[MAX_CLASS_LENGTH];     // Tên lớp
+    int totalStudents;                    // Tổng số sinh viên
+    float highestScore;                   // Điểm cao nhất
+    float lowestScore;                    // Điểm thấp nhất
+    float averageScore;                   // Điểm trung bình
+};
+
 // Function declarations
 bool isDataStructureEmpty(int dataStructureType,
                           const ArrayStudentList &arrayList,
@@ -85,6 +94,12 @@ void performStatistics(int dataStructureType,
                       NodeSLL *singlyLinkedList,
                       NodeSLL *circularLinkedList,
                       NodeDLL *doublyLinkedListHead);
+
+void performGeneralStatistics(int dataStructureType,
+                             const ArrayStudentList &arrayList,
+                             NodeSLL *singlyLinkedList,
+                             NodeSLL *circularLinkedList,
+                             NodeDLL *doublyLinkedListHead);
 
 bool sortStudentList(int dataStructureType, int sortAlgorithm, int sortCriteria,
                      ArrayStudentList &arrayList,
@@ -172,5 +187,23 @@ bool saveToCSVFile(const char *filename, int dataStructureType,
                    NodeSLL *circularLinkedList,
                    NodeDLL *doublyLinkedListHead,
                    NodeBST *binarySearchTree);
+
+// ========== Các hàm helper cho thống kê theo lớp ==========
+int getUniqueClassesArray(const ArrayStudentList &arrayList, char classes[][MAX_CLASS_LENGTH]);
+int getUniqueClassesSLL(NodeSLL *singlyLinkedList, char classes[][MAX_CLASS_LENGTH]);
+int getUniqueClassesCLL(NodeSLL *circularLinkedList, char classes[][MAX_CLASS_LENGTH]);
+int getUniqueClassesDLL(NodeDLL *doublyLinkedListHead, char classes[][MAX_CLASS_LENGTH]);
+
+void calculateClassStatisticsArray(const ArrayStudentList &arrayList, const char *className, ClassStatistics &stats);
+void calculateClassStatisticsSLL(NodeSLL *singlyLinkedList, const char *className, ClassStatistics &stats);
+void calculateClassStatisticsCLL(NodeSLL *circularLinkedList, const char *className, ClassStatistics &stats);
+void calculateClassStatisticsDLL(NodeDLL *doublyLinkedListHead, const char *className, ClassStatistics &stats);
+
+void displayClassStatistics(const ClassStatistics &stats);
+void displayAllClassStatistics(int dataStructureType,
+                               const ArrayStudentList &arrayList,
+                               NodeSLL *singlyLinkedList,
+                               NodeSLL *circularLinkedList,
+                               NodeDLL *doublyLinkedListHead);
 
 #endif // COMMON_OPERATIONS_H

@@ -8,6 +8,7 @@
 #include <limits>
 #include <iomanip>
 #include <chrono>
+#include <cstring>
 
 using namespace std;
 
@@ -402,6 +403,68 @@ void performStatistics(int dataStructureType,
                        NodeSLL *singlyLinkedList,
                        NodeSLL *circularLinkedList,
                        NodeDLL *doublyLinkedListHead)
+{
+    // Kiểm tra dữ liệu có rỗng không
+    if (isDataStructureEmpty(dataStructureType, arrayList, singlyLinkedList, circularLinkedList, doublyLinkedListHead, NULL))
+    {
+        printError("Danh sách sinh viên trống. Vui lòng nhập dữ liệu trước khi thực hiện thống kê!");
+        return;
+    }
+
+    // Hiển thị menu chọn loại thống kê
+    printHeader("CHỌN LOẠI THỐNG KÊ");
+    cout << "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓" << endl;
+    cout << "┃                                       MENU THỐNG KÊ                                          ┃" << endl;
+    cout << "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫" << endl;
+    cout << "┃ 1. Thống kê tổng quát                                                                       ┃" << endl;
+    cout << "┃ 2. Thống kê theo lớp                                                                        ┃" << endl;
+    cout << "┃ 3. Cả hai loại thống kê                                                                     ┃" << endl;
+    cout << "┃ 0. Quay lại                                                                                 ┃" << endl;
+    cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛" << endl;
+
+    int choice;
+    do
+    {
+        cout << "Nhập lựa chọn: ";
+        cin >> choice;
+        
+        if (cin.fail())
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            printError("Vui lòng nhập số!");
+            continue;
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        
+        switch (choice)
+        {
+        case 1:
+            performGeneralStatistics(dataStructureType, arrayList, singlyLinkedList, circularLinkedList, doublyLinkedListHead);
+            break;
+        case 2:
+            displayAllClassStatistics(dataStructureType, arrayList, singlyLinkedList, circularLinkedList, doublyLinkedListHead);
+            break;
+        case 3:
+            performGeneralStatistics(dataStructureType, arrayList, singlyLinkedList, circularLinkedList, doublyLinkedListHead);
+            cout << endl;
+            displayAllClassStatistics(dataStructureType, arrayList, singlyLinkedList, circularLinkedList, doublyLinkedListHead);
+            break;
+        case 0:
+            return;
+        default:
+            printError("Lựa chọn không hợp lệ!");
+            break;
+        }
+    } while (choice != 0 && choice != 1 && choice != 2 && choice != 3);
+}
+
+// Hàm thống kê tổng quát (logic cũ của performStatistics)
+void performGeneralStatistics(int dataStructureType,
+                             const ArrayStudentList &arrayList,
+                             NodeSLL *singlyLinkedList,
+                             NodeSLL *circularLinkedList,
+                             NodeDLL *doublyLinkedListHead)
 {
     float highest = 0.0f, lowest = 0.0f, average = 0.0f;
     bool isEmpty = false;
@@ -2007,5 +2070,313 @@ bool saveToCSVFile(const char *filename, int dataStructureType,
     {
         printError(("Không thể lưu dữ liệu ra file: " + string(filename)).c_str());
         return false;
+    }
+}
+
+// ========== Các hàm helper cho thống kê theo lớp ==========
+
+// Hàm lấy danh sách các lớp duy nhất từ Array List
+int getUniqueClassesArray(const ArrayStudentList &arrayList, char classes[][MAX_CLASS_LENGTH])
+{
+    int classCount = 0;
+    for (int i = 0; i < arrayList.count; i++)
+    {
+        bool found = false;
+        // Kiểm tra xem lớp đã tồn tại trong danh sách chưa
+        for (int j = 0; j < classCount; j++)
+        {
+            if (strcmp(classes[j], arrayList.students[i].studentClass) == 0)
+            {
+                found = true;
+                break;
+            }
+        }
+        // Nếu chưa tồn tại thì thêm vào danh sách
+        if (!found)
+        {
+            strcpy(classes[classCount], arrayList.students[i].studentClass);
+            classCount++;
+        }
+    }
+    return classCount;
+}
+
+// Hàm lấy danh sách các lớp duy nhất từ Singly Linked List
+int getUniqueClassesSLL(NodeSLL *singlyLinkedList, char classes[][MAX_CLASS_LENGTH])
+{
+    int classCount = 0;
+    NodeSLL *current = singlyLinkedList;
+    
+    while (current != NULL)
+    {
+        bool found = false;
+        // Kiểm tra xem lớp đã tồn tại trong danh sách chưa
+        for (int j = 0; j < classCount; j++)
+        {
+            if (strcmp(classes[j], current->info.studentClass) == 0)
+            {
+                found = true;
+                break;
+            }
+        }
+        // Nếu chưa tồn tại thì thêm vào danh sách
+        if (!found)
+        {
+            strcpy(classes[classCount], current->info.studentClass);
+            classCount++;
+        }
+        current = current->next;
+    }
+    return classCount;
+}
+
+// Hàm lấy danh sách các lớp duy nhất từ Circular Linked List
+int getUniqueClassesCLL(NodeSLL *circularLinkedList, char classes[][MAX_CLASS_LENGTH])
+{
+    if (circularLinkedList == NULL) return 0;
+    
+    int classCount = 0;
+    NodeSLL *current = circularLinkedList;
+    
+    do
+    {
+        bool found = false;
+        // Kiểm tra xem lớp đã tồn tại trong danh sách chưa
+        for (int j = 0; j < classCount; j++)
+        {
+            if (strcmp(classes[j], current->info.studentClass) == 0)
+            {
+                found = true;
+                break;
+            }
+        }
+        // Nếu chưa tồn tại thì thêm vào danh sách
+        if (!found)
+        {
+            strcpy(classes[classCount], current->info.studentClass);
+            classCount++;
+        }
+        current = current->next;
+    } while (current != circularLinkedList);
+    
+    return classCount;
+}
+
+// Hàm lấy danh sách các lớp duy nhất từ Doubly Linked List
+int getUniqueClassesDLL(NodeDLL *doublyLinkedListHead, char classes[][MAX_CLASS_LENGTH])
+{
+    int classCount = 0;
+    NodeDLL *current = doublyLinkedListHead;
+    
+    while (current != NULL)
+    {
+        bool found = false;
+        // Kiểm tra xem lớp đã tồn tại trong danh sách chưa
+        for (int j = 0; j < classCount; j++)
+        {
+            if (strcmp(classes[j], current->info.studentClass) == 0)
+            {
+                found = true;
+                break;
+            }
+        }
+        // Nếu chưa tồn tại thì thêm vào danh sách
+        if (!found)
+        {
+            strcpy(classes[classCount], current->info.studentClass);
+            classCount++;
+        }
+        current = current->next;
+    }
+    return classCount;
+}
+
+// Hàm tính toán thống kê cho một lớp từ Array List
+void calculateClassStatisticsArray(const ArrayStudentList &arrayList, const char *className, ClassStatistics &stats)
+{
+    strcpy(stats.className, className);
+    stats.totalStudents = 0;
+    stats.highestScore = -1;
+    stats.lowestScore = 11;
+    float totalScore = 0;
+    
+    for (int i = 0; i < arrayList.count; i++)
+    {
+        if (strcmp(arrayList.students[i].studentClass, className) == 0)
+        {
+            stats.totalStudents++;
+            totalScore += arrayList.students[i].score;
+            
+            if (arrayList.students[i].score > stats.highestScore)
+                stats.highestScore = arrayList.students[i].score;
+            if (arrayList.students[i].score < stats.lowestScore)
+                stats.lowestScore = arrayList.students[i].score;
+        }
+    }
+    
+    stats.averageScore = (stats.totalStudents > 0) ? (totalScore / stats.totalStudents) : 0;
+}
+
+// Hàm tính toán thống kê cho một lớp từ Singly Linked List
+void calculateClassStatisticsSLL(NodeSLL *singlyLinkedList, const char *className, ClassStatistics &stats)
+{
+    strcpy(stats.className, className);
+    stats.totalStudents = 0;
+    stats.highestScore = -1;
+    stats.lowestScore = 11;
+    float totalScore = 0;
+    
+    NodeSLL *current = singlyLinkedList;
+    while (current != NULL)
+    {
+        if (strcmp(current->info.studentClass, className) == 0)
+        {
+            stats.totalStudents++;
+            totalScore += current->info.score;
+            
+            if (current->info.score > stats.highestScore)
+                stats.highestScore = current->info.score;
+            if (current->info.score < stats.lowestScore)
+                stats.lowestScore = current->info.score;
+        }
+        current = current->next;
+    }
+    
+    stats.averageScore = (stats.totalStudents > 0) ? (totalScore / stats.totalStudents) : 0;
+}
+
+// Hàm tính toán thống kê cho một lớp từ Circular Linked List
+void calculateClassStatisticsCLL(NodeSLL *circularLinkedList, const char *className, ClassStatistics &stats)
+{
+    strcpy(stats.className, className);
+    stats.totalStudents = 0;
+    stats.highestScore = -1;
+    stats.lowestScore = 11;
+    float totalScore = 0;
+    
+    if (circularLinkedList == NULL) 
+    {
+        stats.averageScore = 0;
+        return;
+    }
+    
+    NodeSLL *current = circularLinkedList;
+    do
+    {
+        if (strcmp(current->info.studentClass, className) == 0)
+        {
+            stats.totalStudents++;
+            totalScore += current->info.score;
+            
+            if (current->info.score > stats.highestScore)
+                stats.highestScore = current->info.score;
+            if (current->info.score < stats.lowestScore)
+                stats.lowestScore = current->info.score;
+        }
+        current = current->next;
+    } while (current != circularLinkedList);
+    
+    stats.averageScore = (stats.totalStudents > 0) ? (totalScore / stats.totalStudents) : 0;
+}
+
+// Hàm tính toán thống kê cho một lớp từ Doubly Linked List
+void calculateClassStatisticsDLL(NodeDLL *doublyLinkedListHead, const char *className, ClassStatistics &stats)
+{
+    strcpy(stats.className, className);
+    stats.totalStudents = 0;
+    stats.highestScore = -1;
+    stats.lowestScore = 11;
+    float totalScore = 0;
+    
+    NodeDLL *current = doublyLinkedListHead;
+    while (current != NULL)
+    {
+        if (strcmp(current->info.studentClass, className) == 0)
+        {
+            stats.totalStudents++;
+            totalScore += current->info.score;
+            
+            if (current->info.score > stats.highestScore)
+                stats.highestScore = current->info.score;
+            if (current->info.score < stats.lowestScore)
+                stats.lowestScore = current->info.score;
+        }
+        current = current->next;
+    }
+    
+    stats.averageScore = (stats.totalStudents > 0) ? (totalScore / stats.totalStudents) : 0;
+}
+
+// Hàm hiển thị thống kê của một lớp
+void displayClassStatistics(const ClassStatistics &stats)
+{
+    cout << "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓" << endl;
+    cout << "┃                                        THỐNG KÊ LỚP " << setw(15) << left << stats.className << "┃" << endl;
+    cout << "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫" << endl;
+    cout << "┃ Tổng số sinh viên:   " << setw(10) << stats.totalStudents << "                                                      ┃" << endl;
+    cout << "┃ Điểm cao nhất:      " << setw(10) << fixed << setprecision(2) << stats.highestScore << "                                                      ┃" << endl;
+    cout << "┃ Điểm thấp nhất:     " << setw(10) << fixed << setprecision(2) << stats.lowestScore << "                                                      ┃" << endl;
+    cout << "┃ Điểm trung bình:    " << setw(10) << fixed << setprecision(2) << stats.averageScore << "                                                      ┃" << endl;
+    cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛" << endl;
+    cout << endl;
+}
+
+// Hàm hiển thị thống kê tất cả các lớp
+void displayAllClassStatistics(int dataStructureType,
+                               const ArrayStudentList &arrayList,
+                               NodeSLL *singlyLinkedList,
+                               NodeSLL *circularLinkedList,
+                               NodeDLL *doublyLinkedListHead)
+{
+    char classes[MAX_STUDENTS][MAX_CLASS_LENGTH];
+    int classCount = 0;
+    
+    // Lấy danh sách các lớp duy nhất theo cấu trúc dữ liệu
+    switch (dataStructureType)
+    {
+    case ARRAY_LIST:
+        classCount = getUniqueClassesArray(arrayList, classes);
+        break;
+    case SINGLY_LINKED_LIST:
+        classCount = getUniqueClassesSLL(singlyLinkedList, classes);
+        break;
+    case CIRCULAR_LINKED_LIST:
+        classCount = getUniqueClassesCLL(circularLinkedList, classes);
+        break;
+    case DOUBLY_LINKED_LIST:
+        classCount = getUniqueClassesDLL(doublyLinkedListHead, classes);
+        break;
+    }
+    
+    if (classCount == 0)
+    {
+        printWarning("Không có lớp nào để thống kê!");
+        return;
+    }
+    
+    printHeader("THỐNG KÊ THEO LỚP");
+    
+    // Hiển thị thống kê cho từng lớp
+    for (int i = 0; i < classCount; i++)
+    {
+        ClassStatistics stats;
+        
+        switch (dataStructureType)
+        {
+        case ARRAY_LIST:
+            calculateClassStatisticsArray(arrayList, classes[i], stats);
+            break;
+        case SINGLY_LINKED_LIST:
+            calculateClassStatisticsSLL(singlyLinkedList, classes[i], stats);
+            break;
+        case CIRCULAR_LINKED_LIST:
+            calculateClassStatisticsCLL(circularLinkedList, classes[i], stats);
+            break;
+        case DOUBLY_LINKED_LIST:
+            calculateClassStatisticsDLL(doublyLinkedListHead, classes[i], stats);
+            break;
+        }
+        
+        displayClassStatistics(stats);
     }
 }

@@ -1,4 +1,36 @@
 #include "../../include/algorithms/singly_linked_list_sorting.h"
+#include <cstring>
+
+// ========== THUẬT TOÁN SẮP XẾP CHO SINGLY LINKED LIST ==========
+
+// ========== HÀM TIỆN ÍCH SO SÁNH SINH VIÊN ==========
+/**
+ * Hàm so sánh hai sinh viên theo tiêu chí được chọn
+ * @param a: Sinh viên thứ nhất
+ * @param b: Sinh viên thứ hai  
+ * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
+ * @return true nếu a < b theo tiêu chí đã chọn, false nếu ngược lại
+ */
+bool compareStudentsSLL(const Student &a, const Student &b, int sortCriteria)
+{
+    switch (sortCriteria)
+    {
+    case 1: // SORT_BY_STUDENT_ID
+        return strcmp(a.studentID, b.studentID) < 0; // So sánh mã sinh viên
+    case 2: // SORT_BY_NAME
+        // So sánh theo tên (lastName + firstName)
+        {
+            int lastNameCmp = strcmp(a.lastName, b.lastName);
+            if (lastNameCmp != 0)
+                return lastNameCmp < 0;
+            return strcmp(a.firstName, b.firstName) < 0;
+        }
+    case 3: // SORT_BY_SCORE
+        return a.score < b.score; // So sánh điểm số
+    default:
+        return a.score < b.score; // Mặc định so sánh theo điểm
+    }
+}
 
 // ========== THUẬT TOÁN SẮP XẾP CHO SINGLY LINKED LIST ==========
 
@@ -10,8 +42,9 @@
  * Độ phức tạp: O(n²) trong tất cả trường hợp
  *
  * @param head: Tham chiếu đến con trỏ đầu danh sách liên kết đơn
+ * @param sortCriteria: Tiêu chí sắp xếp (1=Mã SV, 2=Tên, 3=Điểm)
  */
-void bubbleSortSLL(NodeSLL *&head)
+void bubbleSortSLL(NodeSLL *&head, int sortCriteria)
 {
     // Kiểm tra danh sách rỗng hoặc chỉ có 1 phần tử
     if (head == NULL || head->next == NULL)
@@ -29,8 +62,8 @@ void bubbleSortSLL(NodeSLL *&head)
         // Duyệt từ đầu đến phần chưa được sắp xếp
         while (ptr1->next != lptr)
         {
-            // So sánh điểm của node hiện tại với node kế tiếp
-            if (ptr1->info.score > ptr1->next->info.score)
+            // So sánh theo tiêu chí được chọn (đảo ngược để có thứ tự tăng dần)
+            if (!compareStudentsSLL(ptr1->info, ptr1->next->info, sortCriteria))
             {
                 // Hoán đổi dữ liệu giữa hai node (không hoán đổi con trỏ)
                 Student temp = ptr1->info;
@@ -52,8 +85,9 @@ void bubbleSortSLL(NodeSLL *&head)
  * Độ phức tạp: O(n) tốt nhất, O(n²) xấu nhất
  *
  * @param head: Tham chiếu đến con trỏ đầu danh sách liên kết đơn
+ * @param sortCriteria: Tiêu chí sắp xếp (1=Mã SV, 2=Tên, 3=Điểm)
  */
-void insertionSortSLL(NodeSLL *&head)
+void insertionSortSLL(NodeSLL *&head, int sortCriteria)
 {
     // Kiểm tra danh sách rỗng hoặc chỉ có 1 phần tử
     if (head == NULL || head->next == NULL)
@@ -69,7 +103,7 @@ void insertionSortSLL(NodeSLL *&head)
 
         // Chèn current vào danh sách đã sắp xếp
         // TH1: Danh sách sorted rỗng hoặc current nhỏ hơn phần tử đầu
-        if (sorted == NULL || sorted->info.score > current->info.score)
+        if (sorted == NULL || compareStudentsSLL(current->info, sorted->info, sortCriteria))
         {
             current->next = sorted; // Chèn current vào đầu danh sách sorted
             sorted = current;       // Cập nhật đầu danh sách sorted
@@ -80,7 +114,7 @@ void insertionSortSLL(NodeSLL *&head)
             NodeSLL *temp = sorted;
 
             // Duyệt đến vị trí node có giá trị >= current (hoặc cuối danh sách)
-            while (temp->next != NULL && temp->next->info.score < current->info.score)
+            while (temp->next != NULL && compareStudentsSLL(temp->next->info, current->info, sortCriteria))
             {
                 temp = temp->next;
             }
@@ -104,8 +138,9 @@ void insertionSortSLL(NodeSLL *&head)
  * Độ phức tạp: O(n²) trong tất cả trường hợp
  *
  * @param head: Tham chiếu đến con trỏ đầu danh sách liên kết đơn
+ * @param sortCriteria: Tiêu chí sắp xếp (1=Mã SV, 2=Tên, 3=Điểm)
  */
-void selectionSortSLL(NodeSLL *&head)
+void selectionSortSLL(NodeSLL *&head, int sortCriteria)
 {
     // Kiểm tra danh sách rỗng hoặc chỉ có 1 phần tử
     if (head == NULL || head->next == NULL)
@@ -122,7 +157,7 @@ void selectionSortSLL(NodeSLL *&head)
         // Tìm node có giá trị nhỏ nhất trong phần còn lại của danh sách
         while (r)
         {
-            if (min->info.score > r->info.score)
+            if (compareStudentsSLL(r->info, min->info, sortCriteria))
                 min = r; // Cập nhật node nhỏ nhất
             r = r->next; // Chuyển sang node tiếp theo
         }
@@ -148,9 +183,10 @@ void selectionSortSLL(NodeSLL *&head)
  *
  * @param a: Con trỏ đến đầu danh sách thứ nhất (đã sắp xếp)
  * @param b: Con trỏ đến đầu danh sách thứ hai (đã sắp xếp)
+ * @param sortCriteria: Tiêu chí sắp xếp (1=Mã SV, 2=Tên, 3=Điểm)
  * @return: Con trỏ đến đầu danh sách sau khi hợp nhất
  */
-NodeSLL *mergeSortedSLL(NodeSLL *a, NodeSLL *b)
+NodeSLL *mergeSortedSLL(NodeSLL *a, NodeSLL *b, int sortCriteria)
 {
     // Trường hợp cơ sở: một trong hai danh sách rỗng
     if (a == NULL)
@@ -161,17 +197,17 @@ NodeSLL *mergeSortedSLL(NodeSLL *a, NodeSLL *b)
     NodeSLL *result = NULL; // Đầu danh sách kết quả
 
     // So sánh phần tử đầu của hai danh sách và chọn phần tử nhỏ hơn
-    if (a->info.score <= b->info.score)
+    if (compareStudentsSLL(a->info, b->info, sortCriteria))
     {
         result = a; // Chọn node từ danh sách a
         // Đệ quy hợp nhất phần còn lại của a với toàn bộ b
-        result->next = mergeSortedSLL(a->next, b);
+        result->next = mergeSortedSLL(a->next, b, sortCriteria);
     }
     else
     {
         result = b; // Chọn node từ danh sách b
         // Đệ quy hợp nhất toàn bộ a với phần còn lại của b
-        result->next = mergeSortedSLL(a, b->next);
+        result->next = mergeSortedSLL(a, b->next, sortCriteria);
     }
     return result;
 }
@@ -218,8 +254,9 @@ void splitSLL(NodeSLL *source, NodeSLL **frontRef, NodeSLL **backRef)
  * Độ phức tạp: O(n log n) trong tất cả trường hợp
  *
  * @param head: Tham chiếu đến con trỏ đầu danh sách liên kết đơn
+ * @param sortCriteria: Tiêu chí sắp xếp (1=Mã SV, 2=Tên, 3=Điểm)
  */
-void mergeSortSLL(NodeSLL *&head)
+void mergeSortSLL(NodeSLL *&head, int sortCriteria)
 {
     // Trường hợp cơ sở: danh sách rỗng hoặc chỉ có 1 phần tử
     if (head == NULL || head->next == NULL)
@@ -232,9 +269,9 @@ void mergeSortSLL(NodeSLL *&head)
     splitSLL(head, &a, &b);
 
     // Đệ quy sắp xếp từng nửa
-    mergeSortSLL(a);
-    mergeSortSLL(b);
+    mergeSortSLL(a, sortCriteria);
+    mergeSortSLL(b, sortCriteria);
 
     // Hợp nhất hai nửa đã sắp xếp và cập nhật head
-    head = mergeSortedSLL(a, b);
+    head = mergeSortedSLL(a, b, sortCriteria);
 }

@@ -17,8 +17,9 @@
  *
  * @param head: Con trỏ tham chiếu đến node đầu danh sách
  * @param tail: Con trỏ tham chiếu đến node cuối danh sách
+ * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
  */
-void bubbleSortDLL(NodeDLL *&head, NodeDLL *&tail)
+void bubbleSortDLL(NodeDLL *&head, NodeDLL *&tail, int sortCriteria)
 {
     // Kiểm tra danh sách rỗng hoặc chỉ có 1 phần tử
     if (head == NULL || head->next == NULL)
@@ -36,8 +37,8 @@ void bubbleSortDLL(NodeDLL *&head, NodeDLL *&tail)
         // Duyệt từ đầu đến vùng đã sắp xếp
         while (ptr1->next != lptr)
         {
-            // So sánh điểm số của hai node liền kề
-            if (ptr1->info.score > ptr1->next->info.score)
+            // So sánh hai node liền kề theo tiêu chí được chọn
+            if (!compareStudents(ptr1->info, ptr1->next->info, sortCriteria))
             {
                 // Hoán đổi dữ liệu sinh viên giữa hai node
                 Student temp = ptr1->info;
@@ -66,8 +67,9 @@ void bubbleSortDLL(NodeDLL *&head, NodeDLL *&tail)
  *
  * @param head: Con trỏ tham chiếu đến node đầu danh sách
  * @param tail: Con trỏ tham chiếu đến node cuối danh sách
+ * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
  */
-void insertionSortDLL(NodeDLL *&head, NodeDLL *&tail)
+void insertionSortDLL(NodeDLL *&head, NodeDLL *&tail, int sortCriteria)
 {
     // Kiểm tra danh sách rỗng hoặc chỉ có 1 phần tử
     if (head == NULL || head->next == NULL)
@@ -82,7 +84,8 @@ void insertionSortDLL(NodeDLL *&head, NodeDLL *&tail)
 
         // Tìm vị trí thích hợp trong phần đã sắp xếp
         NodeDLL *pos = head;
-        while (pos != current && pos->info.score <= key.score)
+        while (pos != current && (compareStudents(pos->info, key, sortCriteria) || 
+               (!compareStudents(pos->info, key, sortCriteria) && !compareStudents(key, pos->info, sortCriteria))))
             pos = pos->next;
 
         // Chỉ di chuyển node nếu cần thiết (tối ưu hóa)
@@ -126,8 +129,9 @@ void insertionSortDLL(NodeDLL *&head, NodeDLL *&tail)
  *
  * @param head: Con trỏ tham chiếu đến node đầu danh sách
  * @param tail: Con trỏ tham chiếu đến node cuối danh sách
+ * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
  */
-void selectionSortDLL(NodeDLL *&head, NodeDLL *&tail)
+void selectionSortDLL(NodeDLL *&head, NodeDLL *&tail, int sortCriteria)
 {
     // Kiểm tra danh sách rỗng hoặc chỉ có 1 phần tử
     if (head == NULL || head->next == NULL)
@@ -140,10 +144,10 @@ void selectionSortDLL(NodeDLL *&head, NodeDLL *&tail)
         NodeDLL *min = temp;     // Giả sử node hiện tại có giá trị nhỏ nhất
         NodeDLL *r = temp->next; // Con trỏ tìm kiếm trong phần còn lại
 
-        // Tìm node có điểm số nhỏ nhất trong phần chưa sắp xếp
+        // Tìm node có giá trị nhỏ nhất trong phần chưa sắp xếp theo tiêu chí được chọn
         while (r)
         {
-            if (min->info.score > r->info.score)
+            if (compareStudents(r->info, min->info, sortCriteria))
                 min = r; // Cập nhật node có giá trị nhỏ nhất
             r = r->next;
         }
@@ -173,18 +177,20 @@ void selectionSortDLL(NodeDLL *&head, NodeDLL *&tail)
  *
  * @param low: Node đầu của đoạn cần phân vùng
  * @param high: Node cuối của đoạn cần phân vùng (pivot)
+ * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
  * @return: Vị trí cuối cùng của pivot sau khi phân vùng
  */
-NodeDLL *partitionDLL(NodeDLL *low, NodeDLL *high)
+NodeDLL *partitionDLL(NodeDLL *low, NodeDLL *high, int sortCriteria)
 {
-    float pivot = high->info.score; // Chọn điểm số của node cuối làm pivot
-    NodeDLL *i = low->prev;         // Con trỏ đánh dấu vùng <= pivot
+    Student pivot = high->info; // Chọn thông tin sinh viên của node cuối làm pivot
+    NodeDLL *i = low->prev;     // Con trỏ đánh dấu vùng <= pivot
 
     // Duyệt từ low đến node trước high
     for (NodeDLL *j = low; j != high; j = j->next)
     {
-        // Nếu phần tử hiện tại <= pivot
-        if (j->info.score <= pivot)
+        // Nếu phần tử hiện tại <= pivot theo tiêu chí được chọn
+        if (compareStudents(j->info, pivot, sortCriteria) || 
+            (!compareStudents(j->info, pivot, sortCriteria) && !compareStudents(pivot, j->info, sortCriteria)))
         {
             // Di chuyển con trỏ i và hoán đổi
             i = (i == NULL) ? low : i->next;
@@ -213,20 +219,21 @@ NodeDLL *partitionDLL(NodeDLL *low, NodeDLL *high)
  *
  * @param low: Node đầu của đoạn cần sắp xếp
  * @param high: Node cuối của đoạn cần sắp xếp
+ * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
  */
-void quickSortDLLHelper(NodeDLL *low, NodeDLL *high)
+void quickSortDLLHelper(NodeDLL *low, NodeDLL *high, int sortCriteria)
 {
     // Điều kiện dừng: đoạn có ít hơn 2 phần tử
     if (high != NULL && low != high && low != high->next)
     {
         // Phân vùng và lấy vị trí pivot
-        NodeDLL *pivot = partitionDLL(low, high);
+        NodeDLL *pivot = partitionDLL(low, high, sortCriteria);
 
         // Đệ quy sắp xếp phần bên trái pivot
-        quickSortDLLHelper(low, pivot->prev);
+        quickSortDLLHelper(low, pivot->prev, sortCriteria);
 
         // Đệ quy sắp xếp phần bên phải pivot
-        quickSortDLLHelper(pivot->next, high);
+        quickSortDLLHelper(pivot->next, high, sortCriteria);
     }
 }
 
@@ -244,15 +251,16 @@ void quickSortDLLHelper(NodeDLL *low, NodeDLL *high)
  *
  * @param head: Con trỏ tham chiếu đến node đầu danh sách
  * @param tail: Con trỏ tham chiếu đến node cuối danh sách
+ * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
  */
-void quickSortDLL(NodeDLL *&head, NodeDLL *&tail)
+void quickSortDLL(NodeDLL *&head, NodeDLL *&tail, int sortCriteria)
 {
     // Kiểm tra danh sách rỗng hoặc chỉ có 1 phần tử
     if (head == NULL || head->next == NULL)
         return;
 
     // Gọi hàm đệ quy để thực hiện sắp xếp
-    quickSortDLLHelper(head, tail);
+    quickSortDLLHelper(head, tail, sortCriteria);
 }
 
 /**
@@ -271,8 +279,9 @@ void quickSortDLL(NodeDLL *&head, NodeDLL *&tail)
  *
  * @param head: Con trỏ tham chiếu đến node đầu danh sách
  * @param tail: Con trỏ tham chiếu đến node cuối danh sách
+ * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
  */
-void heapSortDLL(NodeDLL *&head, NodeDLL *&tail)
+void heapSortDLL(NodeDLL *&head, NodeDLL *&tail, int sortCriteria)
 {
     // Kiểm tra danh sách rỗng hoặc chỉ có 1 phần tử
     if (head == NULL || head->next == NULL)
@@ -298,7 +307,7 @@ void heapSortDLL(NodeDLL *&head, NodeDLL *&tail)
     }
 
     // BƯỚC 3: Áp dụng thuật toán Heap Sort cho mảng
-    heapSortArrayList(arrayList);
+    heapSortArrayList(arrayList, sortCriteria);
 
     // BƯỚC 4: Sao chép kết quả đã sắp xếp trở lại Doubly Linked List
     temp = head;
@@ -322,9 +331,10 @@ void heapSortDLL(NodeDLL *&head, NodeDLL *&tail)
  *
  * @param firstHalf: Danh sách con thứ nhất đã sắp xếp
  * @param secondHalf: Danh sách con thứ hai đã sắp xếp
+ * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
  * @return: Node đầu của danh sách đã hợp nhất
  */
-NodeDLL *mergeDLL(NodeDLL *firstHalf, NodeDLL *secondHalf)
+NodeDLL *mergeDLL(NodeDLL *firstHalf, NodeDLL *secondHalf, int sortCriteria)
 {
     // Trường hợp cơ sở: một trong hai danh sách rỗng
     if (firstHalf == NULL)
@@ -334,12 +344,13 @@ NodeDLL *mergeDLL(NodeDLL *firstHalf, NodeDLL *secondHalf)
 
     NodeDLL *result = NULL;
 
-    // So sánh điểm số của hai node đầu tiên
-    if (firstHalf->info.score <= secondHalf->info.score)
+    // So sánh hai node đầu tiên theo tiêu chí được chọn
+    if (compareStudents(firstHalf->info, secondHalf->info, sortCriteria) || 
+        (!compareStudents(firstHalf->info, secondHalf->info, sortCriteria) && !compareStudents(secondHalf->info, firstHalf->info, sortCriteria)))
     {
         result = firstHalf; // Chọn node từ danh sách thứ nhất
         // Đệ quy hợp nhất phần còn lại
-        result->next = mergeDLL(firstHalf->next, secondHalf);
+        result->next = mergeDLL(firstHalf->next, secondHalf, sortCriteria);
         // Cập nhật liên kết ngược cho cấu trúc doubly
         if (result->next)
             result->next->prev = result;
@@ -348,7 +359,7 @@ NodeDLL *mergeDLL(NodeDLL *firstHalf, NodeDLL *secondHalf)
     {
         result = secondHalf; // Chọn node từ danh sách thứ hai
         // Đệ quy hợp nhất phần còn lại
-        result->next = mergeDLL(firstHalf, secondHalf->next);
+        result->next = mergeDLL(firstHalf, secondHalf->next, sortCriteria);
         // Cập nhật liên kết ngược cho cấu trúc doubly
         if (result->next)
             result->next->prev = result;
@@ -410,8 +421,9 @@ NodeDLL *splitDLL(NodeDLL *head)
  * Độ phức tạp: O(n log n) về thời gian, O(log n) về không gian (stack)
  *
  * @param headRef: Con trỏ tham chiếu đến con trỏ node đầu danh sách
+ * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
  */
-void mergeSortDLL(NodeDLL **headRef)
+void mergeSortDLL(NodeDLL **headRef, int sortCriteria)
 {
     NodeDLL *head = *headRef;
 
@@ -423,9 +435,9 @@ void mergeSortDLL(NodeDLL **headRef)
     NodeDLL *second = splitDLL(head);
 
     // BƯỚC 2: Đệ quy sắp xếp từng nửa
-    mergeSortDLL(&head);   // Sắp xếp nửa đầu
-    mergeSortDLL(&second); // Sắp xếp nửa sau
+    mergeSortDLL(&head, sortCriteria);   // Sắp xếp nửa đầu
+    mergeSortDLL(&second, sortCriteria); // Sắp xếp nửa sau
 
     // BƯỚC 3: Hợp nhất hai nửa đã sắp xếp
-    *headRef = mergeDLL(head, second);
+    *headRef = mergeDLL(head, second, sortCriteria);
 }

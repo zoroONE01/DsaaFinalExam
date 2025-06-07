@@ -1,6 +1,37 @@
 #include "../../include/algorithms/array_sorting.h"
+#include "../../include/ui/common_ui.h"
+#include <cstring>
 
 // ========== THUẬT TOÁN SẮP XẾP CHO ARRAY LIST ==========
+
+// ========== HÀM TIỆN ÍCH SO SÁNH SINH VIÊN ==========
+/**
+ * Hàm so sánh hai sinh viên theo tiêu chí được chọn
+ * @param a: Sinh viên thứ nhất
+ * @param b: Sinh viên thứ hai  
+ * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
+ * @return true nếu a < b theo tiêu chí đã chọn, false nếu ngược lại
+ */
+bool compareStudents(const Student &a, const Student &b, int sortCriteria)
+{
+    switch (sortCriteria)
+    {
+    case SORT_BY_STUDENT_ID:
+        return strcmp(a.studentID, b.studentID) < 0; // So sánh mã sinh viên
+    case SORT_BY_NAME:
+        // So sánh theo tên (lastName + firstName)
+        {
+            int lastNameCmp = strcmp(a.lastName, b.lastName);
+            if (lastNameCmp != 0)
+                return lastNameCmp < 0;
+            return strcmp(a.firstName, b.firstName) < 0;
+        }
+    case SORT_BY_SCORE:
+        return a.score < b.score; // So sánh điểm số
+    default:
+        return a.score < b.score; // Mặc định so sánh theo điểm
+    }
+}
 
 // ========== BUBBLE SORT (Sắp xếp nổi bọt) ==========
 /**
@@ -10,8 +41,9 @@
  * Độ phức tạp: O(n²) trong tất cả trường hợp
  *
  * @param list: Tham chiếu đến danh sách mảng sinh viên cần sắp xếp
+ * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
  */
-void bubbleSortArrayList(ArrayStudentList &list)
+void bubbleSortArrayList(ArrayStudentList &list, int sortCriteria)
 {
     // Duyệt qua tất cả phần tử, mỗi lần duyệt sẽ đưa 1 phần tử lớn nhất về cuối
     for (int i = 0; i < list.count - 1; i++)
@@ -20,8 +52,8 @@ void bubbleSortArrayList(ArrayStudentList &list)
         // (list.count - i - 1) vì i phần tử cuối đã được sắp xếp
         for (int j = 0; j < list.count - i - 1; j++)
         {
-            // So sánh điểm của sinh viên thứ j và j+1
-            if (list.students[j].score > list.students[j + 1].score)
+            // So sánh sinh viên thứ j và j+1 theo tiêu chí được chọn
+            if (!compareStudents(list.students[j], list.students[j + 1], sortCriteria))
             {
                 // Hoán đổi vị trí hai sinh viên nếu không đúng thứ tự tăng dần
                 Student temp = list.students[j];
@@ -40,8 +72,9 @@ void bubbleSortArrayList(ArrayStudentList &list)
  * Độ phức tạp: O(n) tốt nhất (đã sắp xếp), O(n²) xấu nhất
  *
  * @param list: Tham chiếu đến danh sách mảng sinh viên cần sắp xếp
+ * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
  */
-void insertionSortArrayList(ArrayStudentList &list)
+void insertionSortArrayList(ArrayStudentList &list, int sortCriteria)
 {
     // Bắt đầu từ phần tử thứ 2 (index = 1), phần tử đầu coi như đã sắp xếp
     for (int i = 1; i < list.count; i++)
@@ -51,7 +84,7 @@ void insertionSortArrayList(ArrayStudentList &list)
 
         // Dịch chuyển các phần tử lớn hơn key về phía sau
         // để tạo chỗ trống cho key
-        while (j >= 0 && list.students[j].score > key.score)
+        while (j >= 0 && !compareStudents(list.students[j], key, sortCriteria))
         {
             list.students[j + 1] = list.students[j]; // Dịch chuyển phần tử
             j--;                                     // Tiếp tục xét phần tử trước đó
@@ -70,8 +103,9 @@ void insertionSortArrayList(ArrayStudentList &list)
  * Độ phức tạp: O(n²) trong tất cả trường hợp
  *
  * @param list: Tham chiếu đến danh sách mảng sinh viên cần sắp xếp
+ * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
  */
-void selectionSortArrayList(ArrayStudentList &list)
+void selectionSortArrayList(ArrayStudentList &list, int sortCriteria)
 {
     // Duyệt qua từng vị trí của mảng (trừ vị trí cuối)
     for (int i = 0; i < list.count - 1; i++)
@@ -82,7 +116,7 @@ void selectionSortArrayList(ArrayStudentList &list)
         for (int j = i + 1; j < list.count; j++)
         {
             // Nếu tìm thấy phần tử nhỏ hơn, cập nhật chỉ số
-            if (list.students[j].score < list.students[minIdx].score)
+            if (compareStudents(list.students[j], list.students[minIdx], sortCriteria))
             {
                 minIdx = j;
             }
@@ -101,26 +135,27 @@ void selectionSortArrayList(ArrayStudentList &list)
 // ========== QUICK SORT (Sắp xếp nhanh) ==========
 /**
  * Hàm phân vùng (partition) cho thuật toán Quick Sort
- * Ý tưởng: Chọn một phần tử làm pivot, sắp xếp lại mảng sao cho:
- * - Các phần tử nhỏ hơn hoặc bằng pivot nằm bên trái
- * - Các phần tử lớn hơn pivot nằm bên phải
- * - Trả về vị trí cuối cùng của pivot
+ * Chọn pivot và sắp xếp các phần tử sao cho:
+ * - Các phần tử nhỏ hơn pivot ở bên trái
+ * - Các phần tử lớn hơn pivot ở bên phải
  *
  * @param list: Tham chiếu đến danh sách mảng sinh viên
  * @param low: Chỉ số đầu của phần mảng cần phân vùng
- * @param high: Chỉ số cuối của phần mảng cần phân vùng (chứa pivot)
+ * @param high: Chỉ số cuối của phần mảng cần phân vùng
+ * @param sortCriteria: Tiêu chí sắp xếp
  * @return: Vị trí cuối cùng của pivot sau khi phân vùng
  */
-int partitionArrayList(ArrayStudentList &list, int low, int high)
+int partitionArrayList(ArrayStudentList &list, int low, int high, int sortCriteria)
 {
-    float pivot = list.students[high].score; // Chọn phần tử cuối làm pivot
-    int i = low - 1;                         // Chỉ số của phần tử nhỏ hơn pivot (khởi tạo = low - 1)
+    Student pivot = list.students[high]; // Chọn phần tử cuối làm pivot
+    int i = low - 1;                     // Chỉ số của phần tử nhỏ hơn pivot (khởi tạo = low - 1)
 
     // Duyệt qua tất cả phần tử từ low đến high-1
     for (int j = low; j < high; j++)
     {
-        // Nếu phần tử hiện tại nhỏ hơn hoặc bằng pivot
-        if (list.students[j].score <= pivot)
+        // Nếu phần tử hiện tại nhỏ hơn hoặc bằng pivot theo tiêu chí đã chọn
+        if (compareStudents(list.students[j], pivot, sortCriteria) || 
+            !compareStudents(pivot, list.students[j], sortCriteria))
         {
             i++; // Tăng vùng các phần tử nhỏ hơn pivot
             // Hoán đổi phần tử hiện tại vào vùng nhỏ hơn pivot
@@ -146,18 +181,18 @@ int partitionArrayList(ArrayStudentList &list, int low, int high)
  * @param low: Chỉ số đầu của phần mảng cần sắp xếp
  * @param high: Chỉ số cuối của phần mảng cần sắp xếp
  */
-void quickSortArrayListHelper(ArrayStudentList &list, int low, int high)
+void quickSortArrayListHelper(ArrayStudentList &list, int low, int high, int sortCriteria)
 {
     if (low < high) // Điều kiện dừng đệ quy: còn ít nhất 2 phần tử
     {
         // Phân vùng mảng và lấy vị trí pivot
-        int pivotIndex = partitionArrayList(list, low, high);
+        int pivotIndex = partitionArrayList(list, low, high, sortCriteria);
 
         // Đệ quy sắp xếp phần bên trái pivot (các phần tử nhỏ hơn)
-        quickSortArrayListHelper(list, low, pivotIndex - 1);
+        quickSortArrayListHelper(list, low, pivotIndex - 1, sortCriteria);
 
         // Đệ quy sắp xếp phần bên phải pivot (các phần tử lớn hơn)
-        quickSortArrayListHelper(list, pivotIndex + 1, high);
+        quickSortArrayListHelper(list, pivotIndex + 1, high, sortCriteria);
     }
 }
 
@@ -168,7 +203,7 @@ void quickSortArrayListHelper(ArrayStudentList &list, int low, int high)
  *
  * @param list: Tham chiếu đến danh sách mảng sinh viên cần sắp xếp
  */
-void quickSortArrayList(ArrayStudentList &list)
+void quickSortArrayList(ArrayStudentList &list, int sortCriteria)
 {
     // Kiểm tra điều kiện đầu vào
     if (list.count <= 1)
@@ -177,7 +212,7 @@ void quickSortArrayList(ArrayStudentList &list)
     }
 
     // Gọi hàm đệ quy để sắp xếp toàn bộ mảng
-    quickSortArrayListHelper(list, 0, list.count - 1);
+    quickSortArrayListHelper(list, 0, list.count - 1, sortCriteria);
 }
 
 // ========== HEAP SORT (Sắp xếp vun đống) ==========
@@ -189,18 +224,18 @@ void quickSortArrayList(ArrayStudentList &list)
  * @param n: Kích thước của heap
  * @param i: Chỉ số của node cần heapify
  */
-void heapifyArrayList(ArrayStudentList &list, int n, int i)
+void heapifyArrayList(ArrayStudentList &list, int n, int i, int sortCriteria)
 {
     int largest = i;       // Giả sử node i là lớn nhất
     int left = 2 * i + 1;  // Node con trái
     int right = 2 * i + 2; // Node con phải
 
-    // Nếu node con trái lớn hơn node cha
-    if (left < n && list.students[left].score > list.students[largest].score)
+    // Nếu node con trái lớn hơn node cha theo tiêu chí đã chọn
+    if (left < n && !compareStudents(list.students[left], list.students[largest], sortCriteria))
         largest = left;
 
-    // Nếu node con phải lớn hơn node lớn nhất hiện tại
-    if (right < n && list.students[right].score > list.students[largest].score)
+    // Nếu node con phải lớn hơn node lớn nhất hiện tại theo tiêu chí đã chọn
+    if (right < n && !compareStudents(list.students[right], list.students[largest], sortCriteria))
         largest = right;
 
     // Nếu node lớn nhất không phải là node gốc
@@ -212,7 +247,7 @@ void heapifyArrayList(ArrayStudentList &list, int n, int i)
         list.students[largest] = temp;
 
         // Đệ quy heapify phần sub-tree bị ảnh hưởng
-        heapifyArrayList(list, n, largest);
+        heapifyArrayList(list, n, largest, sortCriteria);
     }
 }
 
@@ -223,14 +258,14 @@ void heapifyArrayList(ArrayStudentList &list, int n, int i)
  *
  * @param list: Tham chiếu đến danh sách mảng sinh viên cần sắp xếp
  */
-void heapSortArrayList(ArrayStudentList &list)
+void heapSortArrayList(ArrayStudentList &list, int sortCriteria)
 {
     int n = list.count;
 
     // Bước 1: Xây dựng max-heap từ mảng đầu vào
     // Bắt đầu từ node cha cuối cùng và heapify ngược lên trên
     for (int i = n / 2 - 1; i >= 0; i--)
-        heapifyArrayList(list, n, i);
+        heapifyArrayList(list, n, i, sortCriteria);
 
     // Bước 2: Trích xuất từng phần tử từ heap
     for (int i = n - 1; i > 0; i--)
@@ -241,7 +276,7 @@ void heapSortArrayList(ArrayStudentList &list)
         list.students[i] = temp;
 
         // Gọi heapify cho heap đã giảm kích thước (loại trừ phần tử vừa sắp xếp)
-        heapifyArrayList(list, i, 0);
+        heapifyArrayList(list, i, 0, sortCriteria);
     }
 }
 
@@ -254,7 +289,7 @@ void heapSortArrayList(ArrayStudentList &list)
  * @param mid: Chỉ số giữa, chia mảng thành 2 phần [left..mid] và [mid+1..right]
  * @param right: Chỉ số cuối của phần mảng cần hợp nhất
  */
-void mergeArrayList(ArrayStudentList &list, int left, int mid, int right)
+void mergeArrayList(ArrayStudentList &list, int left, int mid, int right, int sortCriteria)
 {
     // Tính kích thước của hai mảng con
     int n1 = mid - left + 1; // Kích thước mảng con trái
@@ -277,7 +312,8 @@ void mergeArrayList(ArrayStudentList &list, int left, int mid, int right)
     // So sánh và hợp nhất cho đến khi một trong hai mảng con hết phần tử
     while (i < n1 && j < n2)
     {
-        if (leftArray[i].score <= rightArray[j].score)
+        if (compareStudents(leftArray[i], rightArray[j], sortCriteria) || 
+            (!compareStudents(leftArray[i], rightArray[j], sortCriteria) && !compareStudents(rightArray[j], leftArray[i], sortCriteria)))
         {
             list.students[k] = leftArray[i]; // Lấy từ mảng trái
             i++;
@@ -319,7 +355,7 @@ void mergeArrayList(ArrayStudentList &list, int left, int mid, int right)
  * @param left: Chỉ số đầu của phần mảng cần sắp xếp
  * @param right: Chỉ số cuối của phần mảng cần sắp xếp
  */
-void mergeSortArrayListHelper(ArrayStudentList &list, int left, int right)
+void mergeSortArrayListHelper(ArrayStudentList &list, int left, int right, int sortCriteria)
 {
     if (left < right) // Điều kiện dừng đệ quy: còn ít nhất 2 phần tử
     {
@@ -327,13 +363,13 @@ void mergeSortArrayListHelper(ArrayStudentList &list, int left, int right)
         int mid = left + (right - left) / 2;
 
         // Đệ quy sắp xếp nửa đầu
-        mergeSortArrayListHelper(list, left, mid);
+        mergeSortArrayListHelper(list, left, mid, sortCriteria);
 
         // Đệ quy sắp xếp nửa sau
-        mergeSortArrayListHelper(list, mid + 1, right);
+        mergeSortArrayListHelper(list, mid + 1, right, sortCriteria);
 
         // Hợp nhất hai nửa đã được sắp xếp
-        mergeArrayList(list, left, mid, right);
+        mergeArrayList(list, left, mid, right, sortCriteria);
     }
 }
 
@@ -345,12 +381,12 @@ void mergeSortArrayListHelper(ArrayStudentList &list, int left, int right)
  *
  * @param list: Tham chiếu đến danh sách mảng sinh viên cần sắp xếp
  */
-void mergeSortArrayList(ArrayStudentList &list)
+void mergeSortArrayList(ArrayStudentList &list, int sortCriteria)
 {
     // Kiểm tra điều kiện đầu vào
     if (list.count <= 1)
         return; // Danh sách rỗng hoặc có 1 phần tử đã được sắp xếp
 
     // Gọi hàm đệ quy để sắp xếp toàn bộ mảng
-    mergeSortArrayListHelper(list, 0, list.count - 1);
+    mergeSortArrayListHelper(list, 0, list.count - 1, sortCriteria);
 }

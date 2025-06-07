@@ -37,9 +37,8 @@ void displayBSTMenu()
     cout << "2. Xóa nút khỏi cây (theo điểm số)" << endl;
     cout << "3. Cập nhật nút trong cây" << endl;
     cout << "4. Hiển thị cây (dạng danh sách liên kết)" << endl;
-    cout << "5. Tìm kiếm nút trong cây" << endl;
-    cout << "6. Thống kê cây" << endl;
-    cout << "7. Quay lại menu chính" << endl;
+    cout << "5. Nhập dữ liệu từ file CSV" << endl;
+    cout << "6. Quay lại menu chính" << endl;
     cout << "0. Thoát" << endl;
 }
 
@@ -160,38 +159,65 @@ int performBSTOperations(NodeBST *&binarySearchTree, ArrayStudentList &arrayList
         case 4: // Hiển thị cây (dạng danh sách liên kết)
             displayBST(binarySearchTree);
             break;
-        case 5: // Tìm kiếm nút trong cây
+        case 5: // Nhập dữ liệu từ file CSV
         {
-            char studentID[MAX_STUDENT_ID_LENGTH];
-            if (inputStudentID(studentID))
+            clearScreen();
+            printHeader("NHẬP DỮ LIỆU TỪ FILE CSV VÀO CÂY BST");
+            printInfo("Lưu ý: Nhập \"00\" để hủy bỏ và trở về menu trước.");
+
+            string filePathStr;
+            cout << "\nNhập đường dẫn đến file CSV (nhấn Enter để dùng mặc định 'data/students.csv'): ";
+
+            // Xử lý newline dư thừa nếu có
+            if (cin.peek() == '\n')
             {
-                Student foundStudent;
-                if (searchStudentInBST(studentID, binarySearchTree, foundStudent))
+                cin.ignore();
+            }
+            getline(cin, filePathStr);
+            filePathStr = trim(filePathStr);
+
+            // Kiểm tra hủy bỏ
+            if (filePathStr == "00")
+            {
+                if (confirmCancel())
                 {
-                    displayStudent(foundStudent);
+                    printInfo("Đã hủy thao tác nhập từ file CSV.");
+                    break;
                 }
-                else
+                // Nếu không xác nhận hủy, nhập lại
+                cout << "\nNhập lại đường dẫn đến file CSV (nhấn Enter để dùng mặc định 'data/students.csv'): ";
+                getline(cin, filePathStr);
+                filePathStr = trim(filePathStr);
+                if (filePathStr == "00")
                 {
-                    printError(("Không tìm thấy sinh viên có mã " + string(studentID) + " trong cây.").c_str());
+                    printInfo("Đã hủy thao tác nhập từ file CSV.");
+                    break;
                 }
             }
+
+            // Sử dụng đường dẫn mặc định nếu để trống
+            if (filePathStr.empty())
+            {
+                filePathStr = "data/students.csv";
+            }
+
+            // Gọi hàm nhập dữ liệu từ CSV vào BST
+            handleInputFromCSV(filePathStr.c_str(), BINARY_SEARCH_TREE, arrayList,
+                               singlyLinkedList, circularLinkedList, doublyLinkedListHead, doublyLinkedListTail, binarySearchTree);
             break;
         }
-        case 6: // Thống kê cây
-            performStatisticsOnBST(binarySearchTree);
-            break;
-        case 7: // Quay lại menu chính
+        case 6: // Quay lại menu chính
         {
             // Chuyển đổi dữ liệu từ BST về Array List
             clearScreen();
             printHeader("CHUYỂN ĐỔI DỮ LIỆU");
             printInfo("Đang chuyển đổi dữ liệu từ cây tìm kiếm nhị phân về danh sách mảng...");
-            
+
             convertBSTToArrayList(binarySearchTree, arrayList);
-            
+
             printSuccess("Đã chuyển đổi dữ liệu thành công về danh sách mảng.");
             printInfo("Bạn sẽ được chuyển về menu chính với cấu trúc dữ liệu: Danh sách mảng");
-            
+
             cout << "\nNhấn Enter để tiếp tục...";
             cin.get();
             return ARRAY_LIST; // Trả về mã của Array List
@@ -206,13 +232,13 @@ int performBSTOperations(NodeBST *&binarySearchTree, ArrayStudentList &arrayList
         }
 
         // Nếu không phải menu lựa chọn hoặc trợ giúp, chờ người dùng nhấn Enter để tiếp tục
-        if (choice != 0 && choice != 7)
+        if (choice != 0 && choice != 6)
         {
             cout << "\nNhấn Enter để tiếp tục...";
             cin.get();
         }
-    } while (choice != 0 && choice != 7);
-    
+    } while (choice != 0 && choice != 6);
+
     return BINARY_SEARCH_TREE; // Mặc định trả về BST nếu không có trường hợp đặc biệt
 }
 
@@ -287,7 +313,7 @@ int main()
 
             handleInputFromCSV(filePathStr.c_str(), dataStructureType, arrayList, singlyLinkedList, circularLinkedList,
                                doublyLinkedListHead, doublyLinkedListTail, binarySearchTree);
-            
+
             // Reset sort state after loading new data
             currentSortCriteria = -1;
             isSorted = false;
@@ -354,7 +380,7 @@ int main()
                 addStudentToDataStructure(student, dataStructureType, arrayList, singlyLinkedList,
                                           circularLinkedList, doublyLinkedListHead, doublyLinkedListTail,
                                           binarySearchTree);
-                
+
                 // Reset sort state after adding new student
                 currentSortCriteria = -1;
                 isSorted = false;
@@ -368,7 +394,7 @@ int main()
             {
                 deleteStudentFromDataStructure(studentID, dataStructureType, arrayList, singlyLinkedList,
                                                circularLinkedList, doublyLinkedListHead, doublyLinkedListTail);
-                
+
                 // Reset sort state after deleting student
                 currentSortCriteria = -1;
                 isSorted = false;
@@ -387,7 +413,7 @@ int main()
                 Student currentStudent;
                 // Lấy thông tin sinh viên hiện tại từ cấu trúc dữ liệu
                 if (getStudentFromDataStructure(studentID, dataStructureType, arrayList, singlyLinkedList,
-                                               circularLinkedList, doublyLinkedListHead, currentStudent))
+                                                circularLinkedList, doublyLinkedListHead, currentStudent))
                 {
                     Student updateStudent = currentStudent; // Bắt đầu với thông tin hiện tại
 
@@ -395,7 +421,7 @@ int main()
                     {
                         updateStudentInDataStructure(updateStudent, dataStructureType, arrayList, singlyLinkedList,
                                                      circularLinkedList, doublyLinkedListHead);
-                        
+
                         // Reset sort state after updating student
                         currentSortCriteria = -1;
                         isSorted = false;
@@ -425,21 +451,21 @@ int main()
                 {
                     // Đo thời gian thực thi
                     chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
-                    
-                    bool success = sortStudentList(dataStructureType, sortAlgorithm, sortCriteria, arrayList, 
-                                                   singlyLinkedList, circularLinkedList, doublyLinkedListHead, 
+
+                    bool success = sortStudentList(dataStructureType, sortAlgorithm, sortCriteria, arrayList,
+                                                   singlyLinkedList, circularLinkedList, doublyLinkedListHead,
                                                    doublyLinkedListTail);
-                    
+
                     chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
                     chrono::microseconds duration = chrono::duration_cast<chrono::microseconds>(end - start);
-                    
+
                     if (success)
                     {
                         // Update sort state for enhanced search optimization
                         currentSortCriteria = sortCriteria;
                         isSorted = true;
-                        
-                        cout << BOLD << GREEN << "\n✓ Thời gian thực thi: " << duration.count() << " microseconds (" 
+
+                        cout << BOLD << GREEN << "\n✓ Thời gian thực thi: " << duration.count() << " microseconds ("
                              << (double)duration.count() / 1000.0 << " ms)" << RESET << endl;
                     }
                 }
@@ -449,14 +475,14 @@ int main()
         case 9: // Tìm kiếm nâng cao với nhiều tiêu chí
         {
             searchStudentInDataStructure(dataStructureType, arrayList, singlyLinkedList,
-                                        circularLinkedList, doublyLinkedListHead, 
-                                        isSorted ? currentSortCriteria : -1);
+                                         circularLinkedList, doublyLinkedListHead,
+                                         isSorted ? currentSortCriteria : -1);
             break;
         }
         case 10: // Xóa toàn bộ danh sách
         {
             if (clearAllData(dataStructureType, arrayList, singlyLinkedList, circularLinkedList,
-                           doublyLinkedListHead, doublyLinkedListTail, binarySearchTree))
+                             doublyLinkedListHead, doublyLinkedListTail, binarySearchTree))
             {
                 // Reset sort state after clearing all data
                 currentSortCriteria = -1;
@@ -469,10 +495,10 @@ int main()
             clearScreen();
             printHeader("LỮU DANH SÁCH RA FILE CSV");
             printInfo("Lưu ý: Nhập \"00\" để hủy bỏ và trở về menu chính.");
-            
+
             string filePath;
             cout << "\nNhập đường dẫn file CSV để lưu (nhấn Enter để dùng mặc định 'data/export.csv'): ";
-            
+
             // Handle potential leftover newline
             if (cin.peek() == '\n')
             {
@@ -480,7 +506,7 @@ int main()
             }
             getline(cin, filePath);
             filePath = trim(filePath);
-            
+
             // Kiểm tra hủy bỏ
             if (filePath == "00")
             {
@@ -499,15 +525,15 @@ int main()
                     break;
                 }
             }
-            
+
             // Sử dụng đường dẫn mặc định nếu để trống
             if (filePath.empty())
             {
                 filePath = "data/export.csv";
             }
-            
+
             saveToCSVFile(filePath.c_str(), dataStructureType, arrayList, singlyLinkedList,
-                         circularLinkedList, doublyLinkedListHead, binarySearchTree);
+                          circularLinkedList, doublyLinkedListHead, binarySearchTree);
             break;
         }
         case 0:

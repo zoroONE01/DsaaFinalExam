@@ -1398,7 +1398,7 @@ void deleteStudentFromBST(const char *studentID, NodeBST *&binarySearchTree)
 
     // Tìm sinh viên trong BST
     Student foundStudent;
-    if (!searchStudentInBST(studentID, binarySearchTree, foundStudent))
+    if (!getStudentFromBST(studentID, binarySearchTree, foundStudent))
     {
         printError(("Không tìm thấy sinh viên có mã " + string(studentID) + " trong cây BST.").c_str());
         return;
@@ -1557,11 +1557,7 @@ void updateStudentInBST(const Student &student, NodeBST *&binarySearchTree)
     }
 }
 
-// Hàm tìm kiếm sinh viên trong BST theo mã sinh viên
-bool searchStudentInBST(const char *studentID, NodeBST *binarySearchTree, Student &foundStudent)
-{
-    return getStudentFromBST(studentID, binarySearchTree, foundStudent);
-}
+
 
 // Hàm hiển thị cây BST
 void displayBST(NodeBST *binarySearchTree)
@@ -1582,109 +1578,6 @@ void displayBST(NodeBST *binarySearchTree)
     inorderTraversalBSTWithTimer(binarySearchTree);
     preorderTraversalBSTWithTimer(binarySearchTree);
     postorderTraversalBSTWithTimer(binarySearchTree);
-}
-
-// ========== Các hàm helper cho thống kê BST ==========
-
-// Hàm helper để tính thống kê BST
-void calculateBSTStats(NodeBST *node, int &totalStudents, float &totalScore, float &highestScore, float &lowestScore)
-{
-    if (node == NULL)
-        return;
-
-    // Duyệt node hiện tại
-    totalStudents += node->count;
-    for (int i = 0; i < node->count; i++)
-    {
-        totalScore += node->students[i].score;
-        if (node->students[i].score > highestScore)
-            highestScore = node->students[i].score;
-        if (node->students[i].score < lowestScore)
-            lowestScore = node->students[i].score;
-    }
-
-    // Duyệt cây con
-    calculateBSTStats(node->left, totalStudents, totalScore, highestScore, lowestScore);
-    calculateBSTStats(node->right, totalStudents, totalScore, highestScore, lowestScore);
-}
-
-// Hàm helper để hiển thị sinh viên có điểm cao nhất
-void showHighestScoreStudents(NodeBST *node, float highestScore)
-{
-    if (node == NULL)
-        return;
-
-    for (int i = 0; i < node->count; i++)
-    {
-        if (node->students[i].score == highestScore)
-        {
-            displayStudent(node->students[i]);
-            printDivider();
-        }
-    }
-
-    showHighestScoreStudents(node->left, highestScore);
-    showHighestScoreStudents(node->right, highestScore);
-}
-
-// Hàm helper để hiển thị sinh viên có điểm thấp nhất
-void showLowestScoreStudents(NodeBST *node, float lowestScore)
-{
-    if (node == NULL)
-        return;
-
-    for (int i = 0; i < node->count; i++)
-    {
-        if (node->students[i].score == lowestScore)
-        {
-            displayStudent(node->students[i]);
-            printDivider();
-        }
-    }
-
-    showLowestScoreStudents(node->left, lowestScore);
-    showLowestScoreStudents(node->right, lowestScore);
-}
-
-// Hàm thực hiện thống kê trên BST
-void performStatisticsOnBST(NodeBST *binarySearchTree)
-{
-    clearScreen();
-    printHeader("THỐNG KÊ CÂY TÌM KIẾM NHỊ PHÂN");
-
-    if (binarySearchTree == NULL)
-    {
-        printWarning("Cây BST rỗng! Không có thống kê.");
-        return;
-    }
-
-    // Tính toán thống kê bằng cách duyệt cây
-    int totalStudents = 0;
-    float totalScore = 0.0;
-    float highestScore = -1.0;
-    float lowestScore = 11.0;
-
-    calculateBSTStats(binarySearchTree, totalStudents, totalScore, highestScore, lowestScore);
-
-    float averageScore = (totalStudents > 0) ? (totalScore / totalStudents) : 0.0;
-
-    // Hiển thị thống kê cơ bản
-    cout << "Số lượng sinh viên: " << totalStudents << "\n";
-    cout << GREEN << "Điểm cao nhất: " << highestScore << RESET << "\n";
-    cout << RED << "Điểm thấp nhất: " << lowestScore << RESET << "\n";
-    cout << BLUE << "Điểm trung bình: " << fixed << setprecision(2) << averageScore << RESET << "\n";
-
-    // Hiển thị sinh viên có điểm cao nhất
-    cout << CYAN << "\nSinh viên có điểm cao nhất:\n"
-         << RESET;
-    printDivider();
-    showHighestScoreStudents(binarySearchTree, highestScore);
-
-    // Hiển thị sinh viên có điểm thấp nhất
-    cout << CYAN << "\nSinh viên có điểm thấp nhất:\n"
-         << RESET;
-    printDivider();
-    showLowestScoreStudents(binarySearchTree, lowestScore);
 }
 
 // ========== Các hàm chuyển đổi dữ liệu giữa các cấu trúc ==========

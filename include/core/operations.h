@@ -142,14 +142,7 @@ void addStudentToBST(const Student &student, NodeBST *&binarySearchTree);
 void deleteStudentFromBST(const char *studentID, NodeBST *&binarySearchTree);
 bool getStudentFromBST(const char *studentID, NodeBST *binarySearchTree, Student &foundStudent);
 void updateStudentInBST(const Student &student, NodeBST *&binarySearchTree);
-bool searchStudentInBST(const char *studentID, NodeBST *binarySearchTree, Student &foundStudent);
 void displayBST(NodeBST *binarySearchTree);
-void performStatisticsOnBST(NodeBST *binarySearchTree);
-
-// ========== Các hàm helper riêng cho thống kê BST ==========
-void calculateBSTStats(NodeBST* node, int& totalStudents, float& totalScore, float& highestScore, float& lowestScore);
-void showHighestScoreStudents(NodeBST* node, float highestScore);
-void showLowestScoreStudents(NodeBST* node, float lowestScore);
 
 // ========== Các hàm chuyển đổi dữ liệu giữa các cấu trúc ==========
 void convertDataStructureToBST(int sourceDataStructureType,

@@ -457,6 +457,63 @@ int main()
                                         isSorted ? currentSortCriteria : -1);
             break;
         }
+        case 10: // Xóa toàn bộ danh sách
+        {
+            if (clearAllData(dataStructureType, arrayList, singlyLinkedList, circularLinkedList,
+                           doublyLinkedListHead, doublyLinkedListTail, binarySearchTree))
+            {
+                // Reset sort state after clearing all data
+                currentSortCriteria = -1;
+                isSorted = false;
+            }
+            break;
+        }
+        case 11: // Lưu danh sách ra file CSV
+        {
+            clearScreen();
+            printHeader("LỮU DANH SÁCH RA FILE CSV");
+            printInfo("Lưu ý: Nhập \"00\" để hủy bỏ và trở về menu chính.");
+            
+            string filePath;
+            cout << "\nNhập đường dẫn file CSV để lưu (nhấn Enter để dùng mặc định 'data/export.csv'): ";
+            
+            // Handle potential leftover newline
+            if (cin.peek() == '\n')
+            {
+                cin.ignore();
+            }
+            getline(cin, filePath);
+            filePath = trim(filePath);
+            
+            // Kiểm tra hủy bỏ
+            if (filePath == "00")
+            {
+                if (confirmCancel())
+                {
+                    printInfo("Đã hủy thao tác lưu file CSV.");
+                    break;
+                }
+                // Nếu không xác nhận hủy, nhập lại
+                cout << "\nNhập lại đường dẫn file CSV để lưu: ";
+                getline(cin, filePath);
+                filePath = trim(filePath);
+                if (filePath == "00")
+                {
+                    printInfo("Đã hủy thao tác lưu file CSV.");
+                    break;
+                }
+            }
+            
+            // Sử dụng đường dẫn mặc định nếu để trống
+            if (filePath.empty())
+            {
+                filePath = "data/export.csv";
+            }
+            
+            saveToCSVFile(filePath.c_str(), dataStructureType, arrayList, singlyLinkedList,
+                         circularLinkedList, doublyLinkedListHead, binarySearchTree);
+            break;
+        }
         case 0:
             exitProgram(singlyLinkedList, circularLinkedList, doublyLinkedListHead,
                         doublyLinkedListTail, binarySearchTree);

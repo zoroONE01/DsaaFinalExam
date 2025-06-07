@@ -155,6 +155,8 @@ void displayMainMenu(int dataStructureType)
     cout << "│   7    │  Thống kê sinh viên (chỉ cho mảng)                │" << endl;
     cout << "│   8    │  Sắp xếp sinh viên (theo mã/tên/điểm)             │" << endl;
     cout << "│   9    │  Tìm kiếm nâng cao (nhiều tiêu chí)               │" << endl;
+    cout << "│  10    │  Xóa toàn bộ danh sách sinh viên                  │" << endl;
+    cout << "│  11    │  Lưu danh sách ra file CSV                        │" << endl;
     cout << "│   0    │  Thoát chương trình                               │" << endl;
     cout << "└────────┴───────────────────────────────────────────────────┘" << RESET << endl;
 

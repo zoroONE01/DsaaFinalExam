@@ -1,6 +1,7 @@
 #include "../../include/utils/common_utils.h"
 #include "../../include/utils/validation.h"
 #include "../../include/ui/common_ui.h"
+#include <iomanip>
 
 using namespace std;
 
@@ -171,6 +172,38 @@ bool readFromCSVFile(const char *filename, ArrayStudentList &list)
         cout << RED << "✗ Số dòng không hợp lệ (bị bỏ qua): " << invalidCount << RESET << endl;
     }
     
+    return true;
+}
+
+// ========== Lưu dữ liệu ra file CSV ==========
+bool writeToCSVFile(const char *filename, const ArrayStudentList &list)
+{
+    ofstream file(filename);
+    if (!file.is_open())
+    {
+        return false; // Không thể tạo hoặc mở file để ghi
+    }
+
+    // Ghi dòng tiêu đề
+    file << "StudentID,FirstName,LastName,Class,Score" << endl;
+
+    // Ghi dữ liệu từng sinh viên
+    for (int i = 0; i < list.count; i++)
+    {
+        file << list.students[i].studentID << ","
+             << list.students[i].firstName << ","
+             << list.students[i].lastName << ","
+             << list.students[i].studentClass << ","
+             << fixed << setprecision(1) << list.students[i].score;
+        
+        // Không thêm newline cho dòng cuối cùng để tránh dòng trống
+        if (i < list.count - 1)
+        {
+            file << endl;
+        }
+    }
+
+    file.close();
     return true;
 }
 

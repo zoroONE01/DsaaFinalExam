@@ -16,6 +16,9 @@ using namespace std;
 // Đọc dữ liệu từ file CSV
 bool readFromCSVFile(const char *filename, ArrayStudentList &list);
 
+// Lưu dữ liệu ra file CSV
+bool writeToCSVFile(const char *filename, const ArrayStudentList &list);
+
 // Hàm trim() để loại bỏ khoảng trắng ở đầu và cuối chuỗi
 string trim(string str);
 

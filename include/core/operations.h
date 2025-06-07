@@ -147,12 +147,28 @@ void convertBSTToArrayList(NodeBST *binarySearchTree, ArrayStudentList &arrayLis
 // Hàm helper cho chuyển đổi BST sang Array List
 void traverseBSTAndAddToArray(NodeBST* node, ArrayStudentList &arrayList);
 
-// Hàm chọn cấu trúc dữ liệu với xử lý chuyển đổi BST
+// ========== Các hàm chọn cấu trúc dữ liệu với xử lý chuyển đổi BST ==========
 int selectDataStructureWithBSTHandling(int currentDataStructureType,
                                        ArrayStudentList &arrayList,
                                        NodeSLL *singlyLinkedList,
                                        NodeSLL *circularLinkedList,
                                        NodeDLL *doublyLinkedListHead,
                                        NodeBST *&binarySearchTree);
+
+// ========== Các hàm mới: Xóa toàn bộ và lưu file ==========
+bool clearAllData(int dataStructureType,
+                  ArrayStudentList &arrayList,
+                  NodeSLL *&singlyLinkedList,
+                  NodeSLL *&circularLinkedList,
+                  NodeDLL *&doublyLinkedListHead,
+                  NodeDLL *&doublyLinkedListTail,
+                  NodeBST *&binarySearchTree);
+
+bool saveToCSVFile(const char *filename, int dataStructureType,
+                   const ArrayStudentList &arrayList,
+                   NodeSLL *singlyLinkedList,
+                   NodeSLL *circularLinkedList,
+                   NodeDLL *doublyLinkedListHead,
+                   NodeBST *binarySearchTree);
 
 #endif // COMMON_OPERATIONS_H

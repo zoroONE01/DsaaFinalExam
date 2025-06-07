@@ -1797,3 +1797,218 @@ int selectDataStructureWithBSTHandling(int currentDataStructureType,
 
     return choice;
 }
+
+// ========== Các hàm mới: Xóa toàn bộ và lưu file ==========
+
+// Hàm xóa toàn bộ dữ liệu trong cấu trúc dữ liệu hiện tại
+bool clearAllData(int dataStructureType,
+                  ArrayStudentList &arrayList,
+                  NodeSLL *&singlyLinkedList,
+                  NodeSLL *&circularLinkedList,
+                  NodeDLL *&doublyLinkedListHead,
+                  NodeDLL *&doublyLinkedListTail,
+                  NodeBST *&binarySearchTree)
+{
+    clearScreen();
+    printHeader("XÓA TOÀN BỘ DANH SÁCH SINH VIÊN");
+    
+    // Kiểm tra xem có dữ liệu để xóa không
+    bool hasData = !isDataStructureEmpty(dataStructureType, arrayList, singlyLinkedList, 
+                                        circularLinkedList, doublyLinkedListHead, binarySearchTree);
+    
+    if (!hasData)
+    {
+        printWarning("Danh sách sinh viên đang rỗng. Không có gì để xóa.");
+        return false;
+    }
+    
+    // Hiển thị cảnh báo
+    cout << RED << "⚠ CẢNH BÁO: Bạn sắp xóa toàn bộ danh sách sinh viên!" << RESET << endl;
+    cout << "Thao tác này không thể hoàn tác." << endl;
+    cout << "Cấu trúc dữ liệu hiện tại: " << CYAN << getDataStructureName(dataStructureType) << RESET << endl;
+    
+    // Xin xác nhận từ người dùng
+    char confirm;
+    cout << "\nBạn có chắc chắn muốn xóa toàn bộ danh sách? (y/N): ";
+    cin >> confirm;
+    clearInputBuffer();
+    
+    if (confirm != 'y' && confirm != 'Y')
+    {
+        printInfo("Đã hủy thao tác xóa toàn bộ danh sách.");
+        return false;
+    }
+    
+    // Xác nhận lần 2
+    cout << RED << "Xác nhận lần cuối - Nhập 'XOA' để tiếp tục: " << RESET;
+    string finalConfirm;
+    getline(cin, finalConfirm);
+    
+    if (finalConfirm != "XOA")
+    {
+        printInfo("Đã hủy thao tác xóa toàn bộ danh sách.");
+        return false;
+    }
+    
+    // Thực hiện xóa dữ liệu
+    bool success = false;
+    
+    switch (dataStructureType)
+    {
+    case ARRAY_LIST:
+        initArrayList(arrayList);
+        success = true;
+        break;
+        
+    case SINGLY_LINKED_LIST:
+        if (singlyLinkedList != NULL)
+        {
+            freeSLL(singlyLinkedList);
+            singlyLinkedList = NULL;
+            success = true;
+        }
+        break;
+        
+    case CIRCULAR_LINKED_LIST:
+        if (circularLinkedList != NULL)
+        {
+            freeCLL(circularLinkedList);
+            circularLinkedList = NULL;
+            success = true;
+        }
+        break;
+        
+    case DOUBLY_LINKED_LIST:
+        if (doublyLinkedListHead != NULL)
+        {
+            freeDLL(doublyLinkedListHead, doublyLinkedListTail);
+            doublyLinkedListHead = NULL;
+            doublyLinkedListTail = NULL;
+            success = true;
+        }
+        break;
+        
+    case BINARY_SEARCH_TREE:
+        if (binarySearchTree != NULL)
+        {
+            freeBST(binarySearchTree);
+            binarySearchTree = NULL;
+            success = true;
+        }
+        break;
+        
+    default:
+        printError("Cấu trúc dữ liệu không hợp lệ.");
+        return false;
+    }
+    
+    if (success)
+    {
+        printSuccess("Đã xóa toàn bộ danh sách sinh viên thành công!");
+    }
+    else
+    {
+        printError("Có lỗi xảy ra khi xóa danh sách.");
+    }
+    
+    return success;
+}
+
+// Hàm lưu danh sách sinh viên ra file CSV
+bool saveToCSVFile(const char *filename, int dataStructureType,
+                   const ArrayStudentList &arrayList,
+                   NodeSLL *singlyLinkedList,
+                   NodeSLL *circularLinkedList,
+                   NodeDLL *doublyLinkedListHead,
+                   NodeBST *binarySearchTree)
+{
+    // Kiểm tra xem có dữ liệu để lưu không
+    bool hasData = !isDataStructureEmpty(dataStructureType, arrayList, singlyLinkedList, 
+                                        circularLinkedList, doublyLinkedListHead, binarySearchTree);
+    
+    if (!hasData)
+    {
+        printWarning("Danh sách sinh viên đang rỗng. Không có gì để lưu.");
+        return false;
+    }
+    
+    // Tạo một ArrayStudentList tạm để chuyển đổi dữ liệu
+    ArrayStudentList tempList;
+    initArrayList(tempList);
+    
+    // Chuyển đổi dữ liệu từ cấu trúc hiện tại sang ArrayStudentList
+    switch (dataStructureType)
+    {
+    case ARRAY_LIST:
+        // Sao chép trực tiếp
+        tempList = arrayList;
+        break;
+        
+    case SINGLY_LINKED_LIST:
+        {
+            NodeSLL *current = singlyLinkedList;
+            while (current != NULL && tempList.count < MAX_STUDENTS)
+            {
+                tempList.students[tempList.count] = current->info;
+                tempList.count++;
+                current = current->next;
+            }
+        }
+        break;
+        
+    case CIRCULAR_LINKED_LIST:
+        {
+            if (circularLinkedList != NULL)
+            {
+                NodeSLL *current = circularLinkedList;
+                do
+                {
+                    if (tempList.count < MAX_STUDENTS)
+                    {
+                        tempList.students[tempList.count] = current->info;
+                        tempList.count++;
+                        current = current->next;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                } while (current != circularLinkedList);
+            }
+        }
+        break;
+        
+    case DOUBLY_LINKED_LIST:
+        {
+            NodeDLL *current = doublyLinkedListHead;
+            while (current != NULL && tempList.count < MAX_STUDENTS)
+            {
+                tempList.students[tempList.count] = current->info;
+                tempList.count++;
+                current = current->next;
+            }
+        }
+        break;
+        
+    case BINARY_SEARCH_TREE:
+        // Sử dụng hàm có sẵn để chuyển đổi BST sang ArrayList
+        traverseBSTAndAddToArray(binarySearchTree, tempList);
+        break;
+        
+    default:
+        printError("Cấu trúc dữ liệu không hợp lệ.");
+        return false;
+    }
+    
+    // Ghi dữ liệu ra file CSV
+    if (writeToCSVFile(filename, tempList))
+    {
+        printSuccess(("Đã lưu " + to_string(tempList.count) + " sinh viên ra file: " + string(filename)).c_str());
+        return true;
+    }
+    else
+    {
+        printError(("Không thể lưu dữ liệu ra file: " + string(filename)).c_str());
+        return false;
+    }
+}

@@ -379,10 +379,10 @@ bool inputSearchKeyword(char* keyword, int searchCriteria)
             prompt = "Mã sinh viên (ví dụ: SV001): ";
             break;
         case SEARCH_BY_FIRST_NAME:
-            prompt = "Tên (ví dụ: Nguyen): ";
+            prompt = "Họ (ví dụ: Nguyen): ";
             break;
         case SEARCH_BY_LAST_NAME:
-            prompt = "Họ (ví dụ: Van): ";
+            prompt = "Tên (ví dụ: Van): ";
             break;
         case SEARCH_BY_CLASS:
             prompt = "Lớp (ví dụ: CNTT1): ";

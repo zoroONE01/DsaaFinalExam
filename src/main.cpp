@@ -34,7 +34,7 @@ void displayBSTMenu()
     clearScreen();
     printHeader("MENU CÂY TÌM KIẾM NHỊ PHÂN");
     cout << "1. Thêm nút vào cây" << endl;
-    cout << "2. Xóa nút khỏi cây" << endl;
+    cout << "2. Xóa nút khỏi cây (theo điểm số)" << endl;
     cout << "3. Cập nhật nút trong cây" << endl;
     cout << "4. Hiển thị cây (dạng danh sách liên kết)" << endl;
     cout << "5. Tìm kiếm nút trong cây" << endl;
@@ -127,11 +127,7 @@ int performBSTOperations(NodeBST *&binarySearchTree, ArrayStudentList &arrayList
         }
         case 2: // Xóa nút khỏi cây
         {
-            char studentID[MAX_STUDENT_ID_LENGTH];
-            if (inputStudentID(studentID))
-            {
-                deleteStudentFromBST(studentID, binarySearchTree);
-            }
+            deleteNodeFromBSTByKey(binarySearchTree);
             break;
         }
         case 3: // Cập nhật nút trong cây

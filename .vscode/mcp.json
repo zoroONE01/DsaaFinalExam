@@ -12,7 +12,7 @@
             "args": [
                 "-y",
                 "@modelcontextprotocol/server-filesystem",
-                "/Users/tunt/Workspace/Cpp/DsaaFinalExam"
+                "/Users/tuthanhnguyen/Workspace/CPP/DsaaFinalExam"
             ]
         },
         "memory": {

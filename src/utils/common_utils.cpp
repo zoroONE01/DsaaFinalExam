@@ -1,4 +1,6 @@
 #include "../../include/utils/common_utils.h"
+#include "../../include/utils/validation.h"
+#include "../../include/ui/common_ui.h"
 
 using namespace std;
 
@@ -21,9 +23,15 @@ bool readFromCSVFile(const char *filename, ArrayStudentList &list)
     // Đọc dòng tiêu đề (nếu có)
     getline(file, line);
 
+    int lineNumber = 1; // Bắt đầu từ dòng 1 (sau header)
+    int validCount = 0;
+    int invalidCount = 0;
+
     // Đọc từng dòng dữ liệu
     while (getline(file, line))
     {
+        lineNumber++;
+        
         if (line.empty())
         {
             continue; // Bỏ qua dòng trống
@@ -35,30 +43,134 @@ bool readFromCSVFile(const char *filename, ArrayStudentList &list)
 
         // Phân tích dữ liệu CSV bằng phân tách dấu phẩy
         char *token = strtok(buffer, ",");
-        if (token)
-            strcpy(student.studentID, token);
-
+        string studentID = token ? token : "";
+        
         token = strtok(NULL, ",");
-        if (token)
-            strcpy(student.firstName, token);
-
+        string firstName = token ? token : "";
+        
         token = strtok(NULL, ",");
-        if (token)
-            strcpy(student.lastName, token);
-
+        string lastName = token ? token : "";
+        
         token = strtok(NULL, ",");
-        if (token)
-            strcpy(student.studentClass, token);
-
+        string className = token ? token : "";
+        
         token = strtok(NULL, ",");
-        if (token)
-            student.score = atof(token);
+        string scoreStr = token ? token : "";
 
-        // Thêm sinh viên vào danh sách
-        addToArrayList(list, student);
+        // Trim các chuỗi để loại bỏ khoảng trắng thừa
+        studentID = trim(studentID);
+        firstName = trim(firstName);
+        lastName = trim(lastName);
+        className = trim(className);
+        scoreStr = trim(scoreStr);
+
+        // Biến để kiểm tra tính hợp lệ của dòng hiện tại
+        bool isLineValid = true;
+        string errorMessages = "";
+
+        // Kiểm tra mã sinh viên
+        if (!validateStudentID(studentID))
+        {
+            isLineValid = false;
+            errorMessages += "Mã sinh viên không hợp lệ. ";
+        }
+        else
+        {
+            // Kiểm tra trùng mã sinh viên trong danh sách hiện tại
+            bool isDuplicate = false;
+            for (int i = 0; i < list.count; i++)
+            {
+                if (strcmp(list.students[i].studentID, studentID.c_str()) == 0)
+                {
+                    isDuplicate = true;
+                    break;
+                }
+            }
+            if (isDuplicate)
+            {
+                isLineValid = false;
+                errorMessages += "Mã sinh viên bị trùng lặp. ";
+            }
+        }
+
+        // Kiểm tra họ và tên đệm
+        if (!validateName(firstName))
+        {
+            isLineValid = false;
+            errorMessages += "Họ và tên đệm không hợp lệ. ";
+        }
+
+        // Kiểm tra tên
+        if (!validateName(lastName))
+        {
+            isLineValid = false;
+            errorMessages += "Tên không hợp lệ. ";
+        }
+
+        // Kiểm tra tên lớp
+        if (!validateClassName(className))
+        {
+            isLineValid = false;
+            errorMessages += "Tên lớp không hợp lệ. ";
+        }
+
+        // Kiểm tra điểm số
+        float score = 0.0f;
+        try
+        {
+            if (!scoreStr.empty())
+            {
+                score = stof(scoreStr);
+                if (!validateScore(score))
+                {
+                    isLineValid = false;
+                    errorMessages += "Điểm số không hợp lệ (phải từ 0.0 đến 10.0). ";
+                }
+            }
+            else
+            {
+                isLineValid = false;
+                errorMessages += "Thiếu điểm số. ";
+            }
+        }
+        catch (const exception &e)
+        {
+            isLineValid = false;
+            errorMessages += "Điểm số không đúng định dạng. ";
+        }
+
+        // Nếu dòng hợp lệ, thêm vào danh sách
+        if (isLineValid)
+        {
+            strcpy(student.studentID, studentID.c_str());
+            strcpy(student.firstName, firstName.c_str());
+            strcpy(student.lastName, lastName.c_str());
+            strcpy(student.studentClass, className.c_str());
+            student.score = score;
+
+            addToArrayList(list, student);
+            validCount++;
+        }
+        else
+        {
+            // In thông báo lỗi cho dòng không hợp lệ
+            cout << YELLOW << "⚠ Dòng " << lineNumber << ": " << RESET 
+                 << RED << errorMessages << RESET << endl;
+            cout << "   Nội dung: " << line << endl;
+            invalidCount++;
+        }
     }
 
     file.close();
+    
+    // Hiển thị thống kê
+    cout << "\n" << BOLD << "KẾT QUẢ ĐỌC FILE CSV:" << RESET << endl;
+    cout << GREEN << "✓ Số dòng hợp lệ: " << validCount << RESET << endl;
+    if (invalidCount > 0)
+    {
+        cout << RED << "✗ Số dòng không hợp lệ (bị bỏ qua): " << invalidCount << RESET << endl;
+    }
+    
     return true;
 }
 

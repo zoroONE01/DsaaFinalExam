@@ -1518,17 +1518,10 @@ void displayBST(NodeBST *binarySearchTree)
     cout << BOLD << CYAN << "\n=== CÂY TÌM KIẾM NHỊ PHÂN ===" << RESET << endl;
     displayBSTTree(binarySearchTree);
 
-    cout << "\n"
-         << BOLD << YELLOW << "Duyệt cây theo thứ tự giữa (In-order):" << RESET;
-    inorderTraversalBST(binarySearchTree);
-
-    cout << "\n"
-         << BOLD << YELLOW << "Duyệt cây theo thứ tự trước (Pre-order):" << RESET;
-    preorderTraversalBST(binarySearchTree);
-
-    cout << "\n"
-         << BOLD << YELLOW << "Duyệt cây theo thứ tự sau (Post-order):" << RESET;
-    postorderTraversalBST(binarySearchTree);
+    // Sử dụng các hàm duyệt có đo thời gian
+    inorderTraversalBSTWithTimer(binarySearchTree);
+    preorderTraversalBSTWithTimer(binarySearchTree);
+    postorderTraversalBSTWithTimer(binarySearchTree);
 }
 
 // ========== Các hàm helper cho thống kê BST ==========

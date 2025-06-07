@@ -3,6 +3,8 @@
 
 #include "../core/student.h"
 #include "../data_structures/array_list.h"
+#include "validation.h"
+#include "../ui/common_ui.h"
 #include <iostream>
 #include <fstream>
 #include <cstring>

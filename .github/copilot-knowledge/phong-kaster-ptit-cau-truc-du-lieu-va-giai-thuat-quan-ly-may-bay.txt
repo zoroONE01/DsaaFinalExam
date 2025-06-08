@@ -1,0 +1,5922 @@
+Directory structure:
+└── phong-kaster-ptit-cau-truc-du-lieu-va-giai-thuat-quan-ly-may-bay/
+    ├── README.md
+    ├── AirplaneTP.cpp
+    ├── AirplaneTP.h
+    ├── ConstraintTP.cpp
+    ├── ConstraintTP.h
+    ├── DataTimeTP.cpp
+    ├── DateTime.h
+    ├── DSCB.txt
+    ├── DSHK.txt
+    ├── DSMB.txt
+    ├── FlightTP.cpp
+    ├── FlightTP.h
+    ├── GlobalVariableTP.h
+    ├── Introduction.txt
+    ├── MyLibraryTP.cpp
+    ├── MyLibraryTP.h
+    ├── PassengerTP.cpp
+    ├── PassengerTP.h
+    ├── ProcessionTP.cpp
+    ├── ProcessionTP.h
+    ├── Quan Ly May Bay - Last fix.sln
+    ├── Quan Ly May Bay - Last fix.vcxproj
+    ├── Quan Ly May Bay - Last fix.vcxproj.filters
+    ├── Source.cpp
+    ├── ThankYouSoMuch.txt
+    ├── ThongTinChiTiet.txt
+    ├── TicketTP.h
+    ├── UserInterfaceTP.cpp
+    ├── UserInterfaceTP.h
+    ├── Đề bài quản lí máy bay.doc
+    ├── Debug/
+    │   ├── Quan Ly May Bay - Last fix.exe.recipe
+    │   ├── Quan Ly May Bay - Last fix.ilk
+    │   ├── Quan Ly May Bay - Last fix.vcxproj.FileListAbsolute.txt
+    │   ├── vc142.idb
+    │   └── Quan Ly .EAF40062.tlog/
+    │       ├── CL.command.1.tlog
+    │       ├── CL.read.1.tlog
+    │       ├── CL.write.1.tlog
+    │       ├── link.command.1.tlog
+    │       ├── link.read.1.tlog
+    │       ├── link.write.1.tlog
+    │       └── Quan Ly May Bay - Last fix.lastbuildstate
+    ├── DSV/
+    │   ├── CRECH.TXT
+    │   ├── CZECH.TXT
+    │   ├── Finland.TXT
+    │   ├── FRA123.TXT
+    │   ├── GER0806.TXT
+    │   ├── germany.TXT
+    │   ├── HOLLAND.TXT
+    │   ├── JA1010.TXT
+    │   ├── NORWAY.TXT
+    │   ├── POLAND.TXT
+    │   ├── QWE123.TXT
+    │   ├── RUS79U.txt
+    │   ├── USA2306.TXT
+    │   └── XYZ1945.TXT
+    └── HinhAnhDemoDoAnCuaMinh/
+
+================================================
+FILE: README.md
+================================================
+<h1 align="center">Cấu Trúc Dữ Liệu Và Giải Thuật<br/>
+    Đề tài: Quản Lý Máy Bay
+</h1>
+
+<p align="center">
+    <img src="./HinhAnhDemoDoAnCuaMinh/cover.jpg" width="1280" />
+</p>
+
+# [**Table Of Content**](#table-of-content)
+- [**Table Of Content**](#table-of-content)
+- [**Introduction**](#introduction)
+- [**Architecture**](#architecture)
+- [**Illustrating Images**](#illustrating-images)
+- [**Frequently Asked Questions**](#frequently-asked-questions)
+- [**How to score yourself**](#how-to-score-yourself)
+- [**Special Thank**](#special-thank)
+- [**Post Script**](#post-script)
+# [**Introduction**](#introduction)
+Mình tên là Nguyễn Thành Phong. Mã N18DCCN147. Lớp D18CQCN03-N. Khóa 2018-2023
+
+Nhắc đến học IT ở PTIT mà hông nhắc tới môn này thì thật là thiếu sót.
+Đây là đồ án quản lý máy bay kì 2 năm 2 (2020) môn cấu trúc dữ liệu và giải thuật do thầy Lưu Nguyễn Kì Thư dạy lớp mình.
+
+Đây thực sự là môn mà mình thấy khó nhất trường PTIT này - cho tới khi các bạn học [**Cơ sở dữ liệu phân tán**](https://github.com/Phong-Kaster/PTIT-Co-So-Du-Lieu-Phan-Tan-Quan-Ly-Vat-Tu) ở năm cuối đại học thì sẽ ăn hành ở 1 tầm cao mới 😅. Qua được môn phải nói là siêu ít, lớp mình có 83 người thì tầm khoảng 20 người qua là hết cỡ 😐(NÓI CHUNG LÀ TOANG )
+Chả thế mà nhiều thế hệ gắn ổng cái nick name Lưu Mãi Kì Thi cũng đúng 😂😂
+
+Mình chia sẻ phần đồ này hi vọng giúp các tân binh khóa sau có thể vượt qua môn này dễ nhất . Đồ án này gồm nhiều thành phần và thư viện được tích hợp thành 1 bài hoàn chỉnh. Theo mình thấy, cái khó ở đây nằm ở chỗ trước đó chúng ta chỉ làm các bài tập đơn giản với 1 màn hình console duy nhất. Do vậy, khi tự dưng phải làm một đồ án lớn thì dễ bị nản và ngợp. Lúc mình học thì cũng có kha khá bạn bỏ thi vì lý do này.
+
+# [**Architecture**](#architecture)
+Để tham khảo bài mình hiệu quả các bạn hãy đọc code theo trình tự như sau và xem hình ảnh demo để hình dung các bạn sẽ làm gì 
+( do thời điểm mình viết là 12-04-2021 , lúc này kì 2 năm 3 rồi nên có thể không nhớ chính xác trình tự 😎 )
+1. MyLibraryTP - thư viện mẫu chứa các hàm để vẽ điểm , thay đổi màu sắc , nói chung là muốn vẽ trên cosole thì phải có như viện này  blah...blah
+
+2. UserInterfaceTP - chỗ này mình dùng để dựng lên menu và gắn các nút mũi tên để di chuyển lên xuống giữa các các tùy chọn
+
+3. GlobalVariableTP - lưu toàn bộ biến toàn cuc
+
+4. ConstraintTP - các ràng buộc được xây dựng ,ví dụ như nhập tên người thì không có được ghi số , số điện thoại thì hông được ghi chữ cái ...vân vân và mây mây
+
+5. AirplaneTP - xử lý cho việc tạo thêm - xóa - sửa máy bay 
+
+6. FlightTP - xử lý cho việc tạo - thêm - xóa - sửa chuyến bay
+
+7. DataTimeTP - xử lý ngày giờ
+
+8. PassengerTP - chứa thông tin của 1 hành khách , phục vụ cho việc đặt vé
+
+9. ProcessionTP - phần kết của đồ án, chủ yếu làm cho màu mè chứ không có cũng chẳng sao 😝,trong này viết các hàm đọc file để hiện lên phần intro và outro cho đồ án
+nhưng thầy cũng không để ý phần này nhìu đâu nha 🥱
+
+# [**Illustrating Images**](#illustrating-images)
+
+1)Màn hình intro nè !!
+<img width="960" alt="Quan_Ly_May_Bay_-_Last_fix_Z2FPblh3oM" src="https://user-images.githubusercontent.com/58034430/119598518-4d8ef980-be0d-11eb-9e9b-b1ddf40dc94b.png">
+
+
+2)Màn hình menu chính
+<img width="960" alt="Quan_Ly_May_Bay_-_Last_fix_BmTWFPVOLY" src="https://user-images.githubusercontent.com/58034430/119598488-3d771a00-be0d-11eb-8cb1-d41b99b7a7b0.png">
+
+<img width="960" alt="Quan_Ly_May_Bay_-_Last_fix_BrvBxJQm89" src="https://user-images.githubusercontent.com/58034430/119598541-58e22500-be0d-11eb-9bd6-c5d0698b5461.png">
+
+3)Màn hình quản lý máy bay
+<img width="960" alt="Quan_Ly_May_Bay_-_Last_fix_Q1LQEK0fdW" src="https://user-images.githubusercontent.com/58034430/119598662-8e870e00-be0d-11eb-978b-7ad826aa584f.png">
+
+4)Màn hình quản lý chuyến bay
+<img width="960" alt="Quan_Ly_May_Bay_-_Last_fix_9S3QPTXLuI" src="https://user-images.githubusercontent.com/58034430/119598675-93e45880-be0d-11eb-896e-45a2f964e8b4.png">
+
+5)Màn hình kiểm tra thông tin chuyến bay
+<img width="960" alt="Quan_Ly_May_Bay_-_Last_fix_uavjIiuqdC" src="https://user-images.githubusercontent.com/58034430/119598723-aced0980-be0d-11eb-8cb3-912017767d5f.png">
+
+6)Màn hình danh sách hành khách của chuyến bay 
+<img width="960" alt="Quan_Ly_May_Bay_-_Last_fix_YLjx8ojtSd" src="https://user-images.githubusercontent.com/58034430/119598771-c2623380-be0d-11eb-9e90-514c14b84073.png">
+
+7)Màn hình liệt kê số chuyến bay đã thực hiện
+<img width="960" alt="Quan_Ly_May_Bay_-_Last_fix_rY5Jjq4VoX" src="https://user-images.githubusercontent.com/58034430/119598801-d312a980-be0d-11eb-979c-7ec205041a5d.png">
+
+8)Màn hình sơ đồ chỗ ngồi , đặt vé
+<img width="960" alt="Quan_Ly_May_Bay_-_Last_fix_8zuCtrJ5ee" src="https://user-images.githubusercontent.com/58034430/119598899-0d7c4680-be0e-11eb-82ce-accb575c2703.png">
+
+9)Màn hình kết thúc
+<img width="960" alt="Quan_Ly_May_Bay_-_Last_fix_iopZYOlSQ5" src="https://user-images.githubusercontent.com/58034430/119598925-1d942600-be0e-11eb-9fca-ad51b96a8d3e.png">
+
+# [**Frequently Asked Questions**](#frequently-asked-questions)
+Frequently Asked Questions hay FAQ là câu hỏi thường gặp. Mình cũng thi khá lâu rồi nhưng vẫn nhớ được một số câu hỏi
+mà thầy Lưu Nguyễn Kì Thư hay hỏi sinh viên chúng mình. Các câu hỏi của thầy sẽ đi bao gồm 4 cấp độ như sau:
+
+Cấp 1 - Nhận biết: cấp độ này siêu dễ hiểu thầy sẽ hỏi các câu hỏi như:
+
+	1.Biến nào thể hiện số lượng máy bay ?
+	2.Biến nào thể hiện số lượng hành khách ?
+	3.Số CMND|CCCD thì dùng kiểu dữ liệu là gì ?
+	..........................
+
+Cấp 2 - Thông hiểu: cấp này hỏi chủ yếu là lý thuyết
+
+	1.Giải thích danh sách liên kết là gì ?
+	2.Cây nhị phân cân bằng có cơ chế tự cân bằng số node ở 2 bên như nào ?
+	3.Sự khác biệt giữa mảng con trỏ & mảng động
+	4.Một số tính năng phụ trợ như có thể dùng phím mũi tên để di chuyển con trỏ lên xuống ở mục nhập thông tin được không ?
+	5.Trước khi kết thúc yêu cầu thêm - xóa - sửa.Các bạn nên có 1 ô thông báo để xác nhận lại: Bạn có chắc chắn muốn thay đổi không ?
+	..........................
+
+Cấp 3 - Vận dụng: thầy sẽ yêu cầu chúng ta mở đoạn code có xử lý chức năng nào đó.Ví dụ như sử lý thêm - xóa - sửa máy bay.Tiếp đến, thầy sẽ hỏi rằng:
+
+	1.Đoạn code đó có độ phức tạp là bao nhiêu ?
+	2.Có mấy vòng lặp trong đoạn code này ?
+	3.Đã bắt các ràng buộc được chưa ? Tên người thì không có số, số điện thoại thì không được ghi chữ cái,..........
+	4.Một hành khách chỉ được phép mua 1 vé duy nhất / chuyến bay.
+	5.Một hành khách không thể đặt mua vé trên 2 chuyến bay có cùng thời gian khởi hành
+	..........................
+
+Note: Với ý số 4 & số 5 la vô cùng QUAN TRỌNG. Nếu các bạn không bắt được tối thiểu 1 trong 2 ý này thì bài làm của các bạn sẽ bị mất rất nhiều điểm.
+
+Cấp 4 - Vận dụng cao: Cuối cùng( Yeah 😂 cuối cùng cũng sắp thoát ải  ).
+
+Thầy sẽ hỏi các bạn 1 câu siêu khó. Nếu trả lời được thì được cộng 0.5 điểm. Nếu không thì cũng không sao cả.
+ Câu mình gặp mà mình vẫn nhớ đó là:
+
+    - Trình bày cách sắp xếp 20000 số tự nhiên theo thứ tự từ bé đến lớn với mảng con trỏ ?
+Câu này khó vl. Mình trả lời được 1 nửa đầu , nửa sau thì không đúng nên bị đánh hỏng😞
+
+# [**How to score yourself**](#how-to-score-yourself)
+
+Sau khi các bạn thi xong. Ổng thầy sẽ không chấm cho bạn điểm ngay lập tức để bạn biết đời mình nở hoa🌺 hay sẽ chuẩn bị tiền & tinh thần học lại. Thay vào đó, để tăng thêm phần kịch tính (và khả năng dày vò những đứa thi không thực sự tốt 😗 ), ổng sẽ cho bạn một cái mã số gồm 3 con số. Ví dụ: 049, 598,... Và bạn sẽ phải chờ dài cả cổ cho tới khi những đứa còn lại thi xong thì mới biết công thức tính điểm. 
+Mình đã gần ra trường (04-03-2022) nên có một số công thức có thể coi là cố định để các bạn tự chấm trước cho mình như sau:
+
+Mã điểm là a b c
+
+Cách 1: ( b + c ) % 10
+
+Cách 2: ( a + c) % 10
+
+Cách 2: ( a + b + c ) % 10
+
+Ví dụ: mã điểm là 5 3 1 thì theo
+
+Cách 1: ( 3 + 1 ) % 10 = 0 dư 4. Tức bạn được 4 điểm.
+
+Cách 2: ( 5 + 1 ) % 10 = 0 dư 6. Tức bạn được 6 điểm.
+
+Cách 3: ( 5 + 3 + 1) % 10 = 0 dư 9. Tức bạn được 9 điểm.
+
+Thông thường, cách 1 và cách 2 là phổ biến được sử dụng hơn cách 3.
+
+# [**Special Thank**](#special-thank) 
+
+<table>
+    <tr>
+        <td align="center">
+        <a href="https://github.com/ngdanghau">
+            <img src="./HinhAnhDemoDoAnCuaMinh/Hau.jpg" width="100px;" alt=""/>
+            <br />
+            <sub><b> Nguyen Dang Hau </b></sub>
+        </a>
+        <br />
+    </td>
+</table>
+	
+Phần này mình dành riêng để gửi lời cám ơn tới bạn [Nguyễn Đăng Hậu](https://www.facebook.com/anh.nhim.50). Bạn ấy vừa là một người bạn, vừa là một người thầy đối với mình. Suốt khoảng 3 tháng, từ tháng 03-2020 đến tháng 06-2020, kể từ khi nhận đề tài từ thầy, bạn Hậu đã chỉ dạy và giúp đỡ mình trong việc sửa chữa các đoạn chương trình vô cùng chi tiết và tỉ mỉ (vì làm đề tài một mình nên hơi bị đuối nữa). Nếu không có sự giúp đỡ nhiệt tình từ bạn Hậu, có lẽ mình đã không thể hoàn thiện một trong những đồ án lớn trong đời sinh viên PTIT của mình.😇😇
+	
+Ngoài ra, nếu các bạn làm để tài về Quản lý Sinh viên thì có thể tham khảo bài của bạn Hậu tại [đây](https://github.com/ngdanghau/quanlysinhvien) nha.
+	
+# [**Post Script**](#post-script)
+Mình hy vọng đồ án này có thể giúp các bạn khóa sau có thể vượt qua môn này dễ dàng nhất có thể ( vì môn này khó vl , mình cũng làm vỡ mặt mới qua ^^ ).
+
+Nếu đồ án & phần chú thích của mình giúp ích cho các bạn thì đừng ngần ngại tặng mình một ⭐ nha.
+
+Nếu qua được thì xin CHÚC MỪNG BẠN vì nếu qua được môn này của thầy thì tương lai với ngành này của bạn rất triển vọng nha. Nhiều bạn kêu thầy khó.
+Nhưng thực ra thì thầy làm vậy là tốt cho chúng mình á , các bạn đừng oán thầy nha.
+Chúc các bạn khóa sau khi đọc được bài này của mình nhiều may mắn và sức khỏe nha - Mon, 12 April 2021
+
+Mình viết chương trình này trên Visual Ultimate Code 2010 nhưng mình đã cập nhật lại core của ngôn ngữ C++ mới nhất.Nên các bạn hoàn toàn có thể an tâm tải về chạy được trên Visual Studio 2019 ( phiên bản mới nhất thời điểm mình viết ) ngay nha 😎😋😊
+
+
+
+================================================
+FILE: AirplaneTP.cpp
+================================================
+#pragma once
+#include"GlobalVariableTP.h"// bien toan cuc
+#include"UserInterfaceTP.h"// thu vien toan cuc
+#include"AirplaneTP.h"
+#include"ConstraintTP.h"// cac rang buoc nhap xuat
+#include"ProcessionTP.h"
+
+// thong tin vi tri hien tai
+int CurPosAirplane = 0;
+int CurAirplanePage = 1;
+int TotalAirplanePage = 0;
+extern string ContentAirplane[3];
+// tim vi tri cua may bay trong danh sach
+
+void InitListAirplane(ListAirplane &LA)
+{
+	LA.SoLuong = 0;
+}
+Airplane *FindAirplane(ListAirplane LA, const char* Ma)
+{
+	for (int i = 0; i < LA.SoLuong; i++)
+	{
+		if (_stricmp(LA.DSMB[i]->SoHieuMB, Ma) == 0)
+		{
+			return LA.DSMB[i];
+		}
+	}
+	return NULL;
+}
+int FindIndexAirplane(ListAirplane LA,const char *Ma)
+{
+	for(int i = 0 ; i < LA.SoLuong ;i++)
+	{
+		if( _stricmp(LA.DSMB[i]->SoHieuMB,Ma) == 0 )
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+// Cai lai mau nhu cu
+void NormalBGAirplan()
+{
+	SetColor(14);// yellow
+	SetBGColor(0);// black
+}
+
+// kiem tra xem may bay co nhap day du cac du lieu chua
+bool AirplaneDataIsEmpty(Airplane *A)
+{
+	/*false la nhap thieu - true la nhap du*/
+	if( strlen(A->SoHieuMB) == 0 || strlen(A->LoaiMB) == 0 || A->SoChoMB == 0)
+	{
+		return false;
+	}
+	
+	return true;
+}
+// kiem tra xem da xoa may bay thanh cong chua
+bool RemoveAirplaneIsSucceed(ListAirplane &LA,int ViTri)
+{
+	if( ViTri < 0)
+	{
+		return false;// khong co so hieu nay
+	}
+
+	 /*XOA = 3 => LA.DSMB[3] = LA.DSMB[4]*/
+	for(int i = ViTri; i < LA.SoLuong ;i++)
+	{
+			LA.DSMB[i] = LA.DSMB[i+1];
+	}
+	LA.SoLuong--;// giai phong bo nho
+	return true;// xoa thanh cong
+}
+/*=========Ham xuat danh sach may bay===========*/
+// hien thong tin 1 cai may bay
+void ShowAirplane(Airplane *A,int position)
+{
+	int xKeyDisplay[7] = {1,20,45,63,80,95, 107};// toa do X cac diem nut
+
+	//RemoveOldData( sizeof(ContentAirplane) / sizeof(string),position);// xoa du lieu cu di
+	gotoxy(xKeyDisplay[0] + 3, Y_Display + 3 + position*3);printf("%-15s",A->SoHieuMB);
+	gotoxy(xKeyDisplay[1] + 3, Y_Display + 3 + position*3);printf("%-15s",A->LoaiMB);
+	gotoxy(xKeyDisplay[2] + 3, Y_Display + 3 + position*3);printf("%-15d",A->SoChoMB);
+}
+
+void ShowListAirplaneOnePage(ListAirplane LA,int StartIndex)
+{
+	gotoxy(1,2);
+	cout << " So luong may bay : " << LA.SoLuong;
+	int i;
+	for( i = 0 ; i + StartIndex < LA.SoLuong && i < NumberPerPage ; i++)
+	{
+		ShowAirplane(LA.DSMB[i+StartIndex] , i);
+	}
+	RemoveExceedMember(i, 3);
+	gotoxy(X_Page,Y_Page);
+	cout <<" Trang " << CurAirplanePage <<"/"<< TotalAirplanePage; 
+}
+
+void ChangeAirplaneMenuManagerPage(ListAirplane LA)
+{
+	gotoxy(X_TitlePage,Y_TitlePage);
+	cout << " Quan li may bay ";
+
+	Display( ContentAirplane,sizeof(ContentAirplane)/sizeof(string) );
+	ShowListAirplaneOnePage(LA,(CurAirplanePage-1)*NumberPerPage);
+}
+
+/*Nhap thong tin may bay - kem theo cac rang buoc*/
+void InputAirplane(ListAirplane &LA, bool EditedOrNot = false, bool DeleteOrNot = false )
+{
+	ShowCur(true);
+	// kiem tra xem day la chinh sua thong tin hay nhap moi
+	bool SaveOrNot = true;// kiem tra xem duoc luu lai hay chua
+	bool MoveOrNot = false;// kiem tra xem nguoi dung co dung phim mui ten de di chuyen khong
+	bool IDExisted = false;// kiem tra xem can tim kiem co ton tai khong - > false la khong ton tai
+	string ID;// so hieu
+	string TypeAirplane;// loai may bay
+	int nChair = 0;// so cho ngoi
+	int ordinal = 0;// so thu tu bat dau viet
+	int target = -1;
+
+	while(true)
+	{
+		switch(ordinal)
+		{
+		case 0:
+		{
+			//RemoveNotification();
+			ConstraintForLetterAndNumber(ID, MoveOrNot, ordinal, SaveOrNot, 12);
+			
+			if (SaveOrNot == false)
+			{
+				RemoveFormComplete();
+				return;
+			}
+			if (DeleteOrNot) {
+				int target = RemoveConfirm();
+				gotoxy(50,50);
+
+				
+				RemoveFormComplete();
+				
+				if (!RemoveAirplaneIsSucceed(LA, FindIndexAirplane(LA, ID.c_str()) ) )
+				{
+					gotoxy(X_Notification + 1, Y_Notification + 1);
+					cout << " Xoa khong thanh cong";
+				}
+				else {
+					gotoxy(X_Notification + 1, Y_Notification + 1);
+					cout << " Xoa thanh cong";
+				}
+				
+				system("color 0E");
+				return;
+			}
+
+			
+
+			if (ID == "") {
+				gotoxy(X_Notification, Y_Notification + 1);
+				cout << " Vui Long Khong Bo Trong ";
+				break;
+			}
+			/*kIEM TRA XEM ID NHAP VAO CO Bi Trung khong*/
+			
+			target = FindIndexAirplane(LA, ID.c_str());
+			if (target > -1 && EditedOrNot == false) {
+				gotoxy(X_Notification, Y_Notification + 1);
+				cout << " ID da ton tai ";
+				break;
+			}
+
+			if (target < 0 && EditedOrNot == true) {
+				gotoxy(X_Notification, Y_Notification + 1);
+				cout << " ID khong ton tai ";
+				break;
+			}
+
+			if (EditedOrNot)
+			{
+				ID = LA.DSMB[target]->SoHieuMB;
+				TypeAirplane = LA.DSMB[target]->LoaiMB;
+				nChair = LA.DSMB[target]->SoChoMB;
+
+				gotoxy(X_Add + 12, 0 * 3 + Y_Add);
+				cout << ID;
+				gotoxy(X_Add + 12, 1 * 3 + Y_Add);
+				cout << TypeAirplane;
+				gotoxy(X_Add + 12, 2 * 3 + Y_Add);
+				cout << nChair;
+			}
+			ordinal++;
+			break;
+		}
+		case 1:// nhap hang may bay
+			ConstraintForOnlyLetter(TypeAirplane,MoveOrNot,ordinal,SaveOrNot,12);
+			if( SaveOrNot == false)
+			{
+				RemoveFormComplete();
+				return;
+			}
+			if (TypeAirplane == "") {
+				gotoxy(X_Notification, Y_Notification + 1);
+				cout << " Vui Long Khong Bo Trong ";
+				break;
+			}
+			ordinal++;
+			break;
+		case 2:// nhap so cho ngoi may bay
+			ConstraintForOnlyNumber(nChair,MoveOrNot,ordinal,SaveOrNot,12, 999);
+			if( SaveOrNot == false)
+			{
+				RemoveFormComplete();
+				return;
+			}
+			if (nChair < 1) {
+				gotoxy(X_Notification, Y_Notification + 1);
+				cout << " Vui Long Khong Bo Trong ";
+				break;
+			}
+			if( nChair < 20 ){
+				gotoxy(X_Notification, Y_Notification + 1);
+				cout << " So cho phai >= 20";
+				break;
+			}
+			ordinal++;
+			break;
+		case 3:
+			{
+				/*Chinh sua thong tin*/
+				if( EditedOrNot && target > -1)
+				{
+					strcpy(LA.DSMB[target]->SoHieuMB, ID.c_str());
+					strcpy(LA.DSMB[target]->LoaiMB, TypeAirplane.c_str());
+					LA.DSMB[target]->SoChoMB = nChair;
+					gotoxy(X_Notification,Y_Notification+1);
+					cout << " Sua Thanh Cong ";
+				}
+				/*Them moi*/
+				else
+				{
+					LA.DSMB[LA.SoLuong] = new Airplane;
+					strcpy(LA.DSMB[LA.SoLuong]->SoHieuMB, ID.c_str());
+					strcpy(LA.DSMB[LA.SoLuong]->LoaiMB, TypeAirplane.c_str());
+					LA.DSMB[LA.SoLuong]->SoChoMB = nChair;
+					LA.DSMB[LA.SoLuong]->SoLanThucHienChuyenBay = 0;
+					LA.SoLuong++;
+
+					gotoxy(X_Notification,Y_Notification+1);
+					cout << " Them thanh cong ";
+				}
+
+				WriteAirplaneToFile(LA);
+				ID = "";
+				TypeAirplane = "";
+				nChair = 0;
+				ordinal = 0;
+				RemoveForm();
+			}
+			break;
+		}// switch
+	}// while(true)
+	ShowCur(false);
+}
+
+/*========== MENU quan li may bay ==========*/
+void MenuManageAirplane(ListAirplane &LA)
+{
+	ShowCur(false);
+	system("cls");
+	//system("color 0E");
+	CurAirplanePage = 1;
+	// ceil lam tron len
+	TotalAirplanePage = (int)ceil( (double)LA.SoLuong/NumberPerPage );
+
+	Display(ContentAirplane,sizeof(ContentAirplane) / sizeof(string) );
+	ShowListAirplaneOnePage(LA,0);
+
+	gotoxy(X_TitlePage,Y_TitlePage);
+	cout << "Quan li may bay";
+	
+	int signal;
+	while(true)
+	{
+		while( _kbhit() )
+		{
+			signal = _getch();
+			if (signal == ESC)
+				return;
+			if( signal == 224)
+			{
+				signal = _getch();
+				if( signal == PAGE_UP && CurAirplanePage > 1)
+				{
+					CurAirplanePage--;
+					ChangeAirplaneMenuManagerPage(LA);
+				}
+				else if( signal == PAGE_DOWN && CurAirplanePage < TotalAirplanePage)
+				{
+					CurAirplanePage++;
+					ChangeAirplaneMenuManagerPage(LA);
+				}
+				// them moi
+				else if( signal == INSERT )
+				{
+					if( LA.SoLuong == MaxAirplane )
+					{
+						gotoxy(X_Notification,Y_Notification+1);cout <<"Danh sach day,khong the them";
+						return;
+					}
+					CreateForm(ContentAirplane,0,3,27);
+					InputAirplane(LA);
+					TotalAirplanePage = (int)ceil( (double)LA.SoLuong/NumberPerPage );
+					ShowListAirplaneOnePage(LA,(CurAirplanePage - 1)*NumberPerPage);
+					ShowCur(false);
+					
+				}// endif signal == INSERT
+
+				// xoa di
+				else if( signal == DEL)
+				{
+					if( LA.SoLuong == 0 )
+					{
+						gotoxy(X_Notification,Y_Notification+1);cout <<"Danh sach rong,khong the xoa";
+						return;
+					}
+					CreateForm(ContentAirplane,0, 1, 27);
+					InputAirplane(LA, false, true);
+					TotalAirplanePage = (int)ceil((double)LA.SoLuong / NumberPerPage);
+					ShowListAirplaneOnePage(LA, (CurAirplanePage - 1) * NumberPerPage);
+				}//else if( signal == DEL)
+				// HOME == chinh sua
+				else if ( signal == HOME )
+				{
+					CreateForm(ContentAirplane,0, 3, 27);
+					InputAirplane(LA, true, false);
+					TotalAirplanePage = (int)ceil((double)LA.SoLuong / NumberPerPage);
+					ShowListAirplaneOnePage(LA, (CurAirplanePage - 1) * NumberPerPage);
+				}// signal == HOME
+			}
+		}//while( _kbhit)
+	}// while(true)
+}
+/*=========== Ket Thuc Menu quan li may bay ============*/
+
+
+================================================
+FILE: AirplaneTP.h
+================================================
+#pragma once
+#include"GlobalVariableTP.h"// bien toan cuc
+#include"UserInterfaceTP.h"// thu vien toan cuc
+#include"AirplaneTP.h"
+
+// cau truc may bay
+struct airplane
+{
+	char SoHieuMB[15];
+	char LoaiMB[40];
+	int SoChoMB;// so cho >= 20
+	int SoLanThucHienChuyenBay;
+};
+typedef struct airplane Airplane;
+/*Mang con tro chua toi da 300 may bay cac loai*/
+struct listairplane
+{
+	int SoLuong;
+	Airplane *DSMB[MaxAirplane];
+};
+typedef struct listairplane ListAirplane;
+
+
+/*Cac ham xuat hien trong AirplaneTP.cpp*/
+void InitListAirplane(ListAirplane &LA);
+int FindIndexAirplane(ListAirplane LA,const char *Ma);
+void NormalBGAirplan();
+bool AirplaneDataIsEmpty(Airplane *A);
+bool RemoveAirplaneIsSucceed(ListAirplane &LA,char SoHieuMBCanXoa[]);
+void ShowAirplane(Airplane *A,int position);
+void ShowListAirplaneOnePage(ListAirplane LA,int StartIndex);
+void ChangeAirplaneMenuManagerPage(ListAirplane LA);
+void InputAirplane(ListAirplane &LA, bool EditedOrNot );
+void MenuManageAirplane(ListAirplane &LA);
+
+
+================================================
+FILE: ConstraintTP.cpp
+================================================
+﻿#pragma once
+/*Noi nay quy dinh nhung 
+rang buoc cua phan nhap lieu noi dung chu viet*/
+#include<iostream>
+#include<string>
+#include<string.h>
+#include<cstdlib>
+#include<conio.h>
+#include<iomanip>
+#include<cmath>// for funtion log10
+#include<ctime>// danh cho thoi gian thuc
+#include"MyLibraryTP.h"
+#include<math.h>
+#include"GlobalVariableTP.h"
+using namespace std;
+
+
+/* vua chu cai vua co chu so*/
+/*ordinal = so thu tu - the hien vi tri cua cai rang buoc ma ta dang su dung o vi tri
+thu bao nhieu de thao tac trong ham nhap thong tin */
+/*distance the hien khoang cach thut dau dong voi tieu de cua dong do*/
+void ConstraintForLetterAndNumber(string &result,bool &MoveOrNot,int &ordinal,bool &SaveOrNot,int distance)
+{
+	int lenght = (int)result.length();
+	gotoxy(X_Add + distance,ordinal * 3 + Y_Add);
+	cout << result;
+	int count = lenght;
+
+	while(true)
+	{
+		while( _kbhit() )
+		{
+			int signal = _getch();
+			if( signal != 224 && signal != BACKSPACE && signal != 0)
+			{
+				/*	--------tu A den Z -----				------Tu a den z -------				-----Tu 0 den 9 -----*/
+				if( ( 65 <= signal && signal <= 90 ) || ( 97 <= signal && signal <= 122 ) || ( 48 <= signal && signal <= 57 ) )
+				{
+					/*Limit_ID_Length la do dai gioi han cua no-*/
+					if( count < Limit_ID_Length )
+					{
+						count++;// cap nhat bien count 
+						cout << (char)signal;// hien thi no tren man hinh nhap thong tin
+						result += (char)signal;// cap nhat ket qua vao RESULT
+					}
+				}
+				else if( signal == ENTER)
+				{
+					MoveOrNot = true;// Enter cung tuong duong voi xuong dong 
+					return;
+				}
+				
+				else if(signal == ESC){
+					SaveOrNot = false;
+					return;
+				}
+			}
+			else if( signal == BACKSPACE && count > 0)
+			{
+				/* xoa ki tu khoang trang - \b dai dien cho 
+				khoang trang dung tren ban phim - xoa khoang trang vua nhap*/
+				cout << "\b" << " " << "\b";
+				/* xoa di 1 ki tu o vi tri cuoi cung - cap nhat lai 1 vi tri*/
+				result.erase(result.length() - 1 , 1);
+				/* vi day la BACKSPACE nen khong tinh gia tri nay vao bien count*/
+				count--;
+			}
+		}// while(_kbhit())
+	}// while(true)
+}
+/*ham nay se chi nhap ten nguoi hoac ten so hieu may bay*/
+/* va cac danh tu chi co 1 tu duy nhat VD Phong,Thanh,Nguyen*/
+void ConstraintForOnlyLetter(string &result,bool &MoveOrNot,int &ordinal,bool &SaveOrNot,int distance)
+{
+	int lenght = (int)result.length();
+	int count = lenght;
+	gotoxy(X_Add + distance,ordinal*3 + Y_Add);
+	cout << result;
+	
+
+	while(true)
+	{
+		while( _kbhit() )
+		{
+			int signal = _getch();
+			if ( signal != 224 && signal != BACKSPACE && signal != 0)
+			{
+				/*   --- tu A den Z ---						---- tu a den z ---*/ 
+				if( ( 65 <= signal && signal <= 90 ) || ( 97 <= signal && signal <= 122 ) )
+				{
+					// do dai cua 1 chu toi da chi co 7 chu cai
+					if( count < Litmit_Word_Length )
+					{
+						count ++;
+						cout << (char)signal;
+						result += (char)signal;
+					}
+				}
+				else if( signal == ENTER)
+				{
+					return;
+				}
+				
+				else if(signal == ESC){
+					SaveOrNot = false;
+					return;
+				}
+			}// if( signal != 224 && signal != BACKSPACE )
+			else if( signal == BACKSPACE && count > 0)
+			{
+				/* xoa ki tu khoang trang - \b dai dien cho 
+				khoang trang dung tren ban phim - xoa khoang trang vua nhap*/
+				cout << "\b" << " " << "\b";
+				/* xoa di 1 ki tu o vi tri cuoi cung - cap nhat lai 1 vi tri*/
+				result.erase(result.length() - 1 , 1);
+				/* vi day la BACKSPACE nen khong tinh gia tri nay vao bien count*/
+				count--;
+			}
+		}// while( _khbit() )
+	}// while(true)
+}
+/*Cho phep nhap danh tu co ki tu khoang trang o giua
+VD Thanh Phong*/
+void ConstraintsForLetterAndSpace(string &result,bool &MoveOrNot,int &ordinal,bool &SaveOrNot,int distance)
+{
+	int count = result.length();
+	gotoxy(X_Add + distance,ordinal*3 + Y_Add);
+	cout << result;
+	bool Spaced = false; // false nghia la chua space
+	int signal;
+	while( true )
+	{
+		while( _kbhit() )
+		{
+			signal = _getch();
+			if( signal != 224 && signal != 0 )
+			{
+				if ((65 <= signal && signal <= 90) || (97 <= signal && signal <= 122) || signal == SPACE )
+				{
+					/*gioi han do dai chuoi la 20*/
+					if( count <= 20)
+					{
+						count++;
+						/*Lam chac dieu kien de khong SPACE sai phim*/
+						if( Spaced == true && signal == SPACE )
+						{
+							cout <<(char)signal;
+							result += (char)signal;
+							Spaced = true;
+						}
+						else
+						{
+							Spaced = false;
+							cout <<(char)signal;
+							result += (char)signal;
+						}
+					}
+				}
+				else if ( signal == ENTER)
+				{
+					SaveOrNot = true;
+					return;
+				}
+				else if (signal == BACKSPACE && count >0)
+				{
+					cout << "\b" << " " << "\b";
+					result.erase(result.length() - 1, 1);
+					count--;
+				}
+				else if( signal == ESC)
+				{
+					SaveOrNot = false;
+					return;
+				}
+			}// end if ( signal = ..... )
+		}//end while( kbhit() )
+	}// end while(true)
+
+}
+
+void ConstraintForOnlyNumber(int &result,bool &MoveOrNot,int &ordinal,bool &SaveOrNot,int distance,int LimitNumber)
+{
+	gotoxy(X_Add + distance,ordinal*3 + Y_Add);
+	if( result != 0)
+	{
+		cout << result;
+	}
+	int count = 0;// mac dinh 
+
+	int num = result;
+	/*Lay di dai cua day so dang nhap vao*/
+	do
+	{
+		count++;
+		num /= 10;
+	} while (num != 0);
+	while( true )
+	{
+		while( _kbhit() )
+		{
+			int signal = _getch();
+			if( signal != 224 && signal != SPACE && signal != 0 )
+			{
+				/*  ---tu 0 den 9--- va count nho hon 3*/
+				if( 48 <= signal && signal <= 57)
+				{
+					/* signal = 56 -> numb = 56 - 48 = 8 -> ung dung voi so 8*/
+					int Numb = signal - 48;
+					if( signal == 48 && count == 0 )
+					{
+						continue;
+					}
+					/* vi du LimitNumber = 100 co nghia may bay chi cho 
+					nhap toi da 100 cho ngoi */
+					else if( (result*10 + Numb) <= LimitNumber) 
+					{
+						cout << Numb;
+						result = result*10 + Numb;
+						count ++;
+					}
+				}
+				else if (signal == ESC)
+				{
+					SaveOrNot = false;
+					return;
+				}
+				 
+				else if( signal == 8 && count > 0 )
+				{
+					cout << (char)BACKSPACE<<" "<<(char)BACKSPACE;
+					count--;
+					result /= 10;
+				}
+
+				else if( signal == ENTER)
+				{
+					if (result > LimitNumber)
+						continue;
+					return;
+				}
+			}// ( signal != 224 && signal != BACKSPACE && signal != 0)
+			
+		}// while( _kbhit() )
+	}// while(true)
+}
+
+/*space la khoang thut dau dong
+Limit Reach la gia tri gioi han cua no*/
+void ConstraintForDateAndTime( int &result,int &DTordinal,bool &SaveOrCancel,int space , int LimitReach)
+{
+
+	int count = 0;
+	gotoxy(X_Add + space + DTordinal * 3,  9 + Y_Add);
+	if( result != 0 )
+		cout << result;
+
+	int num = result;
+	/*Lay do dai day so dang nhap*/
+	do
+	{
+		count++;
+		num /= 10;
+	} while (num != 0);
+
+	int signal ;
+	while(true)
+	{
+		while( _kbhit() )
+		{
+			signal = _getch();
+
+			/*thao tac nhap so*/
+			if( signal != 224 && signal != SPACE && signal != 0 )
+			{
+				if(  48 <= signal && signal <= 57 )
+				{
+					int numb = signal - 48;
+					/*vi nhu nhap 13 la gio thi khong hop le*/
+					if( result > LimitReach )
+						continue;
+
+					if ( (result * 10 + numb) < LimitReach)
+					{
+						cout << numb;
+						result = result * 10 + (numb);
+						count++;
+					}
+				}
+				else if (signal == 8 && count > 0)
+				{
+					cout << (char)BACKSPACE << " " << (char)BACKSPACE;
+					count--;
+					result /= 10;
+				}
+				else if (signal == ENTER)
+				{
+
+					if (result > LimitReach || (DTordinal >  1 && result == 0 ))
+						continue;
+					return;
+				}
+			}// if( signal != 224 && signal != SPACE && signal != 0 )
+
+		}// while( _kbhit() )
+	}//while(true)
+}
+
+void ConstraintForOnlyGender(int &result,bool &MoveOrNot,int &ordinal,bool &SaveOrNot,int distance)
+{
+	gotoxy(X_Add + distance,ordinal*3 + Y_Add);
+	if( result != 0)
+	{
+		cout << result;
+	}
+	int count = 0;
+	while( true )
+	{
+		while( _kbhit() )
+		{
+			int signal = _getch();
+			if( signal != 224 && signal != SPACE && signal != 0 )
+			{
+				/*  ---tu 0 den 1--- va count nho hon 3*/
+				if( 48 <= signal && signal <= 49)
+				{
+					/* signal = 56 -> numb = 56 - 48 = 8 -> ung dung voi so 8*/
+					int Numb = signal - 48;
+					
+					/* vi du LimitNumber = 100 co nghia may bay chi cho 
+					nhap toi da 100 cho ngoi */
+					if( -1 < result*10 + Numb && result*10 +Numb < 2) 
+					{
+						cout << Numb;
+						result = result*10 + Numb;
+						count ++;
+					}
+					else if(signal == ESC)
+					{
+						SaveOrNot = false;
+						return;
+					}
+
+				}
+				 
+				else if (signal == 8 && count >= 0)
+				{
+					cout << (char)BACKSPACE << " " << (char)BACKSPACE;
+					count--;
+					result /= 10;
+				}
+
+				else if( signal == ENTER)
+				{
+					if (result > 1)
+						continue;
+					return;
+				}
+			}// ( signal != 224 && signal != BACKSPACE && signal != 0)
+		}// while( _kbhit() )
+	}// while(true)
+}
+
+
+
+/*Chuan hoa chuoi string ta nhap vao*/
+void StandardName(char *a)
+{
+	a[0] = toupper(a[0]);
+	int length = strlen(a);
+	for (int i = 1; i < length; ++i)
+	{
+		if (a[i -1] == ' ' && a[i] != ' ') a[i] = toupper(a[i]);
+		else a[i] = tolower(a[i]);
+	}
+}
+
+
+================================================
+FILE: ConstraintTP.h
+================================================
+/*Noi nay quy dinh nhung rang buoc cua phan nhap lieu noi dung chu viet*/
+#pragma once
+/*Noi nay quy dinh nhung 
+rang buoc cua phan nhap lieu noi dung chu viet*/
+#include<iostream>
+#include<string>
+#include<string.h>
+#include<cstdlib>
+#include<conio.h>
+#include<iomanip>
+#include<cmath>// for funtion log10
+#include<ctime>// danh cho thoi gian thuc
+#include"MyLibraryTP.h"
+#include<math.h>
+#include"GlobalVariableTP.h"
+using namespace std;
+
+
+void ConstraintForLetterAndNumber(string &result,bool &MoveOrNot,int &ordinal,bool &SaveOrNot,int distance);
+void ConstraintForOnlyLetter(string &result,bool &MoveOrNot,int &ordinal,bool &SaveOrNot,int distance);
+void ConstraintForOnlyNumber(int &result,bool &MoveOrNot,int &ordinal,bool &SaveOrNot,int distance,int LimitNumber);
+void ConstraintForDateAndTime( int &result,int &DTordinal,bool &SaveOrCancel,int space , int LimitReach);
+void ConstraintsForLetterAndSpace(string &result,bool &MoveOrNot,int &ordinal,bool &SaveOrNot,int distance);
+void ConstraintForOnlyGender(int &result,bool &MoveOrNot,int &ordinal,bool &SaveOrNot,int distance);
+void StandardName(char *a);
+
+
+================================================
+FILE: DataTimeTP.cpp
+================================================
+#pragma once
+#include <ctime>// dung cho ngay gio
+#include"UserInterfaceTP.h"
+#include"DateTime.h"
+
+int nDayOfMonth[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+
+void InitDataTime(DateTime &DT)
+{
+	time_t baygio = time(0);/*lay ngay gio he thong hien tai*/
+	tm* ltm = localtime(&baygio);/*con tro de the hien ngay gio hien tai*/
+
+
+	DT.h = ltm->tm_hour;//Hour
+	DT.mi = ltm->tm_min;//Minute
+	DT.d = ltm->tm_mday;//Day
+	DT.m = 1 + ltm->tm_mon;//Month
+	DT.y = 1900 + ltm->tm_year;//Year
+}
+
+// kiem tra so ngay va nam nhuan hay khong, return true nghia la dung
+bool DateTimeIsRightFormat(DateTime dt)
+{
+	nDayOfMonth[2] = 28;
+	if ((dt.y % 400 == 0) || (dt.y % 4 == 0 && dt.y % 100 != 0))//kiem tra nam nhuan
+		nDayOfMonth[2] = 29;
+	if (dt.d > nDayOfMonth[dt.m])// kiem tra xem so ngay nhap co lon hon so ngay mac dinh khong
+		return false;
+	return true;
+}
+
+//kiem tra dinh dang gio phu ngay thang nam, return true => nhap dung
+bool DateTimeIsValid(DateTime dt)
+{
+	if (!DateTimeIsRightFormat(dt)) return false;
+
+	nDayOfMonth[2] = 28;
+	time_t baygio = time(0);
+	tm *ltm = localtime(&baygio);
+	DateTime dtNow;
+	dtNow.y = 1900 + ltm->tm_year;
+	dtNow.m = 1 + ltm->tm_mon;
+	dtNow.d = ltm->tm_mday;
+	dtNow.h = ltm->tm_hour;
+	dtNow.mi = ltm->tm_min;
+
+	// tra ve false neu nhu 
+	if (dt.y < dtNow.y) return false;// nam nhap vao nho hon nam hien tai
+	if ((dt.y == dtNow.y) && (dt.m < dtNow.m))  return false;// thang nhap vao nho hon thang hien tai
+	if ((dt.y % 400 == 0) || (dt.y % 4 == 0 && dt.y % 100 != 0))
+		nDayOfMonth[2] = 29;
+	if (dt.y == dtNow.y && dt.m == dtNow.m && dt.d < dtNow.d)return false;// ngay nhap vao nho hon ngay hien tai
+	if (dt.y == dtNow.y && dt.m == dtNow.m && dt.d == dtNow.d && dt.h < dtNow.h)return false;// gio nhap bi sai
+	// so phut nhap vao bi sai
+	if (dt.y == dtNow.y && dt.m == dtNow.m && dt.d == dtNow.d && dt.h == dtNow.h && dt.mi <= dtNow.mi)return false;
+	return true;
+}
+
+void OutputDateTime(DateTime &dt)
+{
+	cout << dt.h << ":" << dt.mi << " " << dt.d << "/" << dt.m << "/" << dt.y;
+}
+
+bool CompareDate(DateTime dt1, DateTime dt2)
+{
+	return dt1.d == dt2.d && dt2.m == dt1.m && dt1.y == dt2.y;
+}
+
+
+================================================
+FILE: DateTime.h
+================================================
+#pragma once
+#include <ctime>
+// #include"ValidateTP.h"// dung de kiem tra cac ki tu nhap vao
+
+struct datetime
+{
+	int y ; 
+	int m ; 
+	int d ; 
+	int h ;
+	int mi;
+};
+typedef struct datetime DateTime;
+void InitDataTime(DateTime &DT);
+bool DateTimeIsRightFormat(DateTime dt);
+bool DateTimeIsValid(DateTime dt);
+void OutputDateTime(DateTime &dt);
+bool CompareDate(DateTime dt1, DateTime dt2);
+
+
+================================================
+FILE: DSCB.txt
+================================================
+13
+QWE123
+Washington Dc
+SU1135
+8
+48
+27
+6
+2020
+21
+4
+RUS79U
+Moscow
+BNW555
+10
+37
+26
+3
+2021
+100
+4
+GER0806
+Berlin
+BA3213
+10
+20
+23
+12
+2020
+50
+4
+XYZ1945
+New York
+VN9021
+17
+45
+1
+5
+2045
+75
+1
+JA1010
+Tokyo
+VN1187
+15
+30
+30
+9
+2020
+80
+4
+Holland
+Amsterdam
+SU1135
+21
+30
+23
+6
+2021
+50
+2
+USA2306
+Los Angerles
+VN1896
+9
+40
+23
+6
+2020
+90
+4
+POLAND
+Warsaw
+VN1187
+9
+47
+27
+6
+2022
+30
+2
+FRA123
+Paris
+VN1234
+18
+22
+27
+12
+2020
+30
+4
+CRECH
+Praha
+VJ5431
+18
+29
+27
+12
+2020
+60
+4
+NORWAY
+Oslo
+VN9876
+0
+0
+12
+12
+2020
+50
+4
+Finland
+Helsinki
+VJ3456
+17
+46
+29
+6
+2021
+55
+2
+GERMANY
+Berlin
+VJ5431
+17
+44
+29
+12
+2020
+40
+4
+
+
+
+================================================
+FILE: DSHK.txt
+================================================
+115
+147104
+Nguyen Thuy
+Linh
+0
+0
+147048
+Khuc Ngoc
+Hien
+0
+0
+147015
+Do Thien
+Binh
+1
+0
+147005
+Ngo Kinh
+Kinh
+1
+0
+146033
+Tran Ngoc
+Mai
+0
+0
+105200
+Thanh Phong
+Phong
+1
+0
+147002
+Truong Minh
+An
+0
+0
+147003
+Dang Tuan
+Anh
+1
+0
+147009
+Tran Nhat
+Anh
+1
+0
+147006
+Pham Minh
+Tuan
+1
+0
+147008
+Tran Ba
+Tien
+1
+0
+147012
+Luong Thai
+Bao
+1
+0
+147011
+Duong Quoc
+Bao
+1
+0
+147030
+Nguyen Khanh
+Duy
+1
+0
+147023
+Dang Thuy
+Tien
+0
+0
+147021
+Nguyen Chung
+Chanh
+1
+0
+147016
+Huynh Canh
+Canh
+1
+0
+147027
+Nguyen Huyen
+Diu
+0
+0
+147024
+Nguyen Van
+Chung
+1
+0
+147029
+Nguyen Anh
+Duy
+1
+0
+147039
+Nguyen Hai
+Dang
+1
+0
+147036
+Le Phuoc
+Dat
+1
+0
+147035
+Anna Emma
+Emma
+0
+0
+147045
+Ngo Thu
+Ha
+0
+0
+147042
+Nguyen Cong
+Dinh
+0
+0
+147046
+Jonnie Deep
+Deep
+1
+0
+147075
+Ton Thi
+Hue
+0
+0
+147059
+Le Cong
+Hau
+1
+0
+147054
+Le Ngoc
+Hai
+1
+0
+147050
+Vu Tuyet
+Tuyet
+0
+0
+147051
+Nguyen Huy
+Giap
+1
+0
+147056
+Pussy Cat
+Doll
+0
+0
+147055
+Peter Parker
+Parker
+1
+0
+147057
+Nguyen Van
+Han
+1
+0
+147066
+Nguyen Xuan
+Hieu
+1
+0
+147062
+Truong Nguyen
+Trung
+1
+0
+147060
+Nguyen Dang
+Hau
+1
+0
+147063
+Hua Hoang
+Hiep
+1
+0
+147072
+Nguyen Vinh
+Hoang
+1
+0
+147068
+Dinh Viet
+Hoang
+1
+0
+147074
+Nguyen Minh
+Huan
+1
+0
+147093
+Luong Dinh
+Khang
+1
+0
+147081
+Nguyen Ta
+Huy
+1
+0
+147078
+Do Phuoc
+Huy
+1
+0
+147077
+Doan Nhat
+Huy
+1
+0
+147080
+Nguyen Quang
+Huy
+1
+0
+147087
+Ho Ngoc
+Minh
+1
+0
+147084
+Nguyen Huynh
+Huynh
+1
+0
+147090
+Nguyen Minh
+Kiet
+1
+0
+147100
+Nguyen Thanh
+Phong
+1
+0
+147098
+Huynh Quoc
+Khanh
+1
+0
+147096
+Hoang Quoc
+Khanh
+1
+0
+147099
+Le Ba
+Khanh
+1
+0
+147102
+Hoang Thanh
+Lam
+1
+0
+147170
+Huynh Ngoc
+Sang
+1
+0
+147141
+Nguyen Long
+Nhat
+1
+0
+147126
+Ha Thi
+Mo
+0
+0
+147114
+Tran Phi
+Long
+1
+0
+147108
+Nguyen Hoang
+Long
+1
+0
+147105
+Vu Ngoc
+Linh
+1
+0
+147111
+Pham Hoang
+Long
+1
+0
+147117
+Le Ngoc
+Hoai
+0
+0
+147116
+Vo Nguyen
+Long
+1
+0
+147123
+Tran Viet
+Manh
+1
+0
+147132
+Mai Ky
+Nguyen
+1
+0
+147129
+Nguyen Hai
+Nam
+1
+0
+147128
+Do Van
+Nam
+1
+0
+147131
+Huynh Hieu
+Minh
+1
+0
+147137
+Nguyen Trong
+Nhan
+1
+0
+147135
+Nguyen Phuc
+Nhanh
+1
+0
+147138
+Nguyen Trong
+Dai
+1
+0
+147155
+Pham Hoang
+Phuc
+1
+0
+147149
+Tu Thai
+Phong
+1
+0
+147146
+Luu Tien
+Phat
+1
+0
+147144
+Nguyen Lam
+Nhu
+0
+0
+147147
+Nguyen Thanh
+Phong
+1
+0
+147153
+Do Huynh
+Hong
+1
+0
+147150
+Luong Vi
+Phu
+1
+0
+147154
+Pham Phu
+Phuc
+1
+0
+147161
+Nguyen Minh
+Quan
+1
+0
+147158
+Hoang Thanh
+Quang
+1
+0
+147156
+Tran Minh
+Phuc
+1
+0
+147159
+Pham Minh
+Quang
+1
+0
+147165
+Pham Minh
+Quoc
+1
+0
+147162
+Dau Truong
+Quan
+1
+0
+147168
+Phan Quang
+Quy
+1
+0
+157006
+Kieu Huynh
+Tung
+0
+0
+155555
+John Wick
+Wick
+1
+0
+147180
+Nguyen Duc
+Tam
+1
+0
+147174
+Tran Ngoc
+Sang
+1
+0
+147171
+Huynh Phuoc
+Sang
+1
+0
+147177
+Tran Phuoc
+Tai
+1
+0
+147185
+Le Quoc
+Tan
+1
+0
+147183
+Truong Minh
+Tan
+1
+0
+150007
+Marie Carrie
+Carrie
+0
+0
+157003
+Duong Pham
+Tong
+1
+0
+157002
+Nguyen Chi
+Tin
+1
+0
+157001
+Ngo Si
+Tien
+1
+0
+157005
+Bui Van
+Tuan
+1
+0
+157004
+Nguyen Ngoc
+Tu
+1
+0
+157010
+Chau Thai
+Phong
+1
+0
+157008
+Van Duc
+Thanh
+1
+0
+157007
+Phung Ngoc
+Thach
+1
+0
+157009
+Mai Duc
+Thang
+1
+0
+157014
+Mac Van
+Sy
+0
+0
+157012
+Huynh Phan
+Trung
+1
+0
+157011
+Nguyen Ngoc
+Trinh
+0
+0
+157013
+Tran Quang
+Vinh
+1
+0
+666666
+The Devil
+Devil
+1
+0
+555555
+John Kennedy
+Kennedy
+1
+0
+777777
+Ngoc Trinh
+Trinh
+0
+0
+
+
+
+================================================
+FILE: DSMB.txt
+================================================
+VN1187 Lannister 30
+VN9021 Boing 100
+BA3213 Bombardier 70
+VN2310 Airbus 40
+VJ5431 Embraer 100
+BA7820 Embraer 80
+VN1234 Bombardier 30
+VN9876 Boing 100
+VJ3456 Comac 80
+VJ1234 Airbus 30
+JS4359 Comac 80
+VN1896 SpaceX 90
+US9110 Lannister 84
+SU1135 RushBee 70
+GE3004 Porche 83
+BNW555 Vschoe 100
+CN9873 Stark 50
+SG7878 SpaceX 90
+AirforceOne USAirforce 20
+AIRFORUS USAairforce 20
+
+
+================================================
+FILE: FlightTP.cpp
+================================================
+﻿
+#pragma once
+#include"AirplaneTP.h"
+#include"GlobalVariableTP.h"
+#include"TicketTP.h"
+#include"DateTime.h"
+#include"FlightTP.h"
+#include"ConstraintTP.h"
+#include"ProcessionTP.h"
+/*Vi tri cua danh sach chuyen bay*/
+int CurPosFlight = 0;
+int CurPosPreFlight = 0;
+int CurFlightPage = 1;
+int TotalFlightPage = 0;
+
+int CurPosTicket = 1;
+int CurPosPreTicket = 1;
+
+extern string ContentFlight[6];
+extern ListAirplane LA;
+
+void InitFlight(Flight &F)
+{
+	F.TongSoVe = 0;
+	F.TongSoDaBan = 0;
+	F.TicketList = new Ticket[100];// cap phat mang dong
+	F.TrangThai = 2;// 1: hủy chuyến, 2: còn vé, 3: hết vé,4: hoàn tất ;
+}
+
+void InitFlightList(FlightList &FL)
+{
+	FL.pHead = NULL;
+	FL.pTail = NULL;
+	FL.SoLuongChuyenBay = -1;
+}
+/*tao moi 1 cai FlightNode chuyen bay*/
+FlightNode *CreateFlightNode(Flight Data)
+{
+	FlightNode *tempo = new FlightNode;
+	if( tempo == NULL)
+	{
+		return NULL;
+	}
+	tempo->data = Data;
+	tempo->pNext = NULL;
+
+	return tempo;
+}
+// them dau danh sach
+void AddBeginningList(FlightList &FL,Flight Data)
+{
+	FlightNode *tempo = CreateFlightNode(Data);
+
+	tempo->pNext = FL.pHead;
+	FL.pHead = tempo;
+	FL.SoLuongChuyenBay++;
+}
+
+void AddEndingList(FlightList &FL,Flight Data)
+{
+	FlightNode *tempo = CreateFlightNode(Data);
+
+	if( FL.pHead == NULL )
+	{
+		FL.pHead = FL.pTail = tempo;
+	}
+	else
+	{
+		FL.pTail->pNext = tempo;
+		FL.pTail = tempo;
+	}
+	FL.SoLuongChuyenBay++;
+}
+// tim so thu tu dua vao MaChuyenBay
+int FindIndexFlight( FlightList FL,const char *MaChuyenBayCanTim)
+{
+	int index = 0;
+	for( FlightNode *search = FL.pHead ; search != NULL; search = search->pNext)
+	{
+		/*so sanh 2 chuoi voi nhau co phan biet hoa thuong*/
+		if( _stricmp(search->data.MaChuyenBay,MaChuyenBayCanTim) == 0 )
+		{
+			return index;
+		}
+		index++;
+	}
+	return -1;
+}
+int FindDestination( FlightList FL,const char* SanBayDenCanTim)
+{
+	int index = 0;
+	for( FlightNode *search = FL.pHead ; search != NULL; search = search->pNext)
+	{
+		if( _stricmp(search->data.SanBayDen ,SanBayDenCanTim) == 0 )
+		{
+			return index;
+		}
+		index++;
+	}
+	return -1;
+}
+FlightNode *FindFlight ( FlightList FL,const char *MaChuyenBayCanTim)
+{
+	if( FL.pHead == NULL)
+		return NULL;
+	for( FlightNode *search = FL.pHead ; search != NULL; search = search->pNext)
+	{
+		if( _strcmpi(search->data.MaChuyenBay,MaChuyenBayCanTim) == 0 )
+		{
+			return search;
+		}
+	}
+	return NULL;
+}
+
+void InputDateAndTimeInfor(DateTime &DT, int ordinal )
+{
+	int DTordinal = 0;// vi tri khoi dau cho viec nhap
+	bool SaveOrCancel = false;
+	/*Hien form hien thi ngay - gio*/
+	gotoxy(X_Add + 12 + 2 , ordinal * 3 + Y_Add);
+	cout << ":";
+	gotoxy(X_Add + 12 + 8 , ordinal * 3 + Y_Add);
+	cout << "/";
+	gotoxy(X_Add + 12 + 11, ordinal * 3 + Y_Add);
+	cout << "/";
+
+
+	while( true )
+	{
+		/*Kiem tra theo trinh tu Hour->Minutes->Day->Month->Year*/
+		switch(DTordinal)
+		{
+		case 0:
+			ConstraintForDateAndTime(DT.h,DTordinal,SaveOrCancel,12,23);
+			DTordinal++;
+			break;
+		case 1:
+			ConstraintForDateAndTime(DT.mi,DTordinal,SaveOrCancel,12,59);
+			DTordinal++;
+			break;
+		case 2:
+			ConstraintForDateAndTime(DT.d,DTordinal,SaveOrCancel,12,31);
+			DTordinal++;
+			break;
+		case 3:
+			ConstraintForDateAndTime(DT.m,DTordinal,SaveOrCancel,12,13);
+			DTordinal++;
+			break;
+		case 4:
+			ConstraintForDateAndTime(DT.y,DTordinal,SaveOrCancel,12,2100);
+			return;
+		}
+	}//while( true )
+}
+
+bool RemoveHead(FlightList &FL)
+{
+	if( FL.pHead == NULL)
+		return false;
+	FlightNode *tempo = FL.pHead;
+	FL.pHead = FL.pHead->pNext;
+	delete tempo;
+	FL.SoLuongChuyenBay--;
+	return true;
+}
+
+bool RemoveEnding(FlightList &FL)
+{
+	if( FL.pHead == NULL)
+		return false;
+	FlightNode *tempo = NULL;
+	for( FlightNode *search = FL.pHead ; search != NULL;search = search->pNext)
+	{
+		if( search == FL.pTail)
+		{
+			tempo->pNext = NULL;
+			FL.pTail = tempo;
+			delete search;
+			--FL.SoLuongChuyenBay;
+			return true;
+		}
+		tempo = search;
+	}
+	
+}
+/*Muc tieu la xoa node dung sau node TempoFlight*/
+bool RemoveAfterAnother(FlightList &FL,FlightNode *TempoFlight)
+{
+	if( TempoFlight == NULL || TempoFlight->pNext == NULL)
+		return false;
+
+	FlightNode*RemovedNode = TempoFlight->pNext;
+	TempoFlight->pNext = RemovedNode->pNext;
+	delete RemovedNode;
+	FL.SoLuongChuyenBay--;
+	return true;
+}
+// xoa chuyen bay theo Ma chuyen bay
+// TRUE LA XOA THANH CONG , FASLSE LA THAT BAI
+bool RemoveFlightFollowID(FlightList &FL,const char *MaChuyenBayCanXoa)
+{
+	FlightNode *CleanedFlight = FindFlight(FL,MaChuyenBayCanXoa);
+
+	if( CleanedFlight == NULL)
+		return false;
+	else if( CleanedFlight == FL.pHead)
+		return RemoveHead(FL);
+	else if( CleanedFlight == FL.pTail)
+		return RemoveEnding(FL);
+	else
+	{
+		FlightNode *tempora = FL.pHead;
+		while (true) {
+			if (tempora->pNext == CleanedFlight) {
+				break;
+			}
+			tempora = tempora->pNext;
+		}
+			
+		return RemoveAfterAnother(FL,tempora);
+	}
+}
+// giai phong bo nho
+bool CleanUpFlightList(FlightList &FL)
+{
+	if( FL.pHead == NULL)
+		return false;
+	FlightNode *tempo;
+	while(FL.pHead != NULL)
+	{
+		tempo = FL.pHead;
+		FL.pHead = FL.pHead->pNext;
+		delete tempo;
+	}
+	return true;
+}
+// cap nhat trang thai chuyen bay
+void AutoUpdateFlightStatus(FlightList &FL)
+{
+	for( FlightNode *search = FL.pHead; search != NULL ; search = search->pNext)
+	{
+		if( DateTimeIsValid( search->data.ThoiGianDi ) == false )
+			//// 1: hủy chuyến, 2: còn vé, 3: hết vé,4: hoàn tất ; 
+			search->data.TrangThai = 4;
+	}
+}
+
+int CheckOut(Flight F, int x)
+{
+	for (int i = 0; i < F.TongSoDaBan; i++)
+	{
+		if (x == F.TicketList[i].Status)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
+/*Ham nay ve tat cac cho ngoi ra thanh 1 bang -  moi vi tri duoc ke o
+Ve da duoc ban se duoc danh dau mau RED*/
+void TicketChairBoard(Flight F)
+{
+	int x = X_TicketChair + 8;
+	int y = Y_TicketChair + 5;
+	int Limit = F.TongSoVe;
+
+	for ( int i = 1 ; i <= Limit ; i++ )
+	{
+		TicketStack(x , y, i, CheckOut(F,i));
+		x += 8;
+		/*i = 10 - da den vi tri cuoi cung cua hang do*/
+		if (i % 10 == 0)
+		{
+			y += 5;
+			x = X_TicketChair + 8;
+		}
+	}
+}
+/*Lam hieu ung cho cai ve duoc thanh sang tro toi chon*/
+void EffectTicketMenu(int index)
+{
+	ShowCur(false);
+	int Current = index;// lay vi tri cai ve hien tai
+
+	int column = (Current - 1) % 10;//(18-1)%10 = 7 ->cot thu 8
+	int row = (Current - 1) / 10;// (18-1)/10 = 1 ->hang thu 2
+
+	SetBGColor(1);// highligh vi tri hien tai
+	gotoxy( X_TicketChair + (column+1)*8, Y_TicketChair +(row+1)*5);
+	cout << char(176) << setw(3) << setfill('0')<<Current<<char(176);
+
+	/*Tam ve dung truoc tam ve hien tai truoc do*/
+	column = (CurPosPreTicket - 1) % 10;// 18-1 = 7 ->> cai nay dang nam cot 7
+	row = (CurPosPreTicket - 1) / 10; // 2
+
+	SetBGColor(ColorCode_Black);
+	gotoxy( X_TicketChair + (column+1)*8, Y_TicketChair +(row+1)*5);
+	cout << char(176) << setw(3) << setfill('0')<<CurPosPreTicket<<char(176);
+	CurPosPreTicket = Current;
+}
+/*Nut Dieu Khien De Chon Ve May Bay*/
+int ChooseTicket (Flight &F)
+{
+	system("color 0E");
+	// tao lai vi tri chon ve
+	CurPosTicket = 1;
+	CurPosPreTicket = 1;
+	
+	TicketChairBoard(F);
+	int signal;
+	int PASS = 1;// pass dung nhu 1 cai cong tac neu enter thi thoat ra ngoai
+	SetBGColor(1);// blue
+	gotoxy(X_TicketChair + (0 + 1) * 8, Y_TicketChair + (0 + 1) * 5);// (28,9)
+	cout << char(176) << setw(3) << setfill('0') << 1 << char(176);
+
+	while( PASS )
+	{
+		signal = _getch();
+		if( signal == 0 ) signal = _getch();
+
+		switch(signal)
+		{
+		case KEY_DOWN:
+			if( CurPosTicket + 10 <= F.TongSoVe )
+			{
+				CurPosTicket = CurPosTicket + 10;
+				EffectTicketMenu( CurPosTicket );
+			}
+			break;
+		case KEY_UP:
+			if( CurPosTicket - 10 >= 1)
+			{
+				CurPosTicket = CurPosTicket - 10;
+				EffectTicketMenu( CurPosTicket  );
+			}
+			break;
+		case KEY_LEFT:
+			if( CurPosTicket > 1 )
+			{
+				CurPosTicket--;
+				EffectTicketMenu( CurPosTicket  );
+			}
+			break;
+		case KEY_RIGHT:
+			if ( CurPosTicket < F.TongSoVe)
+			{
+				CurPosTicket++;
+				EffectTicketMenu( CurPosTicket );
+			}
+			break;
+		case ESC:
+			return -1;
+		case ENTER:
+			if (CheckOut(F, CurPosTicket) == 1) {
+				
+				gotoxy(3, 5);
+				cout << "Ve nay da co Hanh khach dat cho";
+				Sleep(1000);
+				gotoxy(3, 5);
+				SetBGColor(ColorCode_Black);
+				printf("%-50s", " ");
+				break;
+			}
+			PASS = 0;
+			return CurPosTicket;
+		}// end switch
+	}// while
+	return 0;
+}
+/*xuat thong tin 1 chuyen bay*/
+void ShowFlight(Flight F,int position)
+{
+	int xKeyDisplay[7] = {1,20,45,63,80,95, 107};// toa do X cac diem nut
+	/*string ContentFlight[6] = { "Ma Chuyen Bay","San Bay Den"
+	,"So Hieu May Bay","Thoi Gian Di","Tong So Ve","Trang Thai"};*/
+	gotoxy(xKeyDisplay[0] + 3, Y_Display + 3 + position*3);printf("%-15s",F.MaChuyenBay);
+	gotoxy(xKeyDisplay[1] + 3, Y_Display + 3 + position*3);printf("%-18s",F.SanBayDen);
+	gotoxy(xKeyDisplay[2] + 3, Y_Display + 3 + position*3);printf("%-15s",F.SoHieuMB);
+	gotoxy(xKeyDisplay[3] + 2, Y_Display + 3 + position*3);OutputDateTime(F.ThoiGianDi);
+	gotoxy(xKeyDisplay[4] + 6, Y_Display + 3 + position*3);printf("%-3d",F.TongSoVe);
+	gotoxy(xKeyDisplay[5] + 3, Y_Display + 3 + position*3);
+	// 1: hủy chuyến, 2: còn vé, 3: hết vé,4: hoàn tất ; 
+	switch(F.TrangThai)
+	{
+	case 1: cout << "Huy     ";
+		break;
+	case 2: cout << "Con ve  ";
+		break;
+	case 3: cout << "Het ve  ";
+		break;
+	case 4: cout << "Hoan tat";
+		break;
+	default:
+		break;
+	}
+
+
+}
+
+/*Xuat thong tin danh sach  chuyen bay*/
+void ShowFlightList(FlightList FL)
+{
+	if( FL.pHead == NULL && FL.pTail == NULL) return;
+
+	int count = -1 ;
+	AutoUpdateFlightStatus(FL);
+
+	for( FlightNode *search = FL.pHead ; search != NULL ; search = search->pNext)
+	{
+		count++;
+		ShowFlight(search->data,count);
+	}
+}
+/*hien thi chuyen bay theo trang*/
+void ShowFlightListPerPage(FlightList FL, int StartIndex)
+{
+	gotoxy(1,2);
+	cout << " So luong chuyen bay : " << FL.SoLuongChuyenBay;
+
+	if( FL.pHead == NULL && FL.pTail == NULL) return;
+
+	int count = -1 ;
+	AutoUpdateFlightStatus(FL);
+
+	for( FlightNode *search = FL.pHead ; search != NULL ; search = search->pNext)
+	{
+		count++;
+		if( count == StartIndex)
+		{
+			int i = - 1;
+			while( search != NULL && i < NumberPerPage - 1 )
+			{
+				ShowFlight(search->data,++i);
+				search = search->pNext;
+			}
+			RemoveExceedMember(i+1, 7);
+			break;
+		}
+	}
+	gotoxy(X_Page,Y_Page);
+	cout <<"Trang "<< CurFlightPage << "/" << TotalFlightPage;
+}
+
+void ChangePageManageFlightList(FlightList FL)
+{
+	gotoxy(1,2);
+	cout << " So luong chuyen bay : " << FL.SoLuongChuyenBay;
+	gotoxy(X_TitlePage,Y_TitlePage);
+	cout << " Quan ly chuyen bay ";
+
+	ShowFlightListPerPage(FL,(CurFlightPage-1)*NumberPerPage);
+
+	gotoxy(X_Page,Y_Page);
+	cout <<"Trang "<< CurFlightPage << "/" << TotalFlightPage;
+}
+
+// kiem tra xem da nhap du thong tin co du khong
+bool FlighDataIsEmpty(Flight F)
+{
+	if( strlen(F.MaChuyenBay) == 0 || strlen(F.SanBayDen) == 0 || F.TongSoVe <= 0)
+	{
+		return false;
+	}
+	return true;
+}
+/*Edited = false de luon la nhap moi khi goi ham*/
+void InputFlight( FlightList &FL,bool EditedOrNot, bool DeleteOrNot)
+{
+	ShowCur(true);
+	
+	int ordinal = 0;
+	bool MoveOrNot = false;//ko di chuyen
+	bool SaveOrNot = true;// mac dinh la nguoi dung se luu lai
+	bool  IDExisted = false;// ma chuyen bay luon la nhap moi
+	string ID;// Ma chuyen bay
+	string destination;// San bay den
+	string AirplaneID;//So hieu may bay
+	DateTime DT;// ngay gio
+	int nSoldTicket = 0;
+	int nTicket = 0 ;// so ve trong chuyen bay 
+	int status = 0 ;// luon con ve
+	int target = -1;// kiem tra Ma chuyen bay ton tai hay chua
+	/*string ContentFlight[6] = { "Ma Chuyen Bay","San Bay Den"
+	,"So Hieu May Bay","Thoi Gian Di","Tong So Ve","Trang Thai"};*/
+	int targett = -1;// kiem tra so hieu may bay co ton tai hay khong
+	while( true )
+	{
+		switch(ordinal)
+		{
+		case 0:// nhap ma chuyen bay
+			{
+				
+				ConstraintForLetterAndNumber(ID,MoveOrNot,ordinal,SaveOrNot,12);
+				RemoveNotification();
+				// neu nguoi dung thoat ra giua chung
+				if (SaveOrNot == false)
+				{
+					RemoveFormComplete();
+					return;
+				}
+				// xu ly neu bo trong
+				if (ID == "")
+				{
+					gotoxy(X_Notification,Y_Notification);cout<<"Thong Bao";
+					gotoxy(X_Notification, Y_Notification + 1);
+					cout << "Vui Long Khong Bo Trong";
+					break;
+				}
+
+				// xu ly neu la xoa
+				if (DeleteOrNot) 
+				{
+					int target = RemoveConfirm();
+					//RemoveNotification();
+					gotoxy(50,50);
+
+					RemoveFormComplete();
+					// XOA THEO MA CHUYEN BAY DUOC NHAP
+					if ( !RemoveFlightFollowID(FL,ID.c_str() )  )
+					{ 
+						gotoxy(X_Notification, Y_Notification    );cout <<" Thong Bao";
+						gotoxy(X_Notification, Y_Notification + 1);cout <<" Xoa khong thanh cong";
+					}
+					else 
+					{
+						gotoxy(X_Notification, Y_Notification    );cout <<" Thong Bao";
+						gotoxy(X_Notification, Y_Notification + 1);cout <<" Xoa thanh cong";
+					}
+					system("color 0E");
+					return;
+				}
+				
+				// tim kiem Ma Chuyen Bay
+				target = FindIndexFlight(FL,ID.c_str() );
+				
+				if (target > -1 && EditedOrNot == false) {
+						gotoxy(X_Notification, Y_Notification    );cout <<"Thong Bao";
+						gotoxy(X_Notification, Y_Notification + 1);cout <<"ID da ton tai";
+						gotoxy(X_Notification, Y_Notification + 2);cout <<"He thong khong chap nhan";
+						gotoxy(X_Notification, Y_Notification + 3);cout <<"ID co cung noi dung";
+						break;
+				}
+
+				else if (target < 0 && EditedOrNot == true) {
+					gotoxy(X_Notification, Y_Notification    );cout << "Thong Bao";
+					gotoxy(X_Notification, Y_Notification + 1);cout << "ID khong ton tai";
+					break;
+				}
+				FlightNode *EditingFlight = FindFlight(FL,ID.c_str() );
+				/*string ContentFlight[6] = { "Ma Chuyen Bay","San Bay Den"
+				,"So Hieu May Bay","Thoi Gian Di","Tong So Ve","Trang Thai"};*/
+				if (EditedOrNot)
+				{
+						//ordinal = 1;
+						gotoxy(X_Add + 12, 0 * 3 + Y_Add);cout << EditingFlight->data.MaChuyenBay;
+						gotoxy(X_Add + 12, 1 * 3 + Y_Add);cout << EditingFlight->data.SanBayDen;
+						gotoxy(X_Add + 12, 2 * 3 + Y_Add);cout << EditingFlight->data.SoHieuMB;
+						gotoxy(X_Add + 12, 3 * 3 + Y_Add);OutputDateTime(EditingFlight->data.ThoiGianDi);
+						gotoxy(X_Add + 12, 4 * 3 + Y_Add);cout << EditingFlight->data.TongSoVe;
+						gotoxy(X_Add + 12, 5 * 3 + Y_Add);cout << EditingFlight->data.TrangThai;
+				}
+				ordinal++;
+				break;
+			}
+		case 1:// San bay den
+			{
+				ConstraintsForLetterAndSpace(destination,MoveOrNot,ordinal,SaveOrNot,12);
+				RemoveNotification();
+				if (SaveOrNot == false)
+				{
+					RemoveFormComplete();
+					return;
+				}
+				if( destination =="")
+				{
+					gotoxy(X_Notification, Y_Notification    );cout << "Thong Bao";
+					gotoxy(X_Notification, Y_Notification + 1);cout << " Vui Long Khong Bo Trong ";
+					break;
+				}
+			}
+			ordinal++;
+			break;
+		case 2:// So hieu may bay
+			{
+				 ConstraintForLetterAndNumber(AirplaneID,MoveOrNot,ordinal,SaveOrNot,12);
+				 RemoveNotification();
+				 if (SaveOrNot == false)
+				 {
+					RemoveFormComplete();
+					return;
+				 }
+				 /*kiem tra xem So hieu may bay nhap vao co ton tai*/
+				if (AirplaneID == "") {
+					gotoxy(X_Notification, Y_Notification    );cout<<"Thong Bao";
+					gotoxy(X_Notification, Y_Notification + 1);cout << " Vui Long Khong Bo Trong ";
+					break;
+				}
+
+				 targett = FindIndexAirplane( LA,AirplaneID.c_str() );
+				 
+				 // neu may bay khong ton tai
+				 
+				 if( targett < 0 )
+				 {
+					 gotoxy(X_Notification,Y_Notification     );cout<<"Thong Bao";
+					 gotoxy(X_Notification, Y_Notification + 1);cout <<"So hieu may bay khong ton tai";
+					 break;
+				 }
+				 
+			}
+			
+			ordinal++;
+			break;
+		case 3:// Nhap thoi gian di cua may bay
+			{
+				InitDataTime(DT);// khoi tao cac gia tri DateTime la thoi gian he thong
+				InputDateAndTimeInfor(DT, ordinal);
+				RemoveNotification();
+				if (SaveOrNot == false)
+				 {
+					RemoveFormComplete();
+					return;
+				 }
+				ordinal++;
+			}
+			break;
+		case 4:// nhap so ve may bay
+			{
+				ConstraintForOnlyNumber(nTicket,MoveOrNot,ordinal,SaveOrNot,12,999);
+				RemoveNotification();
+				if (SaveOrNot == false)
+				 {
+					RemoveFormComplete();
+					return;
+				 }
+
+				if( nTicket > LA.DSMB[targett]->SoChoMB || nTicket <20 )
+				{
+					gotoxy(X_Notification, Y_Notification    );cout << "Thong Bao";
+					gotoxy(X_Notification, Y_Notification + 1);cout << "So Ve khong phu hoi voi";
+					gotoxy(X_Notification, Y_Notification + 2);cout << "So cho tren May Bay";
+					gotoxy(X_Notification, Y_Notification + 3);cout << "20 <= So cho <="<< LA.DSMB[targett]->SoChoMB;
+					break;
+				}
+			}
+			ordinal++;
+			break;
+		case 5:
+			{
+			/*
+			thêm thông báo*/
+			// 1: hủy chuyến, 2: còn vé, 3: hết vé,4: hoàn tất ; 
+			gotoxy(X_Notification,Y_Notification+1);cout <<"1 = Huy     ";
+			gotoxy(X_Notification,Y_Notification+2);cout <<"2 = Con ve  ";
+			gotoxy(X_Notification,Y_Notification+3);cout <<"3 = Het ve  ";
+			gotoxy(X_Notification,Y_Notification+4);cout <<"4 = Hoan tat";
+			ConstraintForOnlyNumber(status, MoveOrNot, ordinal, SaveOrNot, 12, 4);
+			RemoveNotification();
+				if (SaveOrNot == false)
+				{
+					RemoveFormComplete();
+					return;
+				}
+				ordinal++;
+				break;
+			}
+		case 6:
+			{
+				Flight AddingFlight;
+				strcpy(AddingFlight.MaChuyenBay,ID.c_str() );
+				StandardName((char*)destination.c_str() );
+				strcpy(AddingFlight.SanBayDen,destination.c_str());
+				strcpy(AddingFlight.SoHieuMB,AirplaneID.c_str() );
+				AddingFlight.ThoiGianDi = DT;
+				AddingFlight.TongSoVe = nTicket;
+				AddingFlight.TrangThai = status;
+				/*string ContentFlight[6] = { "Ma Chuyen Bay","San Bay Den"
+				,"So Hieu May Bay","Thoi Gian Di","Tong So Ve","Trang Thai"};*/
+
+				/*Chinh sua*/
+				if( EditedOrNot && target > -1)
+				{
+					/*Lay du lieu ve*/
+					FlightNode *tempo = FindFlight(FL,AddingFlight.MaChuyenBay);
+					AddingFlight.TongSoDaBan = tempo->data.TongSoDaBan;
+					AddingFlight.TicketList  = tempo->data.TicketList;
+
+					tempo->data = AddingFlight;
+				}
+				else// them moi
+				{
+					AddingFlight.TongSoDaBan = 0;
+					AddEndingList(FL,AddingFlight);
+				}
+
+				//WriteFlightToFile(FL);
+
+				ID="";
+				destination="";
+				AirplaneID ="";
+				InitDataTime(DT);
+				nTicket = 0;
+				nSoldTicket = 0;
+				status = 0;
+				/*
+				Chinh sua ham removeform cho danh sach chuyen bay phu hop
+				*/
+				RemoveNotification();
+				RemoveForm();
+				ordinal = 0;
+			}
+			break;
+		} // end switch(ordinal)
+	}// end while( true )
+}
+
+void MenuManageFlightLisht( FlightList &FL)
+{
+
+	system("cls");
+
+	gotoxy(X_TitlePage,Y_TitlePage);
+	cout << " Quan ly chuyen bay ";
+
+	CurFlightPage = 1;
+	TotalFlightPage = (int)ceil( (double) FL.SoLuongChuyenBay/NumberPerPage );
+
+	Display( ContentFlight,sizeof(ContentFlight)/sizeof(string) );
+	ShowFlightListPerPage(FL,0);
+	
+
+	int signal;
+	while(true)
+	{
+		while( _kbhit() )
+		{
+			signal = _getch();
+			if (signal == ESC) {
+				ShowCur(false);
+				return;
+			}
+			if( signal == 224)
+			{
+				signal = _getch();
+				if( signal == PAGE_UP && CurFlightPage > 1)
+				{
+					CurFlightPage--;
+					ChangePageManageFlightList(FL);
+				}
+				else if( signal == PAGE_DOWN && CurFlightPage < TotalFlightPage)
+				{
+					CurFlightPage++;
+					ChangePageManageFlightList(FL);
+				}
+				else if( signal == INSERT)
+				{
+					//nChair la so ghe trong cac may bay
+					CreateForm(ContentFlight,0,6,30);
+					InputFlight(FL);
+					
+					TotalFlightPage = (int)ceil( (double)FL.SoLuongChuyenBay/NumberPerPage );
+					ShowFlightListPerPage(FL,(CurFlightPage-1)/NumberPerPage);
+				}
+				else if ( signal == DEL)
+				{
+					CreateForm(ContentFlight,0,1,30);
+					InputFlight(FL,false,true);
+					TotalFlightPage = (int)ceil( (double)FL.SoLuongChuyenBay/NumberPerPage );
+					ShowFlightListPerPage(FL,(CurFlightPage-1)/NumberPerPage);
+					ShowCur(false);
+				}
+				// chinh sua
+				else if ( signal == HOME)
+				{
+					CreateForm(ContentFlight,0,6,30);
+					InputFlight(FL,true,false);
+					TotalFlightPage = (int)ceil( (double)FL.SoLuongChuyenBay/NumberPerPage );
+					ShowFlightListPerPage(FL,(CurFlightPage-1)/NumberPerPage);
+					ShowCur(false);
+				}
+			}
+		}// while( _kbhit() )
+	}// while( true)
+}
+
+
+================================================
+FILE: FlightTP.h
+================================================
+﻿#pragma once
+#include"AirplaneTP.h"
+#include"GlobalVariableTP.h"
+#include"TicketTP.h"
+#include"DateTime.h"
+
+
+/*=====Thong tin 1 chuyen bay=====*/
+struct flight
+{
+	char MaChuyenBay[10];
+	char SanBayDen[20];
+	DateTime ThoiGianDi;
+	char SoHieuMB[15];
+	int TrangThai;// 0: hủy chuyến, 1: còn vé, 2: hết vé,3: hoàn tat
+	// ve may bay
+	int TongSoVe;
+	int TongSoDaBan;
+	Ticket *TicketList;
+};
+typedef struct flight Flight;
+/*=== Danh Sach Chuyen Bay - Mang Con Tro ===*/
+struct flightnode
+{
+	Flight data;
+	struct flightnode *pNext;
+};
+typedef struct flightnode FlightNode;
+
+struct flightlist
+{
+	FlightNode *pHead;
+	FlightNode *pTail;
+	int SoLuongChuyenBay;
+};
+typedef struct flightlist FlightList;
+
+void InitFlight(Flight &F);
+void InitFlightList(FlightList &FL);
+FlightNode *CreateFlightNode(Flight Data);
+void AddBeginningList(FlightList &FL,Flight Data);
+void AddEndingList(FlightList &FL,Flight Data);
+int FindIndexFlight( FlightList FL,const char *MaChuyenBayCanTim);
+int FindDestination( FlightList FL,const char* SanBayDenCanTim);
+FlightNode *FindFlight ( FlightList FL,const char *MaChuyenBayCanTim);
+FlightNode *FindByOrdinal( FlightList FL,int ordinal);
+void InputDateAndTimeInfor(DateTime &DT, int ordinal);
+bool RemoveHead(FlightList &FL);
+bool RemoveEnding(FlightList &FL);
+bool RemoveAfterAnother(FlightList &FL,FlightNode *TempoFlight);
+bool RemoveFlightFollowID(FlightList &FL,const char *MaChuyenBayCanXoa);
+bool CleanUpFlightList(FlightList &FL);
+void AutoUpdateFlightStatus(FlightList &FL);
+void TicketChairBoard(Flight F);
+void EffectTicketMenu(int index,int PreColor);
+int ChooseTicket ( Flight &F);
+void ShowFlight(Flight F,int position);
+void ShowFlightList(FlightList FL);
+void ShowFlightListPerPage(FlightList FL, int StartIndex);
+void ChangePageManageFlightList(FlightList FL);
+bool FlighDataIsEmpty(Flight F);
+void InputFlight( FlightList &FL,bool EditedOrNot = false,bool DeleteOrNot = false);
+void MenuManageFlightLisht( FlightList &FL);
+int CheckOut(Flight F, int x);
+
+
+================================================
+FILE: GlobalVariableTP.h
+================================================
+#pragma once
+
+
+
+#define TICKET_SOLD 1
+#define TICKET_EMPTY 0
+
+//color
+#define GREY 7
+#define GREEN 6
+#define PURPLE 5
+#define ColorCode_Black			0
+#define ColorCode_DarkBlue		1
+#define ColorCode_DarkGreen		2
+#define ColorCode_DarkCyan		3
+#define ColorCode_DarkRed		4
+#define ColorCode_DarkPink		5
+#define ColorCode_DarkYellow	6
+#define ColorCode_DarkWhite		7
+#define ColorCode_Grey			8
+#define ColorCode_Blue			9
+#define ColorCode_Green			10
+#define ColorCode_Cyan			11
+#define ColorCode_Red			12
+#define ColorCode_Pink			13
+#define ColorCode_Yellow		14
+#define ColorCode_White			15
+
+#define default_ColorCode		7
+
+//key
+#define SPACE  32
+#define ESC  27
+#define ENTER 13
+#define BACKSPACE 8
+#define KEY_UP 72// 0
+#define KEY_DOWN 80
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
+#define KEY_F2 60
+#define KEY_F3 61
+#define KEY_F4 62
+#define KEY_F10 68
+#define PAGE_DOWN 81// 224
+#define PAGE_UP 73
+#define INSERT 82
+#define DEL 83
+#define HOME 71
+#define END 79// 224
+// center menu
+const int MaxItem = 9;
+#define X_CenterMenu 60
+#define Y_CenterMenu 5
+
+// max quantity for members
+#define MaxAirplane 300
+// so luong may bay hien thi trong 1 trang
+#define NumberPerPage 6
+// Board Menu - bang liet ke ra danh sach
+#define X_Display 50
+#define Y_Display 3
+// Toa do de tao ra bang them thong tin
+#define X_Add 115
+#define Y_Add 4
+// Toa do cua phan hien thi page/ total Page
+#define X_Page 80
+#define Y_Page 26
+// Toa do phan huong dan
+#define X_Tutorial 5
+#define Y_Tutorial 27
+// Toa do dat tieu de VD: Quan Li May Bay
+#define X_TitlePage 60
+#define Y_TitlePage 1
+// Toa do phan thong bao
+#define X_Notification 115
+#define Y_Notification 26
+// Toa do cho vi tri ve
+#define X_TicketChair 20
+#define Y_TicketChair 4
+// toa do cho vi tri xac nhan xoa
+#define X_RemoveConfirm 80
+#define Y_RemoveConfirm 27
+
+#define Limit_ID_Length 15
+#define Litmit_Word_Length 40
+
+
+================================================
+FILE: Introduction.txt
+================================================
+						
+				  __  __                                            _      _ _            
+				 |  \/  |                                     /\   (_)    | (_)           
+				 | \  / | __ _ _ __   __ _  __ _  ___        /  \   _ _ __| |_ _ __   ___ 
+				 | |\/| |/ _` | '_ \ / _` |/ _` |/ _ \      / /\ \ | | '__| | | '_ \ / _ \
+				 | |  | | (_| | | | | (_| | (_| |  __/     / ____ \| | |  | | | | | |  __/
+				 |_|  |_|\__,_|_| |_|\__,_|\__, |\___|    /_/    \_\_|_|  |_|_|_| |_|\___|	
+			        	                    __/ |                                         
+			                	           |___/                                                                                          
+	                       `-+sso:.                                                                     
+	                          `:shhyo/.                                                                 
+	                             `/shdhho/.`                                           .---.`                 
+	     :o++-`                     .+yhhhdhs+-.`                                   ````````````        
+	     `ydmmy+.                    ``-+yhdhhhhyo/-.`                 ```...--::+++sosyyhyyhyyso:.     
+	      `hmNddh+-`                     `:+yhdddhhdhyo+:.``..-//.///+oosshhhdddmmmNNNNNNNmdmNNNNNNh+.  
+	       `ymyhhohs:.                      `-sddhhhyyosyssdmmNNNsddmmmNddMMMMMNmmmmmmmmmmmmmmNMMMMNh-  
+	  `     `oyoyysyoyo-`       ``.-:::/ooyyyhhyhhhhhhhmNdMMMMNMMdhyyyyyyyhhhddhhhddhhhdhhhhhhs+/:-     
+	`-+ss+/:..syyhyhsyhyy+//o//+ydhhdddhmmmmmdhhshhdddhhddmmmmmmmddddhhdddhhhhyyyyso//::--.`            
+	   `./shdhyhhhhyyyddddhddhhdmmhhhhhhhhysss+ooshhddhhhddhhhddhhhddhhs/:--..`                         
+	      `-ymmmmmmmddNNNmhdhyyyyyyyyshhhhhhhhhhhhhhddhhhddhhhdddmdhdNNd+y.                             
+	      -/+ymmmmmmdmdhhhhdhhhhhdhhhyyoo++/:----..-``shysoooyymMMMMMMMMdd:                             
+	         -/-`       ``...``...`                 .://:-.   `.:+mmmmdho+`                             
+	                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+
+
+================================================
+FILE: MyLibraryTP.cpp
+================================================
+﻿#pragma once
+
+#include <conio.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <dos.h>
+#include <string.h>
+#include <windows.h>
+
+#define Enter 13
+//const int WHITE=15;
+#define PASSWORD "abcdef"
+//const int WHITE=15;
+
+// đưa con trỏ tới vị trí(x,y)
+void gotoxy(short x,short y)
+{
+        HANDLE hConsoleOutput;
+        COORD Cursor_an_Pos = { x,y};
+        hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleCursorPosition(hConsoleOutput , Cursor_an_Pos);
+}  
+// xác định vị trí của x trên màn hình - x là chiều dài của màn hình
+// đi từ trái sang phải
+int wherex( void )
+{
+    HANDLE hConsoleOutput;
+    hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO screen_buffer_info;
+    GetConsoleScreenBufferInfo(hConsoleOutput, &screen_buffer_info);
+    return screen_buffer_info.dwCursorPosition.X;
+}
+// xác định vị trí của con trỏ theo chiều rộng - y có chiều dương hướng từ
+// trên xuống dưới
+int wherey( void )
+{
+    HANDLE hConsoleOutput;
+    hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO screen_buffer_info;
+    GetConsoleScreenBufferInfo(hConsoleOutput, &screen_buffer_info);
+    return screen_buffer_info.dwCursorPosition.Y;
+}
+// xóa màn hình theo điều kiện nào đó
+void clreol() {
+COORD coord;
+DWORD written;
+CONSOLE_SCREEN_BUFFER_INFO info;
+GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+coord.X = info.dwCursorPosition.X;
+coord.Y = info.dwCursorPosition.Y;
+FillConsoleOutputCharacter (GetStdHandle(STD_OUTPUT_HANDLE), ' ',
+  info.dwSize.X - info.dwCursorPosition.X * info.dwCursorPosition.Y, coord, &written);
+gotoxy (info.dwCursorPosition.X , info.dwCursorPosition.Y );
+}
+
+// đặt màu cho chữ với color là giá trị từ 0 đến 255
+void SetColor(WORD color)
+{
+    HANDLE hConsoleOutput;
+    hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    CONSOLE_SCREEN_BUFFER_INFO screen_buffer_info;
+    GetConsoleScreenBufferInfo(hConsoleOutput, &screen_buffer_info);
+
+    WORD wAttributes = screen_buffer_info.wAttributes;
+    color &= 0x000f;
+    wAttributes &= 0xfff0;
+    wAttributes |= color;
+
+    SetConsoleTextAttribute(hConsoleOutput, wAttributes);
+}
+//đặt màu nền cũng với color từ 0 đến 255
+void SetBGColor(WORD color)
+{
+    HANDLE hConsoleOutput;
+    hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    CONSOLE_SCREEN_BUFFER_INFO screen_buffer_info;
+    GetConsoleScreenBufferInfo(hConsoleOutput, &screen_buffer_info);
+
+    WORD wAttributes = screen_buffer_info.wAttributes;
+    color &= 0x000f;
+    color <<= 4;
+    wAttributes &= 0xff0f;
+    wAttributes |= color;
+
+    SetConsoleTextAttribute(hConsoleOutput, wAttributes);
+}
+// xóa hoàn toàn màn hình
+void clearScreen() {
+	system("cls");
+}
+
+// hien thi con tro hoac khong
+void ShowCur(bool CursorVisibility)
+{
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cursor = { 1, CursorVisibility };
+	SetConsoleCursorInfo(handle, &cursor);
+}
+// quy dinh kich co man hinh console
+void SizeConsole(SHORT Width, SHORT height)
+{
+	SMALL_RECT SizeW = { 0,0,Width - 1,height - 1 };
+	COORD sizebuff = { Width,height };
+	BOOL BSize = SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), true, &SizeW);
+	SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE), sizebuff);
+	if (!BSize) SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), true, &SizeW);
+}
+
+// Xóa toàn b? n?i dung c?a s? console - chôm t? MSDN
+HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+void cls(HANDLE hConsole)
+{
+	COORD coordScreen = { 0, 0 };    // home for the cursor 
+	DWORD cCharsWritten;
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	DWORD dwConSize;
+
+	// Get the number of character cells in the current buffer. 
+
+	if (!GetConsoleScreenBufferInfo(hConsole, &csbi))
+		return;
+	dwConSize = csbi.dwSize.X * csbi.dwSize.Y;
+
+	// Fill the entire screen with blanks.
+
+	if (!FillConsoleOutputCharacter(hConsole, (TCHAR) ' ',
+		dwConSize, coordScreen, &cCharsWritten))
+		return;
+
+	// Get the current text attribute.
+
+	if (!GetConsoleScreenBufferInfo(hConsole, &csbi))
+		return;
+
+	// Set the buffer's attributes accordingly.
+
+	if (!FillConsoleOutputAttribute(hConsole, csbi.wAttributes,
+		dwConSize, coordScreen, &cCharsWritten))
+		return;
+
+	// Put the cursor at its home coordinates.
+
+	SetConsoleCursorPosition(hConsole, coordScreen);
+}
+// Vi?t l?i hàm clrscr, không c?n cung du?c nhung d? nh́n vào code cho d?p m?t
+void clrscr()
+{
+	cls(hCon);
+}
+
+BOOL NT_SetConsoleDisplayMode(HANDLE hOutputHandle, DWORD dwNewMode)
+{
+	typedef BOOL(WINAPI *SCDMProc_t) (HANDLE, DWORD, LPDWORD);
+	SCDMProc_t SetConsoleDisplayMode;
+	HMODULE hKernel32;
+	BOOL bFreeLib = FALSE, ret;
+	const char KERNEL32_NAME[] = "kernel32.dll";
+
+	hKernel32 = GetModuleHandleA(KERNEL32_NAME);
+	if (hKernel32 == NULL)
+	{
+		hKernel32 = LoadLibraryA(KERNEL32_NAME);
+		if (hKernel32 == NULL)
+			return FALSE;
+
+		bFreeLib = true;
+	}
+
+	SetConsoleDisplayMode =
+		(SCDMProc_t)GetProcAddress(hKernel32, "SetConsoleDisplayMode");
+	if (SetConsoleDisplayMode == NULL)
+	{
+		SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
+		ret = FALSE;
+	}
+	else
+	{
+		DWORD tmp;
+		ret = SetConsoleDisplayMode(hOutputHandle, dwNewMode, &tmp);
+	}
+
+	if (bFreeLib)
+		FreeLibrary(hKernel32);
+
+	return ret;
+}
+
+void fullscreen()
+{
+	keybd_event(VK_MENU,0x38,0,0);
+	keybd_event(VK_RETURN,0x1c,0,0);
+	keybd_event(VK_RETURN,0x1c,KEYEVENTF_KEYUP,0);
+	keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0);
+}
+
+// Đ?t ch? d? FullScreen
+void setFullScreen()
+{
+	NT_SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), 1);
+}
+
+// Thoát kh?i fullscreen
+void exitFullScreen()
+{
+	NT_SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), 1);
+}
+
+
+================================================
+FILE: MyLibraryTP.h
+================================================
+#pragma once
+
+#include <conio.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <dos.h>
+#include <string.h>
+#include <windows.h>
+
+#define Enter 13
+//const int WHITE=15;
+#define PASSWORD "abcdef"
+//const int WHITE=15;
+
+
+int CheckPwd();
+void gotoxy(short x,short y);
+int wherex( void );
+int wherey( void );
+void clreol();
+void SetColor(WORD color);
+void SetBGColor(WORD color);
+void clearScreen();
+void ShowCur(bool CursorVisibility);
+void SizeConsole(SHORT Width, SHORT height);
+void SizeConsole();
+void cls(HANDLE hConsole);
+void clrscr();
+void fullscreen();
+void setFullScreen();
+void exitFullScreen();
+
+
+================================================
+FILE: PassengerTP.cpp
+================================================
+#pragma once
+#include"UserInterfaceTP.h"
+#include"ConstraintTP.h"
+#include"ProcessionTP.h"
+#include"PassengerTP.h"
+#include"GlobalVariableTP.h"
+int CurPosPassenger = 1;
+int CurPassengerPage = 1;
+int TotalPassengerPage = 0;
+extern FlightList FL;
+extern ListAirplane LA;
+extern string ContentPassenger[5];
+extern string ContentFlight[6];
+extern int nPassenger;
+unsigned int *ArrPassengerId;
+/*Noi dung cho chuc nang thu 8*/
+string SpecifedFlight[6] = {
+		"Ma Chuyen Bay",
+		"So Hieu May Bay",
+		"Tong So Ve",
+		"Gio Khoi Hanh",
+		"Da Ban",
+		"Con Trong"};
+void CreateAVLTree(AVLTree &root)
+{
+	root = NULL;
+	nPassenger = 0;
+}
+
+// tim max giua a va b
+int maxi(int a,int b)
+{
+	if(a >= b)
+	{
+		return a;
+	}
+	return b;
+}
+// chieu cao cua cay
+int height(AVLTree root)
+{
+	if( root == NULL)
+	{
+		return 0;
+	}
+	return root->height;
+}
+
+AVLTree CreateTree(Passenger data)
+{
+	AVLTree newpassenger = new PassengerNode;
+	newpassenger->data = data;
+	newpassenger->pLeft = NULL;
+	newpassenger->pRight = NULL;
+	newpassenger->height = 1;
+	return newpassenger;
+}
+/*BE LEFT*/
+AVLTree RightRotate(AVLTree y)
+{
+	AVLTree x = y->pLeft;
+	AVLTree T2= x->pRight;
+
+	// thuc hien xoay
+	x->pRight = y;
+	y->pLeft = T2;
+	// cap nhat chieu cao
+	y->height = maxi( height(y->pLeft),height(y->pRight) )+1;
+	x->height = maxi( height(x->pLeft), height(x->pRight) ) +1;
+	
+	// tra ve node moi
+	return x;
+}
+/*BE RIGHT*/
+AVLTree LeftRotate(AVLTree x)
+{
+	AVLTree y = x->pRight;
+	AVLTree T2 = y->pLeft;
+	
+	// thuc hien phep quay
+	y->pLeft = x; 
+	x->pRight = T2;
+
+	// cap nhat chieu cao
+	x->height = maxi( height(x->pLeft),height(x->pRight)  )+1;
+	y->height = maxi( height(y->pLeft), height(y->pRight) )+1;
+	
+	return y;
+}
+
+// lay gia tri can bang
+int getBalanceFactor(AVLTree root)
+{
+	if( root == NULL)
+	{
+		return 0;
+	}
+	return height(root->pLeft) - height(root->pRight);
+}
+
+// them theo toan bo thong tin cua hanh khach
+AVLTree AddPassenger(AVLTree &root,Passenger data)
+{
+	//them nhu cay nhi phan binh thuong
+	if(root == NULL)
+	{
+		return CreateTree(data);
+	}
+	if (data.CMND < root->data.CMND)
+	{
+		root->pLeft = AddPassenger(root->pLeft, data);
+	}
+	else if (data.CMND > root->data.CMND)
+	{
+		root->pRight = AddPassenger(root->pRight, data);
+	}
+	else  return root;
+	/*cap nhat lai chieu cao cho cay*/
+	root->height = maxi( height(root->pLeft),height(root->pRight) ) + 1;
+	
+
+	/*kiem tra xem co bi mat can bang hay khong*/
+	int BalanceFactor = getBalanceFactor(root);
+	// height(root->pLeft) - height(root->pRight);
+
+	/*neu no mat can bang thi xay ra 4 truong hop*/
+
+	// Left left case
+	if( BalanceFactor > 1 &&
+		data.CMND < root->pLeft->data.CMND)
+	{
+		return RightRotate(root);
+	}
+	// right right case
+	if( BalanceFactor < -1 &&
+		data.CMND > root->pRight->data.CMND)
+	{
+		return LeftRotate(root);
+	}
+	// left right case
+	if( BalanceFactor > 1 &&
+		data.CMND > root->pLeft->data.CMND)
+	{
+		root->pLeft = LeftRotate(root->pLeft);
+		return  RightRotate(root);
+	}
+
+	// right left case
+	if( BalanceFactor < -1 &&
+		data.CMND < root->pRight->data.CMND)
+	{
+		root->pRight = RightRotate(root->pRight);
+		return LeftRotate(root);
+	}
+
+	return root;
+	
+}
+
+// tra ve gia tri cuc trai thap nhat
+AVLTree minValuePassenger(AVLTree root)
+{
+	AVLTree current = root;
+	if( current->pLeft != NULL)
+	{
+		current = current->pLeft;
+	}
+	return current;
+}
+
+// xoa theo CMND cua hanh khach
+AVLTree RemovePassenger(AVLTree &root,Passenger data)
+{
+	// B1 tim vi tri ung voi cai node can xoa
+	if(root == NULL)
+	{
+		return root;
+	}
+
+	if( data.CMND < root->data.CMND)
+	{
+		root->pLeft = RemovePassenger(root->pLeft,data);
+	}
+	else if( data.CMND > root->data.CMND)
+	{
+		root->pRight = RemovePassenger(root->pRight,data);
+	}
+	// neu da tim ra CMND bang dung CMND co trong cay AVL,thi no la node can xoa
+	else
+	{
+		// TH1: ID co 1 cay con hoac khong co cay con nao
+		if( (root->pLeft == NULL) || (root->pRight == NULL) )
+		{
+			AVLTree tempo = root->pLeft ? root->pLeft : root->pRight;
+
+			// TH khong co nhanh con
+			if( tempo == NULL)
+			{
+				tempo = root;
+				root = NULL;
+			}
+			// TH co 1 nhanh con TRAI hoac PHAI
+			else
+			{
+				*root = *tempo;/*TRUYEN DIA CHI CUA *TEMPO cho *ROOT*/
+				free(tempo);/*GIAI PHONG VUNG NHO TEMPO DO khong dung toi nua*/
+			}
+		}
+		// TH2 :node can xoa co 2 nhanh con
+		else
+		{
+			/*Node thay the la node trai nhat cua nhanh ben PHAI*/
+			/*Vi no lon hon tat ca node ben o nhanh ben trai va nho hon tat
+			ca node o nhanh ben phai*/
+			AVLTree tempo = minValuePassenger(root->pRight); 
+			/*tim duoc thi chep noi dung cua node thay the vao vi tri node can
+			xoa*/
+			root->data = tempo->data;
+			/*xoa node thay the o vi tri cu di*/
+			root->pRight = RemovePassenger(root->pRight,tempo->data);
+		}
+		// B2: cap nhat do cao cua node
+		root->height = maxi( height(root->pLeft) , height(root->pRight) )+1;
+		// B3 : can bang cay
+		int BalanceFactor = getBalanceFactor(root);
+
+		// Left left case
+		if( BalanceFactor > 1 &&
+			data.CMND < root->pLeft->data.CMND)
+		{
+			return RightRotate(root);
+		}
+		// right right case
+		if( BalanceFactor < -1 &&
+			data.CMND > root->pRight->data.CMND)
+		{
+			return LeftRotate(root);
+		}
+		// left right case
+		if( BalanceFactor > 1 &&
+			data.CMND > root->pLeft->data.CMND)
+		{
+			root->pLeft = LeftRotate(root->pLeft);
+			return RightRotate(root);
+		}
+
+		// right left case
+		if( BalanceFactor < -1 && 
+			data.CMND < root->pRight->data.CMND)
+		{
+			root->pRight = RightRotate(root->pRight);
+			return LeftRotate(root);
+		}
+	}
+}
+
+bool FindPassengerFollowID(AVLTree root,unsigned int CMNDcantim)
+{
+	if( root != NULL)
+	{
+		if( root->data.CMND == CMNDcantim)
+		{
+			return true;
+		}
+		else if( root->data.CMND < CMNDcantim)
+		{
+			FindPassengerFollowID(root->pLeft,CMNDcantim);
+		}
+		else if( root->data.CMND > CMNDcantim)
+		{
+			FindPassengerFollowID(root->pRight,CMNDcantim);
+		}
+	}
+	return false;
+}
+
+PassengerNode* FindPassenger(AVLTree root, unsigned int CMNDcantim)
+{
+	if (root == NULL) return NULL;
+	if (root->data.CMND == CMNDcantim)
+		return root;
+	if (root->data.CMND > CMNDcantim)
+		FindPassenger(root->pLeft, CMNDcantim);
+	else
+		FindPassenger(root->pRight, CMNDcantim);
+}
+
+void ShowPassenger(Passenger P,int position)
+{
+	int xKeyDisplay[7] = {1,20,45,63,80,95, 107};// toa do X cac diem nut
+	gotoxy(xKeyDisplay[0] + 3, Y_Display + 3 + position*3);printf("%-5d",position+1);
+	gotoxy(xKeyDisplay[1] + 3, Y_Display + 3 + position*3);printf("%-12d",P.CMND);
+	gotoxy(xKeyDisplay[2] + 3, Y_Display + 3 + position*3);printf("%-20s",P.Ho);
+	gotoxy(xKeyDisplay[3] + 3, Y_Display + 3 + position*3);printf("%-10s",P.Ten);
+	gotoxy(xKeyDisplay[4] + 5, Y_Display + 3 + position*3);
+	if( P.GioiTinh == 1)
+		cout << "Nam";
+	if( P.GioiTinh == 0)
+		cout << "Nu";
+}
+
+void ShowListPassengerPerPage(AVLTree root,int BeginIndex)
+{
+	int i;
+
+	for(  i = 0 ; i + BeginIndex <= nPassenger && i < NumberPerPage;i++)
+	{
+		PassengerNode* tempo = FindPassenger(root,ArrPassengerId[i+BeginIndex] );
+		ShowPassenger(tempo->data,i);
+	}
+
+	RemoveExceedMember(i, 4);
+	gotoxy(X_Page,Y_Page);
+	cout << CurPassengerPage << "/" << TotalPassengerPage;
+}
+
+void swap ( unsigned int &x,unsigned int  &y)
+{
+	unsigned int tempo;
+	tempo = x;
+	x = y;
+	y = tempo;
+}
+/*sap xep so CMND trong mang CMND[100]*/
+void QuickSort(int left, int right, unsigned int a[]) {
+	int key = a[(left + right) / 2];
+	int i = left, j = right;
+	do {
+		while (a[i] < key) i++;// tien den khi gap a[i] > KEY
+		while (a[j] > key) j--;// lui ve den khi a[j] < KEY
+		if (i <= j) {// neu vi tri i < j trong mang thi doi cho
+			if (i < j) 
+				swap(a[i], a[j]);
+			i++;	j--;// tiep tuc thuc hien duyet
+		}
+	} while (i <= j);
+	if (left < j) QuickSort(left, j, a);
+	if (right > i) QuickSort(i, right, a);
+}
+void WatchRoot(AVLTree root)
+{
+	if (root != NULL)
+	{
+		WatchRoot(root->pLeft);
+		cout << root->data.Ten << "- " << root->data.CMND << endl;
+		WatchRoot(root->pRight);
+	}
+}
+void InputPassenger(AVLTree &root,bool EditedOrNot,bool DeleteOrNot, int IDPassenger)
+{
+	ShowCur(true);
+	bool SaveOrNot = true;
+	bool MoveOrNot = false;
+	bool IDExisted = false;
+	
+	string FirstName;// Ho
+	string LastName;// Ten
+	int gender = 1;// 0 la nu , 1 la nam
+
+	int ordinal = 1;
+	gotoxy(X_Notification,Y_Notification);cout << " Thong Bao ";
+	gotoxy(X_Notification,Y_Notification+1);cout << " 0 la Nu , 1 la Nam";
+
+	int signal;
+	while(true)
+	{
+		system("color 0E");
+		switch(ordinal)
+		{
+		case 1:// NHAP Ho
+			{
+				ConstraintsForLetterAndSpace(FirstName,MoveOrNot,ordinal,SaveOrNot,12);
+				if (SaveOrNot == false)
+				{
+					RemoveFormComplete();
+					return;
+				}
+				if( FirstName =="")
+				{
+					gotoxy(X_Notification,Y_Notification);
+					cout << " Thong Bao ";
+					gotoxy(X_Notification, Y_Notification + 1);
+					cout << "Khong bo trong";
+				}
+				
+				ordinal++;
+			}
+
+			break;
+		case 2:// Nhap ten
+			{
+				ConstraintForOnlyLetter(LastName,MoveOrNot,ordinal,SaveOrNot,12);
+				if (SaveOrNot  == false)
+				{
+					RemoveFormComplete();
+					return;
+				}
+				if( LastName =="")
+				{
+					gotoxy(X_Notification,Y_Notification);cout << " Thong Bao ";
+					gotoxy(X_Notification, Y_Notification + 1);cout << "Khong bo trong";
+				}
+				ordinal++;
+			}
+			break;
+		case 3:// nhap gioi tinh
+			{
+				 ConstraintForOnlyGender(gender,MoveOrNot,ordinal,SaveOrNot,12);
+				 if (SaveOrNot == false)
+				{
+					RemoveFormComplete();
+					return;
+				}
+				 // 0 la nu , 1 la nam
+				if( gender == -1)
+				{
+					gotoxy(X_Notification,Y_Notification);
+					cout << " Thong Bao ";
+					gotoxy(X_Notification, Y_Notification + 1);
+					cout << "Khong bo trong";
+				}
+				ordinal++;
+			}
+			break;
+		case 4:
+			{
+				Passenger P;
+				P.CMND = IDPassenger;
+				strcpy(P.Ho,FirstName.c_str() );
+				strcpy(P.Ten,LastName.c_str() );
+				StandardName(P.Ho);
+				StandardName(P.Ten);
+				P.GioiTinh = gender;
+				
+				AddPassenger(root, P);
+
+				gotoxy(X_Notification,Y_Notification);
+				cout << " Thong Bao ";
+				gotoxy(X_Notification, Y_Notification + 1);
+				cout << " Dat ve thanh cong !!!";
+				RemoveNotification();
+				RemoveFormComplete();
+				return;
+			}
+			break;
+		}/*switch(ordinal)*/
+	}/*While(true)*/
+}
+
+
+void WatchPassengerListOfFlight(AVLTree root,Flight F)
+{
+	ShowCur(false);
+	DisplayForWatchOnly(ContentPassenger,sizeof(ContentPassenger)/sizeof(string), F.TongSoDaBan);
+
+	for( int i = 0; i < F.TongSoDaBan;i++)
+	{ 
+		
+		PassengerNode *tempora = FindPassenger(root, F.TicketList[i].CMND);
+		if (tempora == NULL) continue;
+		//gotoxy(1,1);.
+		//cout << F.TicketList[i].CMND << endl;
+		ShowPassenger(tempora->data,i);
+		
+	}
+}
+/*"5.Xem Danh Sach Hanh Khach Chi Tiet"*/
+void SeePassengerList(AVLTree root)
+{
+	system("cls");
+	
+	gotoxy(X_TitlePage - 55,Y_TitlePage+3);
+	cout <<"Kinh moi Thay nhap Ma chuyen bay theo phan danh sach chuyen bay hien co de kiem tra thong tin --->";
+	/*Kiem tra xem MaChuyenBay co ton tai*/
+	string result;
+	CreateForm(ContentFlight,0,1,30);
+	bool flag = false;
+	bool MoveOrNot = false;
+	bool SaveOrNot = true;
+	int ordinal = 0;
+	FlightNode* WatchingFlight = NULL;
+	while( flag == false)
+	{
+		ShowCur(true);
+		ConstraintForLetterAndNumber(result,MoveOrNot,ordinal,SaveOrNot,12);
+		if (SaveOrNot == false)
+		{
+			RemoveFormComplete();
+			return;
+		}
+
+		WatchingFlight = FindFlight(FL,result.c_str() );
+		if (WatchingFlight == NULL )
+		{
+			gotoxy(X_Notification,Y_Notification);
+			cout << " Thong Bao ";
+			gotoxy(X_Notification,Y_Notification+1);
+			cout << "So hieu khong ton tai";
+		}
+		else
+		{
+			flag = true;
+		}
+	}
+
+	system("cls");
+	gotoxy(X_TitlePage - 35 ,Y_TitlePage);
+
+	cout <<" Danh sach hanh khach co ma chuyen bay "<<WatchingFlight->data.MaChuyenBay<<" toi "<<WatchingFlight->data.SanBayDen;
+	cout <<" luc ";OutputDateTime(WatchingFlight->data.ThoiGianDi);
+
+	//int countdown = nPassenger;
+	
+	WatchPassengerListOfFlight(root, WatchingFlight->data);
+
+	/*thao tac de thoat ve man hinh chinh*/
+	int signal;
+	while( true )
+	{
+		while( _kbhit() )
+		{
+			signal = _getch();
+			if( signal == ESC )
+			{
+				return;
+			}
+		}
+	}
+}
+/*"4.Huy Bo Ve May Bay",*/
+void CancelFlightTicket( AVLTree root)
+{
+	system("cls");
+	
+	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
+	cout << "Kinh moi Thay nhap CMND theo phan danh sach chuyen bay hien co de HUY ve -->>";
+	gotoxy(X_Notification,Y_Notification);cout << " Thong Bao ";
+	/*Kiem tra xem MaChuyenBay co ton tai*/
+	string result;
+	CreateForm(ContentFlight,0, 1, 30);
+	bool flag = false;
+	bool MoveOrNot = false;
+	bool SaveOrNot = true;
+	int ordinal = 0;
+	FlightNode* WatchingFlight = NULL;
+	while (flag == false)
+	{
+		system("color 0E");
+		ShowCur(true);
+		ConstraintForLetterAndNumber(result, MoveOrNot, ordinal, SaveOrNot, 12);
+		if (SaveOrNot == false)
+		{
+			RemoveFormComplete();
+			return;
+		}
+
+		WatchingFlight = FindFlight(FL, result.c_str());
+		if (WatchingFlight == NULL)
+		{
+			
+			gotoxy(X_Notification, Y_Notification + 1);
+			cout << "Chuyen bay khong ton tai       ";
+			gotoxy(X_Notification, Y_Notification + 2);
+			cout << "Vui long nhap lai";
+		}
+		else
+		{
+			if( WatchingFlight->data.TrangThai == 1 || WatchingFlight->data.TrangThai == 4 )
+			{
+				ShowCur(false);
+				gotoxy(X_Notification, Y_Notification + 1);
+				cout << "Chuyen bay da HUY hoac HOAN TAT";
+				gotoxy(X_Notification, Y_Notification + 2);
+				cout << "Vui long nhap lai";
+				continue;
+			}
+			flag = true;
+		}
+	}
+	RemoveNotification();
+	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
+	cout << "Kinh moi Thay nhap CMND theo phan danh sach chuyen bay hien co de kiem tra thong tin --->";
+	CreateForm(ContentPassenger,1, 2, 30);
+	int IDHanhKhach = 0;
+	int target = -1;
+	while (true)
+	{
+		ShowCur(true);
+		ConstraintForOnlyNumber(IDHanhKhach, MoveOrNot, ordinal, SaveOrNot, 12, 999999);
+		if (SaveOrNot == false)
+		{
+			RemoveFormComplete();
+			return;
+		}
+
+		for (int i = 0; i < WatchingFlight->data.TongSoDaBan; i++)
+		{
+			if (WatchingFlight->data.TicketList[i].CMND == IDHanhKhach) {
+				target = i; break;
+			}
+		}
+
+		if (target == -1) 
+		{
+			gotoxy(X_Notification,Y_Notification);
+			cout << " Thong Bao ";
+			gotoxy(X_Notification , Y_Notification + 1);
+			cout << "So CMND khong co";
+			gotoxy(X_Notification , Y_Notification + 2);
+			cout << "o danh sach hanh khach";
+		}
+		else break;
+	}
+	RemoveNotification();
+	int confirm = RemoveConfirm();
+	if (confirm == 0) {
+
+		for (int i = target; i < WatchingFlight->data.TongSoDaBan; i++)
+		{
+			WatchingFlight->data.TicketList[i - 1] = WatchingFlight->data.TicketList[i];
+		}
+		WatchingFlight->data.TongSoDaBan--;
+	}
+	else {
+		RemoveFormComplete();
+	}
+	return;
+}
+/*3.Dang Ky Ve May Bay*/
+void BookTicket(AVLTree &root)
+{
+	system("cls");
+
+	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
+	cout << "Kinh moi Thay nhap Ma chuyen bay theo phan danh sach chuyen bay hien co de kiem tra thong tin --->";
+	/*Kiem tra xem MaChuyenBay co ton tai*/
+
+	string result;
+	CreateForm(ContentFlight, 0, 1, 30);
+	bool flag = false;
+	bool MoveOrNot = false;
+	bool SaveOrNot = true;
+	int ordinal = 0;
+	FlightNode* WatchingFlight = NULL;
+	while (flag == false)
+	{
+		system("color 0E");
+		ShowCur(true);
+		ConstraintForLetterAndNumber(result, MoveOrNot, ordinal, SaveOrNot, 12);
+		if (SaveOrNot == false)
+		{
+			RemoveFormComplete();
+			return;
+		}
+
+		WatchingFlight = FindFlight(FL, result.c_str());
+		if (WatchingFlight == NULL)
+		{
+			gotoxy(X_Notification,Y_Notification);
+			cout << " Thong Bao ";
+			gotoxy(X_Notification, Y_Notification + 1);
+			cout << "Chuyen bay khong ton tai       ";
+			gotoxy(X_Notification, Y_Notification + 2);
+			cout << "Vui long nhap lai";
+
+		}
+		else
+		{
+
+			if(WatchingFlight->data.TrangThai == 3 || WatchingFlight->data.TrangThai == 1 || WatchingFlight->data.TrangThai == 4 )
+			{
+				ShowCur(false);
+				gotoxy(X_Notification, Y_Notification + 1);
+				cout << "Chuyen bay da HUY hoac HOAN TAT";
+				gotoxy(X_Notification, Y_Notification + 2);
+				cout << "Vui long nhap lai";
+				continue;
+			}
+			flag = true;
+		}
+	}
+	/*CHON VE MUON DAT*/
+	system("cls");
+
+	gotoxy(X_TitlePage - 32, Y_TitlePage);
+	cout << " Danh sach hanh khach co ma chuyen bay " << WatchingFlight->data.MaChuyenBay << " toi " << WatchingFlight->data.SanBayDen;
+	cout << " luc "; OutputDateTime(WatchingFlight->data.ThoiGianDi);
+
+	gotoxy(3, 4);
+	cout << "CHU Y ->> Ve co mau Do = ve da co nguoi dat cho!!!!";
+
+	while (true) {
+		system("color 0E");
+		int ChoosenTicket = ChooseTicket(WatchingFlight->data);
+
+		if (ChoosenTicket == -1) return;
+		int IDHanhKhach = 0, target = -1;
+
+		
+		gotoxy(X_TitlePage + 30, Y_TitlePage + 3);
+		system("color 0E");
+		cout << "Vui Long Nhap CMND ->";
+		CreateForm(ContentPassenger, 1, 2, 30);
+		ShowCur(true);
+		ConstraintForOnlyNumber(IDHanhKhach, MoveOrNot, ordinal, SaveOrNot, 12, 999999);
+		if (SaveOrNot == false)
+		{
+			gotoxy(X_TitlePage + 30, Y_TitlePage + 3);
+			printf("%-50s", " ");
+			RemoveFormComplete();
+			continue;
+		}
+		/*Tim kiem xem cai ID nay co nam trong danh sach ve chua*/
+		for (int i = 0; i < WatchingFlight->data.TongSoDaBan; i++)
+		{
+			if (WatchingFlight->data.TicketList[i].CMND == IDHanhKhach) {
+				target = i;
+				break;
+			}
+		}
+		/*Da dat ve roi va dat them lan nua*/
+		if (target > -1) {
+			gotoxy(3, 5);
+			cout << "Ban da dat ve roi !!! (^_^)";
+			Sleep(1000);
+			gotoxy(3, 5);
+			printf("%-50s", " ");
+
+
+			gotoxy(X_TitlePage + 30, Y_TitlePage + 3);
+			printf("%-50s", " ");
+			RemoveFormComplete();
+			continue;
+		}
+		/*Khong tim ra*/
+		if (target == -1)
+		{
+			PassengerNode* tempora = FindPassenger(root, IDHanhKhach);
+			/*Neu chua ton tai thi nhap moi*/
+			if (tempora == NULL) {
+				CreateForm(ContentPassenger, 1, sizeof(ContentPassenger) / sizeof(string), 27);
+				gotoxy(X_Add + 12, 0 * 3 + Y_Add);
+				cout << IDHanhKhach;
+				InputPassenger(root, false, false, IDHanhKhach);
+				nPassenger++;
+			}
+			Ticket AddingTicket;
+			AddingTicket.CMND = IDHanhKhach;
+			AddingTicket.Status = ChoosenTicket;
+			WatchingFlight->data.TicketList[WatchingFlight->data.TongSoDaBan] = AddingTicket;
+			WatchingFlight->data.TongSoDaBan++;
+		}
+	}
+}
+/*"6.Xem So Do Cho Ngoi & Danh Sach Ve Con Trong",*/
+void WatchUnbookedTicket()
+{
+	system("cls");
+	
+	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
+	cout << "Kinh moi Thay nhap Ma chuyen bay theo phan danh sach chuyen bay hien co de kiem tra thong tin --->";
+	string IDFlight;
+	CreateForm(ContentFlight, 0, 1, 30);
+	bool SaveOrNot = true;
+	bool DeleteOrNot;
+	bool MoveOrNot = false;
+	FlightNode* WatchingFlight = NULL;
+	int ordinal = 0;
+	while (true)
+	{
+		system("color 0E");
+		ShowCur(true);
+		ConstraintForLetterAndNumber(IDFlight, MoveOrNot, ordinal, SaveOrNot, 12);
+		if(SaveOrNot == false)
+		{
+			RemoveFormComplete();
+			return;
+		}
+		WatchingFlight = FindFlight(FL, IDFlight.c_str());
+		if (WatchingFlight == NULL)
+		{
+			gotoxy(X_Notification, Y_Notification + 1);
+			cout << "Chuyen bay khong ton tai";
+			gotoxy(X_Notification, Y_Notification + 2);
+			cout << "Vui long nhap lai";
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	system("cls");
+	ShowCur(false);
+	gotoxy(X_TitlePage, Y_TitlePage);
+	cout << "Danh sach cho ngoi cua chuyen bay " << WatchingFlight->data.MaChuyenBay << " toi " << WatchingFlight->data.SanBayDen;
+	cout << " luc ";  OutputDateTime(WatchingFlight->data.ThoiGianDi);
+	gotoxy(3, 4);
+	cout << " Ve mau Do = ve da co Hanh khach dat ve";
+	TicketChairBoard(WatchingFlight->data);
+
+	int signal;
+	while (true)
+	{
+		signal = _getch();
+		if (signal == ESC)
+		{
+			return;
+		}
+	}
+}
+
+void GotoDetailForWatchFlightHistory()
+{
+	string GotoDetail[5] = { "Chu thich" ,
+							"1.Aircraft Number = So Hieu May Bay",
+							"2.Airline Company = Hang May Bay",
+							"3.Number Of Seats = So Luong Ghe Ngoi",
+							"4.Flights Times = So lan thuc hien chuyen bay"};
+	for( int i = 0 ; i < 5 ; i++)
+	{
+		gotoxy(X_Add - 30 ,Y_Add + i*2);
+		cout << GotoDetail[i];
+	}
+}
+void ShowHowManyTimesAirplaneTookOff(Airplane *A,int position)
+{
+	int xKeyDisplay[7] = { 1,20,45,63,80,95, 107 };
+	gotoxy(xKeyDisplay[0] + 3, Y_Display + 3 + position * 3); printf("%-20s", A->SoHieuMB);
+	gotoxy(xKeyDisplay[1] + 3, Y_Display + 3 + position * 3); printf("%-20s", A->LoaiMB );
+	gotoxy(xKeyDisplay[2] + 3, Y_Display + 3 + position * 3); printf("%-5d",  A->SoChoMB );
+	gotoxy(xKeyDisplay[3] + 3, Y_Display + 3 + position * 3); printf("%-5d",  A->SoLanThucHienChuyenBay);
+}
+/*"7.Xem Chi Tiet So Lan Thuc Hien Chuyen Bay",*/
+void WatchHowManyTimeFlightTookOff()
+{
+	system("cls");
+
+	gotoxy(X_TitlePage, Y_TitlePage);
+	cout << " SO CHUYEN BAY DA THUC HIEN CUA CAC MAY BAY";
+
+	string StaticsTable[4] = { "Aircraft Number","Airline Company" ,"Number Of Seat","Flights Times"};
+	GotoDetailForWatchFlightHistory();
+	
+
+	for (int i = 0; i < LA.SoLuong; i++)
+	{
+		ShowHowManyTimesAirplaneTookOff(LA.DSMB[i], i);
+	}
+	DisplayForWatchOnly(StaticsTable, 4, LA.SoLuong);
+	/*ESC de quay lai man hinh chinh*/
+	int signal;
+	while (true)
+	{
+		signal = _getch();
+		if (signal == ESC)
+		{
+			return;
+		}
+	}
+}
+void ShowSpecificFlight(Flight F,int position)
+{
+	int xKeyDisplay[7] = {1,20,45,63,80,95, 107};// toa do X cac diem nut
+	gotoxy(xKeyDisplay[0] + 3, Y_Display + 3 + position*3);printf("%-20s",F.MaChuyenBay);
+	gotoxy(xKeyDisplay[1] + 3, Y_Display + 3 + position*3);printf("%-20s",F.SoHieuMB);
+	gotoxy(xKeyDisplay[2] + 3, Y_Display + 3 + position*3);printf("%-5d",F.TongSoVe);
+	gotoxy(xKeyDisplay[3] + 3, Y_Display + 3 + position*3);OutputDateTime(F.ThoiGianDi);
+	gotoxy(xKeyDisplay[4] + 5, Y_Display + 3 + position*3);printf("%-3d",F.TongSoDaBan);
+	gotoxy(xKeyDisplay[5] + 5, Y_Display + 3 + position*3);printf("%-3d",(F.TongSoVe-F.TongSoDaBan));
+}
+/*Xem Cac Chuyen Bay Di Toi Cac Dia Danh & Ngay Gio Cu The*/
+void WatchFlightsWithDateTimeAndDestination()
+{
+	system("cls");
+	int ordinal = 0;
+	bool SaveOrNot = true;
+	bool MoveOrNot = false;
+	bool flag = true;
+	int DestinationExisted = -1;// tim kiem san bay den co ton tai khong
+	string destination;
+	DateTime DT;
+	/*Man hinh mo dau*/
+	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
+	cout << "Kinh moi Thay nhap Ma chuyen bay theo phan danh sach chuyen bay hien co de kiem tra thong tin -->>        San Bay Den : ";
+	/*string ContentFlight[6] = {
+	"MaChuyenBay",
+	"SanBayDen",
+	"SoHieuMayBay",
+	"ThoiGianDi",
+	"TongSoVe",
+	"TrangThai"};*/
+	while( flag == true )
+	{
+		switch(ordinal)
+		{
+		case 0:
+			{
+				//CreateForm(ContentFlight,1,2,30);
+				ShowCur(true);
+				ConstraintsForLetterAndSpace(destination,MoveOrNot,ordinal,SaveOrNot,12);
+				/*Neu nhan phim ESCAPE*/
+				if( SaveOrNot == false)
+				{
+					RemoveFormComplete();
+					return;
+				}
+				/*Neu bi bo trong*/
+				if( destination == "")
+				{
+					gotoxy(X_Notification,Y_Notification    );cout << "Thong Bao";
+					gotoxy(X_Notification,Y_Notification + 1);cout << "Vui Long Khong Bo Trong";
+				}
+				/*Xu li xem co ton tai dia danh nay khong*/
+				DestinationExisted = FindDestination(FL,destination.c_str() );
+				StandardName((char *)destination.c_str());
+
+				if( DestinationExisted == -1 )
+				{
+					gotoxy(X_Notification,Y_Notification    );cout << "Thong Bao";
+					gotoxy(X_Notification,Y_Notification + 1);cout << "Khong co chuyen bay toi "<<destination;
+					gotoxy(X_Notification,Y_Notification + 2);cout << "Vui long chon dia diem khac";
+					break;
+				}
+			}
+			ordinal++;
+			break;
+		case 1:
+			{
+				flag = false;
+				break;
+			}
+		}
+	}
+	system("cls");
+	gotoxy(X_TitlePage -35,Y_TitlePage);
+	cout <<" Danh sach cac chuyen bay toi thanh pho "<<destination;
+
+	int count = 0;
+	for (FlightNode *search = FL.pHead;search != NULL;search = search->pNext)
+	{
+		if( strcmpi( search->data.SanBayDen,destination.c_str()) == 0 )
+		{
+			ShowSpecificFlight(search->data,count++);
+		}
+	}
+	DisplayForWatchOnly(SpecifedFlight,sizeof(SpecifedFlight)/sizeof(string),count);
+	int signal;
+	while(true)
+	{
+		while( _kbhit() )
+		{
+			signal = _getch();
+			if( signal == ESC )
+			{
+				return;
+			}
+		}
+	}
+}
+
+
+================================================
+FILE: PassengerTP.h
+================================================
+#pragma once
+#include"UserInterfaceTP.h"
+#include"ConstraintTP.h"
+#include"ProcessionTP.h"
+
+/*Thong tin 1 hanh khach*/
+struct passenger
+{
+	unsigned int CMND;// day la key chinh
+	char Ho[20];
+	char Ten[10];
+	int GioiTinh;// 1 la nam , 0 la nu
+	bool Booked;// kiem tra xem da mua ve chua
+};
+typedef struct passenger Passenger;
+
+struct passengernode
+{
+	Passenger data;
+	struct passengernode *pLeft;
+	struct passengernode *pRight;
+	int height;// chieu cao cua node
+};
+typedef struct passengernode PassengerNode;
+typedef PassengerNode* AVLTree;
+
+void CreateAVLTree(AVLTree &root);
+int maxi(int a,int b);
+int height(AVLTree root);
+AVLTree CreateTree(Passenger data);
+AVLTree RightRotate(AVLTree root);
+AVLTree LeftRotate(AVLTree root);
+int getBalanceFactor(AVLTree root);
+AVLTree AddPassenger(AVLTree& root, Passenger data);
+AVLTree minValuePassenger(AVLTree root);
+AVLTree RemovePassenger(AVLTree& root, Passenger data);
+bool FindPassengerFollowID(AVLTree root,unsigned int CMNDcantim);
+PassengerNode* FindPassenger(AVLTree root,unsigned int CMNDcantim);
+void ShowPassenger(Passenger P,int position);
+void ShowListPassengerPerPage(AVLTree root,int BeginIndex);
+void ChangePassengerMenuManagePerPage(AVLTree root);
+void InputPassenger( AVLTree &root,bool EditedOrNot,bool DeleteOrNot, int IDPassenger);
+void SeePassengerList(AVLTree root);
+void CancelFlightTicket(AVLTree root);
+void BookTicket(AVLTree &root);
+void WatchUnbookedTicket();
+void WatchHowManyTimeFlightTookOff();
+void WatchFlightsWithDateTimeAndDestination();
+void ShowSpecificFlight(Flight F,int position);
+
+
+================================================
+FILE: ProcessionTP.cpp
+================================================
+#pragma once
+#include"UserInterfaceTP.h"
+#include"AirplaneTP.h"
+#include<fstream>
+#include"ProcessionTP.h"
+#include"FlightTP.h"
+#include"PassengerTP.h"
+#include <string>
+int nPassenger;
+void Introduction()
+{
+	system("color 0E");// nen den chu mau vang
+	ShowCur(false);
+	string temp;
+	ifstream file("Introduction.txt", ios::in);
+
+	if (file.good())
+	{
+		while ( file.eof() == false )
+		{
+			getline(file,temp);
+			//Sleep(80);
+			cout << temp << endl;
+		}
+	}
+	else
+	{
+		cout << " \n Liet ket file that bai " << endl;
+	}
+	gotoxy(50, 25);
+	cout << "Nguyen Thanh Phong";
+	gotoxy(50, 27);
+	cout << "N18DCCN147";
+	gotoxy(50, 29);
+	cout << "D18CQCN03-N";
+	ShowCur(false);
+
+	gotoxy(50, 31);
+	SetBGColor(ColorCode_Black	);
+	SetColor(ColorCode_Red );
+	cout << "Please ! Press ENTER to continue !!!! ";
+	SetBGColor(ColorCode_Black	);
+
+	while (!_kbhit()) {
+		gotoxy(45, 32);
+		SetColor(1 + rand() % 15);
+		Sleep(100);
+		cout << "HOC VIEN CONG NGHE BUU CHINH VIEN THONG CO SO TP HO CHI MINH";
+	}
+	
+	cin.ignore();
+	return;
+}
+
+void ThankYouAndGoodBye()
+{
+	system("color 0E");// nen den chu mau vang
+	ShowCur(false);
+	string temp;
+	ifstream file("ThankYouSoMuch.txt", ios::in);
+
+	if (file.good())
+	{
+		while ( file.eof() == false )
+		{
+			getline(file,temp);
+			cout << temp << endl;
+		}
+	}
+
+	_getch();
+}
+/*Doc ghi file may bay*/
+void ReadAirplaneFile(ListAirplane &LA)
+{
+	ifstream filein;
+	filein.open("DSMB.TXT", ios_base::in);// ios_base::in la de doc
+
+	
+	string temp;
+	int i = 0;
+	if( filein.is_open() )
+	{
+		while(!filein.eof())
+		{
+			Airplane *A = new Airplane;
+
+			filein >> A->SoHieuMB;
+			if (strcmp(A->SoHieuMB, "") == 0) continue;
+			filein >> A->LoaiMB;
+			filein >> A->SoChoMB;
+			filein.ignore();
+			// cap nhat phan tu trong mang con tro
+			LA.DSMB[i++] = A;
+			// cap nhat so luong phan tu trong mang
+			LA.SoLuong++;
+		}
+	}
+	filein.close();
+}
+
+void WriteAirplaneToFile(ListAirplane &LA)
+{
+	ofstream fileout;
+	fileout.open("DSMB.TXT",ios_base::out);// ios_base::out la de ghi vao file
+	if( fileout.is_open() )
+	{
+		for( int i = 0 ; i < LA.SoLuong ; i++)
+		{
+			fileout << LA.DSMB[i]->SoHieuMB <<" "<<LA.DSMB[i]->LoaiMB<<" "<<LA.DSMB[i]->SoChoMB<<endl;
+		}
+	}
+	else
+	{
+		gotoxy(X_Notification,Y_Notification+1);
+		cout << " Ket noi file de ghi vao that bai";
+	}
+	fileout.close();
+}
+/*Doc ghi file chuyen bay*/
+void ReadTicketListOfOneFlight(Flight &F)
+{
+	ifstream file;
+	char filenameve[50] = "DSV\\";
+	strcat(filenameve, F.MaChuyenBay);
+	strcat(filenameve, ".TXT");
+	/*kET QUA = DSS\\GERMANY.TXT*/
+	/*Mo file de doc va thuc hien cac thao tac khac*/
+	file.open(filenameve, ios_base::in);
+	if (file.is_open()) 
+	{
+		file >> F.TongSoDaBan;
+		string temp;
+		getline(file, temp);
+		F.TicketList = new Ticket[F.TongSoDaBan];
+
+		for (int i = 0; i < F.TongSoDaBan; i++)
+		{
+			file >> F.TicketList[i].CMND;
+			file >> F.TicketList[i].Status;
+		}
+	}
+	file.close();
+}
+void ReadFlightFileFromFile(FlightList &FL,ListAirplane &LA)
+{
+	ifstream filein;
+	filein.open("DSCB.TXT",ios_base::in);
+	for( int i = 0; i < LA.SoLuong;i++)
+	{
+		LA.DSMB[i]->SoLanThucHienChuyenBay = 0;
+	}
+	
+	Flight F;
+	int i;
+	if( filein.is_open() )
+	{
+		int nFlight;// doc so chuyen bay
+		filein >> nFlight;
+
+		string temp;
+		getline(filein, temp);
+		for(int j = 0 ; j<nFlight ;j++)
+		{
+			if (strcmp(F.MaChuyenBay,"") == 0) break;
+			filein.getline(F.MaChuyenBay,15,'\n');
+			filein.getline(F.SanBayDen,20,'\n');
+			filein.getline(F.SoHieuMB,15,'\n');
+			
+			// do thoi gian khoi hanh
+			filein >> F.ThoiGianDi.h;
+			filein >> F.ThoiGianDi.mi;
+			filein >> F.ThoiGianDi.d;
+			filein >> F.ThoiGianDi.m;
+			filein >> F.ThoiGianDi.y;
+			filein >> F.TongSoVe;
+			//filein >> F.TongSoDaBan;
+			filein >> F.TrangThai;
+			getline(filein,temp);
+			//cout << F.MaChuyenBay << "-"<<F.SanBayDen<<"-"<<F.SoHieuMB<<"-"<<  F.ThoiGianDi.h<<":"<<F.ThoiGianDi.mi<<" "<<F.ThoiGianDi.d<<"-"<<F.ThoiGianDi.m<<"-"<<F.ThoiGianDi.y << endl;
+		/*doc danh sach ve cua chuyen bay do*/
+			for(i = 0 ;i < LA.SoLuong ;i++)
+			{
+				if( _stricmp(F.SoHieuMB,LA.DSMB[i]->SoHieuMB) == 0 )
+				{
+					
+					LA.DSMB[i]->SoLanThucHienChuyenBay++;
+					
+				}
+				//cout << LA.DSMB[i]->SoHieuMB <<"-"<< LA.DSMB[i]->SoLanThucHienChuyenBay <<endl;
+			}
+			ReadTicketListOfOneFlight(F);
+			//cout << F.MaChuyenBay << "-" << F.TongSoDaBan << endl;
+			AddEndingList(FL,F);
+		//getline(filein,temp);
+		}
+	FL.SoLuongChuyenBay++;
+	}
+	filein.close();
+}
+/*luu 1 chuyen bay*/
+void SaveTicketListOfOneFlight(Flight &F)
+{
+	ofstream file;
+	char filenameve[50] = "DSV\\";
+	strcat(filenameve, F.MaChuyenBay);
+	strcat(filenameve, ".TXT");
+	file.open(filenameve,ios_base::out);
+	if( file.is_open() )
+	{
+		file << F.TongSoDaBan << endl;
+		for( int i = 0; i < F.TongSoDaBan ;i++)
+		{
+			file << F.TicketList[i].CMND << endl;
+			file << F.TicketList[i].Status << endl;
+		}
+	}
+	file.close();
+}
+
+void SaveFlight( Flight &F,ofstream &fileout)
+{
+	fileout << F.MaChuyenBay << endl;
+	fileout << F.SanBayDen << endl;
+	fileout << F.SoHieuMB << endl;
+	fileout << F.ThoiGianDi.h << endl;
+	fileout << F.ThoiGianDi.mi << endl;
+	fileout << F.ThoiGianDi.d << endl;
+	fileout << F.ThoiGianDi.m << endl;
+	fileout << F.ThoiGianDi.y << endl;
+	fileout << F.TongSoVe << endl;
+	//fileout << F.TongSoDaBan << endl;
+	fileout << F.TrangThai << endl;
+	SaveTicketListOfOneFlight(F);
+}
+
+void WriteFlightToFile(FlightList &FL)
+{
+	ofstream fileout;
+	fileout.open("DSCB.TXT",ios_base::out);
+
+	
+	if( fileout.is_open() )
+	{
+		fileout << FL.SoLuongChuyenBay << endl;
+		for( FlightNode *search = FL.pHead ; search != NULL ; search = search->pNext)
+		{
+			SaveFlight(search->data,fileout);
+		}
+	}
+	else
+	{
+		gotoxy(X_Notification,Y_Notification+1);
+		cout << " Ket noi file de ghi vao that bai";
+	}
+	fileout.close();
+}
+extern string ContentPassenger[6];
+void ReadPassengerFromFile(AVLTree &root)
+{
+	ifstream filein;
+	filein.open("DSHK.TXT" ,ios_base::in);
+
+	string temp;
+	
+	char lot[50];
+
+	//DisplayForWatchOnly(ContentPassenger,sizeof(ContentPassenger)/sizeof(string) );
+
+	if( filein.is_open() )
+	{
+		
+		filein >> nPassenger;
+		for( int i = 0 ; i < nPassenger ;i++)
+		{
+			Passenger P;
+			getline(filein,temp);
+		
+			filein >> P.CMND;
+
+			filein >> P.Ho;
+			filein >> lot;
+
+			strcat(P.Ho, " ");
+			strcat(P.Ho, lot);
+
+			filein >> P.Ten;
+
+			if (strcmpi(P.Ten,"1") == 0 || strcmpi(P.Ten, "0") == 0) {
+				P.GioiTinh = strcmpi(P.Ten, "1") == 0 ? 1 : 0;
+				strcpy(P.Ten, lot);
+			}
+			else {
+				filein >> P.GioiTinh;
+			}
+			
+			filein >> P.Booked;
+			
+			//cout << P.Ten << "- " << P.GioiTinh << " - "<< P.CMND<<endl;
+			//system("pause");
+			
+			root = AddPassenger(root, P);
+			
+
+			//OnlySeePassengerListPerPage(P,0);
+			
+		}
+	}
+	
+	filein.close();
+}
+
+/*save 1 hanh khach*/
+void SaveOnePassenger( AVLTree &root,ofstream &fileout)
+{
+	fileout << root->data.CMND << endl;
+	fileout << root->data.Ho << endl;
+	fileout << root->data.Ten << endl;
+	fileout << root->data.GioiTinh << endl;
+	fileout << "0" << endl;//book ve hay chua
+}
+
+void SavePassengerList( AVLTree &root,ofstream &fileout)
+{
+	if( root != NULL)
+	{
+		SaveOnePassenger(root,fileout);
+		SavePassengerList(root->pLeft,fileout);
+		SavePassengerList(root->pRight,fileout);
+	}
+}
+
+void SavePassengerToFile(AVLTree &root)
+{
+	ofstream fileout;
+	fileout.open("DSHK.TXT", ios_base::out);
+
+	if( fileout.is_open() )
+	{
+		fileout << nPassenger << endl;
+		SavePassengerList(root,fileout);
+	}
+	fileout.close();
+}
+
+
+================================================
+FILE: ProcessionTP.h
+================================================
+#pragma once
+#include"UserInterfaceTP.h"
+#include"AirplaneTP.h"
+#include<fstream>
+#include"FlightTP.h"
+#include"PassengerTP.h"
+/*Gioi thieu*/
+void Introduction();
+void ThankYouAndGoodBye();
+/*Xu li may bay*/
+void ReadOneAirplane(Airplane &A,ifstream &filein);
+void ReadAirplaneFile(ListAirplane &LA);
+void WriteAirplaneToFile(ListAirplane &LA);
+/*Xu li chuyen bay*/
+void ReadFlightFileFromFile(FlightList &FL,ListAirplane &LA);
+void SaveTicketListOfOneFlight(Flight &F);
+void SaveFlight( Flight &F,ofstream &fileout);
+void WriteFlightToFile(FlightList &FL);
+/*Xu li hanh khach*/
+void ReadPassengerFromFile(AVLTree &root);
+void SaveOnePassenger( AVLTree &root,ofstream &fileout);
+void SavePassengerList( AVLTree &root,ofstream &fileout);
+void SavePassengerToFile(AVLTree &root);
+
+
+================================================
+FILE: Quan Ly May Bay - Last fix.sln
+================================================
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30002.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Quan Ly May Bay - Last fix", "Quan Ly May Bay - Last fix.vcxproj", "{2599A787-76E4-4E34-BED3-DFB7E1B92B25}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2599A787-76E4-4E34-BED3-DFB7E1B92B25}.Debug|x86.ActiveCfg = Debug|Win32
+		{2599A787-76E4-4E34-BED3-DFB7E1B92B25}.Debug|x86.Build.0 = Debug|Win32
+		{2599A787-76E4-4E34-BED3-DFB7E1B92B25}.Release|x86.ActiveCfg = Release|Win32
+		{2599A787-76E4-4E34-BED3-DFB7E1B92B25}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CAB2F2B-7C15-4AAB-9EF6-F5A06D44D8CE}
+	EndGlobalSection
+EndGlobal
+
+
+
+================================================
+FILE: Quan Ly May Bay - Last fix.vcxproj
+================================================
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{EAF40062-FB4D-4F66-8219-81FE243C588A}</ProjectGuid>
+    <RootNamespace>QuanLyMayBayRelease</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="AirplaneTP.h" />
+    <ClInclude Include="ConstraintTP.h" />
+    <ClInclude Include="DateTime.h" />
+    <ClInclude Include="FlightTP.h" />
+    <ClInclude Include="GlobalVariableTP.h" />
+    <ClInclude Include="MyLibraryTP.h" />
+    <ClInclude Include="PassengerTP.h" />
+    <ClInclude Include="ProcessionTP.h" />
+    <ClInclude Include="TicketTP.h" />
+    <ClInclude Include="UserInterfaceTP.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AirplaneTP.cpp" />
+    <ClCompile Include="ConstraintTP.cpp" />
+    <ClCompile Include="DataTimeTP.cpp" />
+    <ClCompile Include="FlightTP.cpp" />
+    <ClCompile Include="MyLibraryTP.cpp" />
+    <ClCompile Include="PassengerTP.cpp" />
+    <ClCompile Include="ProcessionTP.cpp" />
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="UserInterfaceTP.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
+
+
+================================================
+FILE: Quan Ly May Bay - Last fix.vcxproj.filters
+================================================
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AirplaneTP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstraintTP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DateTime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FlightTP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalVariableTP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLibraryTP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PassengerTP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessionTP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TicketTP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterfaceTP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AirplaneTP.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstraintTP.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataTimeTP.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FlightTP.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLibraryTP.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PassengerTP.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessionTP.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterfaceTP.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
+
+
+================================================
+FILE: Source.cpp
+================================================
+#include<iostream>
+#include"UserInterfaceTP.h"
+#include"GlobalVariableTP.h"
+#include"AirplaneTP.h"
+#include"ProcessionTP.h"
+int main()
+{
+	/*Tong cong gom 4004 dong code tat ca*/
+	system("color 0E");
+	fullscreen();
+	
+	CenterMenu();
+	_getch();
+	return 0;
+}
+
+
+================================================
+FILE: ThankYouSoMuch.txt
+================================================
+     .|'''|                   '\\  //`                         /.\                                   
+     ||                         \\//                          // \\                     ''           
+     `|'''|, .|''|, .|''|,       ||    .|''|, '||  ||`       //...\\    .|''|,  '''|.   ||  `||''|,  
+      .   || ||..|| ||..||       ||    ||  ||  ||  ||       //     \\   ||  || .|''||   ||   ||  ||  
+      |...|' `|...  `|...       .||.   `|..|'  `|..'|.    .//       \\. `|..|| `|..||. .||. .||  ||. 
+                                                                            ||                       
+                                                                         `..|'                      
+                       ___
+                      (_ _)
+                       | |
+                       | |--WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+                       | |\WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+                       | |  \WWWWWWWWWWWWWWWWWWWP'dP'dWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+                       | |   WWWWWW"VWWWb """'.o.. .dWWWWWWWWWWWWP~~""_{WWWWWWWWWWWWWWWWWWWWWW
+                       | |   WWWWWWb  """""""w.     jWWWWWWWP"  ,.--"'    .wWWWWWWWWWWWWWWWWWW
+                       | |   WWWWWWWbWWWWF"""""`    WWWWWWP" .-"          {WWWWWWWWWWWWWWWWWWW
+                       | |   WWWWWWWWWWWWLLWP      jWWWWP"               .wwWWWWWWWWW WWWWWWWW
+                       | |   WWWWW`W`W`WWWW'      jWWW'                 {WWWWWWWWWWP  `VWWWWWW
+                       | |   WWWWWW, dWWWW'      jWWWW                 .wwWWP".w."WWP.WWWWWWWW
+                       | |   WWWWWW' VWWWW        VWW'               _{WWWW( WWWW. P.WWWWWWWWW
+                       | |   ::::::':  :::         "                {  `:::::. '' ,.::::::::::
+                       | |   :::::,:::  ::                                `''''  .::::::::::::
+                       | |   ::::::::::                                       ..,:::::::::::::
+                       | |   :::::::::::   .                  ..:.      `:::::::::::::::::::::
+                       | |   :::::::::::: ::   .: ::::::::   :::::::.          `::::::::::::::
+                       | |   ::::::::::::::' .::::::::::::.    .::::::::::::::  ::::::::::::::
+                       | |   :::::::::::::'.:::::::::::::::::  ::::::::::::::'  ::::::::::::::
+                       | |  /:::::::'.....:.. ::::::::'......:. :::::::::'....::.`::::::::::::
+                       | |/:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                       | |--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		      (_ _)					 Nguyen Thanh Phong - Viet Nam
+
+
+================================================
+FILE: ThongTinChiTiet.txt
+================================================
+Mình tên là Nguyễn Thành Phong.Mã N18DCCN147.Lớp D18CQCN03-N.Khóa 2018-2023
+
+Đây là đồ án quản lý máy bay năm 2 Môn cấu trúc dữ liệu và giải thuật do thầy Lưu Nguyễn Kì Thư dạy lớp mình.
+
+Đây thực sự là môn mà mình thấy khó nhất trường PTIT này.Qua môn phải nói là siêu ít lớp mình có 83 người thì tầm khoảng 20 người qua là hết cỡ (><)
+
+Đồ án này gồm nhiều thành phần và thư viện được viết trong bài
+
+Để tham khảo bài mình hiệu quả các bạn hãy đọc code theo trình tự như sau ( do thời điểm mình viết là 12-04-2021 , lúc này năm 3 kì 2 rồi nên có thể không nhớ chính xác trình tự ^^ )
+1.MyLibraryTP - thư viện mẫu chứa các hàm để vẽ điểm , thay đổi màu sắc , blah...blah
+2.UserInterfaceTP - chỗ này mình dùng để dựng lên menu và gắn các nút mũi tên để lựa chọn các tùy chọn
+3.GlobalVariableTP - lưu toàn bộ biến toàn cuc
+4.ConstraintTP - các ràng buộc được xây dựng ,ví dụ như nhập tên người thì không có được ghi số ...
+5.AirplaneTP - xử lý cho việc tạo thêm xóa sửa máy bay
+6.FlightTP - xử lý cho việc tạo - thêm - xóa - sửa chuyến bay
+7.DataTimeTP - xử lý ngày giờ
+8.PassengerTP - chứa thông tin của 1 hành khách , phục vụ cho việc đặt vé
+9.ProcessionTP - phần kết của đồ án, chủ yếu làm cho màu mè chứ không có cũng chẳng sao,trong này viết các hàm đọc file để hiện lên phần intro và outro cho đồ án nhưng thầy cũng không để ý phần này nhìu đâu nha ^^
+
+Mình hy vọng đồ án này có thể giúp các bạn khóa sau có thể vượt qua môn này dễ dàng nhất có thể ( vì môn này khó vl , mình cũng làm vỡ mặt mới qua ^^ ).
+
+Nếu qua được thì xin CHÚC MỪNG BẠN vì nếu qua được môn này của thầy thì bạn hoàn toàn có thể theo đuổi ngành IT nha.Nhiều bạn kêu thầy khó nhưng thực ra thì thầy làm vậy là tốt cho chúng mình á , các bạn đừng oán thầy nha.Chúc các bạn khóa sau khi đọc được bài này của mình nhiều may mắn và sức khỏe nha - Mon,12-04-2021
+
+
+================================================
+FILE: TicketTP.h
+================================================
+#pragma once
+
+struct ticket
+{
+	unsigned int CMND;
+	int Status;
+	/* CHU THICH
+	CMND = so CCCD cua Hanh khach
+	Status = so ve cua Hanh khach */
+};
+typedef struct ticket Ticket;
+
+
+================================================
+FILE: UserInterfaceTP.cpp
+================================================
+#pragma once
+#include<iostream>
+#include<conio.h>//getch()
+#include<stdint.h>
+#include<string.h>//char
+#include<string>//string
+#include<iomanip>// for setw va setfill
+#include"GlobalVariableTP.h"// thu vien chua cac hang so
+#include"MyLibraryTP.h"// thu vien chua cac ham xu li do hoa
+#include"AirplaneTP.h"
+#include"ProcessionTP.h"
+#include"FlightTP.h"
+#include"PassengerTP.h"
+//#include"AirplaneTP.h"
+using namespace std;
+/*Bien toan cuc*/
+ListAirplane LA;
+FlightList FL;
+AVLTree root;
+extern int nPassenger;
+// co toi da 5 phan tu toi da 50 ki tu
+int xKeyDisplay[7] = { 1,20,45,63,83,95, 107 };// toa do X cac diem nut
+char TenHocVien[100] = { "HOC VIEN CONG NGHE BUU CHINH VIEN THONG CO SO THANH PHO HO CHI MINH"};
+char ThucDon[MaxItem][70] = { 
+					   "1.Quan Li Cac May Bay",
+					   "2.Quan Li Cac Chuyen Bay",
+					   "3.Dang Ky Ve May Bay",
+					   "4.Huy Bo Ve May Bay",
+					   "5.Xem Danh Sach Hanh Khach Chi Tiet",
+					   "6.Xem So Do Cho Ngoi & Danh Sach Ve Con Trong",
+					   "7.Xem Chi Tiet So Lan Thuc Hien Chuyen Bay",
+					   "8.Xem Cac Chuyen Bay Di Toi Cac Dia Danh",
+                       "0.Thoat Chuong Trinh"
+};
+
+// dong tuy chon
+void NormalLine()
+{
+	SetColor(14);// yellow
+	SetBGColor(0);// black
+}
+// dong dang chon
+void HighlightLine()
+{
+	SetColor(14);// yellow 
+	SetBGColor(1);// dark blue        
+}
+/*============== CENTER MENU =============*/
+// menu dung phim moi ten de dieu huong
+int RemoveConfirm()
+{
+	// return 0 la yes - dong y, return 1 la no - tu choi
+	ShowCur(false);
+	NormalLine();
+	
+	gotoxy(X_RemoveConfirm,Y_RemoveConfirm );
+	cout << " Ban co chac chan muon xoa ??";
+
+	char Option[2][4] = {"Yes" ,"No" };
+	for( int i = 0 ; i < 2 ;i++)
+	{
+		gotoxy(X_RemoveConfirm, Y_RemoveConfirm + i*2 + 2);
+		cout << Option[i];
+	}
+	int pointer = 0;
+
+	gotoxy(X_RemoveConfirm, Y_RemoveConfirm + pointer*2 + 2);
+	HighlightLine();
+	cout << Option[pointer];
+	char signal;
+
+	while(true)
+	{
+		signal = _getch();
+		if( signal == 224)
+			signal = _getch();
+		switch(signal)
+		{
+		case KEY_UP:
+			if( pointer > 0)
+			{
+				NormalLine();
+				gotoxy(X_RemoveConfirm, Y_RemoveConfirm + pointer*2 + 2);
+				cout << Option[pointer];
+				pointer--;
+				HighlightLine();
+				gotoxy(X_RemoveConfirm, Y_RemoveConfirm + pointer*2 + 2);
+				cout << Option[pointer];
+			}
+			break;
+		case KEY_DOWN:
+			if( pointer < 1 )
+			{
+				NormalLine();
+				gotoxy(X_RemoveConfirm, Y_RemoveConfirm + pointer*2 + 2);
+				cout << Option[pointer];
+				pointer++;
+				HighlightLine();
+				gotoxy(X_RemoveConfirm, Y_RemoveConfirm + pointer*2 + 2);
+				cout << Option[pointer];
+			}
+			break;
+		case ENTER:
+			for (int i = 0; i < 3; i++)
+			{
+				gotoxy(X_RemoveConfirm, Y_RemoveConfirm+i*2);
+				printf("%-30s", " ");
+			}
+			return pointer;
+		}
+	}// while(true)
+}
+void DrawTable()
+{
+	gotoxy( X_TitlePage - 7 ,Y_TitlePage+1);
+	cout << TenHocVien;
+	/*      "HOC VIEN CONG NGHE BUU CHINH VIEN THONG CO SO THANH PHO HO CHI MINH"*/
+	gotoxy( X_TitlePage - 7 , Y_Display + 19 + 1);
+	cout << " >> Nguyen Thanh Phong -------- N18DCCN147 -------- D18CQCN03-N << ";
+	//ve thanh ngang ben tren va duoi
+	for (int i = xKeyDisplay[3] - 12; i < 122; i++)
+	{
+
+		//ve thanh ngang ben tren so 1
+		gotoxy(i, Y_Display-2);
+		cout << char(176);
+
+		// ve thanh ngang ben tren so 2
+		gotoxy(i, Y_Display + 1);
+		cout << char(176);
+ 
+		//ve thanh ngang ben duoi
+		gotoxy(i, Y_Display + 19);
+		cout << char(176);
+		
+		gotoxy(i ,  Y_Display + 19 + 3);
+		cout << char(176);
+	}
+
+	for (int j = Y_Display ; j < Y_Display + 25; j++)
+	{
+		gotoxy(  xKeyDisplay[3] - 12 , j - 2 );
+		cout << char(176);
+
+		gotoxy( 122 , j - 2 );
+		cout << char(176);
+	}
+}
+int ScrollMenu(char ThucDon[MaxItem][70])
+{
+	// xuat menu
+	ShowCur(false);// an con tro nhap nhay di
+	NormalLine();
+	system("cls");
+	DrawTable();
+	for(int i = 0 ; i < MaxItem ; i++)
+	{
+		
+		gotoxy(X_CenterMenu,Y_CenterMenu + i*2);
+		cout << ThucDon[i];
+	}
+	// to mau cho dong duoc chon
+	int pointer = 0; // vi tri hien tai cua thanh sang
+//	HighlightLine();
+	gotoxy(X_CenterMenu,Y_CenterMenu + pointer*2);
+	HighlightLine();
+	cout << ThucDon[pointer];
+	// dieu khien chuc nang
+	char signal;
+	while(true)
+	{
+		signal = _getch();// kiem tra xem co nhap gi tu ban phim khong
+		if( signal == -32)
+		{
+			signal = _getch();
+		}
+			// dieu huong
+			switch(signal)
+			{
+			case KEY_UP:
+				if( pointer + 1 > 1)
+				{
+					// tro ve mau cu
+					NormalLine();
+					gotoxy(X_CenterMenu,Y_CenterMenu + pointer*2);
+					cout << ThucDon[pointer];
+					pointer--;// cap nhat lai vi tri 
+					// vi tri thanh sang
+					HighlightLine();
+					gotoxy(X_CenterMenu,Y_CenterMenu + pointer*2);
+					cout << ThucDon[pointer];
+				}
+				break;
+			case KEY_DOWN:
+				if( pointer + 1 < MaxItem)
+				{
+					NormalLine();
+					gotoxy(X_CenterMenu,Y_CenterMenu + pointer*2);
+					cout << ThucDon[pointer];
+					pointer++;
+					HighlightLine();
+					gotoxy(X_CenterMenu,Y_CenterMenu + pointer*2);
+					cout << ThucDon[pointer];
+				}
+				break;
+			case ENTER:// lua lai ket qua de thuc hien lenh tuong ung voi CenterMenu
+				return pointer + 1;
+			}
+	}
+}
+/* ========== END CENTER MENU =========== */
+
+/* ========== Bang them thong tin ========*/
+// length = do dai cua toan bo o nhap
+// content = tieu de cua o nhap
+void FloatingEffectWord(char Content[], int x, int y,int Color)
+{
+	SetColor(Color);
+	SetBGColor(ColorCode_Black);
+	ShowCur(false);
+
+	char c[40];
+	int length = (int)strlen(Content);// Lay do dai cua chuoi chu
+	int signal;
+	
+	for (int i = 0; i < length; i++) 
+	{
+		/*Sao chep chuoi tu 40 ki tu "Content + i" toi mang C*/
+		strncpy(c, Content + i, 40);
+		c[39] = '\0';
+		Sleep(100);
+		gotoxy(x, y);
+		cout << "                                       ";
+		gotoxy(x, y); // vi tri de in dong chu chay
+		cout << c;
+		if (i == length - 1)
+		{
+			i = 0;  // Chay vinh cuu
+		}
+		
+		if( _kbhit() )
+		{
+			break;
+		}
+	}
+	cin.ignore();
+	return;
+}
+// tao 1 hang
+void CreateRow(int x, int y, string content, int length)
+{
+	gotoxy(x - 2, y - 1);
+	cout << char(176) << setw(length) << setfill(char(176)) << char(176) << char(176);
+
+	gotoxy(x - 2, y);
+	cout << char(176) << content << setw(length - content.length() + 1) << setfill(' ') << char(176);
+}
+// tao 1 bang nhap thong tin
+void CreateForm(string content[],int StartIndex,int nContent,int length)
+{
+	int yAdd = Y_Add;
+	for (int i = StartIndex; i < nContent; i++)
+	{
+		CreateRow(X_Add, yAdd,content[i],length);
+		yAdd += 3;
+	}
+}
+/*the hien 1 o ve trong danh sach ve cua may bay*/
+void TicketStack(int x, int y, int  text, int status)
+{
+	SetColor(14);// yellow
+	SetBGColor(0);// black
+	/*Ve duong ve ben tren*/
+	gotoxy(x, y - 1);
+	cout << char(176) << setw(3) << setfill(char(176)) << char(176) << char(176);
+	/*So thu tu cua cai ve do*/
+	gotoxy(x, y);
+	
+	cout << char(176) << setw(3) << setfill('0')<<text<<char(176);
+	//printf("%-5d",text);
+	/*ve duong ke ben duoi cua cai ve*/
+	gotoxy(x,y+1);
+	if (status == 1) {
+		SetBGColor(ColorCode_Red);
+	}
+	cout << char(176) << setw(3) << setfill(char(176)) << char(176) << char(176);
+
+}
+
+/*Xoa bang nhap thong tin sau khi nhap xong*/
+void RemoveForm()
+{
+	system("color 0E");
+	for (int i = 0; i < 6; i++)
+	{
+		gotoxy(127, i*3+4);
+		printf("%-20s", " ");
+	}
+}
+
+void RemoveFormForFlight()
+{
+	system("color 0E");
+	for(int i = 0;i < 3; i++)
+	{
+		gotoxy(X_Add + 2 , i*3+4);
+		printf("%-20s", " ");
+	}
+}
+// xoa toan bo bang nhap thong tin
+void RemoveFormComplete()
+{
+	system("color 0E");
+	for( int i = 0 ; i < 20 ; i++)
+	{
+		gotoxy(X_Add - 2 , Y_Add - 1 + i );
+		printf("%-32s", " ");
+	}
+	//ShowCur(false);
+}
+// nContent - so luong thanh phan co trong bang do
+void RemoveExceedMember(int count,int nContent)
+{
+	if (count < NumberPerPage)
+	{
+		for (int i = count; i < NumberPerPage; i++)
+		{
+			for (int y = 0; y < nContent; y++)
+			{
+				gotoxy(xKeyDisplay[y] + 3, Y_Display + 3 + i * 3);
+				printf("%-18s"," ");
+			}
+		}
+	}
+}
+/* ========== End Bang Them Thong tin ===============*/
+
+/* ========== Tao bang xuat thong tin ===============*/
+
+/*Noi dung hien thi trong bang liet ke*/
+string ContentAirplane[3] = { "So Hieu", "HangMayBay", "SoChoNgoi" };
+string ContentFlight[6] = { "MaChuyenBay","SanBayDen","SoHieuMayBay","ThoiGianDi","TongSoVe","TrangThai"};
+string ContentTicket[2] = {"Ten Ve","TrangThai"};
+string ContentPassenger[5] ={"STT","CMND","Ho","Ten","GioiTinh"};
+
+void Display(string content[], int nContent)// ve bang 
+{
+	system("color 0E");
+	SetColor(14);
+	SetBGColor(0);
+	//show key - the hien ra noi dung cua cac cot
+	for (int i = 0; i < nContent; i++)
+	{// Y_Display 4
+		gotoxy(xKeyDisplay[i] + 3, Y_Display+1);
+		cout << content[i];
+	}
+
+	//ve cac duong thang de phan chia cac cot - kich thuoc toi da la 24 ve chieu dai
+	for (int j = Y_Display ; j <= Y_Display + 20; j++)
+	{
+		for (int i = 0; i < nContent+1; i++)
+		{
+			gotoxy(xKeyDisplay[i], j);
+			cout << char(176);
+		}
+	}
+	//ve thanh ngang ben tren va duoi
+	for (int i = xKeyDisplay[0]; i <= xKeyDisplay[nContent]; i++)
+	{
+		//ve thanh ngang ben tren so 1
+		gotoxy(i, Y_Display);
+		cout << char(176);
+
+		// ve thanh ngang ben tren so 2
+		gotoxy(i, Y_Display + 2);
+		cout << char(176);
+
+		//ve thanh ngang ben duoi
+		gotoxy(i, Y_Display + 21);
+		cout << char(176);
+	}
+
+	cout << endl;
+	gotoxy(X_Tutorial,Y_Tutorial);
+	cout << " Huong dan " ;
+	gotoxy(X_Tutorial,Y_Tutorial + 2);
+	cout << " Page Up:Len || Page Down:Xuong ";
+	gotoxy(X_Tutorial,Y_Tutorial + 3);
+	cout << " Insert:Them || Del:Xoa ";
+	gotoxy(X_Tutorial,Y_Tutorial + 4);
+	cout << " Home:Chinh Sua || ESC : thoat" ;
+	gotoxy(X_Notification,Y_Notification);
+	cout << " Thong Bao ";
+}
+
+void DisplayForWatchOnly(string content[], int nContent,int count)// ve bang 
+{
+	system("color 0E");
+	SetColor(14);
+	SetBGColor(0);
+	//show key - the hien ra noi dung cua cac cot
+	for (int i = 0; i < nContent; i++)
+	{// Y_Display 4
+		gotoxy(xKeyDisplay[i] + 3, Y_Display+1);
+		cout << content[i];
+	}
+
+	//ve cac duong thang de phan chia cac cot - kich thuoc toi da la 20+count ve chieu dai
+	for (int j = Y_Display ; j <= count*3 + 5; j++)
+	{
+		for (int i = 0; i < nContent+1; i++)
+		{
+			gotoxy(xKeyDisplay[i], j);
+			cout << char(176);
+		}
+	}
+	//ve thanh ngang ben tren va duoi
+	for (int i = xKeyDisplay[0]; i <= xKeyDisplay[nContent]; i++)
+	{
+		//ve thanh ngang ben tren so 1
+		gotoxy(i, Y_Display);
+		cout << char(176);
+
+		// ve thanh ngang ben tren so 2
+		gotoxy(i, Y_Display + 2);
+		cout << char(176);
+
+		gotoxy(i, count*3 + 5);
+		cout << char(176);
+	}
+}
+
+
+/* ========== End Tao bang xuat thong tin ===========*/
+/* ======= Xoa cac noi dung sau khi da xuat man hinh ===== */
+void RemoveOldData(int nContent, int locate)
+{
+	for (int i = 0; i < nContent; i++)
+	{
+		gotoxy(xKeyDisplay[i] + 3, Y_Display + 3 + locate);
+		cout << setw(xKeyDisplay[i + 1] - xKeyDisplay[i]-2) << setfill(' ') <<" ";		
+	}
+}
+
+void RemoveNotification()
+{
+	for( int i = 1 ; i < 7 ;i++)
+	{
+		gotoxy(X_Notification-10,Y_Notification+i);
+		printf("%-45s", " ");
+	}
+}
+
+void CenterMenu()
+{
+	InitListAirplane(LA);
+	ReadAirplaneFile(LA);
+	
+	InitFlightList(FL);
+	ReadFlightFileFromFile(FL,LA);
+	
+
+	CreateAVLTree(root);
+	ReadPassengerFromFile(root);
+
+	Introduction();
+	/*FloatingEffectWord(TenHocVien,X_TitlePage,Y_TitlePage,ColorCode_White);
+	return;*/
+	system("cls");
+	int pointer;
+
+	bool Exit = false;// false nghia la chua thoat, van dang dung
+	
+	while(Exit == false)
+	{  
+		pointer =  ScrollMenu(ThucDon);
+		
+		switch(pointer)
+		{
+		case 1:
+			system("color 0E");
+			MenuManageAirplane(LA);
+			break;
+		case 2:
+			system("color 0E");
+			MenuManageFlightLisht(FL);
+			break;
+		case 3:
+			system("color 0E");
+			BookTicket(root);
+			break;
+		case 4:
+			system("color 0E");
+			CancelFlightTicket(root);
+			break;
+		case 5:
+			system("color 0E");
+			SeePassengerList(root);
+			break;
+		case 6:
+			system("color 0E");
+			WatchUnbookedTicket();
+			break;
+		case 7:
+			system("color 0E");
+			WatchHowManyTimeFlightTookOff();
+			break;
+		case 8:
+			system("color 0E");
+			WatchFlightsWithDateTimeAndDestination();
+			break;
+		case MaxItem:
+			WriteFlightToFile(FL);
+			SavePassengerToFile(root);
+			system("color 0E");
+			Exit = true;// xac nhan thoat
+			system("cls");
+			ThankYouAndGoodBye();
+			break;
+		}
+	}
+}
+
+
+================================================
+FILE: UserInterfaceTP.h
+================================================
+#pragma once
+#include<iostream>
+//#include<conio.h>// getch()
+#include<stdint.h>
+#include<string.h>//char
+#include<string>//string
+#include<iomanip>// for setw va setfill
+#include"GlobalVariableTP.h"// thu vien chua cac hang so
+#include"MyLibraryTP.h"// thu vien chua cac ham xu li do hoa
+#include"AirplaneTP.h"
+#include"FlightTP.h"
+using namespace std;
+
+void NormalLine();
+void HighlightLine();
+int ScrollMenu(char ThucDon[MaxItem][50]);
+void CreateRow(int x, int y, string content, int length);
+void CreateForm(string content[], int StartIndex, int nContent, int length);
+void TicketStack(int x, int y, int  text, int status);
+int RemoveConfirm();
+void FloatingEffectWord(char Content[], int x, int y,int Color);
+void RemoveExceedMember(int count, int nContent);
+void RemoveForm();
+void RemoveFormComplete();
+void RemoveOldData(int nContent, int locate);
+void RemoveFormForFlight();
+void RemoveNotification();
+void Display(string content[], int nContent);
+void DisplayForWatchOnly(string content[], int nContent, int count);
+void CenterMenu();
+
+
+================================================
+FILE: Đề bài quản lí máy bay.doc
+================================================
+[Non-text file]
+
+
+================================================
+FILE: Debug/Quan Ly May Bay - Last fix.exe.recipe
+================================================
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>D:\Downloads\Get Programming\1-7 - Quan Ly May Bay - TheLastOfUltimate\Quan Ly May Bay - Release\Debug\Quan Ly May Bay - Last fix.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>
+
+
+================================================
+FILE: Debug/Quan Ly May Bay - Last fix.ilk
+================================================
+[Non-text file]
+
+
+================================================
+FILE: Debug/Quan Ly May Bay - Last fix.vcxproj.FileListAbsolute.txt
+================================================
+D:\Downloads\Get Programming\1-7 - Quan Ly May Bay - TheLastOfUltimate\Quan Ly May Bay - Release\Debug\Quan Ly May Bay - Last fix.exe
+
+
+
+================================================
+FILE: Debug/vc142.idb
+================================================
+[Non-text file]
+
+
+================================================
+FILE: Debug/Quan Ly .EAF40062.tlog/CL.command.1.tlog
+================================================
+[Non-text file]
+
+
+================================================
+FILE: Debug/Quan Ly .EAF40062.tlog/CL.read.1.tlog
+================================================
+[Non-text file]
+
+
+================================================
+FILE: Debug/Quan Ly .EAF40062.tlog/CL.write.1.tlog
+================================================
+[Non-text file]
+
+
+================================================
+FILE: Debug/Quan Ly .EAF40062.tlog/link.command.1.tlog
+================================================
+[Non-text file]
+
+
+================================================
+FILE: Debug/Quan Ly .EAF40062.tlog/link.read.1.tlog
+================================================
+[Non-text file]
+
+
+================================================
+FILE: Debug/Quan Ly .EAF40062.tlog/link.write.1.tlog
+================================================
+[Non-text file]
+
+
+================================================
+FILE: Debug/Quan Ly .EAF40062.tlog/Quan Ly May Bay - Last fix.lastbuildstate
+================================================
+PlatformToolSet=v142:VCToolArchitecture=Native32Bit:VCToolsVersion=14.28.29910:TargetPlatformVersion=10.0.19041.0:
+Debug|Win32|D:\Downloads\Get Programming\1-7 - Quan Ly May Bay - TheLastOfUltimate\Quan Ly May Bay - Release\|
+
+
+
+================================================
+FILE: DSV/CRECH.TXT
+================================================
+5
+147147
+1
+147060
+12
+147023
+23
+666666
+14
+555555
+5
+
+
+
+================================================
+FILE: DSV/CZECH.TXT
+================================================
+0
+
+
+
+================================================
+FILE: DSV/Finland.TXT
+================================================
+0
+
+
+
+================================================
+FILE: DSV/FRA123.TXT
+================================================
+5
+147147
+1
+147060
+12
+147023
+23
+666666
+14
+555555
+5
+
+
+
+================================================
+FILE: DSV/GER0806.TXT
+================================================
+34
+147060
+1
+147100
+2
+147023
+3
+147003
+4
+147005
+5
+147006
+6
+147008
+7
+147009
+8
+147011
+9
+147012
+10
+147015
+11
+147016
+12
+147021
+13
+147024
+14
+147027
+15
+147029
+16
+147030
+17
+147036
+18
+147039
+19
+147042
+20
+147045
+21
+147048
+22
+147050
+23
+147051
+24
+147054
+25
+147057
+26
+147059
+27
+147075
+28
+147062
+29
+147147
+30
+147185
+31
+147177
+32
+147180
+33
+147171
+34
+
+
+
+================================================
+FILE: DSV/germany.TXT
+================================================
+3
+147023
+25
+147100
+12
+146033
+15
+
+
+
+================================================
+FILE: DSV/HOLLAND.TXT
+================================================
+36
+147060
+1
+147100
+2
+147023
+3
+147003
+4
+147005
+5
+147006
+6
+147008
+7
+147009
+8
+147011
+9
+147012
+10
+147015
+11
+147016
+12
+147021
+13
+147024
+14
+147027
+15
+147029
+16
+147030
+17
+147036
+18
+147039
+19
+147042
+20
+147045
+21
+147048
+22
+147050
+23
+147051
+24
+147054
+25
+147057
+26
+147059
+27
+147075
+28
+147062
+29
+147147
+40
+555555
+34
+147174
+37
+147056
+42
+666666
+45
+105200
+48
+3452816845
+-842150451
+
+
+
+================================================
+FILE: DSV/JA1010.TXT
+================================================
+35
+147060
+1
+147100
+2
+147023
+3
+147003
+4
+147005
+5
+147006
+6
+147008
+7
+147009
+8
+147011
+9
+147012
+10
+147015
+11
+147016
+12
+147021
+13
+147024
+14
+147027
+15
+147029
+16
+147030
+17
+147036
+18
+147039
+19
+147042
+20
+147045
+21
+147048
+22
+147050
+23
+147051
+24
+147054
+25
+147057
+26
+147059
+27
+147075
+28
+147062
+29
+147063
+30
+147147
+46
+147175
+56
+147035
+57
+147046
+66
+147055
+55
+
+
+
+================================================
+FILE: DSV/NORWAY.TXT
+================================================
+4
+147147
+1
+147060
+25
+147023
+13
+150007
+38
+
+
+
+================================================
+FILE: DSV/POLAND.TXT
+================================================
+2
+147060
+1
+147147
+2
+
+
+
+================================================
+FILE: DSV/QWE123.TXT
+================================================
+1
+147060
+1
+
+
+
+================================================
+FILE: DSV/RUS79U.txt
+================================================
+31
+147060
+1
+147100
+2
+147023
+3
+147003
+4
+147005
+5
+147006
+6
+147008
+7
+147009
+8
+147011
+9
+147012
+10
+147015
+11
+147016
+12
+147021
+13
+147024
+14
+147027
+15
+147029
+16
+147030
+17
+147036
+18
+147039
+19
+147042
+20
+147045
+21
+147048
+22
+147050
+23
+147051
+24
+147054
+25
+147057
+26
+147059
+27
+147075
+28
+147062
+29
+147063
+30
+32423
+31
+
+
+
+================================================
+FILE: DSV/USA2306.TXT
+================================================
+5
+147060
+1
+147100
+2
+147023
+3
+147003
+4
+147005
+5
+
+
+
+================================================
+FILE: DSV/XYZ1945.TXT
+================================================
+30
+147060
+1
+147100
+2
+147023
+3
+147003
+4
+147005
+5
+147006
+6
+147008
+7
+147009
+8
+147011
+9
+147012
+10
+147015
+11
+147016
+12
+147021
+13
+147024
+14
+147027
+15
+147029
+16
+147030
+17
+147036
+18
+147039
+19
+147042
+20
+147045
+21
+147048
+22
+147050
+23
+147051
+24
+147054
+25
+147057
+26
+147059
+27
+147075
+28
+147062
+29
+147063
+30
+
+
+

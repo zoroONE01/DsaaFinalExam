@@ -84,8 +84,8 @@ void insertionSortDLL(NodeDLL *&head, NodeDLL *&tail, int sortCriteria)
 
         // Tìm vị trí thích hợp trong phần đã sắp xếp
         NodeDLL *pos = head;
-        while (pos != current && (compareStudents(pos->info, key, sortCriteria) || 
-               (!compareStudents(pos->info, key, sortCriteria) && !compareStudents(key, pos->info, sortCriteria))))
+        while (pos != current && (compareStudents(pos->info, key, sortCriteria) ||
+                                  (!compareStudents(pos->info, key, sortCriteria) && !compareStudents(key, pos->info, sortCriteria))))
             pos = pos->next;
 
         // Chỉ di chuyển node nếu cần thiết (tối ưu hóa)
@@ -189,7 +189,7 @@ NodeDLL *partitionDLL(NodeDLL *low, NodeDLL *high, int sortCriteria)
     for (NodeDLL *j = low; j != high; j = j->next)
     {
         // Nếu phần tử hiện tại <= pivot theo tiêu chí được chọn
-        if (compareStudents(j->info, pivot, sortCriteria) || 
+        if (compareStudents(j->info, pivot, sortCriteria) ||
             (!compareStudents(j->info, pivot, sortCriteria) && !compareStudents(pivot, j->info, sortCriteria)))
         {
             // Di chuyển con trỏ i và hoán đổi
@@ -345,7 +345,7 @@ NodeDLL *mergeDLL(NodeDLL *firstHalf, NodeDLL *secondHalf, int sortCriteria)
     NodeDLL *result = NULL;
 
     // So sánh hai node đầu tiên theo tiêu chí được chọn
-    if (compareStudents(firstHalf->info, secondHalf->info, sortCriteria) || 
+    if (compareStudents(firstHalf->info, secondHalf->info, sortCriteria) ||
         (!compareStudents(firstHalf->info, secondHalf->info, sortCriteria) && !compareStudents(secondHalf->info, firstHalf->info, sortCriteria)))
     {
         result = firstHalf; // Chọn node từ danh sách thứ nhất

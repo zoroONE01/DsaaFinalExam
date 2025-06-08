@@ -80,6 +80,7 @@ void searchStudentInDataStructure(int dataStructureType,
                                  NodeSLL *singlyLinkedList,
                                  NodeSLL *circularLinkedList,
                                  NodeDLL *doublyLinkedListHead,
+                                 NodeDLL *doublyLinkedListTail,
                                  int currentSortCriteria);
 
 void displayCurrentList(int dataStructureType,

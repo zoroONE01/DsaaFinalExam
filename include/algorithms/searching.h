@@ -46,6 +46,12 @@ SearchTimer startTimer();
 void stopTimer(SearchTimer &timer);
 double getElapsedTimeMs(const SearchTimer &timer);
 
+// Hàm chuyển đổi tiêu chí tìm kiếm thành tiêu chí sắp xếp
+int mapSearchToSortCriteria(int searchCriteria);
+
+// Hàm kiểm tra khả năng sử dụng binary search
+bool canUseBinarySearch(int searchCriteria, int sortCriteria, bool isSorted);
+
 // ========== Hàm tìm kiếm chính ==========
 
 // Tìm kiếm tuần tự

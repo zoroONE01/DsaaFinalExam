@@ -475,7 +475,7 @@ int main()
         case 9: // Tìm kiếm nâng cao với nhiều tiêu chí
         {
             searchStudentInDataStructure(dataStructureType, arrayList, singlyLinkedList,
-                                         circularLinkedList, doublyLinkedListHead,
+                                         circularLinkedList, doublyLinkedListHead, doublyLinkedListTail,
                                          isSorted ? currentSortCriteria : -1);
             break;
         }

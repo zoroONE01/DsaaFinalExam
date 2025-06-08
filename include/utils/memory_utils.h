@@ -8,10 +8,10 @@
 using namespace std;
 
 // ========== Hàm cấp phát bộ nhớ an toàn ==========
-template<typename T>
-T* safeAllocate(size_t count = 1)
+template <typename T>
+T *safeAllocate(size_t count = 1)
 {
-    T* ptr = static_cast<T*>(malloc(sizeof(T) * count));
+    T *ptr = static_cast<T *>(malloc(sizeof(T) * count));
     if (ptr == NULL)
     {
         displayError(ERROR_MEMORY_ALLOCATION, "Không thể cấp phát " + to_string(sizeof(T) * count) + " bytes");
@@ -21,8 +21,8 @@ T* safeAllocate(size_t count = 1)
 }
 
 // ========== Hàm giải phóng bộ nhớ an toàn ==========
-template<typename T>
-void safeFree(T*& ptr)
+template <typename T>
+void safeFree(T *&ptr)
 {
     if (ptr != NULL)
     {
@@ -32,8 +32,8 @@ void safeFree(T*& ptr)
 }
 
 // ========== Hàm cấp phát bộ nhớ với new (C++) ==========
-template<typename T>
-T* safeNew(size_t count = 1)
+template <typename T>
+T *safeNew(size_t count = 1)
 {
     try
     {
@@ -46,7 +46,7 @@ T* safeNew(size_t count = 1)
             return new T[count];
         }
     }
-    catch (const bad_alloc& e)
+    catch (const bad_alloc &e)
     {
         displayError(ERROR_MEMORY_ALLOCATION, "Không thể cấp phát bộ nhớ: " + string(e.what()));
         return NULL;
@@ -54,8 +54,8 @@ T* safeNew(size_t count = 1)
 }
 
 // ========== Hàm giải phóng bộ nhớ với delete (C++) ==========
-template<typename T>
-void safeDelete(T*& ptr, bool isArray = false)
+template <typename T>
+void safeDelete(T *&ptr, bool isArray = false)
 {
     if (ptr != NULL)
     {
@@ -72,7 +72,7 @@ void safeDelete(T*& ptr, bool isArray = false)
 }
 
 // ========== Hàm kiểm tra và thông báo về trạng thái bộ nhớ ==========
-void logMemoryOperation(const string& operation, const string& objectType, bool success)
+void logMemoryOperation(const string &operation, const string &objectType, bool success)
 {
     if (success)
     {

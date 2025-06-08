@@ -251,7 +251,7 @@ int selectSortAlgorithm(int dataStructureType)
         cout << "│   5    │  Merge Sort                          │" << endl;
         cout << "│   6    │  Heap Sort                           │" << endl;
         cout << "└────────┴──────────────────────────────────────┘" << RESET << endl;
-        
+
         cout << "\nNhập lựa chọn: ";
         while (!(cin >> choice) || choice < 1 || choice > 6)
         {
@@ -272,7 +272,7 @@ int selectSortAlgorithm(int dataStructureType)
         cout << "│   3    │  Selection Sort                      │" << endl;
         cout << "│   5    │  Merge Sort                          │" << endl;
         cout << "└────────┴──────────────────────────────────────┘" << RESET << endl;
-        
+
         cout << "\nNhập lựa chọn: ";
         while (!(cin >> choice) || (choice != 1 && choice != 2 && choice != 3 && choice != 5))
         {
@@ -283,7 +283,7 @@ int selectSortAlgorithm(int dataStructureType)
     }
     else if (dataStructureType == CIRCULAR_LINKED_LIST)
     {
-        // Hiển thị menu cho Circular Linked List  
+        // Hiển thị menu cho Circular Linked List
         cout << BOLD;
         cout << "┌────────┬──────────────────────────────────────┐" << endl;
         cout << "│  CHỌN  │           THUẬT TOÁN SẮP XẾP         │" << endl;
@@ -293,7 +293,7 @@ int selectSortAlgorithm(int dataStructureType)
         cout << "│   3    │  Selection Sort                      │" << endl;
         cout << "│   5    │  Merge Sort                          │" << endl;
         cout << "└────────┴──────────────────────────────────────┘" << RESET << endl;
-        
+
         cout << "\nNhập lựa chọn: ";
         while (!(cin >> choice) || (choice != 1 && choice != 2 && choice != 3 && choice != 5))
         {
@@ -316,7 +316,7 @@ int selectSortAlgorithm(int dataStructureType)
         cout << "│   5    │  Merge Sort                          │" << endl;
         cout << "│   6    │  Heap Sort                           │" << endl;
         cout << "└────────┴──────────────────────────────────────┘" << RESET << endl;
-        
+
         cout << "\nNhập lựa chọn: ";
         while (!(cin >> choice) || choice < 1 || choice > 6)
         {
@@ -368,50 +368,54 @@ int selectSearchCriteria()
 }
 
 // Hàm nhập từ khóa tìm kiếm
-bool inputSearchKeyword(char* keyword, int searchCriteria)
+bool inputSearchKeyword(char *keyword, int searchCriteria)
 {
     cout << "\n";
     printInfo("Nhập từ khóa tìm kiếm:");
-    
+
     string prompt;
-    switch (searchCriteria) {
-        case SEARCH_BY_STUDENT_ID:
-            prompt = "Mã sinh viên (ví dụ: SV001): ";
-            break;
-        case SEARCH_BY_FIRST_NAME:
-            prompt = "Họ (ví dụ: Nguyen): ";
-            break;
-        case SEARCH_BY_LAST_NAME:
-            prompt = "Tên (ví dụ: Van): ";
-            break;
-        case SEARCH_BY_CLASS:
-            prompt = "Lớp (ví dụ: CNTT1): ";
-            break;
-        case SEARCH_BY_SCORE:
-            prompt = "Điểm số (ví dụ: 8.5): ";
-            break;
-        default:
-            prompt = "Từ khóa: ";
+    switch (searchCriteria)
+    {
+    case SEARCH_BY_STUDENT_ID:
+        prompt = "Mã sinh viên (ví dụ: SV001): ";
+        break;
+    case SEARCH_BY_FIRST_NAME:
+        prompt = "Họ (ví dụ: Nguyen): ";
+        break;
+    case SEARCH_BY_LAST_NAME:
+        prompt = "Tên (ví dụ: Van): ";
+        break;
+    case SEARCH_BY_CLASS:
+        prompt = "Lớp (ví dụ: CNTT1): ";
+        break;
+    case SEARCH_BY_SCORE:
+        prompt = "Điểm số (ví dụ: 8.5): ";
+        break;
+    default:
+        prompt = "Từ khóa: ";
     }
-    
+
     cout << CYAN << prompt << RESET;
     cin.getline(keyword, 100);
-    
+
     // Kiểm tra từ khóa không rỗng
-    if (strlen(keyword) == 0) {
+    if (strlen(keyword) == 0)
+    {
         printError("Từ khóa không được để trống!");
         return false;
     }
-    
+
     // Validate score input if searching by score
-    if (searchCriteria == SEARCH_BY_SCORE) {
-        char* endptr;
+    if (searchCriteria == SEARCH_BY_SCORE)
+    {
+        char *endptr;
         float score = strtof(keyword, &endptr);
-        if (*endptr != '\0' || score < 0 || score > 10) {
+        if (*endptr != '\0' || score < 0 || score > 10)
+        {
             printError("Điểm số không hợp lệ! Vui lòng nhập điểm từ 0 đến 10.");
             return false;
         }
     }
-    
+
     return true;
 }

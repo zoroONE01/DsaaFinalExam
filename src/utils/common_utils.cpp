@@ -6,7 +6,7 @@
 using namespace std;
 
 // ========== Định nghĩa hằng số ==========
-const char* CANCEL_INPUT_CODE = "00";
+const char *CANCEL_INPUT_CODE = "00";
 
 // ========== Đọc dữ liệu từ file CSV ==========
 bool readFromCSVFile(const char *filename, ArrayStudentList &list)
@@ -32,7 +32,7 @@ bool readFromCSVFile(const char *filename, ArrayStudentList &list)
     while (getline(file, line))
     {
         lineNumber++;
-        
+
         if (line.empty())
         {
             continue; // Bỏ qua dòng trống
@@ -45,16 +45,16 @@ bool readFromCSVFile(const char *filename, ArrayStudentList &list)
         // Phân tích dữ liệu CSV bằng phân tách dấu phẩy
         char *token = strtok(buffer, ",");
         string studentID = token ? token : "";
-        
+
         token = strtok(NULL, ",");
         string firstName = token ? token : "";
-        
+
         token = strtok(NULL, ",");
         string lastName = token ? token : "";
-        
+
         token = strtok(NULL, ",");
         string className = token ? token : "";
-        
+
         token = strtok(NULL, ",");
         string scoreStr = token ? token : "";
 
@@ -155,7 +155,7 @@ bool readFromCSVFile(const char *filename, ArrayStudentList &list)
         else
         {
             // In thông báo lỗi cho dòng không hợp lệ
-            cout << YELLOW << "⚠ Dòng " << lineNumber << ": " << RESET 
+            cout << YELLOW << "⚠ Dòng " << lineNumber << ": " << RESET
                  << RED << errorMessages << RESET << endl;
             cout << "   Nội dung: " << line << endl;
             invalidCount++;
@@ -163,15 +163,16 @@ bool readFromCSVFile(const char *filename, ArrayStudentList &list)
     }
 
     file.close();
-    
+
     // Hiển thị thống kê
-    cout << "\n" << BOLD << "KẾT QUẢ ĐỌC FILE CSV:" << RESET << endl;
+    cout << "\n"
+         << BOLD << "KẾT QUẢ ĐỌC FILE CSV:" << RESET << endl;
     cout << GREEN << "✓ Số dòng hợp lệ: " << validCount << RESET << endl;
     if (invalidCount > 0)
     {
         cout << RED << "✗ Số dòng không hợp lệ (bị bỏ qua): " << invalidCount << RESET << endl;
     }
-    
+
     return true;
 }
 
@@ -195,7 +196,7 @@ bool writeToCSVFile(const char *filename, const ArrayStudentList &list)
              << list.students[i].lastName << ","
              << list.students[i].studentClass << ","
              << fixed << setprecision(1) << list.students[i].score;
-        
+
         // Không thêm newline cho dòng cuối cùng để tránh dòng trống
         if (i < list.count - 1)
         {

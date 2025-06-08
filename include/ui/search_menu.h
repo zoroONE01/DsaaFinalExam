@@ -12,14 +12,14 @@ using namespace std;
 
 // ========== HÀM NHẬP LIỆU ==========
 
-// Nhập tiêu chí tìm kiếm
-int inputSearchCriteria();
+// Nhập thuật toán tìm kiếm (chỉ dành cho Array và Doubly Linked List)
+int inputSearchAlgorithm();
+
+// Nhập tiêu chí tìm kiếm dựa trên thuật toán đã chọn
+int inputSearchCriteria(int searchAlgorithm);
 
 // Hỏi người dùng có muốn hiển thị họ tên đảo ngược không
 bool askForReversedName();
-
-// Nhập thuật toán tìm kiếm (chỉ dành cho Array và Doubly Linked List)
-int inputSearchAlgorithm();
 
 // ========== HÀM TIỆN ÍCH ==========
 // Note: inputSearchKeyword, getDataStructureName được định nghĩa trong common_ui.h
@@ -36,6 +36,17 @@ void performSearchSLL(NodeSLL *head);
 void performSearchCLL(NodeSLL *head);
 
 // Thực hiện tìm kiếm sinh viên cho danh sách liên kết kép
-void performSearchDLL(NodeDLL *head, bool isSorted, int sortCriteria);
+void performSearchDLL(NodeDLL *head, NodeDLL *tail, bool isSorted, int sortCriteria);
+
+// ========== HÀM HỖ TRỢ SẮP XẾP CHO TÌM KIẾM ==========
+
+// Chọn thuật toán sắp xếp dựa trên tiêu chí tìm kiếm và cấu trúc dữ liệu
+int selectSortAlgorithmForSearch(int searchCriteria, int dataStructureType);
+
+// Thực hiện sắp xếp cho Array List
+bool performSortingArray(ArrayStudentList& list, int sortAlgorithm, int sortCriteria);
+
+// Thực hiện sắp xếp cho Doubly Linked List
+bool performSortingDLL(NodeDLL*& head, NodeDLL*& tail, int sortAlgorithm, int sortCriteria);
 
 #endif // SEARCH_MENU_H

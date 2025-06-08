@@ -359,6 +359,7 @@ void searchStudentInDataStructure(int dataStructureType,
                                   NodeSLL *singlyLinkedList,
                                   NodeSLL *circularLinkedList,
                                   NodeDLL *doublyLinkedListHead,
+                                  NodeDLL *doublyLinkedListTail,
                                   int currentSortCriteria)
 {
     // Kiểm tra trường hợp đặc biệt cho BST
@@ -388,7 +389,7 @@ void searchStudentInDataStructure(int dataStructureType,
         performSearchCLL(circularLinkedList);
         break;
     case DOUBLY_LINKED_LIST:
-        performSearchDLL(doublyLinkedListHead, (currentSortCriteria != -1), currentSortCriteria);
+        performSearchDLL(doublyLinkedListHead, doublyLinkedListTail, (currentSortCriteria != -1), currentSortCriteria);
         break;
     default:
         printError("Cấu trúc dữ liệu không được hỗ trợ!");
@@ -426,7 +427,7 @@ void performStatistics(int dataStructureType,
     {
         cout << "Nhập lựa chọn: ";
         cin >> choice;
-        
+
         if (cin.fail())
         {
             cin.clear();
@@ -435,7 +436,7 @@ void performStatistics(int dataStructureType,
             continue;
         }
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        
+
         switch (choice)
         {
         case 1:
@@ -460,10 +461,10 @@ void performStatistics(int dataStructureType,
 
 // Hàm thống kê tổng quát (logic cũ của performStatistics)
 void performGeneralStatistics(int dataStructureType,
-                             const ArrayStudentList &arrayList,
-                             NodeSLL *singlyLinkedList,
-                             NodeSLL *circularLinkedList,
-                             NodeDLL *doublyLinkedListHead)
+                              const ArrayStudentList &arrayList,
+                              NodeSLL *singlyLinkedList,
+                              NodeSLL *circularLinkedList,
+                              NodeDLL *doublyLinkedListHead)
 {
     float highest = 0.0f, lowest = 0.0f, average = 0.0f;
     bool isEmpty = false;
@@ -1556,8 +1557,6 @@ void updateStudentInBST(const Student &student, NodeBST *&binarySearchTree)
     }
 }
 
-
-
 // Hàm hiển thị cây BST
 void displayBST(NodeBST *binarySearchTree)
 {
@@ -1997,7 +1996,7 @@ int getUniqueClassesSLL(NodeSLL *singlyLinkedList, char classes[][MAX_CLASS_LENG
 {
     int classCount = 0;
     NodeSLL *current = singlyLinkedList;
-    
+
     while (current != NULL)
     {
         bool found = false;
@@ -2024,11 +2023,12 @@ int getUniqueClassesSLL(NodeSLL *singlyLinkedList, char classes[][MAX_CLASS_LENG
 // Hàm lấy danh sách các lớp duy nhất từ Circular Linked List
 int getUniqueClassesCLL(NodeSLL *circularLinkedList, char classes[][MAX_CLASS_LENGTH])
 {
-    if (circularLinkedList == NULL) return 0;
-    
+    if (circularLinkedList == NULL)
+        return 0;
+
     int classCount = 0;
     NodeSLL *current = circularLinkedList;
-    
+
     do
     {
         bool found = false;
@@ -2049,7 +2049,7 @@ int getUniqueClassesCLL(NodeSLL *circularLinkedList, char classes[][MAX_CLASS_LE
         }
         current = current->next;
     } while (current != circularLinkedList);
-    
+
     return classCount;
 }
 
@@ -2058,7 +2058,7 @@ int getUniqueClassesDLL(NodeDLL *doublyLinkedListHead, char classes[][MAX_CLASS_
 {
     int classCount = 0;
     NodeDLL *current = doublyLinkedListHead;
-    
+
     while (current != NULL)
     {
         bool found = false;
@@ -2090,21 +2090,21 @@ void calculateClassStatisticsArray(const ArrayStudentList &arrayList, const char
     stats.highestScore = -1;
     stats.lowestScore = 11;
     float totalScore = 0;
-    
+
     for (int i = 0; i < arrayList.count; i++)
     {
         if (strcmp(arrayList.students[i].studentClass, className) == 0)
         {
             stats.totalStudents++;
             totalScore += arrayList.students[i].score;
-            
+
             if (arrayList.students[i].score > stats.highestScore)
                 stats.highestScore = arrayList.students[i].score;
             if (arrayList.students[i].score < stats.lowestScore)
                 stats.lowestScore = arrayList.students[i].score;
         }
     }
-    
+
     stats.averageScore = (stats.totalStudents > 0) ? (totalScore / stats.totalStudents) : 0;
 }
 
@@ -2116,7 +2116,7 @@ void calculateClassStatisticsSLL(NodeSLL *singlyLinkedList, const char *classNam
     stats.highestScore = -1;
     stats.lowestScore = 11;
     float totalScore = 0;
-    
+
     NodeSLL *current = singlyLinkedList;
     while (current != NULL)
     {
@@ -2124,7 +2124,7 @@ void calculateClassStatisticsSLL(NodeSLL *singlyLinkedList, const char *classNam
         {
             stats.totalStudents++;
             totalScore += current->info.score;
-            
+
             if (current->info.score > stats.highestScore)
                 stats.highestScore = current->info.score;
             if (current->info.score < stats.lowestScore)
@@ -2132,7 +2132,7 @@ void calculateClassStatisticsSLL(NodeSLL *singlyLinkedList, const char *classNam
         }
         current = current->next;
     }
-    
+
     stats.averageScore = (stats.totalStudents > 0) ? (totalScore / stats.totalStudents) : 0;
 }
 
@@ -2144,13 +2144,13 @@ void calculateClassStatisticsCLL(NodeSLL *circularLinkedList, const char *classN
     stats.highestScore = -1;
     stats.lowestScore = 11;
     float totalScore = 0;
-    
-    if (circularLinkedList == NULL) 
+
+    if (circularLinkedList == NULL)
     {
         stats.averageScore = 0;
         return;
     }
-    
+
     NodeSLL *current = circularLinkedList;
     do
     {
@@ -2158,7 +2158,7 @@ void calculateClassStatisticsCLL(NodeSLL *circularLinkedList, const char *classN
         {
             stats.totalStudents++;
             totalScore += current->info.score;
-            
+
             if (current->info.score > stats.highestScore)
                 stats.highestScore = current->info.score;
             if (current->info.score < stats.lowestScore)
@@ -2166,7 +2166,7 @@ void calculateClassStatisticsCLL(NodeSLL *circularLinkedList, const char *classN
         }
         current = current->next;
     } while (current != circularLinkedList);
-    
+
     stats.averageScore = (stats.totalStudents > 0) ? (totalScore / stats.totalStudents) : 0;
 }
 
@@ -2178,7 +2178,7 @@ void calculateClassStatisticsDLL(NodeDLL *doublyLinkedListHead, const char *clas
     stats.highestScore = -1;
     stats.lowestScore = 11;
     float totalScore = 0;
-    
+
     NodeDLL *current = doublyLinkedListHead;
     while (current != NULL)
     {
@@ -2186,7 +2186,7 @@ void calculateClassStatisticsDLL(NodeDLL *doublyLinkedListHead, const char *clas
         {
             stats.totalStudents++;
             totalScore += current->info.score;
-            
+
             if (current->info.score > stats.highestScore)
                 stats.highestScore = current->info.score;
             if (current->info.score < stats.lowestScore)
@@ -2194,7 +2194,7 @@ void calculateClassStatisticsDLL(NodeDLL *doublyLinkedListHead, const char *clas
         }
         current = current->next;
     }
-    
+
     stats.averageScore = (stats.totalStudents > 0) ? (totalScore / stats.totalStudents) : 0;
 }
 
@@ -2221,7 +2221,7 @@ void displayAllClassStatistics(int dataStructureType,
 {
     char classes[MAX_STUDENTS][MAX_CLASS_LENGTH];
     int classCount = 0;
-    
+
     // Lấy danh sách các lớp duy nhất theo cấu trúc dữ liệu
     switch (dataStructureType)
     {
@@ -2238,20 +2238,20 @@ void displayAllClassStatistics(int dataStructureType,
         classCount = getUniqueClassesDLL(doublyLinkedListHead, classes);
         break;
     }
-    
+
     if (classCount == 0)
     {
         printWarning("Không có lớp nào để thống kê!");
         return;
     }
-    
+
     printHeader("THỐNG KÊ THEO LỚP");
-    
+
     // Hiển thị thống kê cho từng lớp
     for (int i = 0; i < classCount; i++)
     {
         ClassStatistics stats;
-        
+
         switch (dataStructureType)
         {
         case ARRAY_LIST:
@@ -2267,7 +2267,7 @@ void displayAllClassStatistics(int dataStructureType,
             calculateClassStatisticsDLL(doublyLinkedListHead, classes[i], stats);
             break;
         }
-        
+
         displayClassStatistics(stats);
     }
 }

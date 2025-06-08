@@ -8,7 +8,7 @@
 /**
  * Hàm so sánh hai sinh viên theo tiêu chí được chọn
  * @param a: Sinh viên thứ nhất
- * @param b: Sinh viên thứ hai  
+ * @param b: Sinh viên thứ hai
  * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
  * @return true nếu a < b theo tiêu chí đã chọn, false nếu ngược lại
  */
@@ -154,7 +154,7 @@ int partitionArrayList(ArrayStudentList &list, int low, int high, int sortCriter
     for (int j = low; j < high; j++)
     {
         // Nếu phần tử hiện tại nhỏ hơn hoặc bằng pivot theo tiêu chí đã chọn
-        if (compareStudents(list.students[j], pivot, sortCriteria) || 
+        if (compareStudents(list.students[j], pivot, sortCriteria) ||
             !compareStudents(pivot, list.students[j], sortCriteria))
         {
             i++; // Tăng vùng các phần tử nhỏ hơn pivot
@@ -312,7 +312,7 @@ void mergeArrayList(ArrayStudentList &list, int left, int mid, int right, int so
     // So sánh và hợp nhất cho đến khi một trong hai mảng con hết phần tử
     while (i < n1 && j < n2)
     {
-        if (compareStudents(leftArray[i], rightArray[j], sortCriteria) || 
+        if (compareStudents(leftArray[i], rightArray[j], sortCriteria) ||
             (!compareStudents(leftArray[i], rightArray[j], sortCriteria) && !compareStudents(rightArray[j], leftArray[i], sortCriteria)))
         {
             list.students[k] = leftArray[i]; // Lấy từ mảng trái

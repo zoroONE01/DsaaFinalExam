@@ -196,8 +196,6 @@ NodeBST *findMinNode(NodeBST *root)
     return current;
 }
 
-
-
 // Giải phóng bộ nhớ cây BST
 void freeBST(NodeBST *&root)
 {

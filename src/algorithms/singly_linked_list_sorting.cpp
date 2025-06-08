@@ -7,7 +7,7 @@
 /**
  * Hàm so sánh hai sinh viên theo tiêu chí được chọn
  * @param a: Sinh viên thứ nhất
- * @param b: Sinh viên thứ hai  
+ * @param b: Sinh viên thứ hai
  * @param sortCriteria: Tiêu chí sắp xếp (SORT_BY_STUDENT_ID, SORT_BY_NAME, SORT_BY_SCORE)
  * @return true nếu a < b theo tiêu chí đã chọn, false nếu ngược lại
  */
@@ -15,9 +15,9 @@ bool compareStudentsSLL(const Student &a, const Student &b, int sortCriteria)
 {
     switch (sortCriteria)
     {
-    case 1: // SORT_BY_STUDENT_ID
+    case 1:                                          // SORT_BY_STUDENT_ID
         return strcmp(a.studentID, b.studentID) < 0; // So sánh mã sinh viên
-    case 2: // SORT_BY_NAME
+    case 2:                                          // SORT_BY_NAME
         // So sánh theo tên (lastName + firstName)
         {
             int lastNameCmp = strcmp(a.lastName, b.lastName);
@@ -25,7 +25,7 @@ bool compareStudentsSLL(const Student &a, const Student &b, int sortCriteria)
                 return lastNameCmp < 0;
             return strcmp(a.firstName, b.firstName) < 0;
         }
-    case 3: // SORT_BY_SCORE
+    case 3:                       // SORT_BY_SCORE
         return a.score < b.score; // So sánh điểm số
     default:
         return a.score < b.score; // Mặc định so sánh theo điểm

@@ -13,7 +13,7 @@
 // ========== Tất cả các hàm sắp xếp đã được định nghĩa trong các thư viện con ==========
 
 /*
- * CÁC THỬU VIỆN CON:
+ * CÁC THƯ VIỆN CON:
  * - array_sorting.h: Thuật toán sắp xếp cho Array List
  * - singly_linked_list_sorting.h: Thuật toán sắp xếp cho Singly Linked List
  * - circular_linked_list_sorting.h: Thuật toán sắp xếp cho Circular Linked List

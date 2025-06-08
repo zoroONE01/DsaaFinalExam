@@ -1,16 +1,55 @@
 # Báo cáo Cuối kỳ Dự án: Hệ thống Quản lý Sinh viên (C++)
 
+## Mục lục
+
+* [1. Giới thiệu chung](#1-giới-thiệu-chung)
+  * [1.1. Mục tiêu dự án](#11-mục-tiêu-dự-án)
+  * [1.2. Phạm vi dự án](#12-phạm-vi-dự-án)
+  * [1.3. Môi trường phát triển và Công cụ](#13-môi-trường-phát-triển-và-công-cụ)
+  * [1.4. Đặc điểm kỹ thuật chính](#14-đặc-điểm-kỹ-thuật-chính)
+  * [1.5. Kiến trúc hệ thống](#15-kiến-trúc-hệ-thống)
+* [2. Phân tích và Thiết kế Hệ thống](#2-phân-tích-và-thiết-kế-hệ-thống)
+  * [2.1. Lựa chọn Cấu trúc Dữ liệu Lưu trữ chính](#21-lựa-chọn-cấu-trúc-dữ-liệu-lưu-trữ-chính)
+    * [2.1.1. Mảng (Array List)](#211-mảng-array-list)
+    * [2.1.2. Danh sách Liên kết Đơn (Singly Linked List)](#212-danh-sách-liên-kết-đơn-singly-linked-list)
+    * [2.1.3. Danh sách Liên kết Vòng (Circular Linked List)](#213-danh-sách-liên-kết-vòng-circular-linked-list)
+    * [2.1.4. Danh sách Liên kết Đôi (Doubly Linked List)](#214-danh-sách-liên-kết-đôi-doubly-linked-list)
+    * [2.1.5. Cây Tìm kiếm Nhị phân (Binary Search Tree)](#215-cây-tìm-kiếm-nhị-phân-binary-search-tree)
+  * [2.2. Cấu trúc Thông tin Sinh viên (`struct Student`)](#22-cấu-trúc-thông-tin-sinh-viên-struct-student)
+* [3. Hiện thực Chi tiết các Chức năng (Phần A)](#3-hiện-thực-chi-tiết-các-chức-năng-phần-a)
+  * [3.1. Nhập dữ liệu từ File CSV](#31-nhập-dữ-liệu-từ-file-csv)
+  * [3.2. Thêm Sinh viên mới](#32-thêm-sinh-viên-mới)
+  * [3.3. Xóa hoặc Cập nhật Thông tin Sinh viên](#33-xóa-hoặc-cập-nhật-thông-tin-sinh-viên)
+  * [3.4. Thống kê Sinh viên](#34-thống-kê-sinh-viên)
+  * [3.5. Sắp xếp Danh sách Sinh viên](#35-sắp-xếp-danh-sách-sinh-viên)
+  * [3.6. Tìm kiếm Sinh viên](#36-tìm-kiếm-sinh-viên)
+* [4. Hiện thực Chức năng Nâng cao (Phần B)](#4-hiện-thực-chức-năng-nâng-cao-phần-b)
+  * [4.1. Hệ Thống Thuật Toán Sắp Xếp Nâng Cao](#41-hệ-thống-thuật-toán-sắp-xếp-nâng-cao)
+  * [4.2. Cây Nhị Phân Tìm Kiếm theo Điểm (BST)](#42-cây-nhị-phân-tìm-kiếm-theo-điểm-bst)
+  * [4.3. Hệ Thống Tìm Kiếm Nâng Cao với Đo Lường Hiệu Suất](#43-hệ-thống-tìm-kiếm-nâng-cao-với-đo-lường-hiệu-suất)
+  * [4.4. Tích Hợp Đa Cấu Trúc Dữ Liệu](#44-tích-hợp-đa-cấu-trúc-dữ-liệu)
+* [5. Kết luận và Hướng phát triển](#5-kết-luận-và-hướng-phát-triển)
+  * [5.1. Kết luận](#51-kết-luận)
+    * [5.1.1. Về mặt học thuật](#511-về-mặt-học-thuật)
+    * [5.1.2. Về mặt kỹ thuật](#512-về-mặt-kỹ-thuật)
+    * [5.1.3. Về mặt ứng dụng](#513-về-mặt-ứng-dụng)
+  * [5.2. Hướng phát triển](#52-hướng-phát-triển)
+    * [5.2.1. Các thành tựu hiện tại](#521-các-thành-tựu-hiện-tại)
+    * [5.2.2. Hướng phát triển ngắn hạn](#522-hướng-phát-triển-ngắn-hạn)
+    * [5.2.3. Hướng phát triển dài hạn](#523-hướng-phát-triển-dài-hạn)
+    * [5.2.4. Kết luận tổng thể](#524-kết-luận-tổng-thể)
+
 ## 1. Giới thiệu chung
 
 ### 1.1. Mục tiêu dự án
 
 Dự án "Hệ thống Quản lý Sinh viên" được phát triển với mục tiêu chính là ứng dụng và củng cố kiến thức về Cấu trúc Dữ liệu và Giải thuật thông qua việc xây dựng một hệ thống quản lý thông tin sinh viên hoàn chỉnh. Các mục tiêu cụ thể bao gồm:
 
-- **Thực hành cài đặt cấu trúc dữ liệu:** Tự tay cài đặt các cấu trúc dữ liệu cơ bản như mảng động (ArrayStudentList), danh sách liên kết đơn (NodeSLL), danh sách liên kết vòng (NodeSLL), danh sách liên kết đôi (NodeDLL), và cây nhị phân tìm kiếm (NodeBST) mà không sử dụng thư viện STL có sẵn.
-- **Áp dụng các thuật toán cơ bản:** Cài đặt thủ công 6 thuật toán sắp xếp (Bubble Sort, Insertion Sort, Selection Sort, Quick Sort, Merge Sort, Heap Sort) và 2 thuật toán tìm kiếm (Sequential Search, Binary Search).
-- **Phát triển kỹ năng lập trình thủ tục:** Sử dụng phong cách lập trình thủ tục với C++, tập trung vào việc sử dụng `struct Student` với các trường dữ liệu kiểu mảng ký tự và các hàm độc lập cho từng chức năng.
-- **Quản lý bộ nhớ thủ công:** Thực hành quản lý bộ nhớ bằng cách sử dụng `new`/`delete` cho các cấu trúc dữ liệu động và tránh sử dụng các container STL.
-- **Xây dựng ứng dụng thực tế:** Tạo ra một hệ thống hoàn chỉnh có thể quản lý thông tin sinh viên với đầy đủ các chức năng CRUD (Create, Read, Update, Delete), thống kê, và các tính năng nâng cao.
+* **Thực hành cài đặt cấu trúc dữ liệu:** Tự tay cài đặt các cấu trúc dữ liệu cơ bản như mảng động (ArrayStudentList), danh sách liên kết đơn (NodeSLL), danh sách liên kết vòng (NodeSLL), danh sách liên kết đôi (NodeDLL), và cây nhị phân tìm kiếm (NodeBST) mà không sử dụng thư viện STL có sẵn.
+* **Áp dụng các thuật toán cơ bản:** Cài đặt thủ công 6 thuật toán sắp xếp (Bubble Sort, Insertion Sort, Selection Sort, Quick Sort, Merge Sort, Heap Sort) và 2 thuật toán tìm kiếm (Sequential Search, Binary Search).
+* **Phát triển kỹ năng lập trình thủ tục:** Sử dụng phong cách lập trình thủ tục với C++, tập trung vào việc sử dụng `struct Student` với các trường dữ liệu kiểu mảng ký tự và các hàm độc lập cho từng chức năng.
+* **Quản lý bộ nhớ thủ công:** Thực hành quản lý bộ nhớ bằng cách sử dụng `new`/`delete` cho các cấu trúc dữ liệu động và tránh sử dụng các container STL.
+* **Xây dựng ứng dụng thực tế:** Tạo ra một hệ thống hoàn chỉnh có thể quản lý thông tin sinh viên với đầy đủ các chức năng CRUD (Create, Read, Update, Delete), thống kê, và các tính năng nâng cao.
 
 ### 1.2. Phạm vi dự án
 
@@ -32,12 +71,12 @@ Dự án được chia thành hai phần chính theo yêu cầu của đồ án:
 
 ### 1.3. Môi trường phát triển và Công cụ
 
-- **IDE:** Visual Studio Code (VS Code)
-- **Hệ điều hành:** macOS
-- **Ngôn ngữ:** C++ với phong cách lập trình thủ tục
-- **Trình biên dịch:** Apple Clang/GCC (Thông qua Makefile)
-- **Giao diện:** Console-based application (không sử dụng GUI)
-- **Quản lý project:** Makefile để biên dịch và liên kết các module.
+* **IDE:** Visual Studio Code (VS Code)
+* **Hệ điều hành:** macOS
+* **Ngôn ngữ:** C++ với phong cách lập trình thủ tục
+* **Trình biên dịch:** Apple Clang/GCC (Thông qua Makefile)
+* **Giao diện:** Console-based application (không sử dụng GUI)
+* **Quản lý project:** Makefile để biên dịch và liên kết các module.
 
 ### 1.4. Đặc điểm kỹ thuật chính
 
@@ -55,26 +94,26 @@ struct Student {
 
 **Các cấu trúc dữ liệu được cài đặt:**
 
-- **ArrayStudentList:** Danh sách mảng động với quản lý bộ nhớ thủ công
-- **NodeSLL:** Danh sách liên kết đơn (Singly Linked List)
-- **NodeDLL:** Danh sách liên kết đôi (Doubly Linked List)
-- **CircularLinkedList:** Danh sách liên kết vòng
-- **NodeBST:** Cây nhị phân tìm kiếm (Binary Search Tree)
+* **ArrayStudentList:** Danh sách mảng động với quản lý bộ nhớ thủ công
+* **NodeSLL:** Danh sách liên kết đơn (Singly Linked List)
+* **NodeDLL:** Danh sách liên kết đôi (Doubly Linked List)
+* **CircularLinkedList:** Danh sách liên kết vòng
+* **NodeBST:** Cây nhị phân tìm kiếm (Binary Search Tree)
 
 **Thuật toán sắp xếp được cài đặt:**
 
-- Bubble Sort, Insertion Sort, Selection Sort
-- Quick Sort, Merge Sort, Heap Sort
+* Bubble Sort, Insertion Sort, Selection Sort
+* Quick Sort, Merge Sort, Heap Sort
 
 **Thuật toán tìm kiếm được cài đặt:**
 
-- Sequential Search (Tìm kiếm tuần tự)
-- Binary Search (Tìm kiếm nhị phân)
+* Sequential Search (Tìm kiếm tuần tự)
+* Binary Search (Tìm kiếm nhị phân)
 
 **Chức năng nâng cao:**
 
-- Knight's Tour (Bài toán Mã Đi Tuần) sử dụng thuật toán backtracking
-- Binary Search Tree với khả năng lưu trữ nhiều sinh viên cùng điểm
+* Knight's Tour (Bài toán Mã Đi Tuần) sử dụng thuật toán backtracking
+* Binary Search Tree với khả năng lưu trữ nhiều sinh viên cùng điểm
 
 ### 1.5. Kiến trúc hệ thống
 
@@ -128,13 +167,13 @@ struct ArrayStudentList
 
 **Ưu điểm:**
 
-- Truy cập ngẫu nhiên phần tử theo chỉ số với độ phức tạp O(1).
-- Phù hợp với các thuật toán sắp xếp như Quick Sort và các thuật toán tìm kiếm như Binary Search do tính truy cập nhanh.
+* Truy cập ngẫu nhiên phần tử theo chỉ số với độ phức tạp O(1).
+* Phù hợp với các thuật toán sắp xếp như Quick Sort và các thuật toán tìm kiếm như Binary Search do tính truy cập nhanh.
 
 **Nhược điểm:**
 
-- Thêm hoặc xóa phần tử ở giữa danh sách có độ phức tạp O(n) do cần dịch chuyển các phần tử.
-- Kích thước cố định, không thể mở rộng vượt quá `MAX_STUDENTS` (100 sinh viên).
+* Thêm hoặc xóa phần tử ở giữa danh sách có độ phức tạp O(n) do cần dịch chuyển các phần tử.
+* Kích thước cố định, không thể mở rộng vượt quá `MAX_STUDENTS` (100 sinh viên).
 
 #### 2.1.2. Danh sách Liên kết Đơn (Singly Linked List)
 
@@ -157,14 +196,14 @@ struct NodeSLL
 
 **Ưu điểm:**
 
-- Thêm/xóa phần tử (đặc biệt ở đầu danh sách) có độ phức tạp O(1).
-- Sử dụng bộ nhớ linh hoạt, chỉ cấp phát khi cần thêm `NodeSLL` mới.
+* Thêm/xóa phần tử (đặc biệt ở đầu danh sách) có độ phức tạp O(1).
+* Sử dụng bộ nhớ linh hoạt, chỉ cấp phát khi cần thêm `NodeSLL` mới.
 
 **Nhược điểm:**
 
-- Truy cập phần tử theo vị trí là tuần tự, có độ phức tạp O(n).
-- Không phù hợp với thuật toán Binary Search (yêu cầu truy cập ngẫu nhiên nhanh).
-- Tốn thêm bộ nhớ cho các con trỏ `next`.
+* Truy cập phần tử theo vị trí là tuần tự, có độ phức tạp O(n).
+* Không phù hợp với thuật toán Binary Search (yêu cầu truy cập ngẫu nhiên nhanh).
+* Tốn thêm bộ nhớ cho các con trỏ `next`.
 
 #### 2.1.3. Danh sách Liên kết Vòng (Circular Linked List)
 
@@ -185,13 +224,13 @@ struct NodeSLL
 
 **Ưu điểm:**
 
-- Thuận tiện cho các ứng dụng cần duyệt vòng qua danh sách (ví dụ: phân bổ tài nguyên theo chu kỳ).
-- Có thể dễ dàng thêm/xóa ở cả đầu và cuối danh sách với O(1) nếu dùng con trỏ `tail`.
+* Thuận tiện cho các ứng dụng cần duyệt vòng qua danh sách (ví dụ: phân bổ tài nguyên theo chu kỳ).
+* Có thể dễ dàng thêm/xóa ở cả đầu và cuối danh sách với O(1) nếu dùng con trỏ `tail`.
 
 **Nhược điểm:**
 
-- Cần cẩn thận hơn khi duyệt để tránh vòng lặp vô hạn nếu không có điều kiện dừng đúng.
-- Các thao tác có thể phức tạp hơn một chút so với DSLK Đơn.
+* Cần cẩn thận hơn khi duyệt để tránh vòng lặp vô hạn nếu không có điều kiện dừng đúng.
+* Các thao tác có thể phức tạp hơn một chút so với DSLK Đơn.
 
 #### 2.1.4. Danh sách Liên kết Đôi (Doubly Linked List)
 
@@ -213,14 +252,14 @@ struct NodeDLL
 
 **Ưu điểm:**
 
-- Cho phép duyệt danh sách theo cả hai chiều (xuôi và ngược).
-- Thêm/xóa `Node` hiệu quả hơn (O(1)) nếu biết vị trí `Node` cần thao tác, do có thể dễ dàng cập nhật con trỏ của các `Node` lân cận.
-- Phù hợp hơn cho một số biến thể của Quick Sort.
+* Cho phép duyệt danh sách theo cả hai chiều (xuôi và ngược).
+* Thêm/xóa `Node` hiệu quả hơn (O(1)) nếu biết vị trí `Node` cần thao tác, do có thể dễ dàng cập nhật con trỏ của các `Node` lân cận.
+* Phù hợp hơn cho một số biến thể của Quick Sort.
 
 **Nhược điểm:**
 
-- Tốn nhiều bộ nhớ hơn so với DSLK Đơn do mỗi `Node` có thêm một con trỏ `prev`.
-- Việc cài đặt các thao tác (thêm, xóa) phức tạp hơn một chút do phải quản lý cả hai con trỏ `next` và `prev`.
+* Tốn nhiều bộ nhớ hơn so với DSLK Đơn do mỗi `Node` có thêm một con trỏ `prev`.
+* Việc cài đặt các thao tác (thêm, xóa) phức tạp hơn một chút do phải quản lý cả hai con trỏ `next` và `prev`.
 
 #### 2.1.5. Cây Tìm kiếm Nhị phân (Binary Search Tree)
 
@@ -246,17 +285,17 @@ struct NodeBST
 
 **Ưu điểm:**
 
-- Tìm kiếm, thêm, xóa có độ phức tạp trung bình O(log n) khi cây cân bằng.
-- Duyệt cây theo thứ tự (in-order traversal) tự động cho kết quả đã được sắp xếp theo điểm số.
-- Phù hợp cho các thao tác tìm kiếm theo khoảng điểm số (range search).
-- Hỗ trợ nhiều sinh viên có cùng điểm số trong một `Node`, tiết kiệm bộ nhớ.
+* Tìm kiếm, thêm, xóa có độ phức tạp trung bình O(log n) khi cây cân bằng.
+* Duyệt cây theo thứ tự (in-order traversal) tự động cho kết quả đã được sắp xếp theo điểm số.
+* Phù hợp cho các thao tác tìm kiếm theo khoảng điểm số (range search).
+* Hỗ trợ nhiều sinh viên có cùng điểm số trong một `Node`, tiết kiệm bộ nhớ.
 
 **Nhược điểm:**
 
-- Trong trường hợp xấu nhất (cây không cân bằng), độ phức tạp có thể thoái hóa thành O(n).
-- Cài đặt phức tạp hơn so với các cấu trúc dữ liệu tuyến tính.
-- Cần bộ nhớ bổ sung cho việc lưu trữ con trỏ `left` và `right`.
-- Giới hạn số lượng sinh viên cho mỗi điểm số (`MAX_STUDENTS_PER_SCORE` = 10).
+* Trong trường hợp xấu nhất (cây không cân bằng), độ phức tạp có thể thoái hóa thành O(n).
+* Cài đặt phức tạp hơn so với các cấu trúc dữ liệu tuyến tính.
+* Cần bộ nhớ bổ sung cho việc lưu trữ con trỏ `left` và `right`.
+* Giới hạn số lượng sinh viên cho mỗi điểm số (`MAX_STUDENTS_PER_SCORE` = 10).
 
 ### 2.2. Cấu trúc Thông tin Sinh viên (`struct Student`)
 
@@ -286,9 +325,9 @@ const int MAX_CLASS_LENGTH = 20;        // Độ dài tối đa tên lớp
 
 **Lý do thiết kế:**
 
-- Sử dụng mảng ký tự `char[]` cho các trường chuỗi (như `studentID`, `firstName`, `lastName`, `studentClass`) thay vì `std::string` để tuân thủ yêu cầu của dự án về việc hạn chế STL và thực hành xử lý chuỗi kiểu C.
-- Kích thước tối đa của các mảng ký tự này được định nghĩa bằng các hằng số (ví dụ: `MAX_STUDENT_ID_LENGTH`) trong file `constants.h` để dễ dàng quản lý và thay đổi.
-- Trường `score` sử dụng kiểu `float` để lưu trữ điểm số, đảm bảo đủ độ chính xác cho thang điểm 10.
+* Sử dụng mảng ký tự `char[]` cho các trường chuỗi (như `studentID`, `firstName`, `lastName`, `studentClass`) thay vì `std::string` để tuân thủ yêu cầu của dự án về việc hạn chế STL và thực hành xử lý chuỗi kiểu C.
+* Kích thước tối đa của các mảng ký tự này được định nghĩa bằng các hằng số (ví dụ: `MAX_STUDENT_ID_LENGTH`) trong file `constants.h` để dễ dàng quản lý và thay đổi.
+* Trường `score` sử dụng kiểu `float` để lưu trữ điểm số, đảm bảo đủ độ chính xác cho thang điểm 10.
 
 **Các hàm thao tác với `Student` (ví dụ):**
 
@@ -337,10 +376,10 @@ struct Student
    b. Sử dụng hàm `trim()` để loại bỏ khoảng trắng thừa ở đầu và cuối mỗi trường.
 
    c. Kiểm tra tính hợp lệ của từng trường dữ liệu bằng các hàm validation:
-      - **Mã sinh viên:** Sử dụng regex pattern `^[a-zA-Z0-9]{3,19}$`, kiểm tra tính duy nhất trong danh sách hiện tại.
-      - **Họ và Tên:** Không được để trống, độ dài không vượt quá giới hạn.
-      - **Lớp:** Không được để trống, độ dài không vượt quá giới hạn.
-      - **Điểm:** Phải là số thực hợp lệ trong khoảng từ 0.0 đến 10.0.
+      * **Mã sinh viên:** Sử dụng regex pattern `^[a-zA-Z0-9]{3,19}$`, kiểm tra tính duy nhất trong danh sách hiện tại.
+      * **Họ và Tên:** Không được để trống, độ dài không vượt quá giới hạn.
+      * **Lớp:** Không được để trống, độ dài không vượt quá giới hạn.
+      * **Điểm:** Phải là số thực hợp lệ trong khoảng từ 0.0 đến 10.0.
 
    d. Nếu tất cả các trường đều hợp lệ, tạo một `struct Student` mới và thêm vào danh sách.
 
@@ -632,10 +671,10 @@ N18DCCN025,Nguyễn Thị,Thảo,D21CQCN02-B,9.2
 
 **Xử lý lỗi:**
 
-- Thông báo rõ ràng nếu file không tồn tại hoặc không thể mở.
-- Với mỗi dòng dữ liệu không hợp lệ, hiển thị số dòng và lỗi cụ thể.
-- Hiển thị thống kê tổng quan về số dòng hợp lệ/không hợp lệ.
-- Xử lý trường hợp file rỗng hoặc thiếu dữ liệu.
+* Thông báo rõ ràng nếu file không tồn tại hoặc không thể mở.
+* Với mỗi dòng dữ liệu không hợp lệ, hiển thị số dòng và lỗi cụ thể.
+* Hiển thị thống kê tổng quan về số dòng hợp lệ/không hợp lệ.
+* Xử lý trường hợp file rỗng hoặc thiếu dữ liệu.
 
 ### 3.2. Thêm Sinh viên mới
 
@@ -654,18 +693,18 @@ N18DCCN025,Nguyễn Thị,Thảo,D21CQCN02-B,9.2
 3. Sau khi người dùng nhập đầy đủ và tất cả thông tin đều hợp lệ, có thể hiển thị lại thông tin đã nhập để người dùng xác nhận.
 4. Nếu người dùng xác nhận, tạo một `struct Student` mới và thêm vào cấu trúc dữ liệu đang sử dụng. Cài đặt cho các cấu trúc dữ liệu:
 
-- **Mảng (`ArrayList`):**
-  - Kiểm tra xem mảng có còn chỗ trống không (`size < capacity`).
-  - Nếu đầy, thực hiện mở rộng mảng: tạo một mảng mới có `capacity` lớn hơn, sao chép tất cả sinh viên từ mảng cũ sang mảng mới, giải phóng bộ nhớ của mảng cũ, và cập nhật con trỏ `students` trỏ đến mảng mới.
-  - Thêm sinh viên mới vào vị trí `size` và tăng `size` lên 1.
-- **Danh sách Liên kết Đơn/Vòng/Đôi:**
-  - Cấp phát động một `Node` mới.
-  - Gán dữ liệu sinh viên mới vào `Node`.
-  - Liên kết `Node` mới này vào vị trí thích hợp trong danh sách (ví dụ: thêm vào đầu, cuối, hoặc giữ danh sách sắp xếp theo một tiêu chí nào đó nếu có yêu cầu). Cập nhật các con trỏ `head`, `tail` (nếu có) và `size`.
+* **Mảng (`ArrayList`):**
+  * Kiểm tra xem mảng có còn chỗ trống không (`size < capacity`).
+  * Nếu đầy, thực hiện mở rộng mảng: tạo một mảng mới có `capacity` lớn hơn, sao chép tất cả sinh viên từ mảng cũ sang mảng mới, giải phóng bộ nhớ của mảng cũ, và cập nhật con trỏ `students` trỏ đến mảng mới.
+  * Thêm sinh viên mới vào vị trí `size` và tăng `size` lên 1.
+* **Danh sách Liên kết Đơn/Vòng/Đôi:**
+  * Cấp phát động một `Node` mới.
+  * Gán dữ liệu sinh viên mới vào `Node`.
+  * Liên kết `Node` mới này vào vị trí thích hợp trong danh sách (ví dụ: thêm vào đầu, cuối, hoặc giữ danh sách sắp xếp theo một tiêu chí nào đó nếu có yêu cầu). Cập nhật các con trỏ `head`, `tail` (nếu có) và `size`.
 
 **Trích dẫn Code:**
 
-- **Thêm sinh viên mới:** Người dùng chọn chức năng "Thêm sinh viên mới" (case 3) trong hàm `main` ở `src/main.cpp`. Chương trình yêu cầu nhập mã sinh viên, kiểm tra tính hợp lệ và trùng lặp. Nếu hợp lệ, chương trình yêu cầu nhập các thông tin còn lại của sinh viên. Cuối cùng, hàm `addStudentToDataStructure` được gọi để thêm sinh viên vào cấu trúc dữ liệu đã chọn.
+* **Thêm sinh viên mới:** Người dùng chọn chức năng "Thêm sinh viên mới" (case 3) trong hàm `main` ở `src/main.cpp`. Chương trình yêu cầu nhập mã sinh viên, kiểm tra tính hợp lệ và trùng lặp. Nếu hợp lệ, chương trình yêu cầu nhập các thông tin còn lại của sinh viên. Cuối cùng, hàm `addStudentToDataStructure` được gọi để thêm sinh viên vào cấu trúc dữ liệu đã chọn.
 
   ```cpp
   // src/main.cpp
@@ -740,7 +779,7 @@ N18DCCN025,Nguyễn Thị,Thảo,D21CQCN02-B,9.2
   // ...existing code...
   ```
 
-- **Nhập thông tin sinh viên:** Hàm `inputStudent` trong `src/core/operations.cpp` chịu trách nhiệm nhập các thông tin chi tiết của sinh viên như họ, tên, lớp và điểm, đồng thời kiểm tra tính hợp lệ của từng trường thông tin.
+* **Nhập thông tin sinh viên:** Hàm `inputStudent` trong `src/core/operations.cpp` chịu trách nhiệm nhập các thông tin chi tiết của sinh viên như họ, tên, lớp và điểm, đồng thời kiểm tra tính hợp lệ của từng trường thông tin.
 
   ```cpp
   // src/core/operations.cpp
@@ -898,7 +937,7 @@ N18DCCN025,Nguyễn Thị,Thảo,D21CQCN02-B,9.2
   }
   ```
 
-- **Kiểm tra tính hợp lệ của dữ liệu:** Các hàm `validateAndShowStudentID`, `validateAndShowName`, `validateAndShowClassName`, `validateAndShowScore` trong `src/utils/validation.cpp` được sử dụng để kiểm tra và hiển thị thông báo lỗi nếu dữ liệu nhập vào không hợp lệ.
+* **Kiểm tra tính hợp lệ của dữ liệu:** Các hàm `validateAndShowStudentID`, `validateAndShowName`, `validateAndShowClassName`, `validateAndShowScore` trong `src/utils/validation.cpp` được sử dụng để kiểm tra và hiển thị thông báo lỗi nếu dữ liệu nhập vào không hợp lệ.
 
   ```cpp
   // src/utils/validation.cpp
@@ -947,7 +986,7 @@ N18DCCN025,Nguyễn Thị,Thảo,D21CQCN02-B,9.2
   }
   ```
 
-- **Kiểm tra trùng mã sinh viên:** Hàm `validateAndShowDuplicateStudentID` trong `src/core/operations.cpp` kiểm tra xem mã sinh viên đã tồn tại trong cấu trúc dữ liệu hiện tại hay chưa.
+* **Kiểm tra trùng mã sinh viên:** Hàm `validateAndShowDuplicateStudentID` trong `src/core/operations.cpp` kiểm tra xem mã sinh viên đã tồn tại trong cấu trúc dữ liệu hiện tại hay chưa.
 
   ```cpp
   // src/core/operations.cpp
@@ -973,7 +1012,7 @@ N18DCCN025,Nguyễn Thị,Thảo,D21CQCN02-B,9.2
 
 **Trích dẫn Code:**
 
-- **Xóa sinh viên:** Người dùng chọn chức năng "Xóa sinh viên" (case 4) trong hàm `main` ở `src/main.cpp`. Chương trình yêu cầu nhập mã sinh viên, sau đó gọi hàm `deleteStudentFromDataStructure` để xóa sinh viên khỏi cấu trúc dữ liệu đã chọn.
+* **Xóa sinh viên:** Người dùng chọn chức năng "Xóa sinh viên" (case 4) trong hàm `main` ở `src/main.cpp`. Chương trình yêu cầu nhập mã sinh viên, sau đó gọi hàm `deleteStudentFromDataStructure` để xóa sinh viên khỏi cấu trúc dữ liệu đã chọn.
 
   ```cpp
   // src/main.cpp
@@ -991,7 +1030,7 @@ N18DCCN025,Nguyễn Thị,Thảo,D21CQCN02-B,9.2
   // ...existing code...
   ```
 
-- **Cập nhật thông tin sinh viên:** Người dùng chọn chức năng "Cập nhật thông tin sinh viên" (case 5) trong hàm `main` ở `src/main.cpp`. Chương trình yêu cầu nhập mã sinh viên, kiểm tra sự tồn tại, sau đó yêu cầu nhập thông tin mới và gọi hàm `updateStudentInDataStructure`.
+* **Cập nhật thông tin sinh viên:** Người dùng chọn chức năng "Cập nhật thông tin sinh viên" (case 5) trong hàm `main` ở `src/main.cpp`. Chương trình yêu cầu nhập mã sinh viên, kiểm tra sự tồn tại, sau đó yêu cầu nhập thông tin mới và gọi hàm `updateStudentInDataStructure`.
 
   ```cpp
   // src/main.cpp
@@ -1031,7 +1070,7 @@ N18DCCN025,Nguyễn Thị,Thảo,D21CQCN02-B,9.2
   // ...existing code...
   ```
 
-- **Hàm xóa sinh viên khỏi cấu trúc dữ liệu:** Hàm `deleteStudentFromDataStructure` trong `src/core/operations.cpp` xử lý logic xóa cho từng loại cấu trúc dữ liệu.
+* **Hàm xóa sinh viên khỏi cấu trúc dữ liệu:** Hàm `deleteStudentFromDataStructure` trong `src/core/operations.cpp` xử lý logic xóa cho từng loại cấu trúc dữ liệu.
 
   ```cpp
   // src/core/operations.cpp
@@ -1101,7 +1140,7 @@ N18DCCN025,Nguyễn Thị,Thảo,D21CQCN02-B,9.2
   }
   ```
 
-- **Hàm cập nhật sinh viên trong cấu trúc dữ liệu:** Hàm `updateStudentInDataStructure` trong `src/core/operations.cpp` xử lý logic cập nhật cho từng loại cấu trúc dữ liệu.
+* **Hàm cập nhật sinh viên trong cấu trúc dữ liệu:** Hàm `updateStudentInDataStructure` trong `src/core/operations.cpp` xử lý logic cập nhật cho từng loại cấu trúc dữ liệu.
 
   ```cpp
   // src/core/operations.cpp
@@ -1169,14 +1208,12 @@ N18DCCN025,Nguyễn Thị,Thảo,D21CQCN02-B,9.2
   }
   ```
 
-#### Tìm kiếm sinh viên theo Mã số
-
-Đây là bước chung cho cả Xóa và Cập nhật.
+**Tìm kiếm sinh viên theo Mã số**: Đây là bước chung cho cả Xóa và Cập nhật.
 
 1. Yêu cầu người dùng nhập Mã sinh viên cần tìm.
 2. Duyệt qua cấu trúc dữ liệu đang sử dụng:
-   - **Mảng:** Duyệt từ đầu đến cuối, so sánh `studentID` của từng sinh viên với mã cần tìm bằng `strcmp()`.
-   - **DSLK:** Duyệt từ `head` (hoặc `tail->next` cho DSLK Vòng) đến hết danh sách, so sánh tương tự.
+   * **Mảng:** Duyệt từ đầu đến cuối, so sánh `studentID` của từng sinh viên với mã cần tìm bằng `strcmp()`.
+   * **DSLK:** Duyệt từ `head` (hoặc `tail->next` cho DSLK Vòng) đến hết danh sách, so sánh tương tự.
 3. Nếu tìm thấy sinh viên, trả về con trỏ tới `struct Student` đó (hoặc chỉ số trong mảng, con trỏ tới `Node` trong DSLK). Nếu không tìm thấy, thông báo cho người dùng.
 
 ### 3.4. Thống kê Sinh viên
@@ -1185,25 +1222,25 @@ N18DCCN025,Nguyễn Thị,Thảo,D21CQCN02-B,9.2
 
 **Các loại thống kê được cài đặt:**
 
-- **Liệt kê sinh viên có điểm cao nhất:**
+* **Liệt kê sinh viên có điểm cao nhất:**
   1. Khởi tạo `maxScore` bằng điểm của sinh viên đầu tiên (hoặc giá trị rất nhỏ).
   2. Duyệt qua toàn bộ danh sách. Nếu điểm của sinh viên hiện tại lớn hơn `maxScore`, cập nhật `maxScore`.
   3. Sau khi tìm được `maxScore`, duyệt lại danh sách một lần nữa và hiển thị thông tin của tất cả sinh viên có điểm bằng `maxScore`.
-- **Liệt kê sinh viên có điểm thấp nhất:** Tương tự như tìm điểm cao nhất, nhưng so sánh để tìm `minScore`.
-- **Tính điểm trung bình của cả lớp:**
+* **Liệt kê sinh viên có điểm thấp nhất:** Tương tự như tìm điểm cao nhất, nhưng so sánh để tìm `minScore`.
+* **Tính điểm trung bình của cả lớp:**
   1. Khởi tạo `totalScore = 0.0` và `studentCount = 0`.
   2. Duyệt qua danh sách, cộng dồn điểm của mỗi sinh viên vào `totalScore` và tăng `studentCount`.
   3. Nếu `studentCount > 0`, điểm trung bình = `totalScore / studentCount`. Hiển thị kết quả.
-- **Phân loại học lực sinh viên (ví dụ):**
-  - Định nghĩa các ngưỡng điểm cho từng loại học lực: Giỏi (8.0 - 10.0), Khá (6.5 - 7.9), Trung bình (5.0 - 6.4), Yếu (< 5.0).
-  - Duyệt qua danh sách, với mỗi sinh viên, xác định học lực dựa trên điểm số và đếm số lượng sinh viên thuộc mỗi loại.
-  - Hiển thị số lượng (hoặc tỷ lệ %) sinh viên theo từng loại học lực.
+* **Phân loại học lực sinh viên (ví dụ):**
+  * Định nghĩa các ngưỡng điểm cho từng loại học lực: Giỏi (8.0 - 10.0), Khá (6.5 - 7.9), Trung bình (5.0 - 6.4), Yếu (< 5.0).
+  * Duyệt qua danh sách, với mỗi sinh viên, xác định học lực dựa trên điểm số và đếm số lượng sinh viên thuộc mỗi loại.
+  * Hiển thị số lượng (hoặc tỷ lệ %) sinh viên theo từng loại học lực.
 **Xử lý trường hợp đặc biệt:**
-- Nếu danh sách rỗng, tất cả các chức năng thống kê nên hiển thị thông báo "Danh sách sinh viên rỗng."
+* Nếu danh sách rỗng, tất cả các chức năng thống kê nên hiển thị thông báo "Danh sách sinh viên rỗng."
 
 **Trích dẫn Code:**
 
-- **Thống kê sinh viên:** Người dùng chọn chức năng "Thống kê sinh viên" (case 7) trong hàm `main` ở `src/main.cpp`. Chương trình hiển thị menu con để cho phép người dùng chọn loại thống kê: tổng quát, theo lớp, hoặc cả hai.
+* **Thống kê sinh viên:** Người dùng chọn chức năng "Thống kê sinh viên" (case 7) trong hàm `main` ở `src/main.cpp`. Chương trình hiển thị menu con để cho phép người dùng chọn loại thống kê: tổng quát, theo lớp, hoặc cả hai.
 
 ```cpp
 // From src/main.cpp
@@ -1214,7 +1251,7 @@ case 7: // Thống kê sinh viên
 }
 ```
 
-- **Hàm thực hiện thống kê:** Hàm `performStatistics` trong `src/core/operations.cpp` hỗ trợ nhiều cấu trúc dữ liệu và cung cấp menu lựa chọn loại thống kê.
+* **Hàm thực hiện thống kê:** Hàm `performStatistics` trong `src/core/operations.cpp` hỗ trợ nhiều cấu trúc dữ liệu và cung cấp menu lựa chọn loại thống kê.
 
 ```cpp
 // From src/core/operations.cpp
@@ -1277,30 +1314,30 @@ void performStatistics(int dataStructureType,
 
 **Các thuật toán sắp xếp được cài đặt:**
 
-- **Bubble Sort:**
-  - So sánh các cặp phần tử liền kề và đổi chỗ nếu chúng không đúng thứ tự (ví dụ: phần tử đứng trước lớn hơn phần tử đứng sau khi sắp xếp tăng dần). Lặp lại quá trình này cho đến khi không còn sự đổi chỗ nào.
-  - Độ phức tạp thời gian: O(n²) trong trường hợp xấu nhất và trung bình.
-  - Cài đặt: Có thể áp dụng cho Mảng. Với DSLK, việc đổi chỗ phức tạp hơn và kém hiệu quả.
-- **Selection Sort:**
-  - Tìm phần tử nhỏ nhất (hoặc lớn nhất) trong phần chưa được sắp xếp của danh sách và đổi chỗ nó với phần tử đầu tiên của phần chưa sắp xếp. Lặp lại cho đến khi toàn bộ danh sách được sắp xếp.
-  - Độ phức tạp thời gian: O(n²) trong mọi trường hợp.
-  - Cài đặt: Tương tự Bubble Sort, dễ áp dụng cho Mảng.
-- **Insertion Sort:**
-  - Duyệt qua danh sách từ phần tử thứ hai. Với mỗi phần tử, so sánh nó với các phần tử đã được sắp xếp ở phía trước và chèn nó vào đúng vị trí.
-  - Độ phức tạp thời gian: O(n²) trong trường hợp xấu nhất, O(n) trong trường hợp tốt nhất (danh sách đã sắp xếp).
-  - Cài đặt: Hiệu quả cho danh sách nhỏ hoặc gần như đã sắp xếp. Áp dụng được cho cả Mảng và DSLK.
-- **Quick Sort (khuyến khích cho Mảng/DSLK Đôi):**
-  - Chọn một phần tử làm "pivot". Phân hoạch các phần tử khác thành hai nhóm: nhóm nhỏ hơn pivot và nhóm lớn hơn pivot. Đệ quy sắp xếp hai nhóm này.
-  - Độ phức tạp thời gian trung bình: O(n log n). Xấu nhất: O(n²).
-  - Cài đặt: Hiệu quả nhất cho Mảng. Với DSLK Đôi cũng có thể cài đặt hiệu quả. Với DSLK Đơn khó hơn.
-- **Merge Sort (khuyến khích cho Mảng/DSLK):**
-  - Chia danh sách thành hai nửa bằng nhau. Đệ quy sắp xếp từng nửa. Sau đó, trộn (merge) hai nửa đã sắp xếp lại thành một danh sách duy nhất đã sắp xếp.
-  - Độ phức tạp thời gian: O(n log n) trong mọi trường hợp.
-  - Cài đặt: Phù hợp cho cả Mảng và DSLK. Cần thêm không gian phụ để trộn.
+* **Bubble Sort:**
+  * So sánh các cặp phần tử liền kề và đổi chỗ nếu chúng không đúng thứ tự (ví dụ: phần tử đứng trước lớn hơn phần tử đứng sau khi sắp xếp tăng dần). Lặp lại quá trình này cho đến khi không còn sự đổi chỗ nào.
+  * Độ phức tạp thời gian: O(n²) trong trường hợp xấu nhất và trung bình.
+  * Cài đặt: Có thể áp dụng cho Mảng. Với DSLK, việc đổi chỗ phức tạp hơn và kém hiệu quả.
+* **Selection Sort:**
+  * Tìm phần tử nhỏ nhất (hoặc lớn nhất) trong phần chưa được sắp xếp của danh sách và đổi chỗ nó với phần tử đầu tiên của phần chưa sắp xếp. Lặp lại cho đến khi toàn bộ danh sách được sắp xếp.
+  * Độ phức tạp thời gian: O(n²) trong mọi trường hợp.
+  * Cài đặt: Tương tự Bubble Sort, dễ áp dụng cho Mảng.
+* **Insertion Sort:**
+  * Duyệt qua danh sách từ phần tử thứ hai. Với mỗi phần tử, so sánh nó với các phần tử đã được sắp xếp ở phía trước và chèn nó vào đúng vị trí.
+  * Độ phức tạp thời gian: O(n²) trong trường hợp xấu nhất, O(n) trong trường hợp tốt nhất (danh sách đã sắp xếp).
+  * Cài đặt: Hiệu quả cho danh sách nhỏ hoặc gần như đã sắp xếp. Áp dụng được cho cả Mảng và DSLK.
+* **Quick Sort (khuyến khích cho Mảng/DSLK Đôi):**
+  * Chọn một phần tử làm "pivot". Phân hoạch các phần tử khác thành hai nhóm: nhóm nhỏ hơn pivot và nhóm lớn hơn pivot. Đệ quy sắp xếp hai nhóm này.
+  * Độ phức tạp thời gian trung bình: O(n log n). Xấu nhất: O(n²).
+  * Cài đặt: Hiệu quả nhất cho Mảng. Với DSLK Đôi cũng có thể cài đặt hiệu quả. Với DSLK Đơn khó hơn.
+* **Merge Sort (khuyến khích cho Mảng/DSLK):**
+  * Chia danh sách thành hai nửa bằng nhau. Đệ quy sắp xếp từng nửa. Sau đó, trộn (merge) hai nửa đã sắp xếp lại thành một danh sách duy nhất đã sắp xếp.
+  * Độ phức tạp thời gian: O(n log n) trong mọi trường hợp.
+  * Cài đặt: Phù hợp cho cả Mảng và DSLK. Cần thêm không gian phụ để trộn.
   
 **Trích dẫn Code:**
 
-- **Sắp xếp sinh viên:** Người dùng chọn chức năng "Sắp xếp sinh viên theo tiêu chí" (case 8) trong hàm `main` ở `src/main.cpp`. Chương trình cho phép người dùng chọn thuật toán sắp xếp và tiêu chí sắp xếp, sau đó đo thời gian thực thi.
+* **Sắp xếp sinh viên:** Người dùng chọn chức năng "Sắp xếp sinh viên theo tiêu chí" (case 8) trong hàm `main` ở `src/main.cpp`. Chương trình cho phép người dùng chọn thuật toán sắp xếp và tiêu chí sắp xếp, sau đó đo thời gian thực thi.
 
 ```cpp
 // From src/main.cpp
@@ -1405,9 +1442,9 @@ void quickSortArrayList(ArrayStudentList &list)
 
 **Tiêu chí sắp xếp:**
 
-- Theo Mã sinh viên (thứ tự từ điển, tăng dần).
-- Theo Tên (thứ tự từ điển, tăng dần). Nếu tên trùng thì có thể sắp xếp theo Họ.
-- Theo Điểm (tăng dần hoặc giảm dần).
+* Theo Mã sinh viên (thứ tự từ điển, tăng dần).
+* Theo Tên (thứ tự từ điển, tăng dần). Nếu tên trùng thì có thể sắp xếp theo Họ.
+* Theo Điểm (tăng dần hoặc giảm dần).
 
 **Đo thời gian thực hiện:** Sử dụng thư viện `<chrono>` của C++ để đo thời gian bắt đầu và kết thúc quá trình sắp xếp để so sánh hiệu suất của các thuật toán.
 
@@ -1417,7 +1454,7 @@ void quickSortArrayList(ArrayStudentList &list)
 
 **Trích dẫn Code từ `src/main.cpp` (Xử lý lựa chọn tìm kiếm):**
 
-- **Tìm kiếm nâng cao:** Người dùng chọn chức năng "Tìm kiếm nâng cao với nhiều tiêu chí" (case 9) trong hàm `main`. Hệ thống sử dụng thông tin trạng thái sắp xếp để tối ưu hóa tìm kiếm.
+* **Tìm kiếm nâng cao:** Người dùng chọn chức năng "Tìm kiếm nâng cao với nhiều tiêu chí" (case 9) trong hàm `main`. Hệ thống sử dụng thông tin trạng thái sắp xếp để tối ưu hóa tìm kiếm.
 
 ```cpp
 // From src/main.cpp
@@ -1440,10 +1477,10 @@ void quickSortArrayList(ArrayStudentList &list)
 
 **Các thuật toán tìm kiếm được cài đặt:**
 
-- **Sequential Search (Tìm kiếm tuần tự):**
-  - Duyệt qua từng phần tử trong danh sách từ đầu đến cuối để tìm phần tử có giá trị trùng khớp.
-  - Độ phức tạp thời gian: O(n) trong trường hợp xấu nhất.
-  - Áp dụng được cho tất cả các cấu trúc dữ liệu và không yêu cầu danh sách được sắp xếp trước.
+* **Sequential Search (Tìm kiếm tuần tự):**
+  * Duyệt qua từng phần tử trong danh sách từ đầu đến cuối để tìm phần tử có giá trị trùng khớp.
+  * Độ phức tạp thời gian: O(n) trong trường hợp xấu nhất.
+  * Áp dụng được cho tất cả các cấu trúc dữ liệu và không yêu cầu danh sách được sắp xếp trước.
 
   **Ví dụ cài đặt (`src/algorithms/searching.cpp`):**
 
@@ -1498,11 +1535,11 @@ void quickSortArrayList(ArrayStudentList &list)
   }
   ```
 
-- **Binary Search (Tìm kiếm nhị phân):**
-  - Chỉ áp dụng được khi danh sách đã được sắp xếp theo trường cần tìm kiếm.
-  - So sánh giá trị cần tìm với phần tử ở giữa danh sách. Nếu bằng nhau thì tìm thấy. Nếu nhỏ hơn thì tìm ở nửa trái, nếu lớn hơn thì tìm ở nửa phải.
-  - Độ phức tạp thời gian: O(log n).
-  - Chỉ hiệu quả với mảng do yêu cầu truy cập ngẫu nhiên nhanh.
+* **Binary Search (Tìm kiếm nhị phân):**
+  * Chỉ áp dụng được khi danh sách đã được sắp xếp theo trường cần tìm kiếm.
+  * So sánh giá trị cần tìm với phần tử ở giữa danh sách. Nếu bằng nhau thì tìm thấy. Nếu nhỏ hơn thì tìm ở nửa trái, nếu lớn hơn thì tìm ở nửa phải.
+  * Độ phức tạp thời gian: O(log n).
+  * Chỉ hiệu quả với mảng do yêu cầu truy cập ngẫu nhiên nhanh.
 
   **Ví dụ cài đặt (`src/algorithms/searching.cpp`):**
 
@@ -1597,10 +1634,10 @@ void quickSortArrayList(ArrayStudentList &list)
 
 **Các thuật toán được hỗ trợ:**
 
-- **Thuật toán cơ bản:** Bubble Sort, Selection Sort, Insertion Sort
-- **Thuật toán nâng cao:** Quick Sort, Merge Sort, Heap Sort
-- **Đo lường hiệu suất:** Sử dụng `chrono::high_resolution_clock` để đo thời gian thực thi
-- **Linh hoạt:** Hỗ trợ sắp xếp theo nhiều tiêu chí (mã SV, tên, điểm số)
+* **Thuật toán cơ bản:** Bubble Sort, Selection Sort, Insertion Sort
+* **Thuật toán nâng cao:** Quick Sort, Merge Sort, Heap Sort
+* **Đo lường hiệu suất:** Sử dụng `chrono::high_resolution_clock` để đo thời gian thực thi
+* **Linh hoạt:** Hỗ trợ sắp xếp theo nhiều tiêu chí (mã SV, tên, điểm số)
 
 **Hàm so sánh sinh viên:**
 
@@ -1823,11 +1860,11 @@ void inorderTraversalBST(NodeBST *root)
 
 **Các tính năng nâng cao:**
 
-- **Tìm kiếm tuần tự:** Cho dữ liệu chưa sắp xếp với độ phức tạp O(n)
-- **Tìm kiếm nhị phân:** Cho dữ liệu đã sắp xếp với độ phức tạp O(log n)
-- **Đo lường hiệu suất:** Sử dụng timer precision cao để so sánh hiệu suất
-- **Tìm kiếm mờ:** Hỗ trợ tìm kiếm không phân biệt hoa thường với partial matching
-- **Đa tiêu chí:** Hỗ trợ tìm kiếm theo mã SV, tên, họ, lớp, và điểm số
+* **Tìm kiếm tuần tự:** Cho dữ liệu chưa sắp xếp với độ phức tạp O(n)
+* **Tìm kiếm nhị phân:** Cho dữ liệu đã sắp xếp với độ phức tạp O(log n)
+* **Đo lường hiệu suất:** Sử dụng timer precision cao để so sánh hiệu suất
+* **Tìm kiếm mờ:** Hỗ trợ tìm kiếm không phân biệt hoa thường với partial matching
+* **Đa tiêu chí:** Hỗ trợ tìm kiếm theo mã SV, tên, họ, lớp, và điểm số
 
 **Cấu trúc kết quả tìm kiếm:**
 
@@ -2176,11 +2213,11 @@ SearchResult searchDoublyLinkedList(NodeDLL *head, const char *keyword,
 
 **Các cấu trúc được hỗ trợ:**
 
-- **Array List:** Mảng động với các thuật toán sắp xếp cơ bản và nâng cao, hỗ trợ binary search
-- **Singly Linked List:** Danh sách liên kết đơn với thuật toán sắp xếp được tối ưu, chỉ hỗ trợ sequential search
-- **Doubly Linked List:** Danh sách liên kết đôi với sắp xếp hai chiều và binary search
-- **Circular Linked List:** Danh sách liên kết vòng với xử lý đặc biệt, chỉ hỗ trợ sequential search
-- **Binary Search Tree:** Cây nhị phân tìm kiếm với sắp xếp tự động theo điểm số
+* **Array List:** Mảng động với các thuật toán sắp xếp cơ bản và nâng cao, hỗ trợ binary search
+* **Singly Linked List:** Danh sách liên kết đơn với thuật toán sắp xếp được tối ưu, chỉ hỗ trợ sequential search
+* **Doubly Linked List:** Danh sách liên kết đôi với sắp xếp hai chiều và binary search
+* **Circular Linked List:** Danh sách liên kết vòng với xử lý đặc biệt, chỉ hỗ trợ sequential search
+* **Binary Search Tree:** Cây nhị phân tìm kiếm với sắp xếp tự động theo điểm số
 
 **Ví dụ sắp xếp cho Singly Linked List:**
 
@@ -2222,13 +2259,13 @@ NodeSLL* mergeSortSinglyLinkedList(NodeSLL* head, int sortCriteria)
 
 Hệ thống quản lý sinh viên đã cài đặt thành công nhiều thuật toán nâng cao:
 
-- **6 thuật toán sắp xếp** với đo lường hiệu suất thời gian thực
-- **Cây BST** với các phép duyệt và tìm kiếm theo điểm số
-- **Tìm kiếm nâng cao** với binary search và sequential search tối ưu
-- **Đa cấu trúc dữ liệu** với thuật toán riêng biệt cho từng loại
-- **Đo lường hiệu suất** thời gian thực với độ chính xác microsecond
-- **Tìm kiếm mờ** không phân biệt hoa thường với partial matching
-- **Tích hợp linh hoạt** giữa các thuật toán và cấu trúc dữ liệu khác nhau
+* **6 thuật toán sắp xếp** với đo lường hiệu suất thời gian thực
+* **Cây BST** với các phép duyệt và tìm kiếm theo điểm số
+* **Tìm kiếm nâng cao** với binary search và sequential search tối ưu
+* **Đa cấu trúc dữ liệu** với thuật toán riêng biệt cho từng loại
+* **Đo lường hiệu suất** thời gian thực với độ chính xác microsecond
+* **Tìm kiếm mờ** không phân biệt hoa thường với partial matching
+* **Tích hợp linh hoạt** giữa các thuật toán và cấu trúc dữ liệu khác nhau
 
 ## 5. Kết luận và Hướng phát triển
 
@@ -2270,9 +2307,9 @@ struct NodeSLL
 
 **Thuật toán sắp xếp đã cài đặt** (từ `include/algorithms/array_sorting.h`):
 
-- Bubble Sort, Insertion Sort, Selection Sort
-- Quick Sort, Heap Sort, Merge Sort
-- Hỗ trợ sắp xếp cho tất cả cấu trúc dữ liệu
+* Bubble Sort, Insertion Sort, Selection Sort
+* Quick Sort, Heap Sort, Merge Sort
+* Hỗ trợ sắp xếp cho tất cả cấu trúc dữ liệu
 
 **Thuật toán tìm kiếm** (từ `include/algorithms/searching.h`):
 
@@ -2426,9 +2463,9 @@ const float MAX_SCORE = 10.0f;
 
 Cần cải thiện:
 
-- Tăng giới hạn `MAX_STUDENTS` lên 1000-10000
-- Cài đặt AVL Tree thay thế BST đơn giản
-- Tối ưu hóa thuật toán sắp xếp cho dữ liệu lớn
+* Tăng giới hạn `MAX_STUDENTS` lên 1000-10000
+* Cài đặt AVL Tree thay thế BST đơn giản
+* Tối ưu hóa thuật toán sắp xếp cho dữ liệu lớn
 
 **2. Mở rộng tính năng dữ liệu:**
 
@@ -2441,9 +2478,9 @@ bool writeToCSVFile(const char *filename, const ArrayStudentList &list)
 
 Mở rộng:
 
-- Export JSON, XML format
-- Import từ Excel files
-- Backup/restore database
+* Export JSON, XML format
+* Import từ Excel files
+* Backup/restore database
 
 **3. Cải thiện giao diện:**
 
@@ -2461,9 +2498,9 @@ void printError(const char *message);
 
 Nâng cấp:
 
-- Menu đa cấp thông minh hơn
-- Progress bar cho các thao tác lớn
-- Interactive forms với validation real-time
+* Menu đa cấp thông minh hơn
+* Progress bar cho các thao tác lớn
+* Interactive forms với validation real-time
 
 #### 5.2.3. Hướng phát triển dài hạn
 
@@ -2481,17 +2518,17 @@ NodeBST *binarySearchTree = NULL;
 
 Nâng cấp thành:
 
-- Design pattern Strategy cho các cấu trúc dữ liệu
-- Factory pattern cho việc tạo objects
-- Observer pattern cho event handling
+* Design pattern Strategy cho các cấu trúc dữ liệu
+* Factory pattern cho việc tạo objects
+* Observer pattern cho event handling
 
 **2. Cơ sở dữ liệu bền vững:**
 
 Thay thế file CSV hiện tại bằng:
 
-- SQLite embedded database
-- Redis cho caching
-- MongoDB cho NoSQL needs
+* SQLite embedded database
+* Redis cho caching
+* MongoDB cho NoSQL needs
 
 **3. Giao diện đồ họa:**
 
@@ -2523,13 +2560,13 @@ void generateStudentRecommendations(const ArrayStudentList &list);
 
 Dự án đã đạt được:
 
-- ✅ **5 cấu trúc dữ liệu** hoàn chỉnh với đầy đủ CRUD operations
-- ✅ **6 thuật toán sắp xếp** từ cơ bản đến nâng cao
-- ✅ **Tìm kiếm thông minh** với sequential và binary search
-- ✅ **Validation system** robust cho input data
-- ✅ **UI system** với màu sắc và formatting
-- ✅ **File I/O** với CSV support
-- ✅ **Memory management** thủ công hoàn chỉnh
+* ✅ **5 cấu trúc dữ liệu** hoàn chỉnh với đầy đủ CRUD operations
+* ✅ **6 thuật toán sắp xếp** từ cơ bản đến nâng cao
+* ✅ **Tìm kiếm thông minh** với sequential và binary search
+* ✅ **Validation system** robust cho input data
+* ✅ **UI system** với màu sắc và formatting
+* ✅ **File I/O** với CSV support
+* ✅ **Memory management** thủ công hoàn chỉnh
 
 Hệ thống đã sẵn sàng cho việc mở rộng và phát triển thêm các tính năng nâng cao, đáp ứng được yêu cầu thực tế của một hệ thống quản lý sinh viên hoàn chỉnh.
 
@@ -2537,8 +2574,8 @@ Hệ thống đã sẵn sàng cho việc mở rộng và phát triển thêm cá
 
 **Độ phức tạp thuật toán đạt được:**
 
-- Tìm kiếm: O(1) đến O(log n)
-- Sắp xếp: O(n²) đến O(n log n)
-- Không gian: O(1) đến O(n)
+* Tìm kiếm: O(1) đến O(log n)
+* Sắp xếp: O(n²) đến O(n log n)
+* Không gian: O(1) đến O(n)
 
 Dự án hoàn toàn đáp ứng và vượt qua yêu cầu của đề bài về cả mặt lý thuyết và thực hành.

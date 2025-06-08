@@ -266,7 +266,7 @@ int main()
         switch (choice)
         {
         case 1: // Chọn cấu trúc dữ liệu
-            dataStructureType = selectDataStructureWithBSTHandling(dataStructureType, arrayList, singlyLinkedList, circularLinkedList, doublyLinkedListHead, binarySearchTree);
+            dataStructureType = selectDataStructureWithConversion(dataStructureType, arrayList, singlyLinkedList, circularLinkedList, doublyLinkedListHead, doublyLinkedListTail, binarySearchTree);
             break;
         case 2:
         {

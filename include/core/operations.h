@@ -158,13 +158,48 @@ void convertBSTToArrayList(NodeBST *binarySearchTree, ArrayStudentList &arrayLis
 // Hàm helper cho chuyển đổi BST sang Array List
 void traverseBSTAndAddToArray(NodeBST* node, ArrayStudentList &arrayList);
 
-// ========== Các hàm chọn cấu trúc dữ liệu với xử lý chuyển đổi BST ==========
-int selectDataStructureWithBSTHandling(int currentDataStructureType,
-                                       ArrayStudentList &arrayList,
-                                       NodeSLL *singlyLinkedList,
-                                       NodeSLL *circularLinkedList,
-                                       NodeDLL *doublyLinkedListHead,
-                                       NodeBST *&binarySearchTree);
+// ========== Các hàm chuyển đổi toàn diện giữa tất cả cấu trúc dữ liệu ==========
+void convertDataStructures(int sourceType, int targetType,
+                           ArrayStudentList &arrayList,
+                           NodeSLL *&singlyLinkedList,
+                           NodeSLL *&circularLinkedList,
+                           NodeDLL *&doublyLinkedListHead,
+                           NodeDLL *&doublyLinkedListTail,
+                           NodeBST *&binarySearchTree);
+
+// Các hàm chuyển đổi từ Array List
+void convertArrayListToSLL(const ArrayStudentList &arrayList, NodeSLL *&singlyLinkedList);
+void convertArrayListToCLL(const ArrayStudentList &arrayList, NodeSLL *&circularLinkedList);
+void convertArrayListToDLL(const ArrayStudentList &arrayList, NodeDLL *&doublyLinkedListHead, NodeDLL *&doublyLinkedListTail);
+
+// Các hàm chuyển đổi từ Singly Linked List
+void convertSLLToArrayList(NodeSLL *singlyLinkedList, ArrayStudentList &arrayList);
+void convertSLLToCLL(NodeSLL *singlyLinkedList, NodeSLL *&circularLinkedList);
+void convertSLLToDLL(NodeSLL *singlyLinkedList, NodeDLL *&doublyLinkedListHead, NodeDLL *&doublyLinkedListTail);
+
+// Các hàm chuyển đổi từ Circular Linked List
+void convertCLLToArrayList(NodeSLL *circularLinkedList, ArrayStudentList &arrayList);
+void convertCLLToSLL(NodeSLL *circularLinkedList, NodeSLL *&singlyLinkedList);
+void convertCLLToDLL(NodeSLL *circularLinkedList, NodeDLL *&doublyLinkedListHead, NodeDLL *&doublyLinkedListTail);
+
+// Các hàm chuyển đổi từ Doubly Linked List
+void convertDLLToArrayList(NodeDLL *doublyLinkedListHead, ArrayStudentList &arrayList);
+void convertDLLToSLL(NodeDLL *doublyLinkedListHead, NodeSLL *&singlyLinkedList);
+void convertDLLToCLL(NodeDLL *doublyLinkedListHead, NodeSLL *&circularLinkedList);
+
+// Các hàm chuyển đổi từ BST
+void convertBSTToSLL(NodeBST *binarySearchTree, NodeSLL *&singlyLinkedList);
+void convertBSTToCLL(NodeBST *binarySearchTree, NodeSLL *&circularLinkedList);
+void convertBSTToDLL(NodeBST *binarySearchTree, NodeDLL *&doublyLinkedListHead, NodeDLL *&doublyLinkedListTail);
+
+// ========== Các hàm chọn cấu trúc dữ liệu với xử lý chuyển đổi toàn diện ==========
+int selectDataStructureWithConversion(int currentDataStructureType,
+                                      ArrayStudentList &arrayList,
+                                      NodeSLL *&singlyLinkedList,
+                                      NodeSLL *&circularLinkedList,
+                                      NodeDLL *&doublyLinkedListHead,
+                                      NodeDLL *&doublyLinkedListTail,
+                                      NodeBST *&binarySearchTree);
 
 // ========== Các hàm mới: Xóa toàn bộ và lưu file ==========
 bool clearAllData(int dataStructureType,

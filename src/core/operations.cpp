@@ -3,6 +3,10 @@
 #include "../../include/utils/common_utils.h"
 #include "../../include/ui/search_menu.h"
 #include "../../include/data_structures/binary_search_tree.h"
+#include "../../include/data_structures/array_list.h"
+#include "../../include/data_structures/singly_linked_list.h"
+#include "../../include/data_structures/circular_linked_list.h"
+#include "../../include/data_structures/doubly_linked_list.h"
 #include <iostream>
 #include <string>
 #include <limits>
@@ -1743,6 +1747,503 @@ int selectDataStructureWithBSTHandling(int currentDataStructureType,
         // Forward declaration cần thiết để gọi từ operations.cpp
         extern int performBSTOperations(NodeBST * &binarySearchTree, ArrayStudentList & arrayList);
         return performBSTOperations(binarySearchTree, arrayList);
+    }
+
+    return choice;
+}
+
+// ========== Các hàm chuyển đổi toàn diện giữa tất cả cấu trúc dữ liệu ==========
+
+// Hàm chuyển đổi từ Array List sang Singly Linked List
+void convertArrayListToSLL(const ArrayStudentList &arrayList, NodeSLL *&singlyLinkedList)
+{
+    // Khởi tạo SLL rỗng
+    initSLL(singlyLinkedList);
+    
+    // Thêm từng sinh viên vào SLL
+    for (int i = 0; i < arrayList.count; i++)
+    {
+        addToHeadSLL(singlyLinkedList, arrayList.students[i]);
+    }
+    
+    printSuccess(("Đã chuyển " + to_string(arrayList.count) + " sinh viên từ danh sách mảng sang danh sách liên kết đơn.").c_str());
+}
+
+// Hàm chuyển đổi từ Array List sang Circular Linked List
+void convertArrayListToCLL(const ArrayStudentList &arrayList, NodeSLL *&circularLinkedList)
+{
+    // Khởi tạo CLL rỗng
+    initCLL(circularLinkedList);
+    
+    // Thêm từng sinh viên vào CLL
+    for (int i = 0; i < arrayList.count; i++)
+    {
+        addToCLL(circularLinkedList, arrayList.students[i]);
+    }
+    
+    printSuccess(("Đã chuyển " + to_string(arrayList.count) + " sinh viên từ danh sách mảng sang danh sách liên kết vòng.").c_str());
+}
+
+// Hàm chuyển đổi từ Array List sang Doubly Linked List
+void convertArrayListToDLL(const ArrayStudentList &arrayList, NodeDLL *&doublyLinkedListHead, NodeDLL *&doublyLinkedListTail)
+{
+    // Khởi tạo DLL rỗng
+    initDLL(doublyLinkedListHead, doublyLinkedListTail);
+    
+    // Thêm từng sinh viên vào DLL
+    for (int i = 0; i < arrayList.count; i++)
+    {
+        addToHeadDLL(doublyLinkedListHead, doublyLinkedListTail, arrayList.students[i]);
+    }
+    
+    printSuccess(("Đã chuyển " + to_string(arrayList.count) + " sinh viên từ danh sách mảng sang danh sách liên kết đôi.").c_str());
+}
+
+// Hàm chuyển đổi từ Singly Linked List sang Array List
+void convertSLLToArrayList(NodeSLL *singlyLinkedList, ArrayStudentList &arrayList)
+{
+    // Khởi tạo Array List rỗng
+    initArrayList(arrayList);
+    
+    // Duyệt qua SLL và thêm vào Array List
+    NodeSLL *current = singlyLinkedList;
+    while (current != NULL && arrayList.count < MAX_STUDENTS)
+    {
+        arrayList.students[arrayList.count] = current->info;
+        arrayList.count++;
+        current = current->next;
+    }
+    
+    printSuccess(("Đã chuyển " + to_string(arrayList.count) + " sinh viên từ danh sách liên kết đơn sang danh sách mảng.").c_str());
+}
+
+// Hàm chuyển đổi từ Singly Linked List sang Circular Linked List
+void convertSLLToCLL(NodeSLL *singlyLinkedList, NodeSLL *&circularLinkedList)
+{
+    // Khởi tạo CLL rỗng
+    initCLL(circularLinkedList);
+    
+    // Duyệt qua SLL và thêm vào CLL
+    NodeSLL *current = singlyLinkedList;
+    int count = 0;
+    while (current != NULL)
+    {
+        addToCLL(circularLinkedList, current->info);
+        current = current->next;
+        count++;
+    }
+    
+    printSuccess(("Đã chuyển " + to_string(count) + " sinh viên từ danh sách liên kết đơn sang danh sách liên kết vòng.").c_str());
+}
+
+// Hàm chuyển đổi từ Singly Linked List sang Doubly Linked List
+void convertSLLToDLL(NodeSLL *singlyLinkedList, NodeDLL *&doublyLinkedListHead, NodeDLL *&doublyLinkedListTail)
+{
+    // Khởi tạo DLL rỗng
+    initDLL(doublyLinkedListHead, doublyLinkedListTail);
+    
+    // Duyệt qua SLL và thêm vào DLL
+    NodeSLL *current = singlyLinkedList;
+    int count = 0;
+    while (current != NULL)
+    {
+        addToHeadDLL(doublyLinkedListHead, doublyLinkedListTail, current->info);
+        current = current->next;
+        count++;
+    }
+    
+    printSuccess(("Đã chuyển " + to_string(count) + " sinh viên từ danh sách liên kết đơn sang danh sách liên kết đôi.").c_str());
+}
+
+// Hàm chuyển đổi từ Circular Linked List sang Array List
+void convertCLLToArrayList(NodeSLL *circularLinkedList, ArrayStudentList &arrayList)
+{
+    // Khởi tạo Array List rỗng
+    initArrayList(arrayList);
+    
+    if (circularLinkedList != NULL)
+    {
+        NodeSLL *current = circularLinkedList;
+        do
+        {
+            if (arrayList.count >= MAX_STUDENTS) break;
+            arrayList.students[arrayList.count] = current->info;
+            arrayList.count++;
+            current = current->next;
+        } while (current != circularLinkedList);
+    }
+    
+    printSuccess(("Đã chuyển " + to_string(arrayList.count) + " sinh viên từ danh sách liên kết vòng sang danh sách mảng.").c_str());
+}
+
+// Hàm chuyển đổi từ Circular Linked List sang Singly Linked List
+void convertCLLToSLL(NodeSLL *circularLinkedList, NodeSLL *&singlyLinkedList)
+{
+    // Khởi tạo SLL rỗng
+    initSLL(singlyLinkedList);
+    
+    if (circularLinkedList != NULL)
+    {
+        NodeSLL *current = circularLinkedList;
+        int count = 0;
+        do
+        {
+            addToHeadSLL(singlyLinkedList, current->info);
+            current = current->next;
+            count++;
+        } while (current != circularLinkedList);
+        
+        printSuccess(("Đã chuyển " + to_string(count) + " sinh viên từ danh sách liên kết vòng sang danh sách liên kết đơn.").c_str());
+    }
+    else
+    {
+        printInfo("Danh sách liên kết vòng rỗng, không có dữ liệu để chuyển đổi.");
+    }
+}
+
+// Hàm chuyển đổi từ Circular Linked List sang Doubly Linked List
+void convertCLLToDLL(NodeSLL *circularLinkedList, NodeDLL *&doublyLinkedListHead, NodeDLL *&doublyLinkedListTail)
+{
+    // Khởi tạo DLL rỗng
+    initDLL(doublyLinkedListHead, doublyLinkedListTail);
+    
+    if (circularLinkedList != NULL)
+    {
+        NodeSLL *current = circularLinkedList;
+        int count = 0;
+        do
+        {
+            addToHeadDLL(doublyLinkedListHead, doublyLinkedListTail, current->info);
+            current = current->next;
+            count++;
+        } while (current != circularLinkedList);
+        
+        printSuccess(("Đã chuyển " + to_string(count) + " sinh viên từ danh sách liên kết vòng sang danh sách liên kết đôi.").c_str());
+    }
+    else
+    {
+        printInfo("Danh sách liên kết vòng rỗng, không có dữ liệu để chuyển đổi.");
+    }
+}
+
+// Hàm chuyển đổi từ Doubly Linked List sang Array List
+void convertDLLToArrayList(NodeDLL *doublyLinkedListHead, ArrayStudentList &arrayList)
+{
+    // Khởi tạo Array List rỗng
+    initArrayList(arrayList);
+    
+    // Duyệt qua DLL và thêm vào Array List
+    NodeDLL *current = doublyLinkedListHead;
+    while (current != NULL && arrayList.count < MAX_STUDENTS)
+    {
+        arrayList.students[arrayList.count] = current->info;
+        arrayList.count++;
+        current = current->next;
+    }
+    
+    printSuccess(("Đã chuyển " + to_string(arrayList.count) + " sinh viên từ danh sách liên kết đôi sang danh sách mảng.").c_str());
+}
+
+// Hàm chuyển đổi từ Doubly Linked List sang Singly Linked List
+void convertDLLToSLL(NodeDLL *doublyLinkedListHead, NodeSLL *&singlyLinkedList)
+{
+    // Khởi tạo SLL rỗng
+    initSLL(singlyLinkedList);
+    
+    // Duyệt qua DLL và thêm vào SLL
+    NodeDLL *current = doublyLinkedListHead;
+    int count = 0;
+    while (current != NULL)
+    {
+        addToHeadSLL(singlyLinkedList, current->info);
+        current = current->next;
+        count++;
+    }
+    
+    printSuccess(("Đã chuyển " + to_string(count) + " sinh viên từ danh sách liên kết đôi sang danh sách liên kết đơn.").c_str());
+}
+
+// Hàm chuyển đổi từ Doubly Linked List sang Circular Linked List
+void convertDLLToCLL(NodeDLL *doublyLinkedListHead, NodeSLL *&circularLinkedList)
+{
+    // Khởi tạo CLL rỗng
+    initCLL(circularLinkedList);
+    
+    // Duyệt qua DLL và thêm vào CLL
+    NodeDLL *current = doublyLinkedListHead;
+    int count = 0;
+    while (current != NULL)
+    {
+        addToCLL(circularLinkedList, current->info);
+        current = current->next;
+        count++;
+    }
+    
+    printSuccess(("Đã chuyển " + to_string(count) + " sinh viên từ danh sách liên kết đôi sang danh sách liên kết vòng.").c_str());
+}
+
+// Hàm chuyển đổi từ BST sang Singly Linked List
+void convertBSTToSLL(NodeBST *binarySearchTree, NodeSLL *&singlyLinkedList)
+{
+    // Khởi tạo SLL rỗng
+    initSLL(singlyLinkedList);
+    
+    if (binarySearchTree == NULL)
+    {
+        printInfo("BST rỗng, không có dữ liệu để chuyển đổi.");
+        return;
+    }
+    
+    // Tạo Array List tạm để duyệt BST
+    ArrayStudentList tempList;
+    initArrayList(tempList);
+    traverseBSTAndAddToArray(binarySearchTree, tempList);
+    
+    // Chuyển từ Array List sang SLL
+    convertArrayListToSLL(tempList, singlyLinkedList);
+    
+    printSuccess(("Đã chuyển " + to_string(tempList.count) + " sinh viên từ BST sang danh sách liên kết đơn.").c_str());
+}
+
+// Hàm chuyển đổi từ BST sang Circular Linked List
+void convertBSTToCLL(NodeBST *binarySearchTree, NodeSLL *&circularLinkedList)
+{
+    // Khởi tạo CLL rỗng
+    initCLL(circularLinkedList);
+    
+    if (binarySearchTree == NULL)
+    {
+        printInfo("BST rỗng, không có dữ liệu để chuyển đổi.");
+        return;
+    }
+    
+    // Tạo Array List tạm để duyệt BST
+    ArrayStudentList tempList;
+    initArrayList(tempList);
+    traverseBSTAndAddToArray(binarySearchTree, tempList);
+    
+    // Chuyển từ Array List sang CLL
+    convertArrayListToCLL(tempList, circularLinkedList);
+    
+    printSuccess(("Đã chuyển " + to_string(tempList.count) + " sinh viên từ BST sang danh sách liên kết vòng.").c_str());
+}
+
+// Hàm chuyển đổi từ BST sang Doubly Linked List
+void convertBSTToDLL(NodeBST *binarySearchTree, NodeDLL *&doublyLinkedListHead, NodeDLL *&doublyLinkedListTail)
+{
+    // Khởi tạo DLL rỗng
+    initDLL(doublyLinkedListHead, doublyLinkedListTail);
+    
+    if (binarySearchTree == NULL)
+    {
+        printInfo("BST rỗng, không có dữ liệu để chuyển đổi.");
+        return;
+    }
+    
+    // Tạo Array List tạm để duyệt BST
+    ArrayStudentList tempList;
+    initArrayList(tempList);
+    traverseBSTAndAddToArray(binarySearchTree, tempList);
+    
+    // Chuyển từ Array List sang DLL
+    convertArrayListToDLL(tempList, doublyLinkedListHead, doublyLinkedListTail);
+    
+    printSuccess(("Đã chuyển " + to_string(tempList.count) + " sinh viên từ BST sang danh sách liên kết đôi.").c_str());
+}
+
+// Hàm chuyển đổi toàn diện giữa các cấu trúc dữ liệu
+void convertDataStructures(int sourceType, int targetType,
+                           ArrayStudentList &arrayList,
+                           NodeSLL *&singlyLinkedList,
+                           NodeSLL *&circularLinkedList,
+                           NodeDLL *&doublyLinkedListHead,
+                           NodeDLL *&doublyLinkedListTail,
+                           NodeBST *&binarySearchTree)
+{
+    // Nếu nguồn và đích giống nhau thì không cần chuyển đổi
+    if (sourceType == targetType)
+    {
+        printInfo("Cấu trúc dữ liệu nguồn và đích giống nhau, không cần chuyển đổi.");
+        return;
+    }
+    
+    printInfo(("Đang chuyển đổi từ " + string(getDataStructureName(sourceType)) + 
+               " sang " + string(getDataStructureName(targetType)) + "...").c_str());
+    
+    // Thực hiện chuyển đổi dựa trên nguồn và đích
+    switch (sourceType)
+    {
+    case ARRAY_LIST:
+        switch (targetType)
+        {
+        case SINGLY_LINKED_LIST:
+            convertArrayListToSLL(arrayList, singlyLinkedList);
+            break;
+        case CIRCULAR_LINKED_LIST:
+            convertArrayListToCLL(arrayList, circularLinkedList);
+            break;
+        case DOUBLY_LINKED_LIST:
+            convertArrayListToDLL(arrayList, doublyLinkedListHead, doublyLinkedListTail);
+            break;
+        case BINARY_SEARCH_TREE:
+            convertDataStructureToBST(sourceType, arrayList, singlyLinkedList, 
+                                    circularLinkedList, doublyLinkedListHead, binarySearchTree);
+            break;
+        }
+        break;
+        
+    case SINGLY_LINKED_LIST:
+        switch (targetType)
+        {
+        case ARRAY_LIST:
+            convertSLLToArrayList(singlyLinkedList, arrayList);
+            break;
+        case CIRCULAR_LINKED_LIST:
+            convertSLLToCLL(singlyLinkedList, circularLinkedList);
+            break;
+        case DOUBLY_LINKED_LIST:
+            convertSLLToDLL(singlyLinkedList, doublyLinkedListHead, doublyLinkedListTail);
+            break;
+        case BINARY_SEARCH_TREE:
+            convertDataStructureToBST(sourceType, arrayList, singlyLinkedList, 
+                                    circularLinkedList, doublyLinkedListHead, binarySearchTree);
+            break;
+        }
+        break;
+        
+    case CIRCULAR_LINKED_LIST:
+        switch (targetType)
+        {
+        case ARRAY_LIST:
+            convertCLLToArrayList(circularLinkedList, arrayList);
+            break;
+        case SINGLY_LINKED_LIST:
+            convertCLLToSLL(circularLinkedList, singlyLinkedList);
+            break;
+        case DOUBLY_LINKED_LIST:
+            convertCLLToDLL(circularLinkedList, doublyLinkedListHead, doublyLinkedListTail);
+            break;
+        case BINARY_SEARCH_TREE:
+            convertDataStructureToBST(sourceType, arrayList, singlyLinkedList, 
+                                    circularLinkedList, doublyLinkedListHead, binarySearchTree);
+            break;
+        }
+        break;
+        
+    case DOUBLY_LINKED_LIST:
+        switch (targetType)
+        {
+        case ARRAY_LIST:
+            convertDLLToArrayList(doublyLinkedListHead, arrayList);
+            break;
+        case SINGLY_LINKED_LIST:
+            convertDLLToSLL(doublyLinkedListHead, singlyLinkedList);
+            break;
+        case CIRCULAR_LINKED_LIST:
+            convertDLLToCLL(doublyLinkedListHead, circularLinkedList);
+            break;
+        case BINARY_SEARCH_TREE:
+            convertDataStructureToBST(sourceType, arrayList, singlyLinkedList, 
+                                    circularLinkedList, doublyLinkedListHead, binarySearchTree);
+            break;
+        }
+        break;
+        
+    case BINARY_SEARCH_TREE:
+        switch (targetType)
+        {
+        case ARRAY_LIST:
+            convertBSTToArrayList(binarySearchTree, arrayList);
+            break;
+        case SINGLY_LINKED_LIST:
+            convertBSTToSLL(binarySearchTree, singlyLinkedList);
+            break;
+        case CIRCULAR_LINKED_LIST:
+            convertBSTToCLL(binarySearchTree, circularLinkedList);
+            break;
+        case DOUBLY_LINKED_LIST:
+            convertBSTToDLL(binarySearchTree, doublyLinkedListHead, doublyLinkedListTail);
+            break;
+        }
+        break;
+        
+    default:
+        printError("Cấu trúc dữ liệu nguồn không hợp lệ.");
+        return;
+    }
+}
+
+// Hàm chọn cấu trúc dữ liệu với xử lý chuyển đổi toàn diện
+int selectDataStructureWithConversion(int currentDataStructureType,
+                                      ArrayStudentList &arrayList,
+                                      NodeSLL *&singlyLinkedList,
+                                      NodeSLL *&circularLinkedList,
+                                      NodeDLL *&doublyLinkedListHead,
+                                      NodeDLL *&doublyLinkedListTail,
+                                      NodeBST *&binarySearchTree)
+{
+    int choice = selectDataStructure();
+
+    // Nếu chọn BST (choice == 5)
+    if (choice == BINARY_SEARCH_TREE)
+    {
+        // Kiểm tra xem có dữ liệu trong cấu trúc hiện tại không
+        bool hasData = !isDataStructureEmpty(currentDataStructureType, arrayList,
+                                             singlyLinkedList, circularLinkedList,
+                                             doublyLinkedListHead, binarySearchTree);
+
+        if (hasData && currentDataStructureType != BINARY_SEARCH_TREE)
+        {
+            printInfo("Đang chuyển đổi dữ liệu từ cấu trúc hiện tại sang BST...");
+
+            // Chuyển đổi dữ liệu từ cấu trúc hiện tại sang BST
+            convertDataStructures(currentDataStructureType, BINARY_SEARCH_TREE,
+                                arrayList, singlyLinkedList, circularLinkedList,
+                                doublyLinkedListHead, doublyLinkedListTail, binarySearchTree);
+
+            printInfo("Chuyển sang chế độ BST. Bạn có thể sử dụng các chức năng BST chuyên biệt.");
+            cout << "\nNhấn Enter để tiếp tục...";
+            cin.get();
+        }
+        else if (!hasData)
+        {
+            printInfo("Chuyển sang chế độ BST với dữ liệu rỗng.");
+            cout << "\nNhấn Enter để tiếp tục...";
+            cin.get();
+        }
+
+        // Gọi hàm thực hiện các thao tác BST và lấy loại cấu trúc dữ liệu mới
+        // Forward declaration cần thiết để gọi từ operations.cpp
+        extern int performBSTOperations(NodeBST * &binarySearchTree, ArrayStudentList & arrayList);
+        return performBSTOperations(binarySearchTree, arrayList);
+    }
+    
+    // Xử lý chuyển đổi cho các cấu trúc dữ liệu khác
+    if (choice != currentDataStructureType)
+    {
+        // Kiểm tra xem có dữ liệu trong cấu trúc hiện tại không
+        bool hasData = !isDataStructureEmpty(currentDataStructureType, arrayList,
+                                             singlyLinkedList, circularLinkedList,
+                                             doublyLinkedListHead, binarySearchTree);
+
+        if (hasData)
+        {
+            printInfo(("Đang chuyển đổi dữ liệu từ " + string(getDataStructureName(currentDataStructureType)) + 
+                      " sang " + string(getDataStructureName(choice)) + "...").c_str());
+
+            // Thực hiện chuyển đổi
+            convertDataStructures(currentDataStructureType, choice,
+                                arrayList, singlyLinkedList, circularLinkedList,
+                                doublyLinkedListHead, doublyLinkedListTail, binarySearchTree);
+
+            printSuccess("Chuyển đổi dữ liệu thành công!");
+            cout << "\nNhấn Enter để tiếp tục...";
+            cin.get();
+        }
+        else
+        {
+            printInfo(("Chuyển sang " + string(getDataStructureName(choice)) + " với dữ liệu rỗng.").c_str());
+        }
     }
 
     return choice;
